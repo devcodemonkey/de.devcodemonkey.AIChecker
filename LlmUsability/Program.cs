@@ -89,8 +89,13 @@ Du Antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format struktu
 ";
 
             LMStudioAgentManager lmAgentManager = new LMStudioAgentManager();
+
+            //var output = await lmAgentManager
+            //                .GetStandardLMStudioAgent()
+            //                .SendAsync("Introduce yourself.");
+
             var output = await lmAgentManager
-                            .GetEvolutionLMStudioAgent(systemMessage)
+                            .GetEvolutionLMStudioAgent(systemMessage)                            
                             .SendAsync(userMessage);
 
             Console.WriteLine(output.FormatMessage());

@@ -17,6 +17,14 @@ namespace LlmUsability
             config = new LMStudioConfig("localhost", 1234);
         }
 
+
+        public LMStudioAgent GetStandardLMStudioAgent()
+        {
+            return new LMStudioAgent(
+                "asssistant",                
+                config: config);
+        }
+
         /// <summary>
         /// Gets the default LMStudioAgent.
         /// </summary>
