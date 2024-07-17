@@ -8,8 +8,12 @@ namespace LlmUsability
     {        
         static async Task Main(string[] args)
         {
-            Tests tests = new Tests();            
-            await tests.ShowSameTempuratureAsync();
+            // Test same temperature for 20 messages
+            // ToDo: Must converted to Unit Test
+            //Tests tests = new Tests();            
+            //await tests.ShowSameTempuratureAsync();
+
+
         }
     }
 }
