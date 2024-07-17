@@ -13,7 +13,7 @@ namespace LlmUsability
             //Tests tests = new Tests();            
             //await tests.ShowSameTempuratureAsync();
 
-            string supportQuestion = @"### START FRAGE ###
+            string userMessage = @"### START FRAGE ###
 ---
 
 **Von:** Max Mustermann
@@ -91,7 +91,7 @@ Du Antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format struktu
             LMStudioAgentManager lmAgentManager = new LMStudioAgentManager();
             var output = await lmAgentManager
                             .GetEvolutionLMStudioAgent(systemMessage)
-                            .SendAsync(supportQuestion);
+                            .SendAsync(userMessage);
 
             Console.WriteLine(output.FormatMessage());
 
