@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoGen.LMStudio" Version="0.0.16" />
+    <PackageReference Include="AutoGen.Ollama" Version="0.0.16" />
   </ItemGroup>
 
 </Project>
