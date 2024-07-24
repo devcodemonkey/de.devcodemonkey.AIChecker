@@ -10,8 +10,8 @@ namespace LlmUsability
     {
         static async Task Main(string[] args)
         {
-            await new RunLMStudio().RunAsync();
-
+            //await new RunLMStudio().RunAsync();
+            await new RunOllama().RunAsync();
         }
 
     }
