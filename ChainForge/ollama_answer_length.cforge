@@ -1,0 +1,2332 @@
+{
+  "flow": {
+    "nodes": [
+      {
+        "width": 312,
+        "height": 334,
+        "data": {
+          "fields": [
+            {
+              "text": "The very first Pokémon game, which is widely known as \"Pokémon Red and Blue,\" was released in Japan on November 18, 1996. This version of the series features two protagonists: Red and Blue, who embark on a quest to catch and train various Pokémon in order to become a trainer themselves.\n\nThe game is considered one of the most significant and iconic in the history of video games due to its ability to introduce beginners to the world of Pokémon and its impact on popular culture. It also marked a significant shift in the gaming industry, with many developers turning to Pokémon for inspiration for future releases.",
+              "prompt": "What was the first Pokemon game?",
+              "fill_history": {
+                "game": "Pokemon"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "06b66837-8bb4-4e07-a7ef-067b2eeb8a3b",
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              }
+            },
+            {
+              "text": "The first Pokémon game is \"Pokémon Red and Green\" released in Japan on April 18, 1996. It features two protagonists: Red and Blue, who embark on a journey to catch all 151 Pokémon in the Kanto region of the Pokémon world. The game was developed by Nintendo and published by Enix.",
+              "prompt": "What was the first Pokemon game?",
+              "fill_history": {
+                "game": "Pokemon"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "06b66837-8bb4-4e07-a7ef-067b2eeb8a3b",
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              }
+            },
+            {
+              "text": "The first Pokemon Game is \"Pokemon Red\" (also known as \"Red\" and \"R\" in Japan) released in 1996 for the Sega Genesis console. It is considered to be the groundbreaking introduction to the Pokemon franchise, introducing players to the main character, Bulbasaur, his friends, and the world of Pokemon where they can explore various regions, battle with other trainers, and learn how to catch and raise Pokemon.",
+              "prompt": "What was the first Pokemon game?",
+              "fill_history": {
+                "game": "Pokemon"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "06b66837-8bb4-4e07-a7ef-067b2eeb8a3b",
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              }
+            },
+            {
+              "text": "The first Legend of Zelda game was released in 1986 and was called \"The Adventure of Link.\" It is considered one of the most iconic and popular video games of all time and has been ported to many different platforms. The gameplay involves navigating through a vast open world, collecting treasures, solving puzzles, and fighting enemies while trying to prevent a villian from taking over the kingdom.",
+              "prompt": "What was the first Legend of Zelda game?",
+              "fill_history": {
+                "game": "Legend of Zelda"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "b3388dcb-a99d-4a00-a7ca-452fe7710e0f",
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              }
+            },
+            {
+              "text": "The first Legend of Zelda game, also known as \"Legend of Zelda: Breath of the Wild,\" was released on March 3, 2017 for the Nintendo Switch and Wii U. It is a new adventure game that takes players to the beautiful and vast open world of Hyrule, where they can explore, fight enemies, and solve puzzles to save Princess Zelda from the evil Triforce. This game was developed by Nintendo EPD and published by Nintendo, with assistance from other developers such as Shigeru Miyamoto and Masahiro Sakurai. The story is set in a time before the kingdom of Hyrule fell under the tyranny of Calamity Ganon, who seeks to take over the land by using the Triforce.",
+              "prompt": "What was the first Legend of Zelda game?",
+              "fill_history": {
+                "game": "Legend of Zelda"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "b3388dcb-a99d-4a00-a7ca-452fe7710e0f",
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              }
+            },
+            {
+              "text": "The first Legend of Zelda game, also known as \"Ocarina of Time,\" was released for the Nintendo 64 in 1998. It is a major milestone in the history of video games and has since become one of the most beloved titles of all time. The game follows Link, a young hero who must save his friend Princess Zelda from evil spirits known as Ganons, and uncover a forgotten secret that will lead to their destruction.",
+              "prompt": "What was the first Legend of Zelda game?",
+              "fill_history": {
+                "game": "Legend of Zelda"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "b3388dcb-a99d-4a00-a7ca-452fe7710e0f",
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              }
+            },
+            {
+              "text": "The first Kirby game, as known in Japan and Europe, was published by Nintendo under the title \"Super Mario Bros.\" for the Nintendo Entertainment System (NES). It was released in 1985 and became one of the best-selling video games ever. The game introduced the character Kirby and allowed players to control him using a variety of instruments, such as a guitar, drums, and flauta.\n\nThe Kirby games were known for their innovative gameplay mechanics and unique abilities, including being able to transform into different enemies or plants. They also featured a wide range of levels, including jumping, climbing, and swimming, making them a thrilling and challenging experience for players.\n\nWhile the first Kirby game was not as well-known in other countries, it has been praised for its innovative gameplay mechanics and popularity among fans around the world.",
+              "prompt": "What was the first Kirby game?",
+              "fill_history": {
+                "game": "Kirby"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "376c5c07-aa2a-4efb-9f70-706b3ab4d597",
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              }
+            },
+            {
+              "text": "The first Kirby game is Kirby's Adventure (1992) for the Nintendo 64 console, which features the iconic Kirby character performing various jumps and actions on solid surfaces. The game also introduced the Kirby coin currency and allowed players to collect and use them in various ways, such as buying new power-ups or using them to travel between different areas of the game world. Kirby's Adventure was a massive commercial success, reaching the top 10 in several countries and earning over $50 million worldwide.",
+              "prompt": "What was the first Kirby game?",
+              "fill_history": {
+                "game": "Kirby"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "376c5c07-aa2a-4efb-9f70-706b3ab4d597",
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              }
+            },
+            {
+              "text": "The first Kirby game is Kirby's Dream Land, released on June 19, 1992, for the Nintendo 64 console. This game introduces players to the Kirby character and the ability to transform into different characters, including his friends, enemies, and even a variety of animal forms such as octopuses, birds, and fish. The game also includes other features such as collectible items, puzzles, and boss fights.",
+              "prompt": "What was the first Kirby game?",
+              "fill_history": {
+                "game": "Kirby"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "376c5c07-aa2a-4efb-9f70-706b3ab4d597",
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              }
+            },
+            {
+              "text": "The first Super Mario Bros. game was released in 1985 for the Nintendo Entertainment System (NES). It is known as \"Super Mario Bros.,\" which takes the classic platformer gameplay to a new level with multiple levels, enemies, and a wide variety of power-ups. The game's success helped establish NES as one of the most popular video game consoles in history.",
+              "prompt": "What was the first Super Mario Bros game?",
+              "fill_history": {
+                "game": "Super Mario Bros"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "d2adb19a-395b-49a7-b93f-ebf8be2a843a",
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              }
+            },
+            {
+              "text": "The first Super Mario Bros. game was released in 1985 by Nintendo for the NES, the first video game console. It was a platformer game that introduced players to the beloved Mario character and helped establish him as one of the most recognizable video game characters in history. The game features a world filled with various enemies, obstacles, and platforms that the player must navigate to reach the end of the level.",
+              "prompt": "What was the first Super Mario Bros game?",
+              "fill_history": {
+                "game": "Super Mario Bros"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "d2adb19a-395b-49a7-b93f-ebf8be2a843a",
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              }
+            },
+            {
+              "text": "The first Super Mario Bros. game was released in 1985 for the Sega Genesis console. It is considered one of the most iconic video games of all time and has since become an enduring classic.",
+              "prompt": "What was the first Super Mario Bros game?",
+              "fill_history": {
+                "game": "Super Mario Bros"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "d2adb19a-395b-49a7-b93f-ebf8be2a843a",
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              }
+            }
+          ],
+          "llms": [
+            {
+              "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+              "name": "Ollama",
+              "emoji": "🦙",
+              "model": "ollama",
+              "base_model": "ollama",
+              "temp": 1,
+              "settings": {
+                "ollamaModel": "codeqwen:latest",
+                "ollama_url": "http://localhost:11434/api",
+                "model_type": "text",
+                "system_msg": "",
+                "temperature": 1,
+                "raw": false,
+                "top_k": -1,
+                "top_p": -1,
+                "stop_sequences": []
+              },
+              "formData": {
+                "shortname": "Ollama",
+                "ollamaModel": "codeqwen:latest",
+                "ollama_url": "http://localhost:11434/api",
+                "model_type": "text",
+                "system_msg": "",
+                "temperature": 1,
+                "raw": false,
+                "top_k": -1,
+                "top_p": -1,
+                "stop_sequences": ""
+              }
+            }
+          ],
+          "n": 3,
+          "prompt": "What was the first {game} game?"
+        },
+        "id": "prompt-1684348622333",
+        "position": {
+          "x": 430,
+          "y": 250
+        },
+        "positionAbsolute": {
+          "x": 430,
+          "y": 250
+        },
+        "selected": false,
+        "type": "prompt"
+      },
+      {
+        "width": 312,
+        "height": 280,
+        "data": {
+          "fields": {
+            "f0": "Pokemon",
+            "f1": "Legend of Zelda",
+            "f2": "Kirby",
+            "f3": "Super Mario Bros"
+          }
+        },
+        "dragging": false,
+        "id": "textfields-1684348622333",
+        "position": {
+          "x": 64,
+          "y": 272
+        },
+        "positionAbsolute": {
+          "x": 64,
+          "y": 272
+        },
+        "selected": false,
+        "type": "textfields"
+      },
+      {
+        "width": 722,
+        "height": 557,
+        "data": {
+          "input": "evalNode-1688054984836",
+          "llm_groups": [
+            {
+              "value": "LLM",
+              "label": "LLM"
+            }
+          ],
+          "refresh": false,
+          "selected_vars": [
+            "game"
+          ],
+          "vars": [
+            {
+              "value": "LLM (default)",
+              "label": "LLM (default)"
+            },
+            {
+              "value": "game",
+              "label": "game"
+            }
+          ]
+        },
+        "dragging": false,
+        "id": "vis-1684348622333",
+        "position": {
+          "x": 1168,
+          "y": 208
+        },
+        "positionAbsolute": {
+          "x": 1168,
+          "y": 208
+        },
+        "selected": false,
+        "type": "vis"
+      },
+      {
+        "width": 302,
+        "height": 319,
+        "data": {
+          "input": "prompt-1684348622333",
+          "refresh": false
+        },
+        "dragging": false,
+        "id": "inspect-1684348622333",
+        "position": {
+          "x": 784,
+          "y": 448
+        },
+        "positionAbsolute": {
+          "x": 784,
+          "y": 448
+        },
+        "selected": true,
+        "type": "inspect"
+      },
+      {
+        "width": 340,
+        "height": 225,
+        "data": {
+          "code": "function evaluate(response) {\n  return response.text.length;\n}",
+          "fields": [
+            {
+              "text": "The very first Pokémon game, which is widely known as \"Pokémon Red and Blue,\" was released in Japan on November 18, 1996. This version of the series features two protagonists: Red and Blue, who embark on a quest to catch and train various Pokémon in order to become a trainer themselves.\n\nThe game is considered one of the most significant and iconic in the history of video games due to its ability to introduce beginners to the world of Pokémon and its impact on popular culture. It also marked a significant shift in the gaming industry, with many developers turning to Pokémon for inspiration for future releases.",
+              "prompt": "What was the first Pokemon game?",
+              "fill_history": {
+                "game": "Pokemon"
+              },
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "06b66837-8bb4-4e07-a7ef-067b2eeb8a3b"
+            },
+            {
+              "text": "The first Pokémon game is \"Pokémon Red and Green\" released in Japan on April 18, 1996. It features two protagonists: Red and Blue, who embark on a journey to catch all 151 Pokémon in the Kanto region of the Pokémon world. The game was developed by Nintendo and published by Enix.",
+              "prompt": "What was the first Pokemon game?",
+              "fill_history": {
+                "game": "Pokemon"
+              },
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "06b66837-8bb4-4e07-a7ef-067b2eeb8a3b"
+            },
+            {
+              "text": "The first Pokemon Game is \"Pokemon Red\" (also known as \"Red\" and \"R\" in Japan) released in 1996 for the Sega Genesis console. It is considered to be the groundbreaking introduction to the Pokemon franchise, introducing players to the main character, Bulbasaur, his friends, and the world of Pokemon where they can explore various regions, battle with other trainers, and learn how to catch and raise Pokemon.",
+              "prompt": "What was the first Pokemon game?",
+              "fill_history": {
+                "game": "Pokemon"
+              },
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "06b66837-8bb4-4e07-a7ef-067b2eeb8a3b"
+            },
+            {
+              "text": "The first Legend of Zelda game was released in 1986 and was called \"The Adventure of Link.\" It is considered one of the most iconic and popular video games of all time and has been ported to many different platforms. The gameplay involves navigating through a vast open world, collecting treasures, solving puzzles, and fighting enemies while trying to prevent a villian from taking over the kingdom.",
+              "prompt": "What was the first Legend of Zelda game?",
+              "fill_history": {
+                "game": "Legend of Zelda"
+              },
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "b3388dcb-a99d-4a00-a7ca-452fe7710e0f"
+            },
+            {
+              "text": "The first Legend of Zelda game, also known as \"Legend of Zelda: Breath of the Wild,\" was released on March 3, 2017 for the Nintendo Switch and Wii U. It is a new adventure game that takes players to the beautiful and vast open world of Hyrule, where they can explore, fight enemies, and solve puzzles to save Princess Zelda from the evil Triforce. This game was developed by Nintendo EPD and published by Nintendo, with assistance from other developers such as Shigeru Miyamoto and Masahiro Sakurai. The story is set in a time before the kingdom of Hyrule fell under the tyranny of Calamity Ganon, who seeks to take over the land by using the Triforce.",
+              "prompt": "What was the first Legend of Zelda game?",
+              "fill_history": {
+                "game": "Legend of Zelda"
+              },
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "b3388dcb-a99d-4a00-a7ca-452fe7710e0f"
+            },
+            {
+              "text": "The first Legend of Zelda game, also known as \"Ocarina of Time,\" was released for the Nintendo 64 in 1998. It is a major milestone in the history of video games and has since become one of the most beloved titles of all time. The game follows Link, a young hero who must save his friend Princess Zelda from evil spirits known as Ganons, and uncover a forgotten secret that will lead to their destruction.",
+              "prompt": "What was the first Legend of Zelda game?",
+              "fill_history": {
+                "game": "Legend of Zelda"
+              },
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "b3388dcb-a99d-4a00-a7ca-452fe7710e0f"
+            },
+            {
+              "text": "The first Kirby game, as known in Japan and Europe, was published by Nintendo under the title \"Super Mario Bros.\" for the Nintendo Entertainment System (NES). It was released in 1985 and became one of the best-selling video games ever. The game introduced the character Kirby and allowed players to control him using a variety of instruments, such as a guitar, drums, and flauta.\n\nThe Kirby games were known for their innovative gameplay mechanics and unique abilities, including being able to transform into different enemies or plants. They also featured a wide range of levels, including jumping, climbing, and swimming, making them a thrilling and challenging experience for players.\n\nWhile the first Kirby game was not as well-known in other countries, it has been praised for its innovative gameplay mechanics and popularity among fans around the world.",
+              "prompt": "What was the first Kirby game?",
+              "fill_history": {
+                "game": "Kirby"
+              },
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "376c5c07-aa2a-4efb-9f70-706b3ab4d597"
+            },
+            {
+              "text": "The first Kirby game is Kirby's Adventure (1992) for the Nintendo 64 console, which features the iconic Kirby character performing various jumps and actions on solid surfaces. The game also introduced the Kirby coin currency and allowed players to collect and use them in various ways, such as buying new power-ups or using them to travel between different areas of the game world. Kirby's Adventure was a massive commercial success, reaching the top 10 in several countries and earning over $50 million worldwide.",
+              "prompt": "What was the first Kirby game?",
+              "fill_history": {
+                "game": "Kirby"
+              },
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "376c5c07-aa2a-4efb-9f70-706b3ab4d597"
+            },
+            {
+              "text": "The first Kirby game is Kirby's Dream Land, released on June 19, 1992, for the Nintendo 64 console. This game introduces players to the Kirby character and the ability to transform into different characters, including his friends, enemies, and even a variety of animal forms such as octopuses, birds, and fish. The game also includes other features such as collectible items, puzzles, and boss fights.",
+              "prompt": "What was the first Kirby game?",
+              "fill_history": {
+                "game": "Kirby"
+              },
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "376c5c07-aa2a-4efb-9f70-706b3ab4d597"
+            },
+            {
+              "text": "The first Super Mario Bros. game was released in 1985 for the Nintendo Entertainment System (NES). It is known as \"Super Mario Bros.,\" which takes the classic platformer gameplay to a new level with multiple levels, enemies, and a wide variety of power-ups. The game's success helped establish NES as one of the most popular video game consoles in history.",
+              "prompt": "What was the first Super Mario Bros game?",
+              "fill_history": {
+                "game": "Super Mario Bros"
+              },
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "d2adb19a-395b-49a7-b93f-ebf8be2a843a"
+            },
+            {
+              "text": "The first Super Mario Bros. game was released in 1985 by Nintendo for the NES, the first video game console. It was a platformer game that introduced players to the beloved Mario character and helped establish him as one of the most recognizable video game characters in history. The game features a world filled with various enemies, obstacles, and platforms that the player must navigate to reach the end of the level.",
+              "prompt": "What was the first Super Mario Bros game?",
+              "fill_history": {
+                "game": "Super Mario Bros"
+              },
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "d2adb19a-395b-49a7-b93f-ebf8be2a843a"
+            },
+            {
+              "text": "The first Super Mario Bros. game was released in 1985 for the Sega Genesis console. It is considered one of the most iconic video games of all time and has since become an enduring classic.",
+              "prompt": "What was the first Super Mario Bros game?",
+              "fill_history": {
+                "game": "Super Mario Bros"
+              },
+              "metavars": {
+                "__pt": "What was the first {game} game?",
+                "LLM_0": "Ollama"
+              },
+              "llm": {
+                "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+                "name": "Ollama",
+                "emoji": "🦙",
+                "model": "ollama",
+                "base_model": "ollama",
+                "temp": 1,
+                "settings": {
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": []
+                },
+                "formData": {
+                  "shortname": "Ollama",
+                  "ollamaModel": "codeqwen:latest",
+                  "ollama_url": "http://localhost:11434/api",
+                  "model_type": "text",
+                  "system_msg": "",
+                  "temperature": 1,
+                  "raw": false,
+                  "top_k": -1,
+                  "top_p": -1,
+                  "stop_sequences": ""
+                },
+                "progress": {
+                  "success": 75,
+                  "error": 0
+                }
+              },
+              "uid": "d2adb19a-395b-49a7-b93f-ebf8be2a843a"
+            }
+          ],
+          "language": "javascript",
+          "refresh": false
+        },
+        "dragging": false,
+        "id": "evalNode-1688054984836",
+        "position": {
+          "x": 784,
+          "y": 208
+        },
+        "positionAbsolute": {
+          "x": 784,
+          "y": 208
+        },
+        "selected": false,
+        "type": "evaluator"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e1-2",
+        "interactionWidth": 100,
+        "markerEnd": {
+          "height": "22px",
+          "orient": "auto",
+          "strokeWidth": "1px",
+          "type": "arrow",
+          "width": "22px"
+        },
+        "source": "prompt-1684348622333",
+        "style": {
+          "strokeWidth": "1px"
+        },
+        "target": "eval-1684348622333"
+      },
+      {
+        "id": "reactflow__edge-prompt-1684348622333prompt-inspect-1684348622333input",
+        "interactionWidth": 100,
+        "markerEnd": {
+          "height": "22px",
+          "type": "arrow",
+          "width": "22px"
+        },
+        "source": "prompt-1684348622333",
+        "sourceHandle": "prompt",
+        "target": "inspect-1684348622333",
+        "targetHandle": "input"
+      },
+      {
+        "id": "reactflow__edge-eval-1684348622333output-vis-1684348622333input",
+        "interactionWidth": 100,
+        "markerEnd": {
+          "height": "22px",
+          "type": "arrow",
+          "width": "22px"
+        },
+        "source": "eval-1684348622333",
+        "sourceHandle": "output",
+        "target": "vis-1684348622333",
+        "targetHandle": "input"
+      },
+      {
+        "id": "reactflow__edge-textfields-1684348622333output-prompt-1684348622333game",
+        "interactionWidth": 100,
+        "markerEnd": {
+          "height": "22px",
+          "type": "arrow",
+          "width": "22px"
+        },
+        "source": "textfields-1684348622333",
+        "sourceHandle": "output",
+        "target": "prompt-1684348622333",
+        "targetHandle": "game"
+      },
+      {
+        "id": "reactflow__edge-evalNode-1688054984836output-vis-1684348622333input",
+        "interactionWidth": 100,
+        "markerEnd": {
+          "height": "22px",
+          "type": "arrow",
+          "width": "22px"
+        },
+        "source": "evalNode-1688054984836",
+        "sourceHandle": "output",
+        "target": "vis-1684348622333",
+        "targetHandle": "input"
+      },
+      {
+        "id": "reactflow__edge-prompt-1684348622333prompt-evalNode-1688054984836responseBatch",
+        "interactionWidth": 100,
+        "markerEnd": {
+          "height": "22px",
+          "type": "arrow",
+          "width": "22px"
+        },
+        "source": "prompt-1684348622333",
+        "sourceHandle": "prompt",
+        "target": "evalNode-1688054984836",
+        "targetHandle": "responseBatch"
+      }
+    ],
+    "viewport": {
+      "x": 81.50000035762787,
+      "y": -38,
+      "zoom": 1
+    }
+  },
+  "cache": {
+    "prompt-1684348622333_3.json": {
+      "What was the first Pokemon game?": [
+        {
+          "prompt": "What was the first Pokemon game?",
+          "query": {
+            "model": "codeqwen:latest",
+            "stream": false,
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": [],
+            "prompt": "What was the first Pokemon game?"
+          },
+          "uid": "06b66837-8bb4-4e07-a7ef-067b2eeb8a3b",
+          "responses": [
+            "The very first Pokémon game, which is widely known as \"Pokémon Red and Blue,\" was released in Japan on November 18, 1996. This version of the series features two protagonists: Red and Blue, who embark on a quest to catch and train various Pokémon in order to become a trainer themselves.\n\nThe game is considered one of the most significant and iconic in the history of video games due to its ability to introduce beginners to the world of Pokémon and its impact on popular culture. It also marked a significant shift in the gaming industry, with many developers turning to Pokémon for inspiration for future releases.",
+            "The first Pokémon game is \"Pokémon Red and Green\" released in Japan on April 18, 1996. It features two protagonists: Red and Blue, who embark on a journey to catch all 151 Pokémon in the Kanto region of the Pokémon world. The game was developed by Nintendo and published by Enix.",
+            "The first Pokemon Game is \"Pokemon Red\" (also known as \"Red\" and \"R\" in Japan) released in 1996 for the Sega Genesis console. It is considered to be the groundbreaking introduction to the Pokemon franchise, introducing players to the main character, Bulbasaur, his friends, and the world of Pokemon where they can explore various regions, battle with other trainers, and learn how to catch and raise Pokemon."
+          ],
+          "raw_response": [
+            {
+              "generated_text": "The very first Pokémon game, which is widely known as \"Pokémon Red and Blue,\" was released in Japan on November 18, 1996. This version of the series features two protagonists: Red and Blue, who embark on a quest to catch and train various Pokémon in order to become a trainer themselves.\n\nThe game is considered one of the most significant and iconic in the history of video games due to its ability to introduce beginners to the world of Pokémon and its impact on popular culture. It also marked a significant shift in the gaming industry, with many developers turning to Pokémon for inspiration for future releases."
+            },
+            {
+              "generated_text": "The first Pokémon game is \"Pokémon Red and Green\" released in Japan on April 18, 1996. It features two protagonists: Red and Blue, who embark on a journey to catch all 151 Pokémon in the Kanto region of the Pokémon world. The game was developed by Nintendo and published by Enix."
+            },
+            {
+              "generated_text": "The first Pokemon Game is \"Pokemon Red\" (also known as \"Red\" and \"R\" in Japan) released in 1996 for the Sega Genesis console. It is considered to be the groundbreaking introduction to the Pokemon franchise, introducing players to the main character, Bulbasaur, his friends, and the world of Pokemon where they can explore various regions, battle with other trainers, and learn how to catch and raise Pokemon."
+            }
+          ],
+          "llm": "Ollama",
+          "vars": {
+            "game": "Pokemon"
+          },
+          "metavars": {
+            "__pt": "What was the first {game} game?",
+            "LLM_0": "Ollama"
+          }
+        }
+      ],
+      "What was the first Super Mario Bros game?": [
+        {
+          "prompt": "What was the first Super Mario Bros game?",
+          "query": {
+            "model": "codeqwen:latest",
+            "stream": false,
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": [],
+            "prompt": "What was the first Super Mario Bros game?"
+          },
+          "uid": "d2adb19a-395b-49a7-b93f-ebf8be2a843a",
+          "responses": [
+            "The first Super Mario Bros. game was released in 1985 for the Nintendo Entertainment System (NES). It is known as \"Super Mario Bros.,\" which takes the classic platformer gameplay to a new level with multiple levels, enemies, and a wide variety of power-ups. The game's success helped establish NES as one of the most popular video game consoles in history.",
+            "The first Super Mario Bros. game was released in 1985 by Nintendo for the NES, the first video game console. It was a platformer game that introduced players to the beloved Mario character and helped establish him as one of the most recognizable video game characters in history. The game features a world filled with various enemies, obstacles, and platforms that the player must navigate to reach the end of the level.",
+            "The first Super Mario Bros. game was released in 1985 for the Sega Genesis console. It is considered one of the most iconic video games of all time and has since become an enduring classic."
+          ],
+          "raw_response": [
+            {
+              "generated_text": "The first Super Mario Bros. game was released in 1985 for the Nintendo Entertainment System (NES). It is known as \"Super Mario Bros.,\" which takes the classic platformer gameplay to a new level with multiple levels, enemies, and a wide variety of power-ups. The game's success helped establish NES as one of the most popular video game consoles in history."
+            },
+            {
+              "generated_text": "The first Super Mario Bros. game was released in 1985 by Nintendo for the NES, the first video game console. It was a platformer game that introduced players to the beloved Mario character and helped establish him as one of the most recognizable video game characters in history. The game features a world filled with various enemies, obstacles, and platforms that the player must navigate to reach the end of the level."
+            },
+            {
+              "generated_text": "The first Super Mario Bros. game was released in 1985 for the Sega Genesis console. It is considered one of the most iconic video games of all time and has since become an enduring classic."
+            }
+          ],
+          "llm": "Ollama",
+          "vars": {
+            "game": "Super Mario Bros"
+          },
+          "metavars": {
+            "__pt": "What was the first {game} game?",
+            "LLM_0": "Ollama"
+          }
+        }
+      ],
+      "What was the first Legend of Zelda game?": [
+        {
+          "prompt": "What was the first Legend of Zelda game?",
+          "query": {
+            "model": "codeqwen:latest",
+            "stream": false,
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": [],
+            "prompt": "What was the first Legend of Zelda game?"
+          },
+          "uid": "b3388dcb-a99d-4a00-a7ca-452fe7710e0f",
+          "responses": [
+            "The first Legend of Zelda game was released in 1986 and was called \"The Adventure of Link.\" It is considered one of the most iconic and popular video games of all time and has been ported to many different platforms. The gameplay involves navigating through a vast open world, collecting treasures, solving puzzles, and fighting enemies while trying to prevent a villian from taking over the kingdom.",
+            "The first Legend of Zelda game, also known as \"Legend of Zelda: Breath of the Wild,\" was released on March 3, 2017 for the Nintendo Switch and Wii U. It is a new adventure game that takes players to the beautiful and vast open world of Hyrule, where they can explore, fight enemies, and solve puzzles to save Princess Zelda from the evil Triforce. This game was developed by Nintendo EPD and published by Nintendo, with assistance from other developers such as Shigeru Miyamoto and Masahiro Sakurai. The story is set in a time before the kingdom of Hyrule fell under the tyranny of Calamity Ganon, who seeks to take over the land by using the Triforce.",
+            "The first Legend of Zelda game, also known as \"Ocarina of Time,\" was released for the Nintendo 64 in 1998. It is a major milestone in the history of video games and has since become one of the most beloved titles of all time. The game follows Link, a young hero who must save his friend Princess Zelda from evil spirits known as Ganons, and uncover a forgotten secret that will lead to their destruction."
+          ],
+          "raw_response": [
+            {
+              "generated_text": "The first Legend of Zelda game was released in 1986 and was called \"The Adventure of Link.\" It is considered one of the most iconic and popular video games of all time and has been ported to many different platforms. The gameplay involves navigating through a vast open world, collecting treasures, solving puzzles, and fighting enemies while trying to prevent a villian from taking over the kingdom."
+            },
+            {
+              "generated_text": "The first Legend of Zelda game, also known as \"Legend of Zelda: Breath of the Wild,\" was released on March 3, 2017 for the Nintendo Switch and Wii U. It is a new adventure game that takes players to the beautiful and vast open world of Hyrule, where they can explore, fight enemies, and solve puzzles to save Princess Zelda from the evil Triforce. This game was developed by Nintendo EPD and published by Nintendo, with assistance from other developers such as Shigeru Miyamoto and Masahiro Sakurai. The story is set in a time before the kingdom of Hyrule fell under the tyranny of Calamity Ganon, who seeks to take over the land by using the Triforce."
+            },
+            {
+              "generated_text": "The first Legend of Zelda game, also known as \"Ocarina of Time,\" was released for the Nintendo 64 in 1998. It is a major milestone in the history of video games and has since become one of the most beloved titles of all time. The game follows Link, a young hero who must save his friend Princess Zelda from evil spirits known as Ganons, and uncover a forgotten secret that will lead to their destruction."
+            }
+          ],
+          "llm": "Ollama",
+          "vars": {
+            "game": "Legend of Zelda"
+          },
+          "metavars": {
+            "__pt": "What was the first {game} game?",
+            "LLM_0": "Ollama"
+          }
+        }
+      ],
+      "What was the first Kirby game?": [
+        {
+          "prompt": "What was the first Kirby game?",
+          "query": {
+            "model": "codeqwen:latest",
+            "stream": false,
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": [],
+            "prompt": "What was the first Kirby game?"
+          },
+          "uid": "376c5c07-aa2a-4efb-9f70-706b3ab4d597",
+          "responses": [
+            "The first Kirby game, as known in Japan and Europe, was published by Nintendo under the title \"Super Mario Bros.\" for the Nintendo Entertainment System (NES). It was released in 1985 and became one of the best-selling video games ever. The game introduced the character Kirby and allowed players to control him using a variety of instruments, such as a guitar, drums, and flauta.\n\nThe Kirby games were known for their innovative gameplay mechanics and unique abilities, including being able to transform into different enemies or plants. They also featured a wide range of levels, including jumping, climbing, and swimming, making them a thrilling and challenging experience for players.\n\nWhile the first Kirby game was not as well-known in other countries, it has been praised for its innovative gameplay mechanics and popularity among fans around the world.",
+            "The first Kirby game is Kirby's Adventure (1992) for the Nintendo 64 console, which features the iconic Kirby character performing various jumps and actions on solid surfaces. The game also introduced the Kirby coin currency and allowed players to collect and use them in various ways, such as buying new power-ups or using them to travel between different areas of the game world. Kirby's Adventure was a massive commercial success, reaching the top 10 in several countries and earning over $50 million worldwide.",
+            "The first Kirby game is Kirby's Dream Land, released on June 19, 1992, for the Nintendo 64 console. This game introduces players to the Kirby character and the ability to transform into different characters, including his friends, enemies, and even a variety of animal forms such as octopuses, birds, and fish. The game also includes other features such as collectible items, puzzles, and boss fights."
+          ],
+          "raw_response": [
+            {
+              "generated_text": "The first Kirby game, as known in Japan and Europe, was published by Nintendo under the title \"Super Mario Bros.\" for the Nintendo Entertainment System (NES). It was released in 1985 and became one of the best-selling video games ever. The game introduced the character Kirby and allowed players to control him using a variety of instruments, such as a guitar, drums, and flauta.\n\nThe Kirby games were known for their innovative gameplay mechanics and unique abilities, including being able to transform into different enemies or plants. They also featured a wide range of levels, including jumping, climbing, and swimming, making them a thrilling and challenging experience for players.\n\nWhile the first Kirby game was not as well-known in other countries, it has been praised for its innovative gameplay mechanics and popularity among fans around the world."
+            },
+            {
+              "generated_text": "The first Kirby game is Kirby's Adventure (1992) for the Nintendo 64 console, which features the iconic Kirby character performing various jumps and actions on solid surfaces. The game also introduced the Kirby coin currency and allowed players to collect and use them in various ways, such as buying new power-ups or using them to travel between different areas of the game world. Kirby's Adventure was a massive commercial success, reaching the top 10 in several countries and earning over $50 million worldwide."
+            },
+            {
+              "generated_text": "The first Kirby game is Kirby's Dream Land, released on June 19, 1992, for the Nintendo 64 console. This game introduces players to the Kirby character and the ability to transform into different characters, including his friends, enemies, and even a variety of animal forms such as octopuses, birds, and fish. The game also includes other features such as collectible items, puzzles, and boss fights."
+            }
+          ],
+          "llm": "Ollama",
+          "vars": {
+            "game": "Kirby"
+          },
+          "metavars": {
+            "__pt": "What was the first {game} game?",
+            "LLM_0": "Ollama"
+          }
+        }
+      ]
+    },
+    "prompt-1684348622333.json": {
+      "cache_files": {
+        "prompt-1684348622333_3.json": {
+          "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+          "name": "Ollama",
+          "emoji": "🦙",
+          "model": "ollama",
+          "base_model": "ollama",
+          "temp": 1,
+          "settings": {
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": []
+          },
+          "formData": {
+            "shortname": "Ollama",
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": ""
+          },
+          "progress": {
+            "success": 0,
+            "error": 0
+          }
+        }
+      },
+      "responses_last_run": [
+        {
+          "vars": {
+            "game": "Pokemon"
+          },
+          "metavars": {
+            "__pt": "What was the first {game} game?",
+            "LLM_0": "Ollama"
+          },
+          "llm": "Ollama",
+          "prompt": "What was the first Pokemon game?",
+          "responses": [
+            "The very first Pokémon game, which is widely known as \"Pokémon Red and Blue,\" was released in Japan on November 18, 1996. This version of the series features two protagonists: Red and Blue, who embark on a quest to catch and train various Pokémon in order to become a trainer themselves.\n\nThe game is considered one of the most significant and iconic in the history of video games due to its ability to introduce beginners to the world of Pokémon and its impact on popular culture. It also marked a significant shift in the gaming industry, with many developers turning to Pokémon for inspiration for future releases.",
+            "The first Pokémon game is \"Pokémon Red and Green\" released in Japan on April 18, 1996. It features two protagonists: Red and Blue, who embark on a journey to catch all 151 Pokémon in the Kanto region of the Pokémon world. The game was developed by Nintendo and published by Enix.",
+            "The first Pokemon Game is \"Pokemon Red\" (also known as \"Red\" and \"R\" in Japan) released in 1996 for the Sega Genesis console. It is considered to be the groundbreaking introduction to the Pokemon franchise, introducing players to the main character, Bulbasaur, his friends, and the world of Pokemon where they can explore various regions, battle with other trainers, and learn how to catch and raise Pokemon."
+          ],
+          "uid": "06b66837-8bb4-4e07-a7ef-067b2eeb8a3b"
+        },
+        {
+          "vars": {
+            "game": "Legend of Zelda"
+          },
+          "metavars": {
+            "__pt": "What was the first {game} game?",
+            "LLM_0": "Ollama"
+          },
+          "llm": "Ollama",
+          "prompt": "What was the first Legend of Zelda game?",
+          "responses": [
+            "The first Legend of Zelda game was released in 1986 and was called \"The Adventure of Link.\" It is considered one of the most iconic and popular video games of all time and has been ported to many different platforms. The gameplay involves navigating through a vast open world, collecting treasures, solving puzzles, and fighting enemies while trying to prevent a villian from taking over the kingdom.",
+            "The first Legend of Zelda game, also known as \"Legend of Zelda: Breath of the Wild,\" was released on March 3, 2017 for the Nintendo Switch and Wii U. It is a new adventure game that takes players to the beautiful and vast open world of Hyrule, where they can explore, fight enemies, and solve puzzles to save Princess Zelda from the evil Triforce. This game was developed by Nintendo EPD and published by Nintendo, with assistance from other developers such as Shigeru Miyamoto and Masahiro Sakurai. The story is set in a time before the kingdom of Hyrule fell under the tyranny of Calamity Ganon, who seeks to take over the land by using the Triforce.",
+            "The first Legend of Zelda game, also known as \"Ocarina of Time,\" was released for the Nintendo 64 in 1998. It is a major milestone in the history of video games and has since become one of the most beloved titles of all time. The game follows Link, a young hero who must save his friend Princess Zelda from evil spirits known as Ganons, and uncover a forgotten secret that will lead to their destruction."
+          ],
+          "uid": "b3388dcb-a99d-4a00-a7ca-452fe7710e0f"
+        },
+        {
+          "vars": {
+            "game": "Kirby"
+          },
+          "metavars": {
+            "__pt": "What was the first {game} game?",
+            "LLM_0": "Ollama"
+          },
+          "llm": "Ollama",
+          "prompt": "What was the first Kirby game?",
+          "responses": [
+            "The first Kirby game, as known in Japan and Europe, was published by Nintendo under the title \"Super Mario Bros.\" for the Nintendo Entertainment System (NES). It was released in 1985 and became one of the best-selling video games ever. The game introduced the character Kirby and allowed players to control him using a variety of instruments, such as a guitar, drums, and flauta.\n\nThe Kirby games were known for their innovative gameplay mechanics and unique abilities, including being able to transform into different enemies or plants. They also featured a wide range of levels, including jumping, climbing, and swimming, making them a thrilling and challenging experience for players.\n\nWhile the first Kirby game was not as well-known in other countries, it has been praised for its innovative gameplay mechanics and popularity among fans around the world.",
+            "The first Kirby game is Kirby's Adventure (1992) for the Nintendo 64 console, which features the iconic Kirby character performing various jumps and actions on solid surfaces. The game also introduced the Kirby coin currency and allowed players to collect and use them in various ways, such as buying new power-ups or using them to travel between different areas of the game world. Kirby's Adventure was a massive commercial success, reaching the top 10 in several countries and earning over $50 million worldwide.",
+            "The first Kirby game is Kirby's Dream Land, released on June 19, 1992, for the Nintendo 64 console. This game introduces players to the Kirby character and the ability to transform into different characters, including his friends, enemies, and even a variety of animal forms such as octopuses, birds, and fish. The game also includes other features such as collectible items, puzzles, and boss fights."
+          ],
+          "uid": "376c5c07-aa2a-4efb-9f70-706b3ab4d597"
+        },
+        {
+          "vars": {
+            "game": "Super Mario Bros"
+          },
+          "metavars": {
+            "__pt": "What was the first {game} game?",
+            "LLM_0": "Ollama"
+          },
+          "llm": "Ollama",
+          "prompt": "What was the first Super Mario Bros game?",
+          "responses": [
+            "The first Super Mario Bros. game was released in 1985 for the Nintendo Entertainment System (NES). It is known as \"Super Mario Bros.,\" which takes the classic platformer gameplay to a new level with multiple levels, enemies, and a wide variety of power-ups. The game's success helped establish NES as one of the most popular video game consoles in history.",
+            "The first Super Mario Bros. game was released in 1985 by Nintendo for the NES, the first video game console. It was a platformer game that introduced players to the beloved Mario character and helped establish him as one of the most recognizable video game characters in history. The game features a world filled with various enemies, obstacles, and platforms that the player must navigate to reach the end of the level.",
+            "The first Super Mario Bros. game was released in 1985 for the Sega Genesis console. It is considered one of the most iconic video games of all time and has since become an enduring classic."
+          ],
+          "uid": "d2adb19a-395b-49a7-b93f-ebf8be2a843a"
+        }
+      ]
+    },
+    "textfields-1684348622333.json": {},
+    "vis-1684348622333.json": {},
+    "inspect-1684348622333.json": {},
+    "evalNode-1688054984836.json": [
+      {
+        "vars": {
+          "game": "Pokemon"
+        },
+        "metavars": {
+          "__pt": "What was the first {game} game?",
+          "LLM_0": "Ollama"
+        },
+        "uid": "06b66837-8bb4-4e07-a7ef-067b2eeb8a3b",
+        "llm": {
+          "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+          "name": "Ollama",
+          "emoji": "🦙",
+          "model": "ollama",
+          "base_model": "ollama",
+          "temp": 1,
+          "settings": {
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": []
+          },
+          "formData": {
+            "shortname": "Ollama",
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": ""
+          },
+          "progress": {
+            "success": 75,
+            "error": 0
+          }
+        },
+        "prompt": "What was the first Pokemon game?",
+        "responses": [
+          "The very first Pokémon game, which is widely known as \"Pokémon Red and Blue,\" was released in Japan on November 18, 1996. This version of the series features two protagonists: Red and Blue, who embark on a quest to catch and train various Pokémon in order to become a trainer themselves.\n\nThe game is considered one of the most significant and iconic in the history of video games due to its ability to introduce beginners to the world of Pokémon and its impact on popular culture. It also marked a significant shift in the gaming industry, with many developers turning to Pokémon for inspiration for future releases."
+        ],
+        "tokens": {},
+        "eval_res": {
+          "items": [
+            617
+          ],
+          "dtype": "Numeric"
+        }
+      },
+      {
+        "vars": {
+          "game": "Pokemon"
+        },
+        "metavars": {
+          "__pt": "What was the first {game} game?",
+          "LLM_0": "Ollama"
+        },
+        "uid": "06b66837-8bb4-4e07-a7ef-067b2eeb8a3b",
+        "llm": {
+          "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+          "name": "Ollama",
+          "emoji": "🦙",
+          "model": "ollama",
+          "base_model": "ollama",
+          "temp": 1,
+          "settings": {
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": []
+          },
+          "formData": {
+            "shortname": "Ollama",
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": ""
+          },
+          "progress": {
+            "success": 75,
+            "error": 0
+          }
+        },
+        "prompt": "What was the first Pokemon game?",
+        "responses": [
+          "The first Pokémon game is \"Pokémon Red and Green\" released in Japan on April 18, 1996. It features two protagonists: Red and Blue, who embark on a journey to catch all 151 Pokémon in the Kanto region of the Pokémon world. The game was developed by Nintendo and published by Enix."
+        ],
+        "tokens": {},
+        "eval_res": {
+          "items": [
+            279
+          ],
+          "dtype": "Numeric"
+        }
+      },
+      {
+        "vars": {
+          "game": "Pokemon"
+        },
+        "metavars": {
+          "__pt": "What was the first {game} game?",
+          "LLM_0": "Ollama"
+        },
+        "uid": "06b66837-8bb4-4e07-a7ef-067b2eeb8a3b",
+        "llm": {
+          "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+          "name": "Ollama",
+          "emoji": "🦙",
+          "model": "ollama",
+          "base_model": "ollama",
+          "temp": 1,
+          "settings": {
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": []
+          },
+          "formData": {
+            "shortname": "Ollama",
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": ""
+          },
+          "progress": {
+            "success": 75,
+            "error": 0
+          }
+        },
+        "prompt": "What was the first Pokemon game?",
+        "responses": [
+          "The first Pokemon Game is \"Pokemon Red\" (also known as \"Red\" and \"R\" in Japan) released in 1996 for the Sega Genesis console. It is considered to be the groundbreaking introduction to the Pokemon franchise, introducing players to the main character, Bulbasaur, his friends, and the world of Pokemon where they can explore various regions, battle with other trainers, and learn how to catch and raise Pokemon."
+        ],
+        "tokens": {},
+        "eval_res": {
+          "items": [
+            408
+          ],
+          "dtype": "Numeric"
+        }
+      },
+      {
+        "vars": {
+          "game": "Legend of Zelda"
+        },
+        "metavars": {
+          "__pt": "What was the first {game} game?",
+          "LLM_0": "Ollama"
+        },
+        "uid": "b3388dcb-a99d-4a00-a7ca-452fe7710e0f",
+        "llm": {
+          "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+          "name": "Ollama",
+          "emoji": "🦙",
+          "model": "ollama",
+          "base_model": "ollama",
+          "temp": 1,
+          "settings": {
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": []
+          },
+          "formData": {
+            "shortname": "Ollama",
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": ""
+          },
+          "progress": {
+            "success": 75,
+            "error": 0
+          }
+        },
+        "prompt": "What was the first Legend of Zelda game?",
+        "responses": [
+          "The first Legend of Zelda game was released in 1986 and was called \"The Adventure of Link.\" It is considered one of the most iconic and popular video games of all time and has been ported to many different platforms. The gameplay involves navigating through a vast open world, collecting treasures, solving puzzles, and fighting enemies while trying to prevent a villian from taking over the kingdom."
+        ],
+        "tokens": {},
+        "eval_res": {
+          "items": [
+            400
+          ],
+          "dtype": "Numeric"
+        }
+      },
+      {
+        "vars": {
+          "game": "Legend of Zelda"
+        },
+        "metavars": {
+          "__pt": "What was the first {game} game?",
+          "LLM_0": "Ollama"
+        },
+        "uid": "b3388dcb-a99d-4a00-a7ca-452fe7710e0f",
+        "llm": {
+          "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+          "name": "Ollama",
+          "emoji": "🦙",
+          "model": "ollama",
+          "base_model": "ollama",
+          "temp": 1,
+          "settings": {
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": []
+          },
+          "formData": {
+            "shortname": "Ollama",
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": ""
+          },
+          "progress": {
+            "success": 75,
+            "error": 0
+          }
+        },
+        "prompt": "What was the first Legend of Zelda game?",
+        "responses": [
+          "The first Legend of Zelda game, also known as \"Legend of Zelda: Breath of the Wild,\" was released on March 3, 2017 for the Nintendo Switch and Wii U. It is a new adventure game that takes players to the beautiful and vast open world of Hyrule, where they can explore, fight enemies, and solve puzzles to save Princess Zelda from the evil Triforce. This game was developed by Nintendo EPD and published by Nintendo, with assistance from other developers such as Shigeru Miyamoto and Masahiro Sakurai. The story is set in a time before the kingdom of Hyrule fell under the tyranny of Calamity Ganon, who seeks to take over the land by using the Triforce."
+        ],
+        "tokens": {},
+        "eval_res": {
+          "items": [
+            652
+          ],
+          "dtype": "Numeric"
+        }
+      },
+      {
+        "vars": {
+          "game": "Legend of Zelda"
+        },
+        "metavars": {
+          "__pt": "What was the first {game} game?",
+          "LLM_0": "Ollama"
+        },
+        "uid": "b3388dcb-a99d-4a00-a7ca-452fe7710e0f",
+        "llm": {
+          "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+          "name": "Ollama",
+          "emoji": "🦙",
+          "model": "ollama",
+          "base_model": "ollama",
+          "temp": 1,
+          "settings": {
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": []
+          },
+          "formData": {
+            "shortname": "Ollama",
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": ""
+          },
+          "progress": {
+            "success": 75,
+            "error": 0
+          }
+        },
+        "prompt": "What was the first Legend of Zelda game?",
+        "responses": [
+          "The first Legend of Zelda game, also known as \"Ocarina of Time,\" was released for the Nintendo 64 in 1998. It is a major milestone in the history of video games and has since become one of the most beloved titles of all time. The game follows Link, a young hero who must save his friend Princess Zelda from evil spirits known as Ganons, and uncover a forgotten secret that will lead to their destruction."
+        ],
+        "tokens": {},
+        "eval_res": {
+          "items": [
+            404
+          ],
+          "dtype": "Numeric"
+        }
+      },
+      {
+        "vars": {
+          "game": "Kirby"
+        },
+        "metavars": {
+          "__pt": "What was the first {game} game?",
+          "LLM_0": "Ollama"
+        },
+        "uid": "376c5c07-aa2a-4efb-9f70-706b3ab4d597",
+        "llm": {
+          "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+          "name": "Ollama",
+          "emoji": "🦙",
+          "model": "ollama",
+          "base_model": "ollama",
+          "temp": 1,
+          "settings": {
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": []
+          },
+          "formData": {
+            "shortname": "Ollama",
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": ""
+          },
+          "progress": {
+            "success": 75,
+            "error": 0
+          }
+        },
+        "prompt": "What was the first Kirby game?",
+        "responses": [
+          "The first Kirby game, as known in Japan and Europe, was published by Nintendo under the title \"Super Mario Bros.\" for the Nintendo Entertainment System (NES). It was released in 1985 and became one of the best-selling video games ever. The game introduced the character Kirby and allowed players to control him using a variety of instruments, such as a guitar, drums, and flauta.\n\nThe Kirby games were known for their innovative gameplay mechanics and unique abilities, including being able to transform into different enemies or plants. They also featured a wide range of levels, including jumping, climbing, and swimming, making them a thrilling and challenging experience for players.\n\nWhile the first Kirby game was not as well-known in other countries, it has been praised for its innovative gameplay mechanics and popularity among fans around the world."
+        ],
+        "tokens": {},
+        "eval_res": {
+          "items": [
+            859
+          ],
+          "dtype": "Numeric"
+        }
+      },
+      {
+        "vars": {
+          "game": "Kirby"
+        },
+        "metavars": {
+          "__pt": "What was the first {game} game?",
+          "LLM_0": "Ollama"
+        },
+        "uid": "376c5c07-aa2a-4efb-9f70-706b3ab4d597",
+        "llm": {
+          "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+          "name": "Ollama",
+          "emoji": "🦙",
+          "model": "ollama",
+          "base_model": "ollama",
+          "temp": 1,
+          "settings": {
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": []
+          },
+          "formData": {
+            "shortname": "Ollama",
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": ""
+          },
+          "progress": {
+            "success": 75,
+            "error": 0
+          }
+        },
+        "prompt": "What was the first Kirby game?",
+        "responses": [
+          "The first Kirby game is Kirby's Adventure (1992) for the Nintendo 64 console, which features the iconic Kirby character performing various jumps and actions on solid surfaces. The game also introduced the Kirby coin currency and allowed players to collect and use them in various ways, such as buying new power-ups or using them to travel between different areas of the game world. Kirby's Adventure was a massive commercial success, reaching the top 10 in several countries and earning over $50 million worldwide."
+        ],
+        "tokens": {},
+        "eval_res": {
+          "items": [
+            514
+          ],
+          "dtype": "Numeric"
+        }
+      },
+      {
+        "vars": {
+          "game": "Kirby"
+        },
+        "metavars": {
+          "__pt": "What was the first {game} game?",
+          "LLM_0": "Ollama"
+        },
+        "uid": "376c5c07-aa2a-4efb-9f70-706b3ab4d597",
+        "llm": {
+          "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+          "name": "Ollama",
+          "emoji": "🦙",
+          "model": "ollama",
+          "base_model": "ollama",
+          "temp": 1,
+          "settings": {
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": []
+          },
+          "formData": {
+            "shortname": "Ollama",
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": ""
+          },
+          "progress": {
+            "success": 75,
+            "error": 0
+          }
+        },
+        "prompt": "What was the first Kirby game?",
+        "responses": [
+          "The first Kirby game is Kirby's Dream Land, released on June 19, 1992, for the Nintendo 64 console. This game introduces players to the Kirby character and the ability to transform into different characters, including his friends, enemies, and even a variety of animal forms such as octopuses, birds, and fish. The game also includes other features such as collectible items, puzzles, and boss fights."
+        ],
+        "tokens": {},
+        "eval_res": {
+          "items": [
+            401
+          ],
+          "dtype": "Numeric"
+        }
+      },
+      {
+        "vars": {
+          "game": "Super Mario Bros"
+        },
+        "metavars": {
+          "__pt": "What was the first {game} game?",
+          "LLM_0": "Ollama"
+        },
+        "uid": "d2adb19a-395b-49a7-b93f-ebf8be2a843a",
+        "llm": {
+          "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+          "name": "Ollama",
+          "emoji": "🦙",
+          "model": "ollama",
+          "base_model": "ollama",
+          "temp": 1,
+          "settings": {
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": []
+          },
+          "formData": {
+            "shortname": "Ollama",
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": ""
+          },
+          "progress": {
+            "success": 75,
+            "error": 0
+          }
+        },
+        "prompt": "What was the first Super Mario Bros game?",
+        "responses": [
+          "The first Super Mario Bros. game was released in 1985 for the Nintendo Entertainment System (NES). It is known as \"Super Mario Bros.,\" which takes the classic platformer gameplay to a new level with multiple levels, enemies, and a wide variety of power-ups. The game's success helped establish NES as one of the most popular video game consoles in history."
+        ],
+        "tokens": {},
+        "eval_res": {
+          "items": [
+            356
+          ],
+          "dtype": "Numeric"
+        }
+      },
+      {
+        "vars": {
+          "game": "Super Mario Bros"
+        },
+        "metavars": {
+          "__pt": "What was the first {game} game?",
+          "LLM_0": "Ollama"
+        },
+        "uid": "d2adb19a-395b-49a7-b93f-ebf8be2a843a",
+        "llm": {
+          "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+          "name": "Ollama",
+          "emoji": "🦙",
+          "model": "ollama",
+          "base_model": "ollama",
+          "temp": 1,
+          "settings": {
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": []
+          },
+          "formData": {
+            "shortname": "Ollama",
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": ""
+          },
+          "progress": {
+            "success": 75,
+            "error": 0
+          }
+        },
+        "prompt": "What was the first Super Mario Bros game?",
+        "responses": [
+          "The first Super Mario Bros. game was released in 1985 by Nintendo for the NES, the first video game console. It was a platformer game that introduced players to the beloved Mario character and helped establish him as one of the most recognizable video game characters in history. The game features a world filled with various enemies, obstacles, and platforms that the player must navigate to reach the end of the level."
+        ],
+        "tokens": {},
+        "eval_res": {
+          "items": [
+            420
+          ],
+          "dtype": "Numeric"
+        }
+      },
+      {
+        "vars": {
+          "game": "Super Mario Bros"
+        },
+        "metavars": {
+          "__pt": "What was the first {game} game?",
+          "LLM_0": "Ollama"
+        },
+        "uid": "d2adb19a-395b-49a7-b93f-ebf8be2a843a",
+        "llm": {
+          "key": "6151bab6-ee6b-40b6-b044-506f52f0e4df",
+          "name": "Ollama",
+          "emoji": "🦙",
+          "model": "ollama",
+          "base_model": "ollama",
+          "temp": 1,
+          "settings": {
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": []
+          },
+          "formData": {
+            "shortname": "Ollama",
+            "ollamaModel": "codeqwen:latest",
+            "ollama_url": "http://localhost:11434/api",
+            "model_type": "text",
+            "system_msg": "",
+            "temperature": 1,
+            "raw": false,
+            "top_k": -1,
+            "top_p": -1,
+            "stop_sequences": ""
+          },
+          "progress": {
+            "success": 75,
+            "error": 0
+          }
+        },
+        "prompt": "What was the first Super Mario Bros game?",
+        "responses": [
+          "The first Super Mario Bros. game was released in 1985 for the Sega Genesis console. It is considered one of the most iconic video games of all time and has since become an enduring classic."
+        ],
+        "tokens": {},
+        "eval_res": {
+          "items": [
+            189
+          ],
+          "dtype": "Numeric"
+        }
+      }
+    ]
+  }
+}
