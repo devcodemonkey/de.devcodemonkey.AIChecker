@@ -13,8 +13,8 @@ namespace LlmUsability
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            await new RunLMStudio().RunAsync();
-            //await new RunOllama().RunAsync();
+            //await new RunLMStudio().RunAsync();
+            await new RunOllama().RunAsync();
             stopwatch.Stop();            
             Console.WriteLine("Verstrichene Zeit in Sekunden: " + stopwatch.Elapsed.TotalSeconds);            
         }

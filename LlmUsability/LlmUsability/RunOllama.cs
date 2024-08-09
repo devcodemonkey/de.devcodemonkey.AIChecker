@@ -98,8 +98,12 @@ Du Antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format struktu
             var ollamaAgent = new OllamaAgent(
                 httpClient: httpClient,
                 name: "ollama",
-                modelName: "llama3.1:8b",
-                systemMessage: systemMessage)
+                modelName: "em_german_leo_mistral.Q5_K_M:latest",
+                systemMessage: systemMessage,
+                replyOptions: new OllamaReplyOptions()
+                {
+                    Temperature = 0
+                })
                 .RegisterMessageConnector();
 
             var output = await ollamaAgent.SendAsync(userMessage);
