@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoGen.LMStudio" Version="0.0.16" />
-    <PackageReference Include="AutoGen.Ollama" Version="0.0.16" />
+    <PackageReference Include="AutoGen.LMStudio" Version="0.0.17" />
+    <PackageReference Include="AutoGen.Ollama" Version="0.0.17" />
   </ItemGroup>
 
 </Project>
