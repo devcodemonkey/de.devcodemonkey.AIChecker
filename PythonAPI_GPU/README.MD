@@ -23,6 +23,12 @@ To add Conda to your PATH:
 
 `STRG+SHIFT+P -> Python: Create Envirement -> venv`
 
+## activacte venv
+
+```
+.\venv\Scripts\activate
+```
+
 ## install requiered packages in conda
 
 ```
