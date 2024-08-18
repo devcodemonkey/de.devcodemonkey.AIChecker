@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace de.devcodemonkey.AIChecker.CoreBusiness.Models;
+namespace de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 
-public partial class Question
+public partial class Model
 {
-    public Guid QuestionId { get; set; }
+    public Guid ModelId { get; set; }
 
     public string Value { get; set; } = null!;
-
-    public virtual Answer? Answer { get; set; }
 
     public virtual ICollection<Result> Results { get; set; } = new List<Result>();
 }

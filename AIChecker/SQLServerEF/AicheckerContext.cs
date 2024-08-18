@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using de.devcodemonkey.AIChecker.CoreBusiness.Models;
+using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF;

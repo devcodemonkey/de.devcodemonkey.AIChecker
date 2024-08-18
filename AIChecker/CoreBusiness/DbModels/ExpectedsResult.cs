@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace de.devcodemonkey.AIChecker.CoreBusiness.Models;
+namespace de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 
 public partial class ExpectedsResult
 {
