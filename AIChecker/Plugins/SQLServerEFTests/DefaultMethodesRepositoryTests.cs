@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
+using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 
 namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF.Tests
 {
@@ -15,7 +16,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF.Tests
         [TestMethod()]
         public async Task AddAsyncTest()
         {
-            DefaultMethodesRepository defaultMethodesRepository = new DefaultMethodesRepository();
+            IDefaultMethodesRepository defaultMethodesRepository = new DefaultMethodesRepository();
 
             Question question = new Question
             {

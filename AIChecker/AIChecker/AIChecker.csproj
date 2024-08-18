@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CoreBusiness\CoreBusiness.csproj" />
     <ProjectReference Include="..\Plugins\JsonDeserializer\JsonDeserializer.csproj" />
+    <ProjectReference Include="..\Plugins\SQLServerEF\SQLServerEF.csproj" />
     <ProjectReference Include="..\SQLServerEF\SQLServerEF.csproj" />
     <ProjectReference Include="..\UseCases\UseCases.csproj" />
   </ItemGroup>

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\SQLServerEF\SQLServerEF.csproj" />
+    <ProjectReference Include="..\SQLServerEF\SQLServerEF.csproj" />
   </ItemGroup>
 
   <ItemGroup>
