@@ -1,0 +1,85 @@
+"[openai:TheBloke/SauerkrautLM-7B-HerO-GGUF] it_support_fragen_10\frage_1.json: [
+  {
+    ""role"": ""system"",
+    ""content"": ""Du bist ein KI-Assistent der beurteilt, wie gut die folgende Frage zur Antwort passt. Bewerte auf einer Skala von 1 bis 10000, wobei 1 schlecht und 10000 perfekt ist. Du antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format strukturiert sein: {\""Bewertung\"": \""Wert aus Skala\""}""
+  },
+  {
+    ""role"": ""user"",
+    ""content"": ""Warum funktioniert mein Drucker nicht?""
+  },
+  {
+    ""id"": ""1""
+  }
+]
+"
+"[FAIL] (0.00)
+
+    API error: undefined
+
+{
+""error"": ""Your payload's 'messages' array in misformatted. Itmust only contain objects with a 'role' field. Got 'undefined'.""
+}
+---
+API error: undefined
+
+{
+""error"": ""Your payload's 'messages' array in misformatted. Itmust only contain objects with a 'role' field. Got 'undefined'.""
+}"
+"[FAIL] (0.00)
+
+  TypeError: Cannot read properties of null (reading 'error')
+
+TypeError: Cannot read properties of null (reading 'error')
+at OpenAiChatCompletionProvider.callApi (C:\Users\d-hoe\AppData\Roaming
+pm
+ode_modules\promptfoo\dist\src\providers\openai.js:372:18)
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+at async Evaluator.runEval (C:\Users\d-hoe\AppData\Roaming
+pm
+ode_modules\promptfoo\dist\src\evaluator.js:169:28)
+at async processEvalStep (C:\Users\d-hoe\AppData\Roaming
+pm
+ode_modules\promptfoo\dist\src\evaluator.js:522:25)
+---
+TypeError: Cannot read properties of null (reading 'error')
+
+TypeError: Cannot read properties of null (reading 'error')
+at OpenAiChatCompletionProvider.callApi (C:\Users\d-hoe\AppData\Roaming
+pm
+ode_modules\promptfoo\dist\src\providers\openai.js:372:18)
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+at async Evaluator.runEval (C:\Users\d-hoe\AppData\Roaming
+pm
+ode_modules\promptfoo\dist\src\evaluator.js:169:28)
+at async processEvalStep (C:\Users\d-hoe\AppData\Roaming
+pm
+ode_modules\promptfoo\dist\src\evaluator.js:522:25)"
+"[FAIL] (0.00)
+
+  TypeError: Cannot read properties of null (reading 'error')
+
+TypeError: Cannot read properties of null (reading 'error')
+at OpenAiChatCompletionProvider.callApi (C:\Users\d-hoe\AppData\Roaming
+pm
+ode_modules\promptfoo\dist\src\providers\openai.js:372:18)
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+at async Evaluator.runEval (C:\Users\d-hoe\AppData\Roaming
+pm
+ode_modules\promptfoo\dist\src\evaluator.js:169:28)
+at async processEvalStep (C:\Users\d-hoe\AppData\Roaming
+pm
+ode_modules\promptfoo\dist\src\evaluator.js:522:25)
+---
+TypeError: Cannot read properties of null (reading 'error')
+
+TypeError: Cannot read properties of null (reading 'error')
+at OpenAiChatCompletionProvider.callApi (C:\Users\d-hoe\AppData\Roaming
+pm
+ode_modules\promptfoo\dist\src\providers\openai.js:372:18)
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+at async Evaluator.runEval (C:\Users\d-hoe\AppData\Roaming
+pm
+ode_modules\promptfoo\dist\src\evaluator.js:169:28)
+at async processEvalStep (C:\Users\d-hoe\AppData\Roaming
+pm
+ode_modules\promptfoo\dist\src\evaluator.js:522:25)"

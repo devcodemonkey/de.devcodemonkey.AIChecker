@@ -1,0 +1,22 @@
+[
+  {
+    "role": "system",
+    "content": "Du bist ein KI-Assistent der beurteilt, wie gut die folgende Frage zur Antwort passt. Bewerte auf einer Skala von 1 bis 10000, wobei 1 schlecht und 10000 perfekt ist. Du antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format strukturiert sein:\n{\n  \"Bewertung\": \"Wert aus Skala\"\n}"
+  },
+  {
+    "role": "user",
+    "content": "Wie finde ich heraus, wie viel Speicherplatz ich noch habe?"
+  },
+  {
+    "role": "user",
+    "content": "Wie schütze ich meinen Computer vor Viren?"
+  },
+  {
+    "role": "user",
+    "content": "Wie finde ich heraus, wie viel Speicherplatz ich noch habe?"
+  },
+  {
+    "role": "user",
+    "content": "Wie schütze ich meinen Computer vor Viren?"
+  }
+]

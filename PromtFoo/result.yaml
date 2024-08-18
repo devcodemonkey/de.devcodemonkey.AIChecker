@@ -1,0 +1,362 @@
+results:
+  version: 2
+  timestamp: '2024-08-18T10:29:26.451Z'
+  results:
+    - provider:
+        id: openai:TheBloke/SauerkrautLM-7B-HerO-GGUF
+      prompt:
+        raw: |-
+          [
+            {
+              "role": "system",
+              "content": "Du bist ein KI-Assistent der beurteilt, wie gut die folgende Frage zur Antwort passt. Bewerte auf einer Skala von 1 bis 10000, wobei 1 schlecht und 10000 perfekt ist. Du antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format strukturiert sein: {\"Bewertung\": \"Wert aus Skala\"}"
+            },
+            {
+              "role": "user",
+              "content": "Warum funktioniert mein Drucker nicht?"
+            },
+            {
+              "id": "1"
+            }
+          ]
+        label: |
+          it_support_fragen_10\frage_1.json: [
+            {
+              "role": "system",
+              "content": "Du bist ein KI-Assistent der beurteilt, wie gut die folgende Frage zur Antwort passt. Bewerte auf einer Skala von 1 bis 10000, wobei 1 schlecht und 10000 perfekt ist. Du antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format strukturiert sein: {\"Bewertung\": \"Wert aus Skala\"}"
+            },
+            {
+              "role": "user",
+              "content": "Warum funktioniert mein Drucker nicht?"
+            },
+            {
+              "id": "1"
+            }
+          ]
+      vars: &ref_1 {}
+      response:
+        error: |-
+          API error: undefined
+
+          {
+            "error": "Your payload's 'messages' array in misformatted. Itmust only contain objects with a 'role' field. Got 'undefined'."
+          }
+      success: false
+      score: 0
+      namedScores: &ref_0 {}
+      latencyMs: 8
+      error: |-
+        API error: undefined
+
+        {
+          "error": "Your payload's 'messages' array in misformatted. Itmust only contain objects with a 'role' field. Got 'undefined'."
+        }
+    - provider:
+        id: openai:TheBloke/SauerkrautLM-7B-HerO-GGUF
+      prompt:
+        raw: |-
+          [
+            {
+              "role": "system",
+              "content": "Du bist ein KI-Assistent der beurteilt, wie gut die folgende Frage zur Antwort passt. Bewerte auf einer Skala von 1 bis 10000, wobei 1 schlecht und 10000 perfekt ist. Du antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format strukturiert sein: {\"Bewertung\": \"Wert aus Skala\"}"
+            },
+            {
+              "role": "user",
+              "content": "Warum funktioniert mein Drucker nicht?"
+            },
+            {
+              "id": "1"
+            }
+          ]
+        label: |
+          it_support_fragen_10\frage_1.json: [
+            {
+              "role": "system",
+              "content": "Du bist ein KI-Assistent der beurteilt, wie gut die folgende Frage zur Antwort passt. Bewerte auf einer Skala von 1 bis 10000, wobei 1 schlecht und 10000 perfekt ist. Du antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format strukturiert sein: {\"Bewertung\": \"Wert aus Skala\"}"
+            },
+            {
+              "role": "user",
+              "content": "Warum funktioniert mein Drucker nicht?"
+            },
+            {
+              "id": "1"
+            }
+          ]
+      vars: &ref_3 {}
+      error: |-
+        TypeError: Cannot read properties of null (reading 'error')
+
+        TypeError: Cannot read properties of null (reading 'error')
+            at OpenAiChatCompletionProvider.callApi (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\providers\openai.js:372:18)
+            at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+            at async Evaluator.runEval (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\evaluator.js:169:28)
+            at async processEvalStep (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\evaluator.js:522:25)
+      success: false
+      score: 0
+      namedScores: &ref_2 {}
+      latencyMs: 0
+    - provider:
+        id: openai:TheBloke/SauerkrautLM-7B-HerO-GGUF
+      prompt:
+        raw: |-
+          [
+            {
+              "role": "system",
+              "content": "Du bist ein KI-Assistent der beurteilt, wie gut die folgende Frage zur Antwort passt. Bewerte auf einer Skala von 1 bis 10000, wobei 1 schlecht und 10000 perfekt ist. Du antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format strukturiert sein: {\"Bewertung\": \"Wert aus Skala\"}"
+            },
+            {
+              "role": "user",
+              "content": "Warum funktioniert mein Drucker nicht?"
+            },
+            {
+              "id": "1"
+            }
+          ]
+        label: |
+          it_support_fragen_10\frage_1.json: [
+            {
+              "role": "system",
+              "content": "Du bist ein KI-Assistent der beurteilt, wie gut die folgende Frage zur Antwort passt. Bewerte auf einer Skala von 1 bis 10000, wobei 1 schlecht und 10000 perfekt ist. Du antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format strukturiert sein: {\"Bewertung\": \"Wert aus Skala\"}"
+            },
+            {
+              "role": "user",
+              "content": "Warum funktioniert mein Drucker nicht?"
+            },
+            {
+              "id": "1"
+            }
+          ]
+      vars: &ref_5 {}
+      error: |-
+        TypeError: Cannot read properties of null (reading 'error')
+
+        TypeError: Cannot read properties of null (reading 'error')
+            at OpenAiChatCompletionProvider.callApi (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\providers\openai.js:372:18)
+            at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+            at async Evaluator.runEval (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\evaluator.js:169:28)
+            at async processEvalStep (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\evaluator.js:522:25)
+      success: false
+      score: 0
+      namedScores: &ref_4 {}
+      latencyMs: 0
+  stats:
+    successes: 0
+    failures: 3
+    tokenUsage:
+      total: 0
+      prompt: 0
+      completion: 0
+      cached: 0
+  table:
+    head:
+      prompts:
+        - raw: |
+            [
+              {
+                "role": "system",
+                "content": "Du bist ein KI-Assistent der beurteilt, wie gut die folgende Frage zur Antwort passt. Bewerte auf einer Skala von 1 bis 10000, wobei 1 schlecht und 10000 perfekt ist. Du antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format strukturiert sein: {\"Bewertung\": \"Wert aus Skala\"}"
+              },
+              {
+                "role": "user",
+                "content": "Warum funktioniert mein Drucker nicht?"
+              },
+              {
+                "id": "1"
+              }
+            ]
+          label: |
+            it_support_fragen_10\frage_1.json: [
+              {
+                "role": "system",
+                "content": "Du bist ein KI-Assistent der beurteilt, wie gut die folgende Frage zur Antwort passt. Bewerte auf einer Skala von 1 bis 10000, wobei 1 schlecht und 10000 perfekt ist. Du antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format strukturiert sein: {\"Bewertung\": \"Wert aus Skala\"}"
+              },
+              {
+                "role": "user",
+                "content": "Warum funktioniert mein Drucker nicht?"
+              },
+              {
+                "id": "1"
+              }
+            ]
+          id: f519c3579f4b6d05d343d37229f55ed9b9e444451ebaf77cf49572f4808c9200
+          provider: openai:TheBloke/SauerkrautLM-7B-HerO-GGUF
+          metrics:
+            score: 0
+            testPassCount: 0
+            testFailCount: 3
+            assertPassCount: 0
+            assertFailCount: 0
+            totalLatencyMs: 8
+            tokenUsage:
+              total: 0
+              prompt: 0
+              completion: 0
+              cached: 0
+            namedScores: {}
+            cost: 0
+      vars: []
+    body:
+      - description: Check for keyword
+        outputs:
+          - pass: false
+            score: 0
+            namedScores: *ref_0
+            text: |-
+              API error: undefined
+
+              {
+                "error": "Your payload's 'messages' array in misformatted. Itmust only contain objects with a 'role' field. Got 'undefined'."
+              }
+              ---
+              API error: undefined
+
+              {
+                "error": "Your payload's 'messages' array in misformatted. Itmust only contain objects with a 'role' field. Got 'undefined'."
+              }
+            prompt: |-
+              [
+                {
+                  "role": "system",
+                  "content": "Du bist ein KI-Assistent der beurteilt, wie gut die folgende Frage zur Antwort passt. Bewerte auf einer Skala von 1 bis 10000, wobei 1 schlecht und 10000 perfekt ist. Du antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format strukturiert sein: {\"Bewertung\": \"Wert aus Skala\"}"
+                },
+                {
+                  "role": "user",
+                  "content": "Warum funktioniert mein Drucker nicht?"
+                },
+                {
+                  "id": "1"
+                }
+              ]
+            provider: openai:TheBloke/SauerkrautLM-7B-HerO-GGUF
+            latencyMs: 8
+            cost: 0
+        test:
+          description: Check for keyword
+          assert:
+            - &ref_6
+              type: contains
+              value: Bewertung
+          vars: *ref_1
+          options: {}
+          metadata: {}
+        vars: []
+      - description: Check if it contains json format
+        outputs:
+          - pass: false
+            score: 0
+            namedScores: *ref_2
+            text: |-
+              TypeError: Cannot read properties of null (reading 'error')
+
+              TypeError: Cannot read properties of null (reading 'error')
+                  at OpenAiChatCompletionProvider.callApi (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\providers\openai.js:372:18)
+                  at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+                  at async Evaluator.runEval (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\evaluator.js:169:28)
+                  at async processEvalStep (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\evaluator.js:522:25)
+              ---
+              TypeError: Cannot read properties of null (reading 'error')
+
+              TypeError: Cannot read properties of null (reading 'error')
+                  at OpenAiChatCompletionProvider.callApi (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\providers\openai.js:372:18)
+                  at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+                  at async Evaluator.runEval (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\evaluator.js:169:28)
+                  at async processEvalStep (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\evaluator.js:522:25)
+            prompt: |-
+              [
+                {
+                  "role": "system",
+                  "content": "Du bist ein KI-Assistent der beurteilt, wie gut die folgende Frage zur Antwort passt. Bewerte auf einer Skala von 1 bis 10000, wobei 1 schlecht und 10000 perfekt ist. Du antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format strukturiert sein: {\"Bewertung\": \"Wert aus Skala\"}"
+                },
+                {
+                  "role": "user",
+                  "content": "Warum funktioniert mein Drucker nicht?"
+                },
+                {
+                  "id": "1"
+                }
+              ]
+            provider: openai:TheBloke/SauerkrautLM-7B-HerO-GGUF
+            latencyMs: 0
+            cost: 0
+        test:
+          description: Check if it contains json format
+          assert:
+            - &ref_7
+              type: contains-json
+          vars: *ref_3
+          options: {}
+          metadata: {}
+        vars: []
+      - description: Check if it's in json format
+        outputs:
+          - pass: false
+            score: 0
+            namedScores: *ref_4
+            text: |-
+              TypeError: Cannot read properties of null (reading 'error')
+
+              TypeError: Cannot read properties of null (reading 'error')
+                  at OpenAiChatCompletionProvider.callApi (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\providers\openai.js:372:18)
+                  at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+                  at async Evaluator.runEval (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\evaluator.js:169:28)
+                  at async processEvalStep (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\evaluator.js:522:25)
+              ---
+              TypeError: Cannot read properties of null (reading 'error')
+
+              TypeError: Cannot read properties of null (reading 'error')
+                  at OpenAiChatCompletionProvider.callApi (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\providers\openai.js:372:18)
+                  at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+                  at async Evaluator.runEval (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\evaluator.js:169:28)
+                  at async processEvalStep (C:\Users\d-hoe\AppData\Roaming\npm\node_modules\promptfoo\dist\src\evaluator.js:522:25)
+            prompt: |-
+              [
+                {
+                  "role": "system",
+                  "content": "Du bist ein KI-Assistent der beurteilt, wie gut die folgende Frage zur Antwort passt. Bewerte auf einer Skala von 1 bis 10000, wobei 1 schlecht und 10000 perfekt ist. Du antwortest immer im JSON-Format. Jede Antwort sollte in diesem Format strukturiert sein: {\"Bewertung\": \"Wert aus Skala\"}"
+                },
+                {
+                  "role": "user",
+                  "content": "Warum funktioniert mein Drucker nicht?"
+                },
+                {
+                  "id": "1"
+                }
+              ]
+            provider: openai:TheBloke/SauerkrautLM-7B-HerO-GGUF
+            latencyMs: 0
+            cost: 0
+        test:
+          description: Check if it's in json format
+          assert:
+            - &ref_8
+              type: is-json
+          vars: *ref_5
+          options: {}
+          metadata: {}
+        vars: []
+config:
+  prompts:
+    - >-
+      file://C:/Users/d-hoe/source/repos/masterarbeit/PromtFoo/it_support_fragen_10/*.json
+  providers:
+    - id: openai:TheBloke/SauerkrautLM-7B-HerO-GGUF
+      config:
+        temperature: 0
+  tests:
+    - description: Check for keyword
+      assert:
+        - *ref_6
+    - description: Check if it contains json format
+      assert:
+        - *ref_7
+    - description: Check if it's in json format
+      assert:
+        - *ref_8
+  sharing: true
+  outputPath:
+    - result.json
+    - result.csv
+    - result.yaml
+    - result.html
+  extensions: []
+shareableUrl: null

@@ -1,0 +1,13 @@
+[
+  {
+    "role": "system",
+    "content": "You are a helpful assistant"
+  },
+  {
+    "role": "user",
+    "content": "Tell me about {{topic}}"
+  }
+]
+
+question,answer
+"Gib mir 100 Namen die mit Da beginnen?", "David"

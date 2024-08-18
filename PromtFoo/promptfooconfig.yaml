@@ -1,0 +1,25 @@
+prompts:
+  - file://C:/Users/d-hoe/source/repos/masterarbeit/PromtFoo/it_support_fragen_10/*.json
+
+providers:
+  - id: "openai:TheBloke/SauerkrautLM-7B-HerO-GGUF"
+    config:
+      temperature: 0
+
+tests:
+  - description: "Check for keyword"
+    assert:
+      - type: contains
+        value: "Bewertung"
+  - description: "Check if it contains json format"
+    assert:
+      - type: contains-json
+  - description: "Check if it's in json format"
+    assert:
+      - type: is-json
+
+outputPath:
+  - result.json
+  - result.csv
+  - result.yaml
+  - result.html

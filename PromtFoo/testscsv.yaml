@@ -1,0 +1,5 @@
+prompts:
+  - file://input.csv
+
+providers:
+  - "openai:TheBloke/SauerkrautLM-7B-HerO-GGUF"
