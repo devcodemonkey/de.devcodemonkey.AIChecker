@@ -1,5 +1,6 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using de.devcodemonkey.AIChecker.CoreBusiness.Models;
+using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using System;
 using System.Collections.Generic;
@@ -7,14 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UseCases
+namespace de.devcodemonkey.AIChecker.UseCases
 {
-    public class ImportQuestionAnswerUseCase
+    public class ImportQuestionAnswerUseCase : IImportQuestionAnswerUseCase
     {
         private readonly IDeserializer<QuestionAnswer> _deserializer;
         private readonly IDefaultMethodesRepository _defaultMethodesRepository;
 
-        public ImportQuestionAnswerUseCase(IDeserializer<QuestionAnswer> deserializer, IDefaultMethodesRepository defaultMethodesRepository)
+        public ImportQuestionAnswerUseCase(IDeserializer<QuestionAnswer> deserializer
+            , IDefaultMethodesRepository defaultMethodesRepository)
         {
             _deserializer = deserializer;
             _defaultMethodesRepository = defaultMethodesRepository;
@@ -30,19 +32,19 @@ namespace UseCases
             {
                 var question = new Question
                 {
-                  QuestionId = new Guid(),
-                  Value = questionAnswer.Question,
-                  Answer = new Answer
-                  {
-                    AnswerId = new Guid(),
-                    Value = questionAnswer.Answer
-                  }
-                };             
+                    QuestionId = Guid.NewGuid(),
+                    Value = questionAnswer.Question,
+                    Answer = new Answer
+                    {                        
+                        AnswerId = Guid.NewGuid(),
+                        Value = questionAnswer.Answer
+                    }
+                };
                 questions.Add(question);
             }
 
-            _defaultMethodesRepository.AddAsync(questions);
+            await _defaultMethodesRepository.AddAsync(questions);
         }
-                
+
     }
 }
