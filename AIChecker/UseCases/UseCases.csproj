@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CoreBusiness\CoreBusiness.csproj" />
-    <ProjectReference Include="..\SQLServerEF\SQLServerEF.csproj" />
   </ItemGroup>
 
 </Project>
