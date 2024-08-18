@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>de.devcodemonkey.AIChecker.UseCases.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <RootNamespace>de.devcodemonkey.AIChecker.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

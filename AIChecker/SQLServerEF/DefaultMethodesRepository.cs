@@ -58,5 +58,15 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
                 return entity;
             }
         }
+
+        public async Task RemoveAllEntitiesAsync<T>() where T : class
+        {
+            using (var context = new AicheckerContext())
+            {
+                var entities = await context.Set<T>().ToListAsync();
+                context.Set<T>().RemoveRange(entities);
+                context.SaveChanges();
+            }
+        }
     }
 }
