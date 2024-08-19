@@ -35,11 +35,13 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
                 }
             };
 
-            var result = await sendAPIRequestUseCase.ExecuteAsync(messages, maxTokens: -1);
+            var result = await sendAPIRequestUseCase.ExecuteAsync(messages, maxTokens: 20);
 
             Assert.AreEqual(result.StatusCode, HttpStatusCode.OK);
+            Assert.IsNotNull(result.Data);
         }
 
+        // test will only pass if the system environment variable OPEN_AI_TOKEN is set
         [TestMethod()]
         public async Task ExecuteAsyncTest_OpenAiAPI()
         {
@@ -67,6 +69,7 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
                 environmentTokenName: "OPEN_AI_TOKEN");
 
             Assert.AreEqual(result.StatusCode, HttpStatusCode.OK);
+            Assert.IsNotNull(result.Data);
         }
     }
 }

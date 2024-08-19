@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace de.devcodemonkey.AIChecker.CoreBusiness.Models
@@ -12,7 +13,7 @@ namespace de.devcodemonkey.AIChecker.CoreBusiness.Models
         public string Model { get; set; }
         public List<IMessage> Messages { get; set; }
         public double Temperature { get; set; }
-        [System.Text.Json.Serialization.JsonPropertyName("max_tokens")]
+        [JsonPropertyName("max_tokens")]
         public int? MaxTokens { get; set; }
         public bool Stream { get; set; }
     }

@@ -11,7 +11,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
     public class APIRequester
     {
         public async Task<ApiResult<TResponse>> SendPostRequest<TRequest, TResponse>(
-            string source, 
+            string source,
             TRequest request,
             string? environmentBearerTokenName = null) where TRequest : class
         {
@@ -21,10 +21,12 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
                 {
                     var bearerToken = Environment.GetEnvironmentVariable(environmentBearerTokenName);
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
-                }               
+                }
 
                 // Serialize the request data to JSON
-                var jsonContent = JsonSerializer.Serialize(request, options: new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                var jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+
+                var jsonContent = JsonSerializer.Serialize(request, options: jsonSerializerOptions);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
                 var response = await client.PostAsync(source, content);
@@ -37,7 +39,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();
-                    apiResult.Data = JsonSerializer.Deserialize<TResponse>(responseContent);
+                    apiResult.Data = JsonSerializer.Deserialize<TResponse>(responseContent, options: jsonSerializerOptions);
                 }
 
                 return apiResult;
