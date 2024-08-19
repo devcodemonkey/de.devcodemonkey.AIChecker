@@ -11,5 +11,7 @@ public partial class Answer
 
     public string Value { get; set; } = null!;
 
+    public virtual ICollection<Img> Imgs { get; set; } = new List<Img>();
+
     public virtual Question? Question { get; set; }
 }

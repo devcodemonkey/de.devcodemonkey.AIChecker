@@ -22,6 +22,8 @@ public partial class AicheckerContext : DbContext
 
     public virtual DbSet<ExpectedsResult> ExpectedsResults { get; set; }
 
+    public virtual DbSet<Img> Imgs { get; set; }
+
     public virtual DbSet<Model> Models { get; set; }
 
     public virtual DbSet<Question> Questions { get; set; }
@@ -69,6 +71,23 @@ public partial class AicheckerContext : DbContext
                 .HasForeignKey(d => d.ExpectedId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ExpectedsResults_Result");
+        });
+
+        modelBuilder.Entity<Img>(entity =>
+        {
+            entity.HasKey(e => e.ImagesId);
+
+            entity.ToTable("Img");
+
+            entity.Property(e => e.ImagesId).ValueGeneratedNever();
+            entity.Property(e => e.Img1)
+                .HasColumnType("image")
+                .HasColumnName("Img");
+
+            entity.HasOne(d => d.Answer).WithMany(p => p.Imgs)
+                .HasForeignKey(d => d.AnswerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Img_Answers");
         });
 
         modelBuilder.Entity<Model>(entity =>
