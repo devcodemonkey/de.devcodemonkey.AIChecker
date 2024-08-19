@@ -37,9 +37,18 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     Answer = new Answer
                     {                        
                         AnswerId = Guid.NewGuid(),
-                        Value = questionAnswer.Answer
+                        Value = questionAnswer.Answer,
+                        Imgs = new List<Img>()
                     }
                 };
+                foreach (var img in questionAnswer.Images)
+                {
+                    question.Answer.Imgs.Add(new Img
+                    {
+                        ImagesId = Guid.NewGuid(),
+                        Img1 = File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(filePath), img))
+                    });
+                }
                 questions.Add(question);
             }
 

@@ -10,5 +10,6 @@ namespace de.devcodemonkey.AIChecker.CoreBusiness.Models
     {
         public string Question { get; set; }
         public string Answer { get; set; }
+        public ICollection<string> Images { get; set; }
     }
 }

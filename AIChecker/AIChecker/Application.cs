@@ -26,6 +26,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             //args = ["--importQuestionAnswer", "C:\\Users\\d-hoe\\source\\repos\\masterarbeit\\AIChecker\\Plugins\\JsonDeserializer\\Example.json"];
             //args = ["--deleteAllEntityQuestionAnswer"];
+            //args = ["--importQuestionAnswer", "C:\\Users\\d-hoe\\source\\repos\\masterarbeit.wiki\\06_00_00-Ticketexport\\FAQs\\FAQ-Outlook.json"];
             if (args.Length == 2 && args[0].Equals("--importQuestionAnswer"))
                 await _importQuestionAnswerUseCase.ExecuteAsnc(args[1]);
             else if (args.Length == 1 && args[0].Equals("--deleteAllEntityQuestionAnswer"))
