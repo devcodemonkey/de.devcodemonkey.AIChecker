@@ -10,10 +10,19 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
 {
     public class APIRequester
     {
-        public async Task<ApiResult<TResponse>> SendPostRequest<TRequest, TResponse>(string source, TRequest request) where TRequest : class
+        public async Task<ApiResult<TResponse>> SendPostRequest<TRequest, TResponse>(
+            string source, 
+            TRequest request,
+            string? environmentBearerTokenName = null) where TRequest : class
         {
             using (var client = new HttpClient())
             {
+                if (!string.IsNullOrEmpty(environmentBearerTokenName))
+                {
+                    var bearerToken = Environment.GetEnvironmentVariable(environmentBearerTokenName);
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
+                }               
+
                 // Serialize the request data to JSON
                 var jsonContent = JsonSerializer.Serialize(request, options: new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");

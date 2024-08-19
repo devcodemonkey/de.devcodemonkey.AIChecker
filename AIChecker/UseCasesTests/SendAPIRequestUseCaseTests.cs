@@ -16,7 +16,32 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
     {
         // test will only pass if the LM Studio API is up and running
         [TestMethod()]
-        public async Task ExecuteAsyncTest()
+        public async Task ExecuteAsyncTest_LmStudioAPI()
+        {
+            SendAPIRequestUseCase sendAPIRequestUseCase = new SendAPIRequestUseCase(
+                new DataSource.APIRequester.APIRequester());
+
+            List<IMessage> messages = new List<IMessage>
+            {
+                new Message
+                {
+                    Role = "system",
+                    Content = "You are a helpful assistent"
+                },
+                new Message
+                {
+                    Role = "user",
+                    Content = "Gib mir 2 zufallsfragen aus dem IT-Support"
+                }
+            };
+
+            var result = await sendAPIRequestUseCase.ExecuteAsync(messages, maxTokens: -1);
+
+            Assert.AreEqual(result.StatusCode, HttpStatusCode.OK);
+        }
+
+        [TestMethod()]
+        public async Task ExecuteAsyncTest_OpenAiAPI()
         {
             SendAPIRequestUseCase sendAPIRequestUseCase = new SendAPIRequestUseCase(
                 new DataSource.APIRequester.APIRequester());
@@ -35,7 +60,11 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
                 }
             };
 
-            var result = await sendAPIRequestUseCase.ExecuteAsync(messages);
+            var result = await sendAPIRequestUseCase.ExecuteAsync(
+                messages, 
+                source: "https://api.openai.com/v1/chat/completions",
+                model: "gpt-4o-mini",
+                environmentTokenName: "OPEN_AI_TOKEN");
 
             Assert.AreEqual(result.StatusCode, HttpStatusCode.OK);
         }

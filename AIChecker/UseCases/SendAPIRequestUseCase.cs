@@ -13,16 +13,17 @@ namespace de.devcodemonkey.AIChecker.UseCases
     public class SendAPIRequestUseCase
     {
         private readonly APIRequester _apiRequester;
-        
+
         public SendAPIRequestUseCase(APIRequester apiRequester) => _apiRequester = apiRequester;
 
         public async Task<IApiResult<ResponseData>> ExecuteAsync(
             List<IMessage> messages,
             string model = "nothing set",
             string source = "http://localhost:1234/v1/chat/completions",
-            double temperature = 7,
-            int maxTokens = -1,
-            bool stream = false)
+            double temperature = 0,
+            int? maxTokens = null,
+            bool stream = false,
+            string? environmentTokenName = null)
         {
             var requestData = new RequestData
             {
@@ -32,8 +33,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 MaxTokens = maxTokens,
                 Stream = stream
             };
-            
-            return await _apiRequester.SendPostRequest<RequestData, ResponseData>(source, requestData);
+
+            return await _apiRequester.SendPostRequest<RequestData, ResponseData>(source, requestData, environmentTokenName);
         }
     }
 }

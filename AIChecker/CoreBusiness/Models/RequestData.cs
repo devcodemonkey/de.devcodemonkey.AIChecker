@@ -12,7 +12,8 @@ namespace de.devcodemonkey.AIChecker.CoreBusiness.Models
         public string Model { get; set; }
         public List<IMessage> Messages { get; set; }
         public double Temperature { get; set; }
-        public int MaxTokens { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("max_tokens")]
+        public int? MaxTokens { get; set; }
         public bool Stream { get; set; }
     }
 }
