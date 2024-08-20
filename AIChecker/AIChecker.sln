@@ -17,9 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonDeserializer", "Plugins
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQLServerEFTests", "Plugins\SQLServerEFTests\SQLServerEFTests.csproj", "{7922A6C4-F2C8-4C08-86AF-FF4ABED7BD5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIRequester", "APIRequester\APIRequester.csproj", "{0697C18D-92BD-4E45-937D-D245795AB2EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIRequester", "APIRequester\APIRequester.csproj", "{0697C18D-92BD-4E45-937D-D245795AB2EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseCasesTests", "UseCasesTests\UseCasesTests.csproj", "{7A34B02D-94EF-472D-B99A-ABBEF8BC19D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UseCasesTests", "UseCasesTests\UseCasesTests.csproj", "{7A34B02D-94EF-472D-B99A-ABBEF8BC19D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIRequesterTests", "Plugins\APIRequesterTests\APIRequesterTests.csproj", "{B5D5021C-92DF-4214-9F38-731CF11E3097}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{7A34B02D-94EF-472D-B99A-ABBEF8BC19D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A34B02D-94EF-472D-B99A-ABBEF8BC19D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A34B02D-94EF-472D-B99A-ABBEF8BC19D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5D5021C-92DF-4214-9F38-731CF11E3097}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5D5021C-92DF-4214-9F38-731CF11E3097}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5D5021C-92DF-4214-9F38-731CF11E3097}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5D5021C-92DF-4214-9F38-731CF11E3097}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{F34E74BE-5819-4993-B331-CA520E1A308A} = {004BC518-A556-4B00-90BC-6C61926A5443}
 		{7922A6C4-F2C8-4C08-86AF-FF4ABED7BD5C} = {004BC518-A556-4B00-90BC-6C61926A5443}
 		{0697C18D-92BD-4E45-937D-D245795AB2EB} = {004BC518-A556-4B00-90BC-6C61926A5443}
+		{B5D5021C-92DF-4214-9F38-731CF11E3097} = {004BC518-A556-4B00-90BC-6C61926A5443}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB05F31D-7D77-48E6-8935-F3486FC2242E}

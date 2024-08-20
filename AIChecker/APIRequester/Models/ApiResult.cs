@@ -4,8 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
 
-namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
+namespace de.devcodemonkey.AIChecker.DataSource.APIRequester.Models
 {
     public class ApiResult<TResponse> : IApiResult<TResponse>
     {

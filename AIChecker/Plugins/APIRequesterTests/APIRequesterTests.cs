@@ -1,25 +1,24 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using de.devcodemonkey.AIChecker.UseCases;
+using de.devcodemonkey.AIChecker.DataSource.APIRequester;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using de.devcodemonkey.AIChecker.CoreBusiness.Interfaces;
-using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using System.Net;
+using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 
-namespace de.devcodemonkey.AIChecker.UseCases.Tests
+namespace de.devcodemonkey.AIChecker.DataSource.APIRequester.Tests
 {
     [TestClass()]
-    public class SendAPIRequestUseCaseTests
+    public class APIRequesterTests
     {
         // test will only pass if the LM Studio API is up and running
         [TestMethod()]
-        public async Task ExecuteAsyncTest_LmStudioAPI()
+        public async Task SendChatRequestAsyncTest_LmStudioAPI()
         {
-            SendAPIRequestUseCase sendAPIRequestUseCase = new SendAPIRequestUseCase(
-                new DataSource.APIRequester.APIRequester());
+            APIRequester apiRequester = new APIRequester();
 
             List<IMessage> messages = new List<IMessage>
             {
@@ -33,9 +32,9 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
                     Role = "user",
                     Content = "Gib mir 2 zufallsfragen aus dem IT-Support"
                 }
-            };
+            };            
 
-            var result = await sendAPIRequestUseCase.ExecuteAsync(messages, maxTokens: 20);
+            var result = await apiRequester.SendChatRequestAsync(messages, maxTokens: -1);
 
             Assert.AreEqual(result.StatusCode, HttpStatusCode.OK);
             Assert.IsNotNull(result.Data);
@@ -43,10 +42,9 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
 
         // test will only pass if the system environment variable OPEN_AI_TOKEN is set
         [TestMethod()]
-        public async Task ExecuteAsyncTest_OpenAiAPI()
+        public async Task SendChatRequestAsyncTest_OpenAiAPI()
         {
-            SendAPIRequestUseCase sendAPIRequestUseCase = new SendAPIRequestUseCase(
-                new DataSource.APIRequester.APIRequester());
+            APIRequester apiRequester = new APIRequester();
 
             List<IMessage> messages = new List<IMessage>
             {
@@ -62,8 +60,8 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
                 }
             };
 
-            var result = await sendAPIRequestUseCase.ExecuteAsync(
-                messages, 
+            var result = await apiRequester.SendChatRequestAsync(
+                messages,
                 source: "https://api.openai.com/v1/chat/completions",
                 model: "gpt-4o-mini",
                 environmentTokenName: "OPEN_AI_TOKEN");

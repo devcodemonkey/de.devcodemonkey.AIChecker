@@ -5,6 +5,10 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using de.devcodemonkey.AIChecker.CoreBusiness.Interfaces;
+using de.devcodemonkey.AIChecker.CoreBusiness.Models;
+using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
+using de.devcodemonkey.AIChecker.DataSource.APIRequester.Models;
 
 namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
 {
@@ -44,6 +48,27 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
 
                 return apiResult;
             }
+        }
+
+        public async Task<IApiResult<ResponseData>> SendChatRequestAsync(
+            List<IMessage> messages,
+            string model = "nothing set",
+            string source = "http://localhost:1234/v1/chat/completions",
+            double temperature = 0,
+            int? maxTokens = null,
+            bool stream = false,
+            string? environmentTokenName = null)
+        {
+            var requestData = new RequestData
+            {
+                Model = model,
+                Messages = messages,
+                Temperature = temperature,
+                MaxTokens = maxTokens,
+                Stream = stream
+            };
+
+            return await SendPostRequest<RequestData, ResponseData>(source, requestData, environmentTokenName);
         }
     }
 }
