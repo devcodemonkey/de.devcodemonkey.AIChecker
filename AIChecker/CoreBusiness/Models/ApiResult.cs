@@ -1,10 +1,10 @@
-﻿using System;
+﻿using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
 
 namespace de.devcodemonkey.AIChecker.DataSource.APIRequester.Models
 {

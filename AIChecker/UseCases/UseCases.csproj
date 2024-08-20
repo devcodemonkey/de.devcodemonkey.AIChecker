@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\APIRequester\APIRequester.csproj" />
     <ProjectReference Include="..\CoreBusiness\CoreBusiness.csproj" />
   </ItemGroup>
 

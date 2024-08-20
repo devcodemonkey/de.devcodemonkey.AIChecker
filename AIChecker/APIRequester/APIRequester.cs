@@ -9,10 +9,12 @@ using de.devcodemonkey.AIChecker.CoreBusiness.Interfaces;
 using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester.Models;
+using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+
 
 namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
 {
-    public class APIRequester
+    public class APIRequester : IAPIRequester
     {
         public async Task<ApiResult<TResponse>> SendPostRequest<TRequest, TResponse>(
             string source,

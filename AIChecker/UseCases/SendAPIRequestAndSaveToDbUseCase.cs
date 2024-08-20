@@ -3,6 +3,7 @@ using de.devcodemonkey.AIChecker.CoreBusiness.Interfaces;
 using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
+using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,16 @@ using System.Threading.Tasks;
 
 namespace de.devcodemonkey.AIChecker.UseCases
 {
-    public class SendAPIRequestUseCase
+    public class SendAPIRequestAndSaveToDbUseCase
     {
-        private readonly APIRequester _apiRequester;
+        private readonly IAPIRequester _apiRequester;
 
-        public SendAPIRequestUseCase(APIRequester apiRequester) => _apiRequester = apiRequester;        
+        private readonly IDefaultMethodesRepository _defaultMethodesRepository;
+
+        //public SendAPIRequestAndSaveToDbUseCase(APIRequester apiRequester, IDefaultMethodesRepository defaultMethodesRepository)
+        //{
+        //    _apiRequester = apiRequester;
+
+        //}
     }
 }

@@ -7,4 +7,9 @@
     <RootNamespace>de.devcodemonkey.AIChecker.DataSource.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CoreBusiness\CoreBusiness.csproj" />
+    <ProjectReference Include="..\UseCases\UseCases.csproj" />
+  </ItemGroup>
+
 </Project>
