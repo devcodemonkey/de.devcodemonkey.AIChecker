@@ -24,7 +24,7 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
             await sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(
                 new List<string> { "Hello", "How are you?" },
                 "You are a chatbot",
-                "nothing set",
+                $"Testcase {DateTime.Now}",
                 0.7);
         }
     }

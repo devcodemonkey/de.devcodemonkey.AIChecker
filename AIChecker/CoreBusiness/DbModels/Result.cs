@@ -11,6 +11,8 @@ public partial class Result
 
     public Guid ResultSetId { get; set; }
 
+    public string Asked { get; set; } = null!;
+
     public string Message { get; set; } = null!;
 
     public Guid ModelId { get; set; }

@@ -30,11 +30,11 @@ namespace de.devcodemonkey.AIChecker.UseCases
             string resultSet,
             double temperture = 0.7)
         {
-            List<IMessage> messages = new();
 
             // create messages with user messages and the same system promt
             foreach (var userMessage in UserMessages)
             {
+                List<IMessage> messages = new();
                 messages.Add(new Message
                 {
                     Role = "user",
@@ -45,20 +45,15 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     Role = "system",
                     Content = systemPromt
                 });
-            }
 
-            List<IApiResult<ResponseData>> apiResults = new();
-            foreach (var message in messages)
-            {
-                apiResults.Add(await _apiRequester.SendChatRequestAsync(messages, maxTokens: -1, temperature: temperture));
-            }
 
-            foreach (var apiResult in apiResults)
-            {
+                var apiResult = await _apiRequester.SendChatRequestAsync(messages, maxTokens: -1, temperature: temperture);
+
                 Result result = new Result
                 {
                     ResultId = Guid.NewGuid(),
                     Message = apiResult.Data.Choices[0].Message.Content,
+                    Asked = messages[0].Content,
                     Temperture = temperture,
                     RequestStart = apiResult.RequestStart,
                     RequestEnd = apiResult.RequestEnd
@@ -104,6 +99,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     result.SystemPromtId = systemPromtExists.SystemPromtId;
 
                 await _defaultMethodesRepository.AddAsync(result);
+
             }
         }
     }
