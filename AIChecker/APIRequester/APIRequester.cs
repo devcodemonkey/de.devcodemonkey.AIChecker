@@ -35,12 +35,15 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
                 var jsonContent = JsonSerializer.Serialize(request, options: jsonSerializerOptions);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-                var response = await client.PostAsync(source, content);
-
                 var apiResult = new ApiResult<TResponse>
                 {
-                    StatusCode = response.StatusCode
+                    RequestStart = DateTime.Now
                 };
+                var response = await client.PostAsync(source, content);
+                apiResult.RequestEnd = DateTime.Now;
+                apiResult.StatusCode = response.StatusCode;
+
+
 
                 if (response.IsSuccessStatusCode)
                 {
