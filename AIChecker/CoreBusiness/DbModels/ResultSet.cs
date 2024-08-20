@@ -1,9 +1,10 @@
-﻿using System;
+﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModelInterfaces;
+using System;
 using System.Collections.Generic;
 
 namespace de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 
-public partial class ResultSet
+public partial class ResultSet : IValue
 {
     public Guid ResultSetId { get; set; }
 

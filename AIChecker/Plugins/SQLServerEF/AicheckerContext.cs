@@ -92,8 +92,7 @@ public partial class AicheckerContext : DbContext
 
         modelBuilder.Entity<Model>(entity =>
         {
-            entity.Property(e => e.ModelId).ValueGeneratedNever();
-            entity.Property(e => e.Value).HasMaxLength(50);
+            entity.Property(e => e.ModelId).ValueGeneratedNever();            
         });
 
         modelBuilder.Entity<Question>(entity =>

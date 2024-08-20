@@ -1,4 +1,6 @@
-﻿using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModelInterfaces;
+using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
+using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -66,6 +68,24 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
                 var entities = await context.Set<T>().ToListAsync();
                 context.Set<T>().RemoveRange(entities);
                 context.SaveChanges();
+            }
+        }
+
+        public async Task<Model> ViewModelOverValue(string value)
+        {
+            using (var ctx = new AicheckerContext())
+            {
+                var model = await ctx.Models.FirstOrDefaultAsync(m => m.Value == value);
+                return model;
+            }
+        }
+
+        public async Task<TTable> ViewOverValue<TTable>(string value) where TTable : class, IValue
+        {
+            using (var ctx = new AicheckerContext())
+            {
+                var table = await ctx.Set<TTable>().FirstOrDefaultAsync(t => t.Value == value);
+                return table;
             }
         }
     }

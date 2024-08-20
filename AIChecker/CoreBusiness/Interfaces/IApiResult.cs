@@ -6,5 +6,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces
     {
         TResponse Data { get; set; }
         HttpStatusCode StatusCode { get; set; }
+        DateTime RequestStart { get; }
+        DateTime RequestEnd { get; set; }
     }
 }
