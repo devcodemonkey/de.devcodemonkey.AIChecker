@@ -19,7 +19,8 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
         public async Task<ApiResult<TResponse>> SendPostRequest<TRequest, TResponse>(
             string source,
             TRequest request,
-            string? environmentBearerTokenName = null) where TRequest : class
+            string? environmentBearerTokenName = null,
+            TimeSpan? requestTimeout = null) where TRequest : class
         {
             using (var client = new HttpClient())
             {
@@ -28,6 +29,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
                     var bearerToken = Environment.GetEnvironmentVariable(environmentBearerTokenName);
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
                 }
+                client.Timeout = requestTimeout ?? TimeSpan.FromSeconds(100);
 
                 // Serialize the request data to JSON
                 var jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
@@ -62,7 +64,8 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
             double temperature = 0,
             int? maxTokens = null,
             bool stream = false,
-            string? environmentTokenName = null)
+            string? environmentTokenName = null,
+            TimeSpan? requestTimeout = null)
         {
             var requestData = new RequestData
             {
@@ -73,7 +76,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
                 Stream = stream
             };
 
-            return await SendPostRequest<RequestData, ResponseData>(source, requestData, environmentTokenName);
+            return await SendPostRequest<RequestData, ResponseData>(source, requestData, environmentTokenName, requestTimeout: requestTimeout);
         }
     }
 }
