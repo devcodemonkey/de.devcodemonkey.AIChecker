@@ -25,8 +25,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
         }
 
         public async Task ExecuteAsync(
-           string systemPromt,
            string resultSet,
+           string systemPromt,
            double temperture = 0.7)
         {
             var questions = await _defaultMethodesRepository.GetAllEntitiesAsync<Question>();

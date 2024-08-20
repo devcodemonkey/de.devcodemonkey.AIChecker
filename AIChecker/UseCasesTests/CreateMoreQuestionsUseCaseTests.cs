@@ -20,6 +20,7 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
                 new APIRequester(), new DefaultMethodesRepository());
 
             await createMoreQuestionsUseCase.ExecuteAsync(
+                "Test: More Questions",
                 @"Du Antwortest nur im json-Format.  Das zu verwendende Format ist:
 [
   {
@@ -30,8 +31,8 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
   },
 ]
 Du bist eine hilfesuchende Person, die Fragen  an einen IT-Support sendet.
-Erstelle mir 10 Fragen auf Grundlage des folgenden Satzes:",
-                "Test: More Questions");
+Erstelle mir 10 Fragen auf Grundlage des folgenden Satzes:"
+                );
         }
     }
 }
