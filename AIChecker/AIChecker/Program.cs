@@ -34,6 +34,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             services.AddSingleton<IImportQuestionAnswerUseCase, ImportQuestionAnswerUseCase>();
             services.AddSingleton<IDeleteAllQuestionAnswerUseCase, DeleteAllQuestionAnswerUseCase>();
             services.AddSingleton<ICreateMoreQuestionsUseCase, CreateMoreQuestionsUseCase>();
+            services.AddSingleton<IViewAvarageTimeOfResultSetUseCase, ViewAvarageTimeOfResultSetUseCase>();
 
             return services.BuildServiceProvider();
         }
