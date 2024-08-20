@@ -88,5 +88,24 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
                 return table;
             }
         }
+
+        public async Task<TimeSpan> ViewAvarageTimeOfResultSet (string resultSetValue)
+        {
+            using(var ctx = new AicheckerContext())
+            {
+                var timeDifferencesInTicks = await (from result in ctx.Results
+                                                    join resultSet in ctx.ResultSets on result.ResultSetId equals resultSet.ResultSetId
+                                                    where resultSet.Value == resultSetValue
+                                                    select (result.RequestEnd - result.RequestStart).Ticks).ToListAsync();
+
+                // Perform the average calculation on the client side
+                var averageTicks = timeDifferencesInTicks.Average(); // Calculate average on the client side
+                var averageTimeSpan = TimeSpan.FromTicks(Convert.ToInt64(averageTicks)); // Convert to TimeSpan
+
+
+                return averageTimeSpan;
+            }
+        }
+
     }
 }

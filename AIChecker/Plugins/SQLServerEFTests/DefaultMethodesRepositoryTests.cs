@@ -31,7 +31,18 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF.Tests
 
             await defaultMethodesRepository.AddAsync(question);
 
-  
+
+        }
+
+        [TestMethod()]
+        public async Task ViewAvarageTimeOfResultSetTest()
+        {
+            IDefaultMethodesRepository defaultMethodesRepository = new DefaultMethodesRepository();
+
+            var avgTime = await defaultMethodesRepository.ViewAvarageTimeOfResultSet("Testcase 20.08.2024 15:06:12");
+
+            var seconds = avgTime.TotalSeconds;
+
         }
     }
 }
