@@ -112,8 +112,7 @@ public partial class AicheckerContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Results_Model");
 
-            entity.HasOne(d => d.Question).WithMany(p => p.Results)
-                .HasForeignKey(d => d.QuestionId)
+            entity.HasOne(d => d.Question).WithMany(p => p.Results)                
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Results_Question");
 

@@ -7,7 +7,7 @@ public partial class Result
 {
     public Guid ResultId { get; set; }
 
-    public Guid QuestionId { get; set; }
+    public Guid? QuestionId { get; set; }
 
     public Guid ResultSetId { get; set; }
 
