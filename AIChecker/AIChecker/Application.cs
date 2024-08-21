@@ -16,16 +16,19 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IDeleteAllQuestionAnswerUseCase _deleteAllQuestionAnswerUseCase;
         private readonly ICreateMoreQuestionsUseCase _createMoreQuestionsUseCase;
         private readonly IViewAvarageTimeOfResultSetUseCase _viewAvarageTimeOfResultSetUseCase;
+        private readonly IViewResultSetsUseCase _viewResultSetsUseCase;
 
         public Application(IImportQuestionAnswerUseCase importQuestionAnswerUseCase,
             IDeleteAllQuestionAnswerUseCase deleteAllQuestionAnswerUseCase,
             ICreateMoreQuestionsUseCase createMoreQuestionsUseCase,
-            IViewAvarageTimeOfResultSetUseCase viewAvarageTimeOfResultSetUseCase)
+            IViewAvarageTimeOfResultSetUseCase viewAvarageTimeOfResultSetUseCase,
+            IViewResultSetsUseCase viewResultSetsUseCase)
         {
             _importQuestionAnswerUseCase = importQuestionAnswerUseCase;
             _deleteAllQuestionAnswerUseCase = deleteAllQuestionAnswerUseCase;
             _createMoreQuestionsUseCase = createMoreQuestionsUseCase;
             _viewAvarageTimeOfResultSetUseCase = viewAvarageTimeOfResultSetUseCase;
+            _viewResultSetsUseCase = viewResultSetsUseCase;
         }
 
         public async Task RunAsync(string[] args)
@@ -40,6 +43,12 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 await _importQuestionAnswerUseCase.ExecuteAsnc(args[1]);
             else if (args.Length == 2 && args[0].Equals("--viewAverage"))
                 Console.WriteLine($"{(await _viewAvarageTimeOfResultSetUseCase.ExecuteAsync(args[1])).TotalSeconds} seconds");
+            else if (args.Length == 1 && args[0].Equals("--viewResultSets"))
+            {
+                Console.WriteLine("Result sets:");
+                foreach (var resultSet in await _viewResultSetsUseCase.ExecuteAsync())
+                    Console.WriteLine($"  {resultSet}");
+            }
             else if (args.Length == 1 && args[0].Equals("--deleteAllEntityQuestionAnswer"))
                 await _deleteAllQuestionAnswerUseCase.ExecuteAsync();
             else if (args.Length == 3 && args[0].Equals("--createMoreQuestions") && args[2].Contains("path:"))
@@ -50,6 +59,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             {
                 Console.WriteLine("Commands:");
                 MakeDistance("--importQuestionAnswer <path-to-file>", "Imports a Questions and Answers to the db");
+                MakeDistance("--viewResultSets", "Views all result sets");
                 MakeDistance("--viewAverage <resultSet>", "Views the average time of the api request of a 'result set'");
                 MakeDistance("--deleteAllEntityQuestionAnswer", "Deletes all Questions and Answers from the db");
                 MakeDistance("--createMoreQuestions <resultSet> <systemPromt>",
