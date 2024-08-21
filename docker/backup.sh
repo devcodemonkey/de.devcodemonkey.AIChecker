@@ -1,7 +1,7 @@
 #!/bin/bash
 # create backup and override the last backup file
 docker exec -it 'MyMS_SQLServer' /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P '123456789!_Asdf' -Q "BACKUP DATABASE [AIChecker] TO DISK = N'/var/opt/mssql/data/AIChecker.bak' WITH INIT, NAME = N'AIChecker-Full Database Backup';"
-backupName="$(date +"%Y%m%d_%H%M%S")_db_backup"
+backupName="db_backups/AI_CheckerDB_$(date +"%Y%m%d_%H%M%S")"
 # backup with git
 git checkout main
 git checkout -b $backupName
