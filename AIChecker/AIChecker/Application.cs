@@ -47,7 +47,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             {
                 Console.WriteLine("Result sets:");
                 foreach (var resultSet in await _viewResultSetsUseCase.ExecuteAsync())
-                    Console.WriteLine($"  {resultSet}");
+                    Console.WriteLine($"  {resultSet.ResultSetId}   {resultSet.Value}");
             }
             else if (args.Length == 1 && args[0].Equals("--deleteAllEntityQuestionAnswer"))
                 await _deleteAllQuestionAnswerUseCase.ExecuteAsync();
@@ -60,7 +60,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 Console.WriteLine("Commands:");
                 MakeDistance("--importQuestionAnswer <path-to-file>", "Imports a Questions and Answers to the db");
                 MakeDistance("--viewResultSets", "Views all result sets");
-                MakeDistance("--viewAverage <resultSet>", "Views the average time of the api request of a 'result set'");
+                MakeDistance("--viewAverage <resultSetId or resultSetValue>", "Views the average time of the api request of a 'result set'");
                 MakeDistance("--deleteAllEntityQuestionAnswer", "Deletes all Questions and Answers from the db");
                 MakeDistance("--createMoreQuestions <resultSet> <systemPromt>",
                     "Create more questions under the 'system promt' and save them under the result 'set name'");

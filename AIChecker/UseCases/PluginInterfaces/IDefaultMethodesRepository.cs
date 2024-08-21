@@ -16,5 +16,6 @@ namespace de.devcodemonkey.AIChecker.UseCases.PluginInterfaces
         Task<Model> ViewModelOverValue(string value);
         Task<TTable> ViewOverValue<TTable>(string value) where TTable : class, IValue;
         Task<TimeSpan> ViewAvarageTimeOfResultSet(string resultSetValue);
+        Task<TimeSpan> ViewAvarageTimeOfResultSet(Guid resultSetId);
     }
 }

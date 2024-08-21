@@ -18,10 +18,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
         public ViewResultSetsUseCase(IDefaultMethodesRepository defaultMethodesRepository)
             => _defaultMethodesRepository = defaultMethodesRepository;
 
-        public async Task<IEnumerable<string>> ExecuteAsync()
-        {
-            var dataSets = await _defaultMethodesRepository.GetAllEntitiesAsync<ResultSet>();
-            return dataSets.Select(ds => ds.Value);
-        }
+        public async Task<IEnumerable<ResultSet>> ExecuteAsync()
+            => await _defaultMethodesRepository.GetAllEntitiesAsync<ResultSet>();
+
     }
 }

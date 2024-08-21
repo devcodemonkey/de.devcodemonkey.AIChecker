@@ -16,6 +16,10 @@ namespace de.devcodemonkey.AIChecker.UseCases
             => _defaultMethodesRepository = defaultMethodesRepository;
 
         public async Task<TimeSpan> ExecuteAsync(string resultSet)
-            => await _defaultMethodesRepository.ViewAvarageTimeOfResultSet(resultSet);
+        {
+            if (Guid.TryParse(resultSet, out Guid guid))
+                return await _defaultMethodesRepository.ViewAvarageTimeOfResultSet(guid);
+            return await _defaultMethodesRepository.ViewAvarageTimeOfResultSet(resultSet);
+        }
     }
 }

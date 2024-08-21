@@ -39,7 +39,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF.Tests
         {
             IDefaultMethodesRepository defaultMethodesRepository = new DefaultMethodesRepository();
 
-            var avgTime = await defaultMethodesRepository.ViewAvarageTimeOfResultSet("Testcase 20.08.2024 15:06:12");
+            var avgTime = await defaultMethodesRepository.ViewAvarageTimeOfResultSet("syntetic questions creation | over 25 questions | area: outlook | model: em german mistral v01 7B");
 
             var seconds = avgTime.TotalSeconds;
 
