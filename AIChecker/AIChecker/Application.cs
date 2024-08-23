@@ -66,23 +66,17 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                             ops.RequestCount,
                             ops.MaxTokens,
                             ops.Temperature),
-                    async (ImportQuestionsVerb opts) =>
-                    {
-                        await _importQuestionAnswerUseCase.ExecuteAsnc(opts.Path);
-                    },
-                    async (ViewResultSetsVerb opts) =>
-                    {
-                        await ViewResultSetsAsync();
-                    },
+                    async (ImportQuestionsVerb opts)
+                        => await _importQuestionAnswerUseCase.ExecuteAsnc(opts.Path),
+                    async (ViewResultSetsVerb opts) 
+                        => await ViewResultSetsAsync(),
                     async (ViewAverageVerb opts) =>
                     {
                         var result = await _viewAvarageTimeOfResultSetUseCase.ExecuteAsync(opts.ResultSet);
                         Console.WriteLine($"The average time of the API request of the result set '{opts.ResultSet}' is {result}.");
                     },
-                    async (DeleteAllQuestionsVerb opts) =>
-                    {
-                        await _deleteAllQuestionAnswerUseCase.ExecuteAsync();
-                    },
+                    async (DeleteAllQuestionsVerb opts) 
+                        => await _deleteAllQuestionAnswerUseCase.ExecuteAsync(),
                     async (CreateMoreQuestionsVerb opts) =>
                     {
                         if (opts.SystemPrompt.StartsWith("path:"))
