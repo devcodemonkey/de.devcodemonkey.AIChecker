@@ -130,15 +130,16 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
                 }
 
                 // Retrieve the ResultSet
-                var resultSet = await ctx.ResultSets.FirstOrDefaultAsync(rs => rs.ResultSetId == resultSetId);
-                var model = await ctx.Models.FirstOrDefaultAsync(m => m.ModelId == results.First().ModelId);
-                var systemPrompt = await ctx.SystemPromts.FirstOrDefaultAsync(sp => sp.SystemPromtId == results.First().SystemPromtId);
+                var resultSet = await ctx.ResultSets.FirstOrDefaultAsync(rs => rs.ResultSetId == resultSetId);                
 
                 ctx.Results.RemoveRange(results);
 
-                if (model != null)
+                var model = await ctx.Models.FirstOrDefaultAsync(m => m.ModelId == results.First().ModelId);
+                var systemPrompt = await ctx.SystemPromts.FirstOrDefaultAsync(sp => sp.SystemPromtId == results.First().SystemPromtId);
+
+                if (model != null && !await ctx.Results.AnyAsync(r => r.ModelId == model.ModelId))
                     ctx.Models.Remove(model);
-                if (systemPrompt != null)                
+                if (systemPrompt != null && !await ctx.Results.AnyAsync(r => r.SystemPromtId == systemPrompt.SystemPromtId))                
                     ctx.SystemPromts.Remove(systemPrompt);
                 if (resultSet != null)                
                     ctx.ResultSets.Remove(resultSet);                
