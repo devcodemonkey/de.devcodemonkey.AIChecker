@@ -89,12 +89,12 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
             }
         }
 
-        public async Task<TimeSpan> ViewAvarageTimeOfResultSet(string resultSetValue)
+        public async Task<Guid> GetResultSetIdByValueAsync(string resultSetValue)
         {
             using (var ctx = new AicheckerContext())
             {
                 var resultSet = await ctx.ResultSets.FirstOrDefaultAsync(rs => rs.Value == resultSetValue);
-                return await ViewAvarageTimeOfResultSet(resultSet.ResultSetId);
+                return resultSet.ResultSetId;
             }
         }
 
@@ -111,6 +111,40 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
                 var averageTimeSpan = TimeSpan.FromTicks(Convert.ToInt64(averageTicks)); // Convert to TimeSpan
 
                 return averageTimeSpan;
+            }
+        }
+
+        public async Task RemoveResultSetAsync(Guid resultSetId)
+        {
+            using (var ctx = new AicheckerContext())
+            {
+                // Retrieve the results linked to the ResultSet
+                var results = await ctx.Results
+                    .Where(r => r.ResultSetId == resultSetId)
+                    .ToListAsync();
+
+                if (!results.Any())
+                {
+                    Console.WriteLine("No results found for the specified ResultSet.");
+                    return;
+                }
+
+                // Retrieve the ResultSet
+                var resultSet = await ctx.ResultSets.FirstOrDefaultAsync(rs => rs.ResultSetId == resultSetId);
+                var model = await ctx.Models.FirstOrDefaultAsync(m => m.ModelId == results.First().ModelId);
+                var systemPrompt = await ctx.SystemPromts.FirstOrDefaultAsync(sp => sp.SystemPromtId == results.First().SystemPromtId);
+
+                ctx.Results.RemoveRange(results);
+
+                if (model != null)
+                    ctx.Models.Remove(model);
+                if (systemPrompt != null)                
+                    ctx.SystemPromts.Remove(systemPrompt);
+                if (resultSet != null)                
+                    ctx.ResultSets.Remove(resultSet);                
+
+                // Save changes to the database
+                await ctx.SaveChangesAsync();
             }
         }
 

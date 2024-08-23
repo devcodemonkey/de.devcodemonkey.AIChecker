@@ -21,9 +21,11 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IViewAvarageTimeOfResultSetUseCase _viewAvarageTimeOfResultSetUseCase;
         private readonly IViewResultSetsUseCase _viewResultSetsUseCase;
         private readonly ISendAPIRequestToLmStudioAndSaveToDbUseCase _sendAPIRequestToLmStudioAndSaveToDbUseCase;
+        private readonly IDeleteResultSetUseCase _deleteResultSetUseCase;
 
         public Application(IImportQuestionAnswerUseCase importQuestionAnswerUseCase,
             IDeleteAllQuestionAnswerUseCase deleteAllQuestionAnswerUseCase,
+            IDeleteResultSetUseCase deleteResultSetUseCase,
             ICreateMoreQuestionsUseCase createMoreQuestionsUseCase,
             IViewAvarageTimeOfResultSetUseCase viewAvarageTimeOfResultSetUseCase,
             IViewResultSetsUseCase viewResultSetsUseCase,
@@ -31,6 +33,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             _importQuestionAnswerUseCase = importQuestionAnswerUseCase;
             _deleteAllQuestionAnswerUseCase = deleteAllQuestionAnswerUseCase;
+            _deleteResultSetUseCase = deleteResultSetUseCase;
             _createMoreQuestionsUseCase = createMoreQuestionsUseCase;
             _viewAvarageTimeOfResultSetUseCase = viewAvarageTimeOfResultSetUseCase;
             _viewResultSetsUseCase = viewResultSetsUseCase;
@@ -40,6 +43,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         public async Task RunAsync(string[] args)
         {
             //args = ["sendToLMS", "-m", "Schreib mir ein Gedicht", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "5"];
+            //args = ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"];
 
             if (args.Length == 0)
             {
@@ -57,6 +61,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 ViewResultSetsVerb,
                 ViewAverageVerb,
                 DeleteAllQuestionsVerb,
+                DeleteResultSetVerb,
                 CreateMoreQuestionsVerb,
                 SendToLMSVerb>(args)
                 .MapResult(
@@ -77,6 +82,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                         var result = await _viewAvarageTimeOfResultSetUseCase.ExecuteAsync(opts.ResultSet);
                         Console.WriteLine($"The average time of the API request of the result set '{opts.ResultSet}' is {result}.");
                     },
+                    async (DeleteResultSetVerb opts) 
+                        => await _deleteResultSetUseCase.ExecuteAsync(opts.ResultSet),
                     async (DeleteAllQuestionsVerb opts) 
                         => await _deleteAllQuestionAnswerUseCase.ExecuteAsync(),
                     async (CreateMoreQuestionsVerb opts) =>
@@ -137,6 +144,13 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         [Verb("deleteAllQuestions", HelpText = "Deletes all Questions and Answers from the db.")]
         public class DeleteAllQuestionsVerb { }
+
+        [Verb("deleteResultSet", HelpText = "Deletes a 'result set'.")]
+        public class DeleteResultSetVerb
+        {
+            [Option('r', "ResultSet", Required = true, HelpText = "The result set name.")]
+            public string ResultSet { get; set; }
+        }
 
         [Verb("createMoreQuestions", HelpText = "Creates more questions under the 'system prompt' and saves them under the result 'set name'.")]
         public class CreateMoreQuestionsVerb

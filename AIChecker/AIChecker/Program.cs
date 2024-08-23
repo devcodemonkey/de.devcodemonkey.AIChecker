@@ -33,6 +33,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             // Register use cases
             services.AddSingleton<IImportQuestionAnswerUseCase, ImportQuestionAnswerUseCase>();
             services.AddSingleton<IDeleteAllQuestionAnswerUseCase, DeleteAllQuestionAnswerUseCase>();
+            services.AddSingleton<IDeleteResultSetUseCase, DeleteResultSetUseCase>();
             services.AddSingleton<ICreateMoreQuestionsUseCase, CreateMoreQuestionsUseCase>();
             services.AddSingleton<IViewAvarageTimeOfResultSetUseCase, ViewAvarageTimeOfResultSetUseCase>();
             services.AddSingleton<IViewResultSetsUseCase, ViewResultSetsUseCase>();
