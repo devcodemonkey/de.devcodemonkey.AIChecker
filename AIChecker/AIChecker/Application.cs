@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommandLine;
 using Microsoft.Extensions.Options;
+using Spectre.Console;
 
 
 namespace de.devcodemonkey.AIChecker.AIChecker
@@ -166,13 +167,17 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             Console.WriteLine("Result sets:\n");
 
-            Console.WriteLine("  ID".PadRight(41) + "Value");
-            Console.WriteLine(new string('-', 60));
+            var table = new Table();
+            table.AddColumn("ID");
+            table.AddColumn("Value");
+            table.AddColumn("Average Time");
+
             var resultSets = await _viewResultSetsUseCase.ExecuteAsync();
             foreach (var resultSet in resultSets)
             {
-                Console.WriteLine($"  {resultSet.Item1.ResultSetId} \"{resultSet.Item1.Value}\" (avgTime: {resultSet.Item2.TotalSeconds} sec)");
+                table.AddRow(resultSet.Item1.ResultSetId.ToString(), resultSet.Item1.Value, resultSet.Item2.TotalSeconds.ToString());
             }
+            AnsiConsole.Write(table);
         }
 
         private void HandleParseError(IEnumerable<Error> errors)
