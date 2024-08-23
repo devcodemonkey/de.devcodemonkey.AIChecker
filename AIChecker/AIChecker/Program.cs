@@ -36,6 +36,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             services.AddSingleton<ICreateMoreQuestionsUseCase, CreateMoreQuestionsUseCase>();
             services.AddSingleton<IViewAvarageTimeOfResultSetUseCase, ViewAvarageTimeOfResultSetUseCase>();
             services.AddSingleton<IViewResultSetsUseCase, ViewResultSetsUseCase>();
+            services.AddSingleton<ISendAPIRequestToLmStudioAndSaveToDbUseCase, SendAPIRequestToLmStudioAndSaveToDbUseCase>();
 
             return services.BuildServiceProvider();
         }

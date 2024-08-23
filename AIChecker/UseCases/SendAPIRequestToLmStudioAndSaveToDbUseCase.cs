@@ -66,7 +66,5 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 await _defaultMethodesRepository.AddAsync(result);
             }
         }
-
-
     }
 }

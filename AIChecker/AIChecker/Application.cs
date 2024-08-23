@@ -39,19 +39,21 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         public async Task RunAsync(string[] args)
         {
+            args = ["sendToLMS", "-m", "Schreib mir ein Gedicht", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "5"];
+
             if (args.Length == 0)
             {
                 await ViewResultSetsAsync();
-                CreateMonkey();
+                //CreateMonkey();
                 return;
-            }
-            //args = ["--importQuestionAnswer", "C:\\Users\\d-hoe\\source\\repos\\masterarbeit\\AIChecker\\Plugins\\JsonDeserializer\\Example.json"];
-            //args = ["--viewAverage", "Test set"];
-            //args = ["--deleteAllEntityQuestionAnswer"];
-            //args = ["--importQuestionAnswer", "C:\\Users\\d-hoe\\source\\repos\\masterarbeit.wiki\\06_00_00-Ticketexport\\FAQs\\FAQ-Outlook.json"];
-            //args = ["--createMoreQuestions", "Test set",
-            //    "path:C:\\Users\\d-hoe\\source\\repos\\masterarbeit\\AIChecker\\AIChecker\\examples\\system_promt.txt"];
-            var parsingTask = Parser.Default.ParseArguments<ImportQuestionsVerb,
+            }           
+
+            var parsingTask = new Parser(config =>
+            {
+                //CreateMonkey();
+                config.HelpWriter = Console.Out;
+                
+            }).ParseArguments<ImportQuestionsVerb,
                 ViewResultSetsVerb,
                 ViewAverageVerb,
                 DeleteAllQuestionsVerb,
@@ -92,7 +94,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     },
                     errs => Task.FromResult(0)); // Fehlerbehandlung
 
-            await parsingTask.ContinueWith(_ => CreateMonkey());
+            await parsingTask;
+            //await parsingTask.ContinueWith(_ => CreateMonkey());
         }
 
         // Verbs Definition
