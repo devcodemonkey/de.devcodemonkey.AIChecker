@@ -20,18 +20,21 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly ICreateMoreQuestionsUseCase _createMoreQuestionsUseCase;
         private readonly IViewAvarageTimeOfResultSetUseCase _viewAvarageTimeOfResultSetUseCase;
         private readonly IViewResultSetsUseCase _viewResultSetsUseCase;
+        private readonly ISendAPIRequestToLmStudioAndSaveToDbUseCase _sendAPIRequestToLmStudioAndSaveToDbUseCase;
 
         public Application(IImportQuestionAnswerUseCase importQuestionAnswerUseCase,
             IDeleteAllQuestionAnswerUseCase deleteAllQuestionAnswerUseCase,
             ICreateMoreQuestionsUseCase createMoreQuestionsUseCase,
             IViewAvarageTimeOfResultSetUseCase viewAvarageTimeOfResultSetUseCase,
-            IViewResultSetsUseCase viewResultSetsUseCase)
+            IViewResultSetsUseCase viewResultSetsUseCase,
+            ISendAPIRequestToLmStudioAndSaveToDbUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase)
         {
             _importQuestionAnswerUseCase = importQuestionAnswerUseCase;
             _deleteAllQuestionAnswerUseCase = deleteAllQuestionAnswerUseCase;
             _createMoreQuestionsUseCase = createMoreQuestionsUseCase;
             _viewAvarageTimeOfResultSetUseCase = viewAvarageTimeOfResultSetUseCase;
             _viewResultSetsUseCase = viewResultSetsUseCase;
+            _sendAPIRequestToLmStudioAndSaveToDbUseCase = sendAPIRequestToLmStudioAndSaveToDbUseCase;
         }
 
         public async Task RunAsync(string[] args)
@@ -48,8 +51,21 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["--importQuestionAnswer", "C:\\Users\\d-hoe\\source\\repos\\masterarbeit.wiki\\06_00_00-Ticketexport\\FAQs\\FAQ-Outlook.json"];
             //args = ["--createMoreQuestions", "Test set",
             //    "path:C:\\Users\\d-hoe\\source\\repos\\masterarbeit\\AIChecker\\AIChecker\\examples\\system_promt.txt"];
-            var parsingTask = Parser.Default.ParseArguments<ImportQuestionsVerb, ViewResultSetsVerb, ViewAverageVerb, DeleteAllQuestionsVerb, CreateMoreQuestionsVerb>(args)
+            var parsingTask = Parser.Default.ParseArguments<ImportQuestionsVerb,
+                ViewResultSetsVerb,
+                ViewAverageVerb,
+                DeleteAllQuestionsVerb,
+                CreateMoreQuestionsVerb,
+                SendToLMSVerb>(args)
                 .MapResult(
+                    async (SendToLMSVerb ops) =>
+                        await _sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(
+                            ops.Message,
+                            ops.SystemPrompt,
+                            ops.ResultSet,
+                            ops.RequestCount,
+                            ops.MaxTokens,
+                            ops.Temperature),
                     async (ImportQuestionsVerb opts) =>
                     {
                         await _importQuestionAnswerUseCase.ExecuteAsnc(opts.Path);
@@ -86,6 +102,24 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         }
 
         // Verbs Definition
+        [Verb("sendToLMS", HelpText = "Sends an API request to the LmStudio and saves the result to the db.")]
+        public class SendToLMSVerb
+        {
+            [Option('m', "message", Required = true, HelpText = "The user message.")]
+            public string Message { get; set; }
+            [Option('s', "systemPrompt", Required = true, HelpText = "The system prompt.")]
+            public string SystemPrompt { get; set; }
+            [Option('r', "resultSet", Required = true, HelpText = "The result set name.")]
+            public string ResultSet { get; set; }
+            [Option('c', "requestCount", Default = 1, HelpText = "The number of requests.")]
+            public int RequestCount { get; set; }
+            [Option('t', "maxTokens", Default = -1, HelpText = "The maximum number of tokens.")]
+            public int MaxTokens { get; set; }
+            [Option('p', "temperature", Default = 0.7, HelpText = "The temperature.")]
+            public double Temperature { get; set; }
+        }
+
+
         [Verb("importQuestions", HelpText = "Imports Questions and Answers to the db.")]
         public class ImportQuestionsVerb
         {
