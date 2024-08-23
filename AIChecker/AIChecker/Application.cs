@@ -39,7 +39,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         public async Task RunAsync(string[] args)
         {
-            args = ["sendToLMS", "-m", "Schreib mir ein Gedicht", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "5"];
+            //args = ["sendToLMS", "-m", "Schreib mir ein Gedicht", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "5"];
 
             if (args.Length == 0)
             {
