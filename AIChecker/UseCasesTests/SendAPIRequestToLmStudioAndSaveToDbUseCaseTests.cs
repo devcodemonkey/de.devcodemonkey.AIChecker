@@ -22,10 +22,9 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
                     new DefaultMethodesRepository());
 
             await sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(
-                new List<string> { "Hello", "How are you?" },
+                "How are you",
                 "You are a chatbot",
-                $"Testcase {DateTime.Now}",
-                0.7);
+                $"Testcase {DateTime.Now}");
         }
     }
 }

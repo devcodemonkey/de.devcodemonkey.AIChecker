@@ -2,6 +2,6 @@
 {
     public interface ISendAPIRequestToLmStudioAndSaveToDbUseCase
     {
-        Task ExecuteAsync(List<string> UserMessages, string systemPromt, string resultSet, double temperture = 0.7);
+        Task ExecuteAsync(string userMessage, string systemPromt, string resultSet, int requestCount, int maxTokens, double temperture = 0.7);
     }
 }
