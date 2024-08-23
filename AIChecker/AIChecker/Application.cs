@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommandLine;
+using Microsoft.Extensions.Options;
+
 
 namespace de.devcodemonkey.AIChecker.AIChecker
 {
@@ -33,41 +36,82 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         public async Task RunAsync(string[] args)
         {
+            if (args.Length == 0)
+            {
+                await ViewResultSets();
+                CreateMonkey();
+                return;
+            }
             //args = ["--importQuestionAnswer", "C:\\Users\\d-hoe\\source\\repos\\masterarbeit\\AIChecker\\Plugins\\JsonDeserializer\\Example.json"];
             //args = ["--viewAverage", "Test set"];
             //args = ["--deleteAllEntityQuestionAnswer"];
             //args = ["--importQuestionAnswer", "C:\\Users\\d-hoe\\source\\repos\\masterarbeit.wiki\\06_00_00-Ticketexport\\FAQs\\FAQ-Outlook.json"];
             //args = ["--createMoreQuestions", "Test set",
             //    "path:C:\\Users\\d-hoe\\source\\repos\\masterarbeit\\AIChecker\\AIChecker\\examples\\system_promt.txt"];
-            if (args.Length == 2 && args[0].Equals("--importQuestionAnswer"))
-                await _importQuestionAnswerUseCase.ExecuteAsnc(args[1]);
-            else if (args.Length == 2 && args[0].Equals("--viewAverage"))
-                Console.WriteLine($"{(await _viewAvarageTimeOfResultSetUseCase.ExecuteAsync(args[1])).TotalSeconds} seconds");
-            else if (args.Length == 1 && args[0].Equals("--viewResultSets"))
+            var parsingTask = Parser.Default.ParseArguments<Options>(args)
+                .WithParsedAsync(async (Options opts) =>
+                {
+                    if (opts.ImportQuestionAnswer != null)
+                    {
+                        await _importQuestionAnswerUseCase.ExecuteAsnc(opts.ImportQuestionAnswer);
+                    }
+                    else if (opts.ViewAverage != null)
+                    {
+                        var result = await _viewAvarageTimeOfResultSetUseCase.ExecuteAsync(opts.ViewAverage);
+                        Console.WriteLine($"{result.TotalSeconds} seconds");
+                    }
+                    else if (opts.ViewResultSets)
+                    {
+                        await ViewResultSets();
+                    }
+                    else if (opts.DeleteAllEntityQuestionAnswer)
+                    {
+                        await _deleteAllQuestionAnswerUseCase.ExecuteAsync();
+                    }
+                    else if (opts.CreateMoreQuestions != null)
+                    {
+                        if (opts.SystemPrompt != null && opts.SystemPrompt.StartsWith("path:"))
+                        {
+                            var filePath = opts.SystemPrompt.Substring(5);
+                            var promptContent = File.ReadAllText(filePath);
+                            await _createMoreQuestionsUseCase.ExecuteAsync(opts.CreateMoreQuestions, promptContent);
+                        }
+                        else
+                        {
+                            await _createMoreQuestionsUseCase.ExecuteAsync(opts.CreateMoreQuestions, opts.SystemPrompt);
+                        }
+                    }
+                });
+
+            await parsingTask.ContinueWith(_ => CreateMonkey());
+
+            // Fehlerbehandlung
+            var parserResult = await parsingTask;
+
+            if (parserResult.Tag == ParserResultType.NotParsed)
             {
-                Console.WriteLine("Result sets:");
-                foreach (var resultSet in await _viewResultSetsUseCase.ExecuteAsync())
-                    Console.WriteLine($"  {resultSet.ResultSetId}   {resultSet.Value}");
+                HandleParseError(((NotParsed<Options>)parserResult).Errors);
             }
-            else if (args.Length == 1 && args[0].Equals("--deleteAllEntityQuestionAnswer"))
-                await _deleteAllQuestionAnswerUseCase.ExecuteAsync();
-            else if (args.Length == 3 && args[0].Equals("--createMoreQuestions") && args[2].Contains("path:"))
-                await _createMoreQuestionsUseCase.ExecuteAsync(args[1], File.ReadAllText(args[2].Remove(0, 5)));
-            else if (args.Length == 3 && args[0].Equals("--createMoreQuestions"))
-                await _createMoreQuestionsUseCase.ExecuteAsync(args[1], args[2]);
-            else
+            //CreateMonkey();
+        }
+
+        private async Task ViewResultSets()
+        {
+            Console.WriteLine("Result sets:\n");
+
+            Console.WriteLine("  ID".PadRight(41) + "Value");
+            Console.WriteLine(new string('-', 60));
+            var resultSets = await _viewResultSetsUseCase.ExecuteAsync();
+            foreach (var resultSet in resultSets)
             {
-                Console.WriteLine("Commands:");
-                MakeDistance("--importQuestionAnswer <path-to-file>", "Imports a Questions and Answers to the db");
-                MakeDistance("--viewResultSets", "Views all result sets");
-                MakeDistance("--viewAverage <resultSetId or resultSetValue>", "Views the average time of the api request of a 'result set'");
-                MakeDistance("--deleteAllEntityQuestionAnswer", "Deletes all Questions and Answers from the db");
-                MakeDistance("--createMoreQuestions <resultSet> <systemPromt>",
-                    "Create more questions under the 'system promt' and save them under the result 'set name'");
-                MakeDistance("--createMoreQuestions <resultSet> path:<systemPromt>",
-                    "Reads the 'system promt' from file and create more questions under the systemPromt and save them under the result set name");
+                Console.WriteLine($"  {resultSet.ResultSetId}   \"{resultSet.Value}\"");
             }
-            CreateMonkey();
+        }
+
+        private void HandleParseError(IEnumerable<Error> errors)
+        {
+            // Die Standardhilfe wird automatisch angezeigt, wenn ein Fehler auftritt oder die Argumente falsch sind.
+            // Hier kannst du benutzerdefinierte Logik hinzufügen, wenn nötig.
         }
 
         private void MakeDistance(string command, string description)
