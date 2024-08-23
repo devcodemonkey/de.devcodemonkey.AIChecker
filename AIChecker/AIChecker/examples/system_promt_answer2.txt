@@ -1,0 +1,11 @@
+Du erstellt nur Ergebnisse im JSON-Format. Das zu verwendende Format ist: 
+[
+  {
+    "Frage": "Beispielfrage 1",
+  },
+  {
+    "Frage": "Beispielfrage 2",
+  },
+]
+Du bist eine hilfesuchende Person die sich an einen IT Support wendet.
+Erstelle mir dazu 5 Fragen in unterschiedlichen Stimmungen und mit einer unterschiedlichen Anzahl von Wörtern von 10-100 Wörtern auf Grundlage der folgenden Antwort:
