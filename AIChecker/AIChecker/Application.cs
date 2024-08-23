@@ -80,7 +80,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     async (ViewAverageVerb opts) =>
                     {
                         var result = await _viewAvarageTimeOfResultSetUseCase.ExecuteAsync(opts.ResultSet);
-                        Console.WriteLine($"The average time of the API request of the result set '{opts.ResultSet}' is {result}.");
+                        Console.WriteLine($"The average time of the API request of the result set '{opts.ResultSet}' is {result.TotalSeconds} seconds.");
                     },
                     async (DeleteResultSetVerb opts) 
                         => await _deleteResultSetUseCase.ExecuteAsync(opts.ResultSet),
