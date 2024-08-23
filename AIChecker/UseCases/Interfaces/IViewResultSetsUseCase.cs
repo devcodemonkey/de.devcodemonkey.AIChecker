@@ -3,7 +3,7 @@
 namespace de.devcodemonkey.AIChecker.UseCases.Interfaces
 {
     public interface IViewResultSetsUseCase
-    {
-        Task<IEnumerable<ResultSet>> ExecuteAsync();
+    {        
+        Task<IEnumerable<Tuple<ResultSet, TimeSpan>>> ExecuteAsync();
     }
 }

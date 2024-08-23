@@ -171,7 +171,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             var resultSets = await _viewResultSetsUseCase.ExecuteAsync();
             foreach (var resultSet in resultSets)
             {
-                Console.WriteLine($"  {resultSet.ResultSetId}   \"{resultSet.Value}\"");
+                Console.WriteLine($"  {resultSet.Item1.ResultSetId} \"{resultSet.Item1.Value}\" (avgTime: {resultSet.Item2.TotalSeconds} sec)");
             }
         }
 
