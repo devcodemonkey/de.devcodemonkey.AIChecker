@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CommandLine;
 using Microsoft.Extensions.Options;
 using Spectre.Console;
+using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 
 
 namespace de.devcodemonkey.AIChecker.AIChecker
@@ -23,12 +24,14 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IViewResultSetsUseCase _viewResultSetsUseCase;
         private readonly ISendAPIRequestToLmStudioAndSaveToDbUseCase _sendAPIRequestToLmStudioAndSaveToDbUseCase;
         private readonly IDeleteResultSetUseCase _deleteResultSetUseCase;
+        private readonly IViewResultsOfResultSetUseCase _viewResultsOfResultSetUseCase;
 
         public Application(IImportQuestionAnswerUseCase importQuestionAnswerUseCase,
             IDeleteAllQuestionAnswerUseCase deleteAllQuestionAnswerUseCase,
             IDeleteResultSetUseCase deleteResultSetUseCase,
             ICreateMoreQuestionsUseCase createMoreQuestionsUseCase,
             IViewAvarageTimeOfResultSetUseCase viewAvarageTimeOfResultSetUseCase,
+            IViewResultsOfResultSetUseCase viewResultsOfResultSetUseCase,
             IViewResultSetsUseCase viewResultSetsUseCase,
             ISendAPIRequestToLmStudioAndSaveToDbUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase)
         {
@@ -38,6 +41,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             _createMoreQuestionsUseCase = createMoreQuestionsUseCase;
             _viewAvarageTimeOfResultSetUseCase = viewAvarageTimeOfResultSetUseCase;
             _viewResultSetsUseCase = viewResultSetsUseCase;
+            _viewResultsOfResultSetUseCase = viewResultsOfResultSetUseCase;
             _sendAPIRequestToLmStudioAndSaveToDbUseCase = sendAPIRequestToLmStudioAndSaveToDbUseCase;
         }
 
@@ -45,61 +49,91 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             //args = ["sendToLMS", "-m", "Schreib mir ein Gedicht", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "5"];
             //args = ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"];
-
+            args = ["viewResults", "-r", "bfdbb285-372c-4ff3-a646-bbd8969fdee8"];
             if (args.Length == 0)
             {
                 await ViewResultSetsAsync();
                 //CreateMonkey();
                 return;
-            }           
+            }
 
             var parsingTask = new Parser(config =>
             {
                 //CreateMonkey();
                 config.HelpWriter = Console.Out;
-                
+
             }).ParseArguments<ImportQuestionsVerb,
                 ViewResultSetsVerb,
                 ViewAverageVerb,
+                ViewResultsVerb,
                 DeleteAllQuestionsVerb,
                 DeleteResultSetVerb,
                 CreateMoreQuestionsVerb,
                 SendToLMSVerb>(args)
                 .MapResult(
                     async (SendToLMSVerb ops) =>
-                        await _sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(
-                            ops.Message,
-                            ops.SystemPrompt,
-                            ops.ResultSet,
-                            ops.RequestCount,
-                            ops.MaxTokens,
-                            ops.Temperature),
+                        await AnsiConsole.Status()
+                            .StartAsync("Sending API request to LmStudio and saving to db...", async ctx =>
+                            {
+                                await _sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(
+                                    ops.Message,
+                                    ops.SystemPrompt,
+                                    ops.ResultSet,
+                                    ops.RequestCount,
+                                    ops.MaxTokens,
+                                    ops.Temperature
+                                );
+                            }),
                     async (ImportQuestionsVerb opts)
                         => await _importQuestionAnswerUseCase.ExecuteAsnc(opts.Path),
-                    async (ViewResultSetsVerb opts) 
+                    async (ViewResultSetsVerb opts)
                         => await ViewResultSetsAsync(),
                     async (ViewAverageVerb opts) =>
                     {
                         var result = await _viewAvarageTimeOfResultSetUseCase.ExecuteAsync(opts.ResultSet);
                         Console.WriteLine($"The average time of the API request of the result set '{opts.ResultSet}' is {result.TotalSeconds} seconds.");
                     },
-                    async (DeleteResultSetVerb opts) 
+                    async (ViewResultsVerb opts) =>
+                    {
+                        await AnsiConsole.Status()
+                            .StartAsync("Loading results...", async ctx =>
+                            {
+                                var results = await _viewResultsOfResultSetUseCase.ExecuteAsync(opts.ResultSet);
+                                var table = new Table();
+                                table.AddColumn("Asked");
+                                table.AddColumn("Message");
+                                table.AddColumn("System Prompt");
+                                table.AddColumn("Temperature");
+                                foreach (var result in results)
+                                {
+                                    table.AddRow(
+                                       new Text(result.Asked.ToString(), new Style()),        // Disable markup
+                                       new Text(result.Message, new Style()),                 // Disable markup
+                                       new Text(result.SystemPromt.Value, new Style()),       // Disable markup
+                                       new Text(result.Temperture.ToString(), new Style())    // Disable markup
+                                       );
+                                }
+                                AnsiConsole.WriteLine("Results:");
+                                AnsiConsole.Write(table);
+                            });
+                    },
+                    async (DeleteResultSetVerb opts)
                         => await _deleteResultSetUseCase.ExecuteAsync(opts.ResultSet),
-                    async (DeleteAllQuestionsVerb opts) 
+                    async (DeleteAllQuestionsVerb opts)
                         => await _deleteAllQuestionAnswerUseCase.ExecuteAsync(),
                     async (CreateMoreQuestionsVerb opts) =>
-                    {
-                        if (opts.SystemPrompt.StartsWith("path:"))
-                        {
-                            var filePath = opts.SystemPrompt.Substring(5);
-                            var promptContent = File.ReadAllText(filePath);
-                            await _createMoreQuestionsUseCase.ExecuteAsync(opts.ResultSet, promptContent);
-                        }
-                        else
-                        {
-                            await _createMoreQuestionsUseCase.ExecuteAsync(opts.ResultSet, opts.SystemPrompt);
-                        }
-                    },
+                        await AnsiConsole.Status()
+                            .StartAsync("Creating more questions...", async ctx =>
+                            {
+                                if (opts.SystemPrompt.StartsWith("path:"))
+                                {
+                                    var filePath = opts.SystemPrompt.Substring(5);
+                                    var promptContent = File.ReadAllText(filePath);
+                                    await _createMoreQuestionsUseCase.ExecuteAsync(opts.ResultSet, promptContent);
+                                }
+                                else
+                                    await _createMoreQuestionsUseCase.ExecuteAsync(opts.ResultSet, opts.SystemPrompt);
+                            }),
                     errs => Task.FromResult(0)); // Fehlerbehandlung
 
             await parsingTask;
@@ -130,6 +164,13 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             [Option('p', "path", Required = true, HelpText = "Path to the file with Questions and Answers.")]
             public string Path { get; set; }
+        }
+
+        [Verb("viewResults", HelpText = "View Results of a result set")]
+        public class ViewResultsVerb
+        {
+            [Option('r', "ResultSet", Required = true, HelpText = "The result set name.")]
+            public string ResultSet { get; set; }
         }
 
         [Verb("viewAverage", HelpText = "View the average time of the API request of a 'result set'.")]
@@ -165,19 +206,27 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         private async Task ViewResultSetsAsync()
         {
-            Console.WriteLine("Result sets:\n");
+            await AnsiConsole
+                .Status()
+                .Spinner(Spinner.Known.Star)
+                .StartAsync("Loading result sets...", async ctx =>
+                {
+                    var table = new Table();
+                    table.AddColumn("ID");
+                    table.AddColumn("Value");
+                    table.AddColumn("Average Time");
 
-            var table = new Table();
-            table.AddColumn("ID");
-            table.AddColumn("Value");
-            table.AddColumn("Average Time");
+                    var resultSets = await _viewResultSetsUseCase.ExecuteAsync();
+                    foreach (var resultSet in resultSets)
+                    {
+                        table.AddRow(resultSet.Item1.ResultSetId.ToString(), resultSet.Item1.Value, resultSet.Item2.TotalSeconds.ToString());
+                    }
+                    AnsiConsole.WriteLine("Result sets:");
+                    AnsiConsole.Write(table);
+                });
 
-            var resultSets = await _viewResultSetsUseCase.ExecuteAsync();
-            foreach (var resultSet in resultSets)
-            {
-                table.AddRow(resultSet.Item1.ResultSetId.ToString(), resultSet.Item1.Value, resultSet.Item2.TotalSeconds.ToString());
-            }
-            AnsiConsole.Write(table);
+
+
         }
 
         private void HandleParseError(IEnumerable<Error> errors)

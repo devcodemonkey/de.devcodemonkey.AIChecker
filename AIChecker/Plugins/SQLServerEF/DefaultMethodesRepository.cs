@@ -89,6 +89,16 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
             }
         }
 
+        public async Task<IEnumerable<Result>> ViewResultsOfResultSetAsync(Guid resultSetId)
+        {
+            using (var ctx = new AicheckerContext())
+            {
+                return await ctx.Results
+                    .Include(s => s.SystemPromt)
+                    .Where(r => r.ResultSetId == resultSetId).ToListAsync();
+            }
+        }
+
         public async Task<Guid> GetResultSetIdByValueAsync(string resultSetValue)
         {
             using (var ctx = new AicheckerContext())
@@ -130,7 +140,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
                 }
 
                 // Retrieve the ResultSet
-                var resultSet = await ctx.ResultSets.FirstOrDefaultAsync(rs => rs.ResultSetId == resultSetId);                
+                var resultSet = await ctx.ResultSets.FirstOrDefaultAsync(rs => rs.ResultSetId == resultSetId);
 
                 ctx.Results.RemoveRange(results);
 
@@ -139,10 +149,10 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
 
                 if (model != null && !await ctx.Results.AnyAsync(r => r.ModelId == model.ModelId))
                     ctx.Models.Remove(model);
-                if (systemPrompt != null && !await ctx.Results.AnyAsync(r => r.SystemPromtId == systemPrompt.SystemPromtId))                
+                if (systemPrompt != null && !await ctx.Results.AnyAsync(r => r.SystemPromtId == systemPrompt.SystemPromtId))
                     ctx.SystemPromts.Remove(systemPrompt);
-                if (resultSet != null)                
-                    ctx.ResultSets.Remove(resultSet);                
+                if (resultSet != null)
+                    ctx.ResultSets.Remove(resultSet);
 
                 // Save changes to the database
                 await ctx.SaveChangesAsync();

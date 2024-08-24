@@ -18,5 +18,6 @@ namespace de.devcodemonkey.AIChecker.UseCases.PluginInterfaces
         Task<TimeSpan> ViewAvarageTimeOfResultSet(Guid resultSetId);
         Task RemoveResultSetAsync(Guid resultSetId);
         Task<Guid> GetResultSetIdByValueAsync(string resultSetValue);
+        Task<IEnumerable<Result>> ViewResultsOfResultSetAsync(Guid resultSetId);
     }
 }
