@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
@@ -27,6 +28,10 @@ public partial class AicheckerContext : DbContext
     public virtual DbSet<Model> Models { get; set; }
 
     public virtual DbSet<Question> Questions { get; set; }
+
+    public virtual DbSet<RequestObject> RequestObjects { get; set; }
+
+    public virtual DbSet<RequestReason> RequestReasons { get; set; }
 
     public virtual DbSet<Result> Results { get; set; }
 
@@ -92,12 +97,22 @@ public partial class AicheckerContext : DbContext
 
         modelBuilder.Entity<Model>(entity =>
         {
-            entity.Property(e => e.ModelId).ValueGeneratedNever();            
+            entity.Property(e => e.ModelId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Question>(entity =>
         {
             entity.Property(e => e.QuestionId).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<RequestObject>(entity =>
+        {
+            entity.Property(e => e.RequestObjectId).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<RequestReason>(entity =>
+        {
+            entity.Property(e => e.RequestReasonId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Result>(entity =>
@@ -111,9 +126,19 @@ public partial class AicheckerContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Results_Model");
 
-            entity.HasOne(d => d.Question).WithMany(p => p.Results)                
-                .OnDelete(DeleteBehavior.ClientSetNull)
+            entity.HasOne(d => d.Question).WithMany(p => p.Results)
+                .HasForeignKey(d => d.QuestionId)
                 .HasConstraintName("FK_Results_Question");
+
+            entity.HasOne(d => d.RequestObject).WithMany(p => p.Results)
+                .HasForeignKey(d => d.RequestObjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Results_RequestObjects");
+
+            entity.HasOne(d => d.RequestReason).WithMany(p => p.Results)
+                .HasForeignKey(d => d.RequestReasonId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Results_RequestReasons");
 
             entity.HasOne(d => d.ResultSet).WithMany(p => p.Results)
                 .HasForeignKey(d => d.ResultSetId)
