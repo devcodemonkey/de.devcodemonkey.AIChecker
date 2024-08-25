@@ -62,7 +62,13 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     RequestEnd = apiResult.RequestEnd
                 };
 
-                await SaveDependencies.SaveDependenciesFromResult(_defaultMethodesRepository, systemPromt, resultSet, apiResult, result);
+                await SaveDependencies.SaveDependenciesFromResult(_defaultMethodesRepository,
+                    systemPromt,
+                    resultSet,
+                    apiResult,
+                    result,
+                    apiResult.Data.Object,
+                    apiResult.Data.Choices[0].FinishReason);
 
                 await _defaultMethodesRepository.AddAsync(result);
             }

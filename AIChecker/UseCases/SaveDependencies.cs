@@ -12,7 +12,14 @@ namespace de.devcodemonkey.AIChecker.UseCases
 {
     public static class SaveDependencies
     {
-        public static async Task SaveDependenciesFromResult(IDefaultMethodesRepository defaultMethodesRepository,string systemPromt, string resultSet, IApiResult<ResponseData> apiResult, Result result)
+        public static async Task SaveDependenciesFromResult(
+            IDefaultMethodesRepository defaultMethodesRepository,
+            string systemPromt, 
+            string resultSet, 
+            IApiResult<ResponseData> apiResult, 
+            Result result,
+            string requestObject,
+            string requestReason)
         {
             // check if model exists in db
             var modelExists = await defaultMethodesRepository.ViewOverValue<Model>(apiResult.Data.Model);
@@ -52,6 +59,32 @@ namespace de.devcodemonkey.AIChecker.UseCases
             }
             else
                 result.SystemPromtId = systemPromtExists.SystemPromtId;
+
+            // check if requestObject exists in db
+            var requestObjectExists = await defaultMethodesRepository.ViewOverValue<RequestObject>(requestObject);
+            if (requestObjectExists == null)
+            {
+                result.RequestObject = new RequestObject
+                {
+                    RequestObjectId = Guid.NewGuid(),
+                    Value = requestObject
+                };
+            }
+            else
+                result.RequestObjectId = requestObjectExists.RequestObjectId;
+
+            // check if requestReason exists in db
+            var requestReasonExists = await defaultMethodesRepository.ViewOverValue<RequestReason>(requestReason);
+            if (requestReasonExists == null)
+            {
+                result.RequestReason = new RequestReason
+                {
+                    RequestReasonId = Guid.NewGuid(),
+                    Value = requestReason
+                };
+            }
+            else
+                result.RequestReasonId = requestReasonExists.RequestReasonId;
         }
     }
 }
