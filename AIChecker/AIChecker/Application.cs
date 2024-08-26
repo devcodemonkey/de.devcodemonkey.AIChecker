@@ -47,9 +47,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         public async Task RunAsync(string[] args)
         {
-            //args = ["sendToLMS", "-m", "Schreib mir ein Gedicht", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "5"];
+            args = ["sendToLMS", "-m", "Schreib mir ein Gedicht", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "1"];
             //args = ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"];
-            args = ["viewResults", "-r", "bfdbb285-372c-4ff3-a646-bbd8969fdee8"];
+            //args = ["viewResults", "-r", "bfdbb285-372c-4ff3-a646-bbd8969fdee8"];
             if (args.Length == 0)
             {
                 await ViewResultSetsAsync();

@@ -54,9 +54,15 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 Result result = new Result
                 {
                     ResultId = Guid.NewGuid(),
-                    Message = apiResult.Data.Choices[0].Message.Content,
+                    RequestId = apiResult.Data.Id,
                     Asked = messages[0].Content,
+                    Message = apiResult.Data.Choices[0].Message.Content,                    
                     Temperture = temperture,
+                    MaxTokens = maxTokens,
+                    PromtTokens = apiResult.Data.Usage.PromptTokens,
+                    CompletionTokens = apiResult.Data.Usage.CompletionTokens,
+                    TotalTokens = apiResult.Data.Usage.TotalTokens,
+                    RequestCreated = DateTimeOffset.FromUnixTimeSeconds(apiResult.Data.Created).UtcDateTime,
                     RequestStart = apiResult.RequestStart,
                     RequestEnd = apiResult.RequestEnd
                 };
