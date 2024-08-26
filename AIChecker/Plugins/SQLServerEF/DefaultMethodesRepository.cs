@@ -94,7 +94,11 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
             using (var ctx = new AicheckerContext())
             {
                 return await ctx.Results
+                    .Include(r => r.ResultSet)
                     .Include(s => s.SystemPromt)
+                    .Include(m => m.Model)
+                    .Include(r => r.RequestObject)
+                    .Include(r => r.RequestReason)
                     .Where(r => r.ResultSetId == resultSetId).ToListAsync();
             }
         }

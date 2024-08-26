@@ -47,9 +47,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         public async Task RunAsync(string[] args)
         {
-            args = ["sendToLMS", "-m", "Schreib mir ein Gedicht", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "1"];
+            //args = ["sendToLMS", "-m", "Schreib mir ein Gedicht", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "1"];
             //args = ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"];
-            //args = ["viewResults", "-r", "bfdbb285-372c-4ff3-a646-bbd8969fdee8"];
+            args = ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"];
             if (args.Length == 0)
             {
                 await ViewResultSetsAsync();
@@ -100,18 +100,41 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                             {
                                 var results = await _viewResultsOfResultSetUseCase.ExecuteAsync(opts.ResultSet);
                                 var table = new Table();
+                                table.AddColumn("ResultSet");
+                                //table.AddColumn("RequestObject");
+                                //table.AddColumn("RequestReason");
+                                table.AddColumn("Model");
+                                table.AddColumn("System Prompt");
                                 table.AddColumn("Asked");
                                 table.AddColumn("Message");
-                                table.AddColumn("System Prompt");
-                                table.AddColumn("Temperature");
+                                table.AddColumn("Temp");
+                                table.AddColumn("MaxTo");
+                                table.AddColumn("PoTo");
+                                table.AddColumn("CoTo");
+                                table.AddColumn("Too");
                                 foreach (var result in results)
                                 {
                                     table.AddRow(
-                                       new Text(result.Asked.ToString(), new Style()),        // Disable markup
-                                       new Text(result.Message, new Style()),                 // Disable markup
-                                       new Text(result.SystemPromt.Value, new Style()),       // Disable markup
-                                       new Text(result.Temperture.ToString(), new Style())    // Disable markup
-                                       );
+                                        // Disable markup
+                                        new Text(result.ResultSet.Value, new Style()),
+                                        //new Text(result.RequestObject.Value, new Style()),   
+                                        //new Text(result.RequestReason.Value, new Style()),   
+                                        new Text(result.Model.Value, new Style()),
+                                        new Text(result.SystemPromt.Value, new Style()),
+                                        new Text(result.Asked.ToString(), new Style()),
+                                        new Text(result.Message, new Style()),
+                                        new Text(result.Temperature.ToString(), new Style()),
+                                        new Text(result.MaxTokens.ToString(), new Style()),
+                                        new Text(result.PromtTokens.ToString(), new Style()),
+                                        new Text(result.CompletionTokens.ToString(), new Style()),
+                                        new Text(result.TotalTokens.ToString(), new Style()));
+
+                                    //table.AddRow(
+                                    //   new Text(result.Asked.ToString(), new Style()),        // Disable markup
+                                    //   new Text(result.Message, new Style()),                 // Disable markup
+                                    //   new Text(result.SystemPromt.Value, new Style()),       // Disable markup
+                                    //   new Text(result.Temperture.ToString(), new Style())    // Disable markup
+                                    //   );
                                 }
                                 AnsiConsole.WriteLine("Results:");
                                 AnsiConsole.Write(table);

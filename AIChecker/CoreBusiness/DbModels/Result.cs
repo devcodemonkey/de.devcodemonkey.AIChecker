@@ -25,7 +25,7 @@ public partial class Result
 
     public Guid SystemPromtId { get; set; }
 
-    public double Temperture { get; set; }
+    public double Temperature { get; set; }
 
     public int MaxTokens { get; set; }
 

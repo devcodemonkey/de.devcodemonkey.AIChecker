@@ -57,7 +57,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     RequestId = apiResult.Data.Id,
                     Asked = messages[0].Content,
                     Message = apiResult.Data.Choices[0].Message.Content,                    
-                    Temperture = temperture,
+                    Temperature = temperture,
                     MaxTokens = maxTokens,
                     PromtTokens = apiResult.Data.Usage.PromptTokens,
                     CompletionTokens = apiResult.Data.Usage.CompletionTokens,
