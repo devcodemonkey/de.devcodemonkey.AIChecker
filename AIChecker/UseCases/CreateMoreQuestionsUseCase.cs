@@ -27,7 +27,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
         public async Task ExecuteAsync(
            string resultSet,
            string systemPromt,
-           double temperture = 0.7)
+           int maxTokens = -1,
+           double temperature = 0.7)
         {
             var questions = await _defaultMethodesRepository.GetAllEntitiesAsync<Question>();
 
@@ -48,16 +49,22 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 var apiResult = await _apiRequester
                     .SendChatRequestAsync(messages,
                         maxTokens: -1,
-                        temperature: temperture,
+                        temperature: temperature,
                         requestTimeout: TimeSpan.FromMinutes(10));
 
                 Result result = new Result
                 {
                     ResultId = Guid.NewGuid(),
                     QuestionId = question.QuestionId,
-                    Message = apiResult.Data.Choices[0].Message.Content,
+                    RequestId = apiResult.Data.Id,
                     Asked = messages[0].Content,
-                    Temperture = temperture,
+                    Message = apiResult.Data.Choices[0].Message.Content,
+                    Temperture = temperature,
+                    MaxTokens = maxTokens,
+                    PromtTokens = apiResult.Data.Usage.PromptTokens,
+                    CompletionTokens = apiResult.Data.Usage.CompletionTokens,
+                    TotalTokens = apiResult.Data.Usage.TotalTokens,
+                    RequestCreated = DateTimeOffset.FromUnixTimeSeconds(apiResult.Data.Created).UtcDateTime,
                     RequestStart = apiResult.RequestStart,
                     RequestEnd = apiResult.RequestEnd
                 };

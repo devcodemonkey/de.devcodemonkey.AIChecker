@@ -129,7 +129,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                                 {
                                     var filePath = opts.SystemPrompt.Substring(5);
                                     var promptContent = File.ReadAllText(filePath);
-                                    await _createMoreQuestionsUseCase.ExecuteAsync(opts.ResultSet, promptContent);
+                                    await _createMoreQuestionsUseCase.ExecuteAsync(opts.ResultSet,
+                                        promptContent,
+                                        maxTokens: opts.MaxTokens,
+                                        temperture: opts.Temperature);
                                 }
                                 else
                                     await _createMoreQuestionsUseCase.ExecuteAsync(opts.ResultSet, opts.SystemPrompt);
@@ -202,6 +205,12 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
             [Option('s', "systemPrompt", Required = true, HelpText = "The system prompt or path (path:<file-path>) for creating questions.")]
             public string SystemPrompt { get; set; }
+
+            [Option('t', "maxTokens", Default = -1, HelpText = "The maximum number of tokens.")]
+            public int MaxTokens { get; set; }
+
+            [Option('p', "temperature", Default = 0.7, HelpText = "The temperature.")]
+            public double Temperature { get; set; }
         }
 
         private async Task ViewResultSetsAsync()
