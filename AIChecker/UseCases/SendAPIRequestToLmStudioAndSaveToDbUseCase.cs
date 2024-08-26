@@ -25,28 +25,31 @@ namespace de.devcodemonkey.AIChecker.UseCases
             _defaultMethodesRepository = defaultMethodesRepository;
         }
 
-        public async Task ExecuteAsync(List<string> UserMessages,
+
+        public async Task ExecuteAsync(string userMessage,
             string systemPromt,
-            string resultSet,
+            string resultSet,            
+            int requestCount = 1,
+            int maxTokens = -1,
             double temperture = 0.7)
         {
-
-            // create messages with user messages and the same system promt
-            foreach (var userMessage in UserMessages)
+            
+            List<IMessage> messages = new();
+            messages.Add(new Message
             {
-                List<IMessage> messages = new();
-                messages.Add(new Message
-                {
-                    Role = "user",
-                    Content = userMessage
-                });
-                messages.Add(new Message
-                {
-                    Role = "system",
-                    Content = systemPromt
-                });
+                Role = "user",
+                Content = userMessage
+            });
+            messages.Add(new Message
+            {
+                Role = "system",
+                Content = systemPromt
+            });
 
-                var apiResult = await _apiRequester.SendChatRequestAsync(messages, maxTokens: -1, temperature: temperture);
+            for (int i = 0; i < requestCount; i++)
+            {
+
+                var apiResult = await _apiRequester.SendChatRequestAsync(messages, maxTokens: maxTokens, temperature: temperture);
 
                 Result result = new Result
                 {
@@ -67,10 +70,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     apiResult.Data.Choices[0].FinishReason);
 
                 await _defaultMethodesRepository.AddAsync(result);
-
             }
         }
-
-
     }
 }

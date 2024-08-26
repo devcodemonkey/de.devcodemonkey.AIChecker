@@ -8,19 +8,20 @@ using System.Threading.Tasks;
 
 namespace de.devcodemonkey.AIChecker.UseCases
 {
-    public class ViewAvarageTimeOfResultSetUseCase : IViewAvarageTimeOfResultSetUseCase
+    public class DeleteResultSetUseCase : IDeleteResultSetUseCase
     {
         private readonly IDefaultMethodesRepository _defaultMethodesRepository;
 
-        public ViewAvarageTimeOfResultSetUseCase(IDefaultMethodesRepository defaultMethodesRepository)
+        public DeleteResultSetUseCase(IDefaultMethodesRepository defaultMethodesRepository)
             => _defaultMethodesRepository = defaultMethodesRepository;
 
-        public async Task<TimeSpan> ExecuteAsync(string resultSet)
+        public async Task ExecuteAsync(string resultSet)
         {
             if (Guid.TryParse(resultSet, out Guid guid))
-                return await _defaultMethodesRepository.ViewAvarageTimeOfResultSet(guid);
-            return await _defaultMethodesRepository.ViewAvarageTimeOfResultSet(
-                await _defaultMethodesRepository.GetResultSetIdByValueAsync(resultSet));
+                await _defaultMethodesRepository.RemoveResultSetAsync(guid);
+            else
+                await _defaultMethodesRepository.RemoveResultSetAsync(
+                    await _defaultMethodesRepository.GetResultSetIdByValueAsync(resultSet));
         }
     }
 }
