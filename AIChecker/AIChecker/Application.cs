@@ -8,6 +8,7 @@ using CommandLine;
 using Microsoft.Extensions.Options;
 using Spectre.Console;
 using de.devcodemonkey.AIChecker.CoreBusiness.Models;
+using de.devcodemonkey.AIChecker.AIChecker.Commands;
 
 
 namespace de.devcodemonkey.AIChecker.AIChecker
@@ -128,13 +129,6 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                                         new Text(result.PromtTokens.ToString(), new Style()),
                                         new Text(result.CompletionTokens.ToString(), new Style()),
                                         new Text(result.TotalTokens.ToString(), new Style()));
-
-                                    //table.AddRow(
-                                    //   new Text(result.Asked.ToString(), new Style()),        // Disable markup
-                                    //   new Text(result.Message, new Style()),                 // Disable markup
-                                    //   new Text(result.SystemPromt.Value, new Style()),       // Disable markup
-                                    //   new Text(result.Temperture.ToString(), new Style())    // Disable markup
-                                    //   );
                                 }
                                 AnsiConsole.WriteLine("Results:");
                                 AnsiConsole.Write(table);
@@ -164,76 +158,6 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
             await parsingTask;
             //await parsingTask.ContinueWith(_ => CreateMonkey());
-        }
-
-        // Verbs Definition
-        [Verb("sendToLMS", HelpText = "Sends an API request to the LmStudio and saves the result to the db.")]
-        public class SendToLMSVerb
-        {
-            [Option('m', "message", Required = true, HelpText = "The user message.")]
-            public string Message { get; set; }
-            [Option('s', "systemPrompt", Required = true, HelpText = "The system prompt.")]
-            public string SystemPrompt { get; set; }
-            [Option('r', "resultSet", Required = true, HelpText = "The result set name.")]
-            public string ResultSet { get; set; }
-            [Option('c', "requestCount", Default = 1, HelpText = "The number of requests.")]
-            public int RequestCount { get; set; }
-            [Option('t', "maxTokens", Default = -1, HelpText = "The maximum number of tokens.")]
-            public int MaxTokens { get; set; }
-            [Option('p', "temperature", Default = 0.7, HelpText = "The temperature.")]
-            public double Temperature { get; set; }
-        }
-
-
-        [Verb("importQuestions", HelpText = "Imports Questions and Answers to the db.")]
-        public class ImportQuestionsVerb
-        {
-            [Option('p', "path", Required = true, HelpText = "Path to the file with Questions and Answers.")]
-            public string Path { get; set; }
-        }
-
-        [Verb("viewResults", HelpText = "View Results of a result set")]
-        public class ViewResultsVerb
-        {
-            [Option('r', "ResultSet", Required = true, HelpText = "The result set name.")]
-            public string ResultSet { get; set; }
-        }
-
-        [Verb("viewAverage", HelpText = "View the average time of the API request of a 'result set'.")]
-        public class ViewAverageVerb
-        {
-            [Option('r', "ResultSet", Required = true, HelpText = "The result set name.")]
-            //[Value(0, MetaName = "ResultSet", Required = true, HelpText = "The result set name.")]
-            public string ResultSet { get; set; }
-        }
-
-        [Verb("viewResultSets", HelpText = "View all result sets.")]
-        public class ViewResultSetsVerb { }
-
-        [Verb("deleteAllQuestions", HelpText = "Deletes all Questions and Answers from the db.")]
-        public class DeleteAllQuestionsVerb { }
-
-        [Verb("deleteResultSet", HelpText = "Deletes a 'result set'.")]
-        public class DeleteResultSetVerb
-        {
-            [Option('r', "ResultSet", Required = true, HelpText = "The result set name.")]
-            public string ResultSet { get; set; }
-        }
-
-        [Verb("createMoreQuestions", HelpText = "Creates more questions under the 'system prompt' and saves them under the result 'set name'.")]
-        public class CreateMoreQuestionsVerb
-        {
-            [Option('r', "resultSet", Required = true, HelpText = "The result set name.")]
-            public string ResultSet { get; set; }
-
-            [Option('s', "systemPrompt", Required = true, HelpText = "The system prompt or path (path:<file-path>) for creating questions.")]
-            public string SystemPrompt { get; set; }
-
-            [Option('t', "maxTokens", Default = -1, HelpText = "The maximum number of tokens.")]
-            public int MaxTokens { get; set; }
-
-            [Option('p', "temperature", Default = 0.7, HelpText = "The temperature.")]
-            public double Temperature { get; set; }
         }
 
         private async Task ViewResultSetsAsync()
