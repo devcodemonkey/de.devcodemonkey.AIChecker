@@ -50,7 +50,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             //args = ["sendToLMS", "-m", "Schreib mir ein Gedicht", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "1"];
             //args = ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"];
-            args = ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"];
+            //args = ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"];
             if (args.Length == 0)
             {
                 await ViewResultSetsAsync();
@@ -164,7 +164,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             await AnsiConsole
                 .Status()
-                .Spinner(Spinner.Known.Star)
+                .Spinner(Spinner.Known.Star2)
                 .StartAsync("Loading result sets...", async ctx =>
                 {
                     var table = new Table();
