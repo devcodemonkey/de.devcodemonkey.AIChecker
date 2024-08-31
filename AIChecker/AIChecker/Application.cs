@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using CommandLine;
 using Microsoft.Extensions.Options;
+using Spectre.Console;
+using de.devcodemonkey.AIChecker.CoreBusiness.Models;
+using de.devcodemonkey.AIChecker.AIChecker.Commands;
 
 
 namespace de.devcodemonkey.AIChecker.AIChecker
@@ -20,114 +23,166 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly ICreateMoreQuestionsUseCase _createMoreQuestionsUseCase;
         private readonly IViewAvarageTimeOfResultSetUseCase _viewAvarageTimeOfResultSetUseCase;
         private readonly IViewResultSetsUseCase _viewResultSetsUseCase;
+        private readonly ISendAPIRequestToLmStudioAndSaveToDbUseCase _sendAPIRequestToLmStudioAndSaveToDbUseCase;
+        private readonly IDeleteResultSetUseCase _deleteResultSetUseCase;
+        private readonly IViewResultsOfResultSetUseCase _viewResultsOfResultSetUseCase;
 
         public Application(IImportQuestionAnswerUseCase importQuestionAnswerUseCase,
             IDeleteAllQuestionAnswerUseCase deleteAllQuestionAnswerUseCase,
+            IDeleteResultSetUseCase deleteResultSetUseCase,
             ICreateMoreQuestionsUseCase createMoreQuestionsUseCase,
             IViewAvarageTimeOfResultSetUseCase viewAvarageTimeOfResultSetUseCase,
-            IViewResultSetsUseCase viewResultSetsUseCase)
+            IViewResultsOfResultSetUseCase viewResultsOfResultSetUseCase,
+            IViewResultSetsUseCase viewResultSetsUseCase,
+            ISendAPIRequestToLmStudioAndSaveToDbUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase)
         {
             _importQuestionAnswerUseCase = importQuestionAnswerUseCase;
             _deleteAllQuestionAnswerUseCase = deleteAllQuestionAnswerUseCase;
+            _deleteResultSetUseCase = deleteResultSetUseCase;
             _createMoreQuestionsUseCase = createMoreQuestionsUseCase;
             _viewAvarageTimeOfResultSetUseCase = viewAvarageTimeOfResultSetUseCase;
             _viewResultSetsUseCase = viewResultSetsUseCase;
+            _viewResultsOfResultSetUseCase = viewResultsOfResultSetUseCase;
+            _sendAPIRequestToLmStudioAndSaveToDbUseCase = sendAPIRequestToLmStudioAndSaveToDbUseCase;
         }
 
         public async Task RunAsync(string[] args)
         {
+            //args = ["sendToLMS", "-m", "Schreib mir ein Gedicht", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "1"];
+            //args = ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"];
+            //args = ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"];
             if (args.Length == 0)
             {
                 await ViewResultSetsAsync();
-                CreateMonkey();
+                //CreateMonkey();
                 return;
             }
-            //args = ["--importQuestionAnswer", "C:\\Users\\d-hoe\\source\\repos\\masterarbeit\\AIChecker\\Plugins\\JsonDeserializer\\Example.json"];
-            //args = ["--viewAverage", "Test set"];
-            //args = ["--deleteAllEntityQuestionAnswer"];
-            //args = ["--importQuestionAnswer", "C:\\Users\\d-hoe\\source\\repos\\masterarbeit.wiki\\06_00_00-Ticketexport\\FAQs\\FAQ-Outlook.json"];
-            //args = ["--createMoreQuestions", "Test set",
-            //    "path:C:\\Users\\d-hoe\\source\\repos\\masterarbeit\\AIChecker\\AIChecker\\examples\\system_promt.txt"];
-            var parsingTask = Parser.Default.ParseArguments<ImportQuestionsVerb, ViewResultSetsVerb, ViewAverageVerb, DeleteAllQuestionsVerb, CreateMoreQuestionsVerb>(args)
+
+            var parsingTask = new Parser(config =>
+            {
+                //CreateMonkey();
+                config.HelpWriter = Console.Out;
+
+            }).ParseArguments<ImportQuestionsVerb,
+                ViewResultSetsVerb,
+                ViewAverageVerb,
+                ViewResultsVerb,
+                DeleteAllQuestionsVerb,
+                DeleteResultSetVerb,
+                CreateMoreQuestionsVerb,
+                SendToLMSVerb>(args)
                 .MapResult(
-                    async (ImportQuestionsVerb opts) =>
-                    {
-                        await _importQuestionAnswerUseCase.ExecuteAsnc(opts.Path);
-                    },
-                    async (ViewResultSetsVerb opts) =>
-                    {
-                        await ViewResultSetsAsync();
-                    },
+                    async (SendToLMSVerb ops) =>
+                        await AnsiConsole.Status()
+                            .StartAsync("Sending API request to LmStudio and saving to db...", async ctx =>
+                            {
+                                await _sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(
+                                    ops.Message,
+                                    ops.SystemPrompt,
+                                    ops.ResultSet,
+                                    ops.RequestCount,
+                                    ops.MaxTokens,
+                                    ops.Temperature
+                                );
+                            }),
+                    async (ImportQuestionsVerb opts)
+                        => await _importQuestionAnswerUseCase.ExecuteAsnc(opts.Path),
+                    async (ViewResultSetsVerb opts)
+                        => await ViewResultSetsAsync(),
                     async (ViewAverageVerb opts) =>
                     {
                         var result = await _viewAvarageTimeOfResultSetUseCase.ExecuteAsync(opts.ResultSet);
-                        Console.WriteLine($"The average time of the API request of the result set '{opts.ResultSet}' is {result}.");
+                        Console.WriteLine($"The average time of the API request of the result set '{opts.ResultSet}' is {result.TotalSeconds} seconds.");
                     },
-                    async (DeleteAllQuestionsVerb opts) =>
+                    async (ViewResultsVerb opts) =>
                     {
-                        await _deleteAllQuestionAnswerUseCase.ExecuteAsync();
+                        await AnsiConsole.Status()
+                            .StartAsync("Loading results...", async ctx =>
+                            {
+                                var results = await _viewResultsOfResultSetUseCase.ExecuteAsync(opts.ResultSet);
+                                var table = new Table();
+                                table.AddColumn("ResultSet");
+                                //table.AddColumn("RequestObject");
+                                //table.AddColumn("RequestReason");
+                                table.AddColumn("Model");
+                                table.AddColumn("System Prompt");
+                                table.AddColumn("Asked");
+                                table.AddColumn("Message");
+                                table.AddColumn("Temp");
+                                table.AddColumn("MaxTo");
+                                table.AddColumn("PoTo");
+                                table.AddColumn("CoTo");
+                                table.AddColumn("Too");
+                                foreach (var result in results)
+                                {
+                                    table.AddRow(
+                                        // Disable markup
+                                        new Text(result.ResultSet.Value, new Style()),
+                                        //new Text(result.RequestObject.Value, new Style()),   
+                                        //new Text(result.RequestReason.Value, new Style()),   
+                                        new Text(result.Model.Value, new Style()),
+                                        new Text(result.SystemPromt.Value, new Style()),
+                                        new Text(result.Asked.ToString(), new Style()),
+                                        new Text(result.Message, new Style()),
+                                        new Text(result.Temperature.ToString(), new Style()),
+                                        new Text(result.MaxTokens.ToString(), new Style()),
+                                        new Text(result.PromtTokens.ToString(), new Style()),
+                                        new Text(result.CompletionTokens.ToString(), new Style()),
+                                        new Text(result.TotalTokens.ToString(), new Style()));
+                                }
+                                AnsiConsole.WriteLine("Results:");
+                                AnsiConsole.Write(table);
+                            });
                     },
+                    async (DeleteResultSetVerb opts)
+                        => await _deleteResultSetUseCase.ExecuteAsync(opts.ResultSet),
+                    async (DeleteAllQuestionsVerb opts)
+                        => await _deleteAllQuestionAnswerUseCase.ExecuteAsync(),
                     async (CreateMoreQuestionsVerb opts) =>
-                    {
-                        if (opts.SystemPrompt.StartsWith("path:"))
-                        {
-                            var filePath = opts.SystemPrompt.Substring(5);
-                            var promptContent = File.ReadAllText(filePath);
-                            await _createMoreQuestionsUseCase.ExecuteAsync(opts.ResultSet, promptContent);
-                        }
-                        else
-                        {
-                            await _createMoreQuestionsUseCase.ExecuteAsync(opts.ResultSet, opts.SystemPrompt);
-                        }
-                    },
+                        await AnsiConsole.Status()
+                            .StartAsync("Creating more questions...", async ctx =>
+                            {
+                                if (opts.SystemPrompt.StartsWith("path:"))
+                                {
+                                    var filePath = opts.SystemPrompt.Substring(5);
+                                    var promptContent = File.ReadAllText(filePath);
+                                    await _createMoreQuestionsUseCase.ExecuteAsync(opts.ResultSet,
+                                        promptContent,
+                                        maxTokens: opts.MaxTokens,
+                                        temperture: opts.Temperature);
+                                }
+                                else
+                                    await _createMoreQuestionsUseCase.ExecuteAsync(opts.ResultSet, opts.SystemPrompt);
+                            }),
                     errs => Task.FromResult(0)); // Fehlerbehandlung
 
-            await parsingTask.ContinueWith(_ => CreateMonkey());
-        }
-
-        // Verbs Definition
-        [Verb("importQuestions", HelpText = "Imports Questions and Answers to the db.")]
-        public class ImportQuestionsVerb
-        {
-            [Option('p', "path", Required = true, HelpText = "Path to the file with Questions and Answers.")]
-            public string Path { get; set; }
-        }
-
-        [Verb("viewAverage", HelpText = "View the average time of the API request of a 'result set'.")]
-        public class ViewAverageVerb
-        {
-            [Option('r', "ResultSet", Required = true, HelpText = "The result set name.")]
-            //[Value(0, MetaName = "ResultSet", Required = true, HelpText = "The result set name.")]
-            public string ResultSet { get; set; }
-        }
-
-        [Verb("viewResultSets", HelpText = "View all result sets.")]
-        public class ViewResultSetsVerb { }
-
-        [Verb("deleteAllQuestions", HelpText = "Deletes all Questions and Answers from the db.")]
-        public class DeleteAllQuestionsVerb { }
-
-        [Verb("createMoreQuestions", HelpText = "Creates more questions under the 'system prompt' and saves them under the result 'set name'.")]
-        public class CreateMoreQuestionsVerb
-        {
-            [Option('r', "resultSet", Required = true, HelpText = "The result set name.")]
-            public string ResultSet { get; set; }
-
-            [Option('s', "systemPrompt", Required = true, HelpText = "The system prompt or path (path:<file-path>) for creating questions.")]
-            public string SystemPrompt { get; set; }
+            await parsingTask;
+            //await parsingTask.ContinueWith(_ => CreateMonkey());
         }
 
         private async Task ViewResultSetsAsync()
         {
-            Console.WriteLine("Result sets:\n");
+            await AnsiConsole
+                .Status()
+                .Spinner(Spinner.Known.Star2)
+                .StartAsync("Loading result sets...", async ctx =>
+                {
+                    var table = new Table();
+                    table.AddColumn("ID");
+                    table.AddColumn("Value");
+                    table.AddColumn("Average Time");
 
-            Console.WriteLine("  ID".PadRight(41) + "Value");
-            Console.WriteLine(new string('-', 60));
-            var resultSets = await _viewResultSetsUseCase.ExecuteAsync();
-            foreach (var resultSet in resultSets)
-            {
-                Console.WriteLine($"  {resultSet.ResultSetId}   \"{resultSet.Value}\"");
-            }
+                    var resultSets = await _viewResultSetsUseCase.ExecuteAsync();
+                    foreach (var resultSet in resultSets)
+                    {
+                        table.AddRow(resultSet.Item1.ResultSetId.ToString(), resultSet.Item1.Value, resultSet.Item2.TotalSeconds.ToString());
+                    }
+                    AnsiConsole.WriteLine("Result sets:");
+                    AnsiConsole.Write(table);
+                });
+
+
+
         }
 
         private void HandleParseError(IEnumerable<Error> errors)
