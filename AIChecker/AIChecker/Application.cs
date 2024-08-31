@@ -164,7 +164,6 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             await AnsiConsole
                 .Status()
-                .Spinner(Spinner.Known.Star2)
                 .StartAsync("Loading result sets...", async ctx =>
                 {
                     var table = new Table();
