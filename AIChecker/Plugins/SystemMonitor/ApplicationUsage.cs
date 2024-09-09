@@ -13,7 +13,7 @@ namespace SystemMonitor
         public string ProcessName { get; set; }
 
         public long GpuUsage { get; set; }
-        public float CpuUsage { get; internal set; }
-        public long RamUsage { get; internal set; }
+        public double CpuUsage { get; set; }
+        public long RamUsage { get; set; }
     }
 }

@@ -1,53 +1,43 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
+using System.Management;
 
 namespace SystemMonitor
 {
     [SupportedOSPlatform("windows")]
     public class SystemMonitor
-    {        
+    {
         public async Task<List<ApplicationUsage>> GetApplicationUsagesAsync()
         {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                Console.WriteLine("Application usage is only supported on Windows platforms.");
-                return null;
-            }
-
             List<ApplicationUsage> applicationUsages = new List<ApplicationUsage>();
-            var cpuCounters = new Dictionary<int, PerformanceCounter>();
 
-            foreach (Process process in Process.GetProcesses())
+            await Task.Run(() =>
             {
-                // Initialize CPU performance counter for the process if it doesn't exist
-                if (!cpuCounters.ContainsKey(process.Id))
+                Thread.CurrentThread.Priority = ThreadPriority.Lowest;
+
+                var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PerfFormattedData_PerfProc_Process");
+
+                foreach (var obj in searcher.Get())
                 {
-                    cpuCounters[process.Id] = new PerformanceCounter("Process", "% Processor Time", process.ProcessName, true);
+                    var processId = Convert.ToInt32(obj["IDProcess"]);
+                    var processName = obj["Name"].ToString();
+                    var cpuUsage = Convert.ToDouble(obj["PercentProcessorTime"]);
+                    var ramUsage = Convert.ToInt64(obj["WorkingSet"]) / (1024 * 1024);  // RAM usage in MB
+                    
+                    applicationUsages.Add(new ApplicationUsage
+                    {
+                        ProcessId = processId,
+                        ProcessName = processName,
+                        CpuUsage = cpuUsage,
+                        RamUsage = ramUsage
+                    });
                 }
-
-                // Get CPU usage asynchronously
-                var cpuUsage = await Task.Run(() =>
-                {
-                    // Wait a moment to allow PerformanceCounter to calculate CPU usage
-                    cpuCounters[process.Id].NextValue();
-                    Task.Delay(500).Wait(); // Delay asynchronously
-                    return cpuCounters[process.Id].NextValue() / Environment.ProcessorCount;
-                });
-
-                // Add process information to the list
-                applicationUsages.Add(new ApplicationUsage
-                {
-                    ProcessId = process.Id,
-                    ProcessName = process.ProcessName,
-                    CpuUsage = cpuUsage,
-                    RamUsage = process.WorkingSet64 / (1024 * 1024),  // RAM usage in MB
-                    GpuUsage = process.WorkingSet64 / (1024 * 1024)   // Substitute for GPU, using RAM usage
-                });
-            }
+            });
 
             return applicationUsages;
         }
+
 
         public async Task<List<ApplicationUsage>> MonitorPerformanceEveryXSecondsAsync(int intervalSeconds, CancellationToken cancellationToken)
         {
