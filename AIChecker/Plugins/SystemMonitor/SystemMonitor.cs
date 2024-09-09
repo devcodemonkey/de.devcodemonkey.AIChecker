@@ -49,7 +49,38 @@ namespace SystemMonitor
             return applicationUsages;
         }
 
-        
-        
+        public async Task<List<ApplicationUsage>> MonitorPerformanceEveryXSecondsAsync(int intervalSeconds, CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var usageList = await GetApplicationUsagesAsync();
+
+                if (usageList != null)
+                {
+                    Console.WriteLine("Current Performance Data:");
+                    foreach (var usage in usageList)
+                    {
+                        Console.WriteLine($"Process: {usage.ProcessName}, CPU: {usage.CpuUsage:F2}%, RAM: {usage.RamUsage}MB");
+                    }
+                    Console.WriteLine("----------------------------------------");
+
+                    // Return the usage list to be saved by the caller
+                    return usageList;
+                }
+
+                // Wait for the specified interval or stop if cancellation is requested
+                try
+                {
+                    await Task.Delay(intervalSeconds * 1000, cancellationToken);
+                }
+                catch (TaskCanceledException)
+                {
+                    break; // Break out of the loop if cancellation is requested
+                }
+            }
+
+            Console.WriteLine("Monitoring stopped.");
+            return null; // In case the loop ends without new data
+        }
     }
 }
