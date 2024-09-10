@@ -15,6 +15,8 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
         {
             List<ApplicationUsage> applicationUsages = new List<ApplicationUsage>();
 
+            var gpuStat = await GetGpuUsageAsync();
+
             await Task.Run(() =>
             {
                 Thread.CurrentThread.Priority = ThreadPriority.Lowest;
@@ -27,13 +29,19 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                     var processName = obj["Name"].ToString();
                     var cpuUsage = Convert.ToDouble(obj["PercentProcessorTime"]);
                     var ramUsage = Convert.ToInt64(obj["WorkingSet"]) / (1024 * 1024);  // RAM usage in MB
+                    var gpuUsage = gpuStat.Gpus.FirstOrDefault()
+                                .Processes
+                                .Where(p => p.Pid == processId)
+                                .FirstOrDefault()?.CpuMemoryUsage ?? 0;
+
 
                     applicationUsages.Add(new ApplicationUsage
                     {
                         ProcessId = processId,
                         ProcessName = processName,
                         CpuUsage = cpuUsage,
-                        RamUsage = ramUsage
+                        RamUsage = ramUsage,
+                        GpuUsage = gpuUsage
                     });
                 }
             });
@@ -89,11 +97,13 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
         }
 
 
-        public async Task<IEnumerable<ApplicationUsage>> MonitorPerformanceEveryXSecondsAsync(int intervalSeconds, CancellationToken cancellationToken)
+        public async Task MonitorPerformanceEveryXSecondsAsync(Action<IEnumerable<ApplicationUsage>> saveAction, int intervalSeconds, CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
             {
                 var usageList = await GetApplicationUsagesAsync();
+
+                saveAction(usageList);
 
                 if (usageList != null)
                 {
@@ -102,10 +112,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                     {
                         Console.WriteLine($"Process: {usage.ProcessName}, CPU: {usage.CpuUsage:F2}%, RAM: {usage.RamUsage}MB");
                     }
-                    Console.WriteLine("----------------------------------------");
-
-                    // Return the usage list to be saved by the caller
-                    return usageList;
+                    Console.WriteLine("----------------------------------------");                
                 }
 
                 // Wait for the specified interval or stop if cancellation is requested
@@ -119,8 +126,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                 }
             }
 
-            Console.WriteLine("Monitoring stopped.");
-            return null; // In case the loop ends without new data
+            Console.WriteLine("Monitoring stopped.");            
         }
     }
 }
