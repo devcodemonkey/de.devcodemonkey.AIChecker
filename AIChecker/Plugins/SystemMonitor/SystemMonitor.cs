@@ -22,6 +22,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                 Thread.CurrentThread.Priority = ThreadPriority.Lowest;
 
                 var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PerfFormattedData_PerfProc_Process");
+                var cpuGpuTimestamp = DateTime.Now;
 
                 foreach (var obj in searcher.Get())
                 {
@@ -34,14 +35,18 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                                 .Where(p => p.Pid == processId)
                                 .FirstOrDefault()?.CpuMemoryUsage ?? 0;
 
+                    gpuUsage = gpuUsage / 1024;  // GPU usage in MB
 
                     applicationUsages.Add(new ApplicationUsage
                     {
                         ProcessId = processId,
                         ProcessName = processName,
                         CpuUsage = cpuUsage,
+                        CpuUsageTimestamp = cpuGpuTimestamp,
                         RamUsage = ramUsage,
-                        GpuUsage = gpuUsage
+                        RamUsageTimestamp = cpuGpuTimestamp,
+                        GpuUsage = gpuUsage,
+                        GpuUsageTimestamp = gpuStat.QueryTime
                     });
                 }
             });
@@ -97,7 +102,11 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
         }
 
 
-        public async Task MonitorPerformanceEveryXSecondsAsync(Action<IEnumerable<ApplicationUsage>> saveAction, int intervalSeconds, CancellationToken cancellationToken)
+        public async Task MonitorPerformanceEveryXSecondsAsync(
+            Action<IEnumerable<ApplicationUsage>> saveAction, 
+            int intervalSeconds, 
+            CancellationToken cancellationToken,
+            bool writeOutput = false)
         {
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -105,14 +114,19 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 
                 saveAction(usageList);
 
-                if (usageList != null)
+                if (usageList != null && writeOutput)
                 {
                     Console.WriteLine("Current Performance Data:");
                     foreach (var usage in usageList)
                     {
-                        Console.WriteLine($"Process: {usage.ProcessName}, CPU: {usage.CpuUsage:F2}%, RAM: {usage.RamUsage}MB");
+                        Console.WriteLine(
+                           $"Process: {usage.ProcessName}, " +
+                           $"CPU: {usage.CpuUsage:F2}% at {usage.CpuUsageTimestamp}, " +
+                           $"RAM: {usage.RamUsage}MB at {usage.RamUsageTimestamp}, " +
+                           $"GPU: {usage.GpuUsage}MB at {usage.GpuUsageTimestamp}"
+                       );
                     }
-                    Console.WriteLine("----------------------------------------");                
+                    Console.WriteLine("----------------------------------------");
                 }
 
                 // Wait for the specified interval or stop if cancellation is requested
@@ -126,7 +140,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                 }
             }
 
-            Console.WriteLine("Monitoring stopped.");            
+            Console.WriteLine("Monitoring stopped.");
         }
     }
 }
