@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Spectre.Console;
 using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.AIChecker.Commands;
+using System.Diagnostics;
 
 
 namespace de.devcodemonkey.AIChecker.AIChecker
@@ -51,6 +52,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["sendToLMS", "-m", "Schreib mir ein Gedicht", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "1"];
             //args = ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"];
             //args = ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"];
+            args = ["view-used-gpu"];
             if (args.Length == 0)
             {
                 await ViewResultSetsAsync();
@@ -67,11 +69,16 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 ViewResultSetsVerb,
                 ViewAverageVerb,
                 ViewResultsVerb,
+                ViewUsedGpuVerb,
                 DeleteAllQuestionsVerb,
                 DeleteResultSetVerb,
                 CreateMoreQuestionsVerb,
-                SendToLMSVerb>(args)
+                SendToLMSVerb>(args)                
                 .MapResult(
+                    async (ViewUsedGpuVerb opts) =>
+                    {
+                        
+                    },
                     async (SendToLMSVerb ops) =>
                         await AnsiConsole.Status()
                             .StartAsync("Sending API request to LmStudio and saving to db...", async ctx =>

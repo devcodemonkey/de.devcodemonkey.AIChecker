@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace SystemMonitor.Tests
+namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor.Tests
 {
     [TestClass()]
     public class SystemMonitorTests
@@ -22,7 +22,7 @@ namespace SystemMonitor.Tests
             var applicationUsages = await monitor.GetApplicationUsagesAsync();
 
             //write all properties to trace output in one line
-            foreach (var item in applicationUsages.OrderByDescending(c=>c.gpu))
+            foreach (var item in applicationUsages.OrderByDescending(c => c.GpuUsage))
             {
                 Debug.WriteLine($"Process ID: {item.ProcessId}, Process Name: {item.ProcessName}, CPU Usage: {item.CpuUsage}, RAM Usage: {item.RamUsage}, GPU Usage: {item.GpuUsage}");
             }
@@ -31,7 +31,7 @@ namespace SystemMonitor.Tests
 
             // Assert
             Assert.IsNotNull(applicationUsages, "The list of application usages should not be null.");
-            Assert.IsTrue(applicationUsages.Count > 0, "The list of application usages should contain at least one process.");
+            Assert.IsTrue(applicationUsages.Count() > 0, "The list of application usages should contain at least one process.");
 
             // Further assert that the processes have valid data
             var firstProcess = applicationUsages.FirstOrDefault();
@@ -51,6 +51,16 @@ namespace SystemMonitor.Tests
 
         }
 
-        
+        [TestMethod()]
+        public async Task GetGpuUsageTest()
+        {
+            // Arrange
+            var monitor = new SystemMonitor();
+
+            // Act
+            var gpuUsage = await monitor.GetGpuUsageAsync();
+
+            // Assert
+        }
     }
 }
