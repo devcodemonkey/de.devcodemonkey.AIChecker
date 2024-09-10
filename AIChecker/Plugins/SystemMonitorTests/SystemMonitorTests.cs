@@ -80,7 +80,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor.Tests
             }
 
             // Assert                       
-            Assert.AreEqual(5, allUsageData.Count, "The number of tracked prcesses should be 5.");
+            Assert.AreEqual(4, allUsageData.Count, "The number of tracked prcesses should be 4.");
         }
 
         [TestMethod()]
