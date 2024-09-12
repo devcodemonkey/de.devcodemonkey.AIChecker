@@ -116,11 +116,14 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
         {
             using (var ctx = new AicheckerContext())
             {
-                var timeDifferencesInTicks = await (from result in ctx.Results
+                List<long> timeDifferencesInTicks = await (from result in ctx.Results
                                                     where result.ResultSetId == resultSetId
                                                     select (result.RequestEnd - result.RequestStart).Ticks).ToListAsync();
 
                 // Perform the average calculation on the client side
+                if(timeDifferencesInTicks.Count == 0)                
+                    return TimeSpan.Zero;
+                
                 var averageTicks = timeDifferencesInTicks.Average(); // Calculate average on the client side
                 var averageTimeSpan = TimeSpan.FromTicks(Convert.ToInt64(averageTicks)); // Convert to TimeSpan
 

@@ -8,14 +8,16 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
 
 public partial class AicheckerContext : DbContext
 {
-    public AicheckerContext()
+    private static DbContextOptions<DbContext>? lastOptions;
+
+    public AicheckerContext() : this(lastOptions ?? new DbContextOptions<DbContext>())
     {
     }
 
-    public AicheckerContext(DbContextOptions<AicheckerContext> options)
-        : base(options)
-    {
-    }
+    public AicheckerContext(DbContextOptions<DbContext> options) : base(options)
+            => lastOptions = options;
+
+
 
     public virtual DbSet<Answer> Answers { get; set; }
 
@@ -40,8 +42,10 @@ public partial class AicheckerContext : DbContext
     public virtual DbSet<SystemPromt> SystemPromts { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=127.0.0.1;Database=AIChecker;User ID=sa;Password=123456789!_Asdf;TrustServerCertificate=True;");
+    {
+        if (!optionsBuilder.IsConfigured)
+            optionsBuilder.UseSqlServer("Server=127.0.0.1;Database=AIChecker;User ID=sa;Password=123456789!_Asdf;TrustServerCertificate=True;");
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
