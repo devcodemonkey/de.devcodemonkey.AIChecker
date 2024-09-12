@@ -12,7 +12,7 @@ using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 namespace de.devcodemonkey.AIChecker.DataSource.APIRequester.Tests
 {
     [TestClass()]
-    public class APIRequesterTests
+    public class APIRequesterLiveTests
     {
         // test will only pass if the LM Studio API is up and running
         [TestMethod()]
