@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\APIRequester\APIRequester.csproj" />
+    <ProjectReference Include="..\APIRequester\APIRequester.csproj" />
   </ItemGroup>
 
   <ItemGroup>

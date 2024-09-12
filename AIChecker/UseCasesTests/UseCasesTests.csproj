@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\APIRequester\APIRequester.csproj" />
+    <ProjectReference Include="..\Plugins\APIRequester\APIRequester.csproj" />
     <ProjectReference Include="..\Plugins\SQLServerEF\SQLServerEF.csproj" />
     <ProjectReference Include="..\UseCases\UseCases.csproj" />
   </ItemGroup>

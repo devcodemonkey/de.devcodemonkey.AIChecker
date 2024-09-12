@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\APIRequester\APIRequester.csproj" />
+    <ProjectReference Include="..\Plugins\APIRequester\APIRequester.csproj" />
     <ProjectReference Include="..\CoreBusiness\CoreBusiness.csproj" />
     <ProjectReference Include="..\Plugins\JsonDeserializer\JsonDeserializer.csproj" />
     <ProjectReference Include="..\Plugins\SQLServerEF\SQLServerEF.csproj" />    
