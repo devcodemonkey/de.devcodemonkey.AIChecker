@@ -24,33 +24,31 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
         {
             using (var client = new HttpClient())
             {
+                // Set the Authorization header if a token is provided
                 if (!string.IsNullOrEmpty(environmentBearerTokenName))
                 {
                     var bearerToken = Environment.GetEnvironmentVariable(environmentBearerTokenName);
-                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
                 }
+
+                // Set the timeout for the request
                 client.Timeout = requestTimeout ?? TimeSpan.FromSeconds(100);
 
-                // Serialize the request data to JSON
-                var jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-
-                var jsonContent = JsonSerializer.Serialize(request, options: jsonSerializerOptions);
-                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
+                // Initialize the result object
                 var apiResult = new ApiResult<TResponse>
                 {
                     RequestStart = DateTime.Now
                 };
-                var response = await client.PostAsync(source, content);
+
+                // Send the request as JSON
+                var response = await client.PostAsJsonAsync(source, request);
                 apiResult.RequestEnd = DateTime.Now;
                 apiResult.StatusCode = response.StatusCode;
 
-
-
+                // Handle the response if successful
                 if (response.IsSuccessStatusCode)
                 {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    apiResult.Data = JsonSerializer.Deserialize<TResponse>(responseContent, options: jsonSerializerOptions);
+                    apiResult.Data = await response.Content.ReadFromJsonAsync<TResponse>() ?? default!;
                 }
 
                 return apiResult;
