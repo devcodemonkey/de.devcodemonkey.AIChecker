@@ -76,7 +76,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
             using (var ctx = new AicheckerContext())
             {
                 var model = await ctx.Models.FirstOrDefaultAsync(m => m.Value == value);
-                return model;
+                return model!;
             }
         }
 
@@ -85,7 +85,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
             using (var ctx = new AicheckerContext())
             {
                 var table = await ctx.Set<TTable>().FirstOrDefaultAsync(t => t.Value == value);
-                return table;
+                return table!;
             }
         }
 
@@ -108,7 +108,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
             using (var ctx = new AicheckerContext())
             {
                 var resultSet = await ctx.ResultSets.FirstOrDefaultAsync(rs => rs.Value == resultSetValue);
-                return resultSet.ResultSetId;
+                return resultSet!.ResultSetId;
             }
         }
 

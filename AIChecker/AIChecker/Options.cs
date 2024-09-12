@@ -11,10 +11,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
     public class Options
     {
         [Option("importQuestionAnswer", HelpText = "Imports a Questions and Answers to the db.")]
-        public string ImportQuestionAnswer { get; set; }
+        public string? ImportQuestionAnswer { get; set; }
 
         [Option("viewAverage", HelpText = "Views the average time of the API request of a 'result set'.")]
-        public string ViewAverage { get; set; }
+        public string? ViewAverage { get; set; }
 
         [Option("viewResultSets", HelpText = "Views all result sets.")]
         public bool ViewResultSets { get; set; }
@@ -23,9 +23,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         public bool DeleteAllEntityQuestionAnswer { get; set; }
 
         [Option("createMoreQuestions", HelpText = "Create more questions under the 'system prompt' and save them under the result 'set name'.")]
-        public string CreateMoreQuestions { get; set; }
+        public string? CreateMoreQuestions { get; set; }
 
         [Option("systemPrompt", HelpText = "The system prompt or path (path:<file-path>) for creating questions.")]
-        public string SystemPrompt { get; set; }
+        public string? SystemPrompt { get; set; }
     }
 }

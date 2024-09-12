@@ -10,7 +10,7 @@ namespace de.devcodemonkey.AIChecker.Importer.JsonDeserializer
 {
     public class Deserializer<T> : IDeserializer<T>
     {
-        public List<T> DeserializedClass { get; private set; }        
+        public List<T> DeserializedClass { get; private set; }
 
         public async Task<List<T>> DeserialzeFileAsync(string filePath)
         {
@@ -20,9 +20,7 @@ namespace de.devcodemonkey.AIChecker.Importer.JsonDeserializer
             DeserializedClass = await JsonSerializer.DeserializeAsync<List<T>>(fileStream);
 
             // Deserialize the JSON string to a list of QuizItem objects
-            return DeserializedClass;
+            return DeserializedClass!;
         }
-
-
     }
 }

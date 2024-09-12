@@ -7,7 +7,7 @@ public partial class Question
 {
     public Guid QuestionId { get; set; }
 
-    public string Value { get; set; } = null!;
+    public string? Value { get; set; } = null!;
 
     public virtual Answer? Answer { get; set; }
 

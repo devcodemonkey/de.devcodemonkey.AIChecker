@@ -11,6 +11,6 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
     public class ViewResultsVerb
     {
         [Option('r', "ResultSet", Required = true, HelpText = "The result set name.")]
-        public string ResultSet { get; set; }
+        public string? ResultSet { get; set; }
     }
 }

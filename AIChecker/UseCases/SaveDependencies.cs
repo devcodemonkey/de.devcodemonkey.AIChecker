@@ -14,21 +14,21 @@ namespace de.devcodemonkey.AIChecker.UseCases
     {
         public static async Task SaveDependenciesFromResult(
             IDefaultMethodesRepository defaultMethodesRepository,
-            string systemPromt, 
-            string resultSet, 
-            IApiResult<ResponseData> apiResult, 
+            string systemPromt,
+            string resultSet,
+            IApiResult<ResponseData> apiResult,
             Result result,
             string requestObject,
             string requestReason)
         {
             // check if model exists in db
-            var modelExists = await defaultMethodesRepository.ViewOverValue<Model>(apiResult.Data.Model);
+            var modelExists = await defaultMethodesRepository.ViewOverValue<Model>(apiResult!.Data!.Model!);
             if (modelExists == null)
             {
                 result.Model = new Model
                 {
                     ModelId = Guid.NewGuid(),
-                    Value = apiResult.Data.Model
+                    Value = apiResult?.Data?.Model ?? string.Empty
                 };
             }
             else

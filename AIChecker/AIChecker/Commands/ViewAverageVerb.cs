@@ -12,6 +12,6 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
     {
         [Option('r', "ResultSet", Required = true, HelpText = "The result set name.")]
         //[Value(0, MetaName = "ResultSet", Required = true, HelpText = "The result set name.")]
-        public string ResultSet { get; set; }
+        public string? ResultSet { get; set; }
     }
 }

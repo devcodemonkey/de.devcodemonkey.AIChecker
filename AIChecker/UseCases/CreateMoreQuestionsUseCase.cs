@@ -56,17 +56,17 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 {
                     ResultId = Guid.NewGuid(),
                     QuestionId = question.QuestionId,
-                    RequestId = apiResult.Data.Id,
+                    RequestId = apiResult?.Data?.Id,
                     Asked = messages[0].Content,
-                    Message = apiResult.Data.Choices[0].Message.Content,
+                    Message = apiResult?.Data?.Choices?.FirstOrDefault()?.Message?.Content,
                     Temperature = temperature,
                     MaxTokens = maxTokens,
-                    PromtTokens = apiResult.Data.Usage.PromptTokens,
-                    CompletionTokens = apiResult.Data.Usage.CompletionTokens,
-                    TotalTokens = apiResult.Data.Usage.TotalTokens,
-                    RequestCreated = DateTimeOffset.FromUnixTimeSeconds(apiResult.Data.Created).UtcDateTime,
-                    RequestStart = apiResult.RequestStart,
-                    RequestEnd = apiResult.RequestEnd
+                    PromtTokens = apiResult?.Data?.Usage?.PromptTokens ?? 0,
+                    CompletionTokens = apiResult?.Data?.Usage?.CompletionTokens ?? 0,
+                    TotalTokens = apiResult?.Data?.Usage?.TotalTokens ?? 0,
+                    RequestCreated = DateTimeOffset.FromUnixTimeSeconds(apiResult?.Data?.Created ?? 0).UtcDateTime,
+                    RequestStart = apiResult!.RequestStart!,
+                    RequestEnd = apiResult!.RequestEnd
                 };
 
                 await SaveDependencies.SaveDependenciesFromResult(_defaultMethodesRepository,
@@ -74,8 +74,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     resultSet,
                     apiResult,
                     result,
-                    apiResult.Data.Object,
-                    apiResult.Data.Choices[0].FinishReason);
+                    apiResult.Data!.Object!,
+                    apiResult.Data.Choices?.FirstOrDefault()?.FinishReason!);
 
                 await _defaultMethodesRepository.AddAsync(result);
             }

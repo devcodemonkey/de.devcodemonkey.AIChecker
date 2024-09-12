@@ -11,10 +11,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
     public class CreateMoreQuestionsVerb
     {
         [Option('r', "resultSet", Required = true, HelpText = "The result set name.")]
-        public string ResultSet { get; set; }
+        public string? ResultSet { get; set; }
 
         [Option('s', "systemPrompt", Required = true, HelpText = "The system prompt or path (path:<file-path>) for creating questions.")]
-        public string SystemPrompt { get; set; }
+        public string? SystemPrompt { get; set; }
 
         [Option('t', "maxTokens", Default = -1, HelpText = "The maximum number of tokens.")]
         public int MaxTokens { get; set; }
