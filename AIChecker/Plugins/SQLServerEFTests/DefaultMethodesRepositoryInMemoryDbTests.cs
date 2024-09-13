@@ -14,24 +14,15 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF.Tests
     [TestClass()]
     public class DefaultMethodesRepositoryInMemoryDbTests
     {
-        //private AicheckerContext? _ctx;
-
-        private DbContextOptions<DbContext> options;
-
-        [TestInitialize]
-        public void TestInitialize()
-        {
-            options = new DbContextOptionsBuilder<DbContext>()
+        private readonly DbContextOptions<DbContext> _options = new DbContextOptionsBuilder<DbContext>()
                 .UseInMemoryDatabase(databaseName: "AicheckerTestDatabase")
-                .Options;            
-        }
-
+                .Options;        
 
         [TestMethod()]
         public async Task AddAsyncTest()
         {
             IDefaultMethodesRepository defaultMethodesRepository = 
-                new DefaultMethodesRepository(new AicheckerContext(options));
+                new DefaultMethodesRepository(new AicheckerContext(_options));
 
             Question question = new Question
             {
@@ -54,7 +45,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF.Tests
             var resultSetId = Guid.NewGuid();
 
             // Seed the in-memory database
-            using (var context = new AicheckerContext(options))
+            using (var context = new AicheckerContext(_options))
             {
                 context!.Results.AddRange(new List<Result>
                 {
@@ -85,7 +76,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF.Tests
             }
 
             // Act 
-            var repository = new DefaultMethodesRepository(new AicheckerContext(options));
+            var repository = new DefaultMethodesRepository(new AicheckerContext(_options));
             var result = await repository.ViewAvarageTimeOfResultSet(resultSetId);
 
             // Calculate expected average TimeSpan manually:
