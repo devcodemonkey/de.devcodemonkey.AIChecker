@@ -8,16 +8,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
 
 public partial class AicheckerContext : DbContext
 {
-    private static DbContextOptions<DbContext>? lastOptions;
-
-    public AicheckerContext() : this(lastOptions ?? new DbContextOptions<DbContext>())
-    {
-    }
-
-    public AicheckerContext(DbContextOptions<DbContext> options) : base(options)
-            => lastOptions = options;
-
-
+    
 
     public virtual DbSet<Answer> Answers { get; set; }
 
@@ -43,7 +34,7 @@ public partial class AicheckerContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
+        //if (!optionsBuilder.IsConfigured)
             optionsBuilder.UseSqlServer("Server=127.0.0.1;Database=AIChecker;User ID=sa;Password=123456789!_Asdf;TrustServerCertificate=True;");
     }
 
