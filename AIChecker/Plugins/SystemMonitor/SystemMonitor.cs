@@ -1,9 +1,10 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
+using de.devcodemonkey.AIChecker.CoreBusiness.ModelsSystemMonitor;
 using System.Diagnostics;
 using System.Management;
 using System.Runtime.Versioning;
 using System.Text.Json;
-using SystemMonitor.Models;
+
 
 namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 {
