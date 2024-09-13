@@ -19,7 +19,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
             _ctx = new AicheckerContext();
         }
 
-        public async Task<List<T>> GetAllEntitiesAsync<T>() where T : class
+        public async Task<IEnumerable<T>> GetAllEntitiesAsync<T>() where T : class
         {
             return await _ctx.Set<T>().ToListAsync();
         }
@@ -38,7 +38,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
             return entity;
         }
 
-        public async Task<List<T>> AddAsync<T>(List<T> entities) where T : class
+        public async Task<IEnumerable<T>> AddAsync<T>(IEnumerable<T> entities) where T : class
         {
             _ctx.Set<T>().AddRange(entities);
             await _ctx.SaveChangesAsync();
