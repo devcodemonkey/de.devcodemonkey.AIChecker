@@ -1,15 +1,7 @@
-﻿using de.devcodemonkey.AIChecker.UseCases.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommandLine;
-using Microsoft.Extensions.Options;
-using Spectre.Console;
-using de.devcodemonkey.AIChecker.CoreBusiness.Models;
+﻿using CommandLine;
 using de.devcodemonkey.AIChecker.AIChecker.Commands;
-using System.Diagnostics;
+using de.devcodemonkey.AIChecker.UseCases.Interfaces;
+using Spectre.Console;
 
 
 namespace de.devcodemonkey.AIChecker.AIChecker
@@ -73,11 +65,11 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 DeleteAllQuestionsVerb,
                 DeleteResultSetVerb,
                 CreateMoreQuestionsVerb,
-                SendToLMSVerb>(args)                
+                SendToLMSVerb>(args)
                 .MapResult(
                     async (ViewUsedGpuVerb opts) =>
                     {
-                        
+
                     },
                     async (SendToLMSVerb ops) =>
                         await AnsiConsole.Status()

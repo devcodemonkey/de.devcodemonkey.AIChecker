@@ -1,11 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
+﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,12 +9,12 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF.Tests
     {
         private readonly DbContextOptions<DbContext> _options = new DbContextOptionsBuilder<DbContext>()
                 .UseInMemoryDatabase(databaseName: "AicheckerTestDatabase")
-                .Options;        
+                .Options;
 
         [TestMethod()]
         public async Task AddAsyncTest()
         {
-            IDefaultMethodesRepository defaultMethodesRepository = 
+            IDefaultMethodesRepository defaultMethodesRepository =
                 new DefaultMethodesRepository(new AicheckerContext(_options));
 
             Question question = new Question

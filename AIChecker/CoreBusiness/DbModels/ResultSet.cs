@@ -1,6 +1,4 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModelInterfaces;
-using System;
-using System.Collections.Generic;
 
 namespace de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 

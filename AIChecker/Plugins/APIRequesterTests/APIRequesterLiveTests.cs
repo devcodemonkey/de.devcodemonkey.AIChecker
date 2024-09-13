@@ -1,13 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using de.devcodemonkey.AIChecker.DataSource.APIRequester;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using de.devcodemonkey.AIChecker.CoreBusiness.Interfaces;
-using System.Net;
+﻿using de.devcodemonkey.AIChecker.CoreBusiness.Interfaces;
 using de.devcodemonkey.AIChecker.CoreBusiness.Models;
+using System.Net;
 
 namespace de.devcodemonkey.AIChecker.DataSource.APIRequester.Tests
 {
@@ -32,7 +25,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester.Tests
                     Role = "user",
                     Content = "Gib mir 2 zufallsfragen aus dem IT-Support"
                 }
-            };            
+            };
 
             var result = await apiRequester.SendChatRequestAsync(messages, maxTokens: -1);
 

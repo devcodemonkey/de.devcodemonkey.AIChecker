@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using de.devcodemonkey.AIChecker.CoreBusiness.DbModelInterfaces;
+﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModelInterfaces;
 
 namespace de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 

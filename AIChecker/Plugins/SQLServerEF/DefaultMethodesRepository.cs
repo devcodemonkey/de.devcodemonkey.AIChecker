@@ -2,10 +2,6 @@
 using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
 {
@@ -15,7 +11,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
 
         public DefaultMethodesRepository(AicheckerContext context)
         {
-            _ctx = context;            
+            _ctx = context;
         }
 
         public DefaultMethodesRepository()

@@ -1,13 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using de.devcodemonkey.AIChecker.UseCases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using de.devcodemonkey.AIChecker.DataSource.APIRequester;
+﻿using de.devcodemonkey.AIChecker.DataSource.APIRequester;
 using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
-using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 
 namespace de.devcodemonkey.AIChecker.UseCases.Tests

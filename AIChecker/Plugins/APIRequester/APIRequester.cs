@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using de.devcodemonkey.AIChecker.CoreBusiness.Interfaces;
+﻿using de.devcodemonkey.AIChecker.CoreBusiness.Interfaces;
 using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester.Models;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using System.Net.Http.Json;
 
 
 namespace de.devcodemonkey.AIChecker.DataSource.APIRequester

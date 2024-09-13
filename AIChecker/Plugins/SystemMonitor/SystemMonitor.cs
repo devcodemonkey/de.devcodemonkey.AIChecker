@@ -1,11 +1,9 @@
-﻿using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
+﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
+using System.Diagnostics;
 using System.Management;
-using System.Collections.Generic;
+using System.Runtime.Versioning;
 using System.Text.Json;
 using SystemMonitor.Models;
-using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 
 namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 {

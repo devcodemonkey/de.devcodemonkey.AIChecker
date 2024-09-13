@@ -1,15 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SystemMonitor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using System.Diagnostics;
 using System.Runtime.Versioning;
-using System.Threading;
-using SystemMonitor.Models;
-using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 
 namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor.Tests
 {
