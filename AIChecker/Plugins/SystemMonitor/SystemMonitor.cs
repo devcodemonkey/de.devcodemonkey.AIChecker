@@ -29,24 +29,32 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                     var processId = Convert.ToInt32(obj["IDProcess"]);
                     var processName = obj["Name"].ToString();
                     var cpuUsage = Convert.ToDouble(obj["PercentProcessorTime"]);
-                    var ramUsage = Convert.ToInt64(obj["WorkingSet"]) / (1024 * 1024);  // RAM usage in MB
-                    var gpuUsage = gpuStat.Gpus.FirstOrDefault()
+                    var memoryUsage = Convert.ToInt64(obj["WorkingSet"]) / (1024 * 1024);  // RAM usage in MB
+                    var gpuMemory = gpuStat.Gpus.FirstOrDefault()
                                 .Processes
                                 .Where(p => p.Pid == processId)
                                 .FirstOrDefault()?.CpuMemoryUsage ?? 0;
+                    gpuMemory = gpuMemory / 1024;  // GPU usage in MB
 
-                    gpuUsage = gpuUsage / 1024;  // GPU usage in MB
+                    var gpuUsage = gpuStat.Gpus.FirstOrDefault()
+                                .Processes
+                                .Where(p => p.Pid == processId)
+                                .FirstOrDefault()?.CpuPercent ?? 0;
 
                     applicationUsages.Add(new ApplicationUsage
                     {
                         ProcessId = processId,
                         ProcessName = processName,
+
                         CpuUsage = cpuUsage,
                         CpuUsageTimestamp = cpuGpuTimestamp,
-                        RamUsage = ramUsage,
-                        RamUsageTimestamp = cpuGpuTimestamp,
+                        MemoryUsage = memoryUsage,
+                        MemoryUsageTimestamp = cpuGpuTimestamp,
+
                         GpuUsage = gpuUsage,
-                        GpuUsageTimestamp = gpuStat.QueryTime
+                        GpuUsageTimestamp = gpuStat.QueryTime,
+                        GpuMemoryTimestamp = gpuStat.QueryTime,
+                        GpuMemory = gpuMemory,                        
                     });
                 }
             });
@@ -103,8 +111,8 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 
 
         public async Task MonitorPerformanceEveryXSecondsAsync(
-            Action<IEnumerable<ApplicationUsage>> saveAction, 
-            int intervalSeconds, 
+            Action<IEnumerable<ApplicationUsage>> saveAction,
+            int intervalSeconds,
             CancellationToken cancellationToken,
             bool writeOutput = false)
         {
@@ -122,7 +130,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                         Console.WriteLine(
                            $"Process: {usage.ProcessName}, " +
                            $"CPU: {usage.CpuUsage:F2}% at {usage.CpuUsageTimestamp}, " +
-                           $"RAM: {usage.RamUsage}MB at {usage.RamUsageTimestamp}, " +
+                           $"RAM: {usage.MemoryUsage}MB at {usage.MemoryUsageTimestamp}, " +
                            $"GPU: {usage.GpuUsage}MB at {usage.GpuUsageTimestamp}"
                        );
                     }
