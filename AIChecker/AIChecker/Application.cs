@@ -41,7 +41,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         public async Task RunAsync(string[] args)
         {
-            //args = ["sendToLMS", "-m", "Schreib mir ein Gedicht", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "1"];
+            args = ["sendToLMS", "-m", "Schreib mir ein Gedicht", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "5", "-i", "1"];
             //args = ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"];
             //args = ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"];
             //args = ["view-used-gpu"];
@@ -81,7 +81,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                                     ops.ResultSet,
                                     ops.RequestCount,
                                     ops.MaxTokens,
-                                    ops.Temperature
+                                    ops.Temperature,
+                                    saveInterval: ops.SaveInterval,
+                                    saveProcessUsage: ops.SaveProcessUsage
                                 );
                             }),
                     async (ImportQuestionsVerb opts)

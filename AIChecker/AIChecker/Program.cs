@@ -1,5 +1,6 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester;
+using de.devcodemonkey.AIChecker.DataSource.SystemMonitor;
 using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
 using de.devcodemonkey.AIChecker.Importer.JsonDeserializer;
 using de.devcodemonkey.AIChecker.UseCases;
@@ -30,6 +31,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             services.AddSingleton<IDeserializer<QuestionAnswer>, Deserializer<QuestionAnswer>>();
             services.AddScoped<IDefaultMethodesRepository, DefaultMethodesRepository>();
             services.AddSingleton<IAPIRequester, APIRequester>();
+            services.AddSingleton<ISystemMonitor, SystemMonitor>();
             // Register use cases
             services.AddSingleton<IImportQuestionAnswerUseCase, ImportQuestionAnswerUseCase>();
             services.AddSingleton<IDeleteAllQuestionAnswerUseCase, DeleteAllQuestionAnswerUseCase>();

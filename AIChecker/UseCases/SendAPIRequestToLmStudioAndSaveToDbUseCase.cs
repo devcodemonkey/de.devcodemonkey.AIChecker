@@ -28,18 +28,20 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
         public async Task ExecuteAsync(string userMessage,
             string systemPromt,
-            string resultSet,
+            string resultSetValue,
             int requestCount = 1,
             int maxTokens = -1,
             double temperture = 0.7,
             bool saveProcessUsage = true,
             int saveInterval = 5)
         {
-            await _defaultMethodesRepository.AddAsync(new ResultSet
+            var resultSet = await _defaultMethodesRepository.AddAsync(new ResultSet
             {
                 ResultSetId = Guid.NewGuid(),
-                Value = resultSet
+                Value = resultSetValue
             });
+
+            List<SystemResourceUsage> systemResourceUsages = new();
 
             // start monitoring
             if (saveProcessUsage)
@@ -49,26 +51,30 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     // Start the monitoring task
                     var monitoringTask = _systemMonitor.MonitorPerformanceEveryXSecondsAsync(async (applicationUsages) =>
                     {
-                        foreach(var item in applicationUsages)                        
+                        foreach (var item in applicationUsages)
                             item.SystemResourceUsageId = Guid.NewGuid();
-                        
+                        foreach (var item in applicationUsages)
+                        {
+                            item.SystemResourceUsageId = Guid.NewGuid();
+                            item.ResultSetId = resultSet.ResultSetId;
+                        }
+
                         // Save the application usages
                         await _defaultMethodesRepository.AddAsync(applicationUsages);
 
                     }, saveInterval, cancellationTokenSource.Token);
 
                     // example process to monitor for 20 seconds
-                    await SaveApiRequest(userMessage, systemPromt, resultSet, requestCount, maxTokens, temperture);
+                    await SaveApiRequest(userMessage, systemPromt, resultSetValue, requestCount, maxTokens, temperture);
 
                     cancellationTokenSource.Cancel();
 
                     // Await the monitoring task to handle final cleanup and stop gracefully
                     await monitoringTask;
                 }
-
             }
             else
-                await SaveApiRequest(userMessage, systemPromt, resultSet, requestCount, maxTokens, temperture);
+                await SaveApiRequest(userMessage, systemPromt, resultSetValue, requestCount, maxTokens, temperture);
 
         }
 
