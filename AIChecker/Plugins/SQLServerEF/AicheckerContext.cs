@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
@@ -38,6 +37,8 @@ public partial class AicheckerContext : DbContext
     public virtual DbSet<ResultSet> ResultSets { get; set; }
 
     public virtual DbSet<SystemPromt> SystemPromts { get; set; }
+
+    public virtual DbSet<SystemResourceUsage> SystemResourceUsages { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -166,6 +167,18 @@ public partial class AicheckerContext : DbContext
             entity.HasKey(e => e.SystemPromtId).HasName("PK_SystemPromt");
 
             entity.Property(e => e.SystemPromtId).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<SystemResourceUsage>(entity =>
+        {
+            entity.ToTable("SystemResourceUsage");
+
+            entity.Property(e => e.SystemResourceUsageId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.ResultSet).WithMany(p => p.SystemResourceUsages)
+                .HasForeignKey(d => d.ResultSetId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SystemResourceUsage_ResultSets");
         });
 
         OnModelCreatingPartial(modelBuilder);

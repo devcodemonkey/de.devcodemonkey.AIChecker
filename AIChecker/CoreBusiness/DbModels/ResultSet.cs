@@ -11,4 +11,6 @@ public partial class ResultSet : IValue
     public string Value { get; set; } = null!;
 
     public virtual ICollection<Result> Results { get; set; } = new List<Result>();
+
+    public virtual ICollection<SystemResourceUsage> SystemResourceUsages { get; set; } = new List<SystemResourceUsage>();
 }
