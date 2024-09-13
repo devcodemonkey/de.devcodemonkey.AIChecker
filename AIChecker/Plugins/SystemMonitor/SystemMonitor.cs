@@ -1,5 +1,6 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using de.devcodemonkey.AIChecker.CoreBusiness.ModelsSystemMonitor;
+using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using System.Diagnostics;
 using System.Management;
 using System.Runtime.Versioning;
@@ -9,7 +10,7 @@ using System.Text.Json;
 namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 {
     [SupportedOSPlatform("windows")]
-    public class SystemMonitor
+    public class SystemMonitor : ISystemMonitor
     {
         public async Task<IEnumerable<SystemResourceUsage>> GetApplicationUsagesAsync()
         {
