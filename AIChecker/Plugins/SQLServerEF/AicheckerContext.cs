@@ -8,7 +8,14 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
 
 public partial class AicheckerContext : DbContext
 {
-    
+    public AicheckerContext()
+    {
+    }
+
+    public AicheckerContext(DbContextOptions<DbContext> options)
+        : base(options)
+    {
+    }
 
     public virtual DbSet<Answer> Answers { get; set; }
 
@@ -34,7 +41,8 @@ public partial class AicheckerContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        //if (!optionsBuilder.IsConfigured)
+        // The if check is needed for the InMemory Test Database in the the test project
+        if (!optionsBuilder.IsConfigured)
             optionsBuilder.UseSqlServer("Server=127.0.0.1;Database=AIChecker;User ID=sa;Password=123456789!_Asdf;TrustServerCertificate=True;");
     }
 

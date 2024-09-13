@@ -12,24 +12,26 @@ using Microsoft.EntityFrameworkCore;
 namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF.Tests
 {
     [TestClass()]
-    public class DefaultMethodesRepositoryTests
+    public class DefaultMethodesRepositoryInMemoryDbTests
     {
-        private AicheckerContext? _ctx;
+        //private AicheckerContext? _ctx;
+
+        private DbContextOptions<DbContext> options;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            var options = new DbContextOptionsBuilder<DbContext>()
+            options = new DbContextOptionsBuilder<DbContext>()
                 .UseInMemoryDatabase(databaseName: "AicheckerTestDatabase")
-                .Options;
-            _ctx = new AicheckerContext(options);
+                .Options;            
         }
 
 
         [TestMethod()]
         public async Task AddAsyncTest()
         {
-            IDefaultMethodesRepository defaultMethodesRepository = new DefaultMethodesRepository();
+            IDefaultMethodesRepository defaultMethodesRepository = 
+                new DefaultMethodesRepository(new AicheckerContext(options));
 
             Question question = new Question
             {
@@ -43,7 +45,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF.Tests
             };
 
             await defaultMethodesRepository.AddAsync(question);
-        }       
+        }
 
         [TestMethod]
         public async Task ViewAvarageTimeOfResultSet_ShouldReturnCorrectAverageTime()
@@ -52,7 +54,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF.Tests
             var resultSetId = Guid.NewGuid();
 
             // Seed the in-memory database
-            using (var context = _ctx)
+            using (var context = new AicheckerContext(options))
             {
                 context!.Results.AddRange(new List<Result>
                 {
@@ -83,8 +85,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF.Tests
             }
 
             // Act 
-
-            var repository = new DefaultMethodesRepository();
+            var repository = new DefaultMethodesRepository(new AicheckerContext(options));
             var result = await repository.ViewAvarageTimeOfResultSet(resultSetId);
 
             // Calculate expected average TimeSpan manually:
