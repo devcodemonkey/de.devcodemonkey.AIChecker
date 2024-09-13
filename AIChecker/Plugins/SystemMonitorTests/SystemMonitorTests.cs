@@ -63,7 +63,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor.Tests
             var monitor = new SystemMonitor();
 
             // Act
-            var allUsageData = new List<IEnumerable<ApplicationUsage>>();
+            var allUsageData = new List<IEnumerable<SystemResourceUsage>>();
 
             // Create a cancellation token source to control the task
             using (var cancellationTokenSource = new CancellationTokenSource())

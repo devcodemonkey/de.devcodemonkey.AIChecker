@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SystemMonitor.Models
 {
-    public class ApplicationUsage
+    public class SystemResourceUsage
     {
         public int ProcessId { get; set; }
 

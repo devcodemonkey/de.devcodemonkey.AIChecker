@@ -11,9 +11,9 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
     [SupportedOSPlatform("windows")]
     public class SystemMonitor
     {
-        public async Task<IEnumerable<ApplicationUsage>> GetApplicationUsagesAsync()
+        public async Task<IEnumerable<SystemResourceUsage>> GetApplicationUsagesAsync()
         {
-            List<ApplicationUsage> applicationUsages = new List<ApplicationUsage>();
+            List<SystemResourceUsage> applicationUsages = new List<SystemResourceUsage>();
 
             var gpuStat = await GetGpuUsageAsync();
 
@@ -41,7 +41,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                                 .Where(p => p.Pid == processId)
                                 .FirstOrDefault()?.CpuPercent ?? 0;
 
-                    applicationUsages.Add(new ApplicationUsage
+                    applicationUsages.Add(new SystemResourceUsage
                     {
                         ProcessId = processId,
                         ProcessName = processName,
@@ -111,7 +111,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 
 
         public async Task MonitorPerformanceEveryXSecondsAsync(
-            Action<IEnumerable<ApplicationUsage>> saveAction,
+            Action<IEnumerable<SystemResourceUsage>> saveAction,
             int intervalSeconds,
             CancellationToken cancellationToken,
             bool writeOutput = false)
