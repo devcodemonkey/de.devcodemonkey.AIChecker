@@ -28,7 +28,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             services.AddSingleton<Application>();
             // Register plugins
             services.AddSingleton<IDeserializer<QuestionAnswer>, Deserializer<QuestionAnswer>>();
-            services.AddSingleton<IDefaultMethodesRepository, DefaultMethodesRepository>();
+            services.AddScoped<IDefaultMethodesRepository, DefaultMethodesRepository>();
             services.AddSingleton<IAPIRequester, APIRequester>();
             // Register use cases
             services.AddSingleton<IImportQuestionAnswerUseCase, ImportQuestionAnswerUseCase>();

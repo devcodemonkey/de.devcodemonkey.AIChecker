@@ -5,166 +5,133 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 
 namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
 {
     public class DefaultMethodesRepository : IDefaultMethodesRepository
     {
+        private readonly AicheckerContext _ctx;
+
+        public DefaultMethodesRepository(AicheckerContext context)
+        {
+            _ctx = context;
+        }
+
+        public DefaultMethodesRepository()
+        {
+            _ctx = new AicheckerContext();
+        }
+
         public async Task<List<T>> GetAllEntitiesAsync<T>() where T : class
         {
-            using (var ctx = new AicheckerContext())
-            {
-                return await ctx.Set<T>().ToListAsync();
-            }
+            return await _ctx.Set<T>().ToListAsync();
         }
 
         public async Task<T> AddAsync<T>(T entity) where T : class
         {
-            using (var ctx = new AicheckerContext())
-            {
-                ctx.Set<T>().Add(entity);
-                await ctx.SaveChangesAsync();
-                return entity;
-            }
+            _ctx.Set<T>().Add(entity);
+            await _ctx.SaveChangesAsync();
+            return entity;
         }
 
         public async Task<T> UpdateAsync<T>(T entity) where T : class
         {
-            using (var ctx = new AicheckerContext())
-            {
-                ctx.Set<T>().Update(entity);
-                await ctx.SaveChangesAsync();
-                return entity;
-            }
+            _ctx.Set<T>().Update(entity);
+            await _ctx.SaveChangesAsync();
+            return entity;
         }
 
         public async Task<List<T>> AddAsync<T>(List<T> entities) where T : class
         {
-            using (var ctx = new AicheckerContext())
-            {
-                ctx.Set<T>().AddRange(entities);
-                await ctx.SaveChangesAsync();
-                return entities;
-            }
+            _ctx.Set<T>().AddRange(entities);
+            await _ctx.SaveChangesAsync();
+            return entities;
         }
 
         public async Task<T> RemoveAsync<T>(T entity) where T : class
         {
-            using (var ctx = new AicheckerContext())
-            {
-                ctx.Set<T>().Remove(entity);
-                await ctx.SaveChangesAsync();
-                return entity;
-            }
+            _ctx.Set<T>().Remove(entity);
+            await _ctx.SaveChangesAsync();
+            return entity;
         }
 
         public async Task RemoveAllEntitiesAsync<T>() where T : class
         {
-            using (var context = new AicheckerContext())
-            {
-                var entities = await context.Set<T>().ToListAsync();
-                context.Set<T>().RemoveRange(entities);
-                context.SaveChanges();
-            }
+            var entities = await _ctx.Set<T>().ToListAsync();
+            _ctx.Set<T>().RemoveRange(entities);
+            await _ctx.SaveChangesAsync();
         }
 
         public async Task<Model> ViewModelOverValue(string value)
         {
-            using (var ctx = new AicheckerContext())
-            {
-                var model = await ctx.Models.FirstOrDefaultAsync(m => m.Value == value);
-                return model!;
-            }
+            return await _ctx.Models.FirstOrDefaultAsync(m => m.Value == value);
         }
 
         public async Task<TTable> ViewOverValue<TTable>(string value) where TTable : class, IValue
         {
-            using (var ctx = new AicheckerContext())
-            {
-                var table = await ctx.Set<TTable>().FirstOrDefaultAsync(t => t.Value == value);
-                return table!;
-            }
+            return await _ctx.Set<TTable>().FirstOrDefaultAsync(t => t.Value == value);
         }
 
         public async Task<IEnumerable<Result>> ViewResultsOfResultSetAsync(Guid resultSetId)
         {
-            using (var ctx = new AicheckerContext())
-            {
-                return await ctx.Results
-                    .Include(r => r.ResultSet)
-                    .Include(s => s.SystemPromt)
-                    .Include(m => m.Model)
-                    .Include(r => r.RequestObject)
-                    .Include(r => r.RequestReason)
-                    .Where(r => r.ResultSetId == resultSetId).ToListAsync();
-            }
+            return await _ctx.Results
+                .Include(r => r.ResultSet)
+                .Include(s => s.SystemPromt)
+                .Include(m => m.Model)
+                .Include(r => r.RequestObject)
+                .Include(r => r.RequestReason)
+                .Where(r => r.ResultSetId == resultSetId)
+                .ToListAsync();
         }
 
         public async Task<Guid> GetResultSetIdByValueAsync(string resultSetValue)
         {
-            using (var ctx = new AicheckerContext())
-            {
-                var resultSet = await ctx.ResultSets.FirstOrDefaultAsync(rs => rs.Value == resultSetValue);
-                return resultSet!.ResultSetId;
-            }
+            var resultSet = await _ctx.ResultSets.FirstOrDefaultAsync(rs => rs.Value == resultSetValue);
+            return resultSet!.ResultSetId;
         }
 
         public async Task<TimeSpan> ViewAvarageTimeOfResultSet(Guid resultSetId)
         {
-            using (var ctx = new AicheckerContext())
-            {
-                List<long> timeDifferencesInTicks = await (from result in ctx.Results
-                                                    where result.ResultSetId == resultSetId
-                                                    select (result.RequestEnd - result.RequestStart).Ticks).ToListAsync();
+            List<long> timeDifferencesInTicks = await (from result in _ctx.Results
+                                                       where result.ResultSetId == resultSetId
+                                                       select (result.RequestEnd - result.RequestStart).Ticks)
+                                                      .ToListAsync();
 
-                // Perform the average calculation on the client side
-                if(timeDifferencesInTicks.Count == 0)                
-                    return TimeSpan.Zero;
-                
-                var averageTicks = timeDifferencesInTicks.Average(); // Calculate average on the client side
-                var averageTimeSpan = TimeSpan.FromTicks(Convert.ToInt64(averageTicks)); // Convert to TimeSpan
+            if (timeDifferencesInTicks.Count == 0)
+                return TimeSpan.Zero;
 
-                return averageTimeSpan;
-            }
+            var averageTicks = timeDifferencesInTicks.Average();
+            var averageTimeSpan = TimeSpan.FromTicks(Convert.ToInt64(averageTicks));
+
+            return averageTimeSpan;
         }
 
         public async Task RemoveResultSetAsync(Guid resultSetId)
         {
-            using (var ctx = new AicheckerContext())
+            var results = await _ctx.Results.Where(r => r.ResultSetId == resultSetId).ToListAsync();
+
+            if (!results.Any())
             {
-                // Retrieve the results linked to the ResultSet
-                var results = await ctx.Results
-                    .Where(r => r.ResultSetId == resultSetId)
-                    .ToListAsync();
-
-                if (!results.Any())
-                {
-                    Console.WriteLine("No results found for the specified ResultSet.");
-                    return;
-                }
-
-                // Retrieve the ResultSet
-                var resultSet = await ctx.ResultSets.FirstOrDefaultAsync(rs => rs.ResultSetId == resultSetId);
-
-                ctx.Results.RemoveRange(results);
-
-                var model = await ctx.Models.FirstOrDefaultAsync(m => m.ModelId == results.First().ModelId);
-                var systemPrompt = await ctx.SystemPromts.FirstOrDefaultAsync(sp => sp.SystemPromtId == results.First().SystemPromtId);
-
-                if (model != null && !await ctx.Results.AnyAsync(r => r.ModelId == model.ModelId))
-                    ctx.Models.Remove(model);
-                if (systemPrompt != null && !await ctx.Results.AnyAsync(r => r.SystemPromtId == systemPrompt.SystemPromtId))
-                    ctx.SystemPromts.Remove(systemPrompt);
-                if (resultSet != null)
-                    ctx.ResultSets.Remove(resultSet);
-
-                // Save changes to the database
-                await ctx.SaveChangesAsync();
+                Console.WriteLine("No results found for the specified ResultSet.");
+                return;
             }
-        }
 
+            var resultSet = await _ctx.ResultSets.FirstOrDefaultAsync(rs => rs.ResultSetId == resultSetId);
+
+            _ctx.Results.RemoveRange(results);
+
+            var model = await _ctx.Models.FirstOrDefaultAsync(m => m.ModelId == results.First().ModelId);
+            var systemPrompt = await _ctx.SystemPromts.FirstOrDefaultAsync(sp => sp.SystemPromtId == results.First().SystemPromtId);
+
+            if (model != null && !await _ctx.Results.AnyAsync(r => r.ModelId == model.ModelId))
+                _ctx.Models.Remove(model);
+            if (systemPrompt != null && !await _ctx.Results.AnyAsync(r => r.SystemPromtId == systemPrompt.SystemPromtId))
+                _ctx.SystemPromts.Remove(systemPrompt);
+            if (resultSet != null)
+                _ctx.ResultSets.Remove(resultSet);
+
+            await _ctx.SaveChangesAsync();
+        }
     }
 }
