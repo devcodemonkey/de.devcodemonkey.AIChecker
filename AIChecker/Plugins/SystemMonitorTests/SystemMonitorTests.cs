@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Runtime.Versioning;
 using System.Threading;
 using SystemMonitor.Models;
+using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 
 namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor.Tests
 {

@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CoreBusiness\CoreBusiness.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="PythonGpuStat\dist\gpustat.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

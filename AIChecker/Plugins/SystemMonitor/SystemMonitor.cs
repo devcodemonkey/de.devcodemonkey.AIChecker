@@ -5,6 +5,7 @@ using System.Management;
 using System.Collections.Generic;
 using System.Text.Json;
 using SystemMonitor.Models;
+using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 
 namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 {
