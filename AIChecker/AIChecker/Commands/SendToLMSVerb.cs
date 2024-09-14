@@ -21,5 +21,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
         public bool SaveProcessUsage { get; set; }
         [Option('i', "saveInterval", Default = 5, HelpText = "The save interval.")]
         public int SaveInterval { get; set; }
+        [Option('w', "writeOutput", Default = true, HelpText = "Write process output to console")]
+        public bool WriteOutput { get; set; }
     }
 }

@@ -33,15 +33,14 @@ namespace de.devcodemonkey.AIChecker.UseCases
             int maxTokens = -1,
             double temperture = 0.7,
             bool saveProcessUsage = true,
-            int saveInterval = 5)
+            int saveInterval = 5,
+            bool writeOutput = true)
         {
             var resultSet = await _defaultMethodesRepository.AddAsync(new ResultSet
             {
                 ResultSetId = Guid.NewGuid(),
                 Value = resultSetValue
             });
-
-            List<SystemResourceUsage> systemResourceUsages = new();
 
             // start monitoring
             if (saveProcessUsage)
@@ -62,7 +61,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                         // Save the application usages
                         await _defaultMethodesRepository.AddAsync(applicationUsages);
 
-                    }, saveInterval, cancellationTokenSource.Token);
+                    }, saveInterval, cancellationTokenSource.Token, writeOutput: writeOutput);
 
                     // example process to monitor for 20 seconds
                     await SaveApiRequest(userMessage, systemPromt, resultSetValue, requestCount, maxTokens, temperture);

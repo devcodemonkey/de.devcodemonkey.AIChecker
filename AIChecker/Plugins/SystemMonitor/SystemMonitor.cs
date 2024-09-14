@@ -1,6 +1,7 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using de.devcodemonkey.AIChecker.CoreBusiness.ModelsSystemMonitor;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using Spectre.Console;
 using System.Diagnostics;
 using System.Management;
 using System.Runtime.Versioning;
@@ -89,7 +90,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                     // Deserialize the JSON result into the GpuStatData class
                     gpuStat = JsonSerializer.Deserialize<GpuStatData>(result);
 
-                    Console.WriteLine(result);
+                    //Console.WriteLine(result);
                 }
 
                 // Read the StandardError asynchronously
@@ -124,17 +125,54 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 
                 if (usageList != null && writeOutput)
                 {
-                    Console.WriteLine("Current Performance Data:");
-                    foreach (var usage in usageList)
+                    //Console.WriteLine("Current Performance Data:");
+                    //foreach (var usage in usageList)
+                    //{
+                    //    Console.WriteLine(
+                    //       $"Process: {usage.ProcessName}, " +
+                    //       $"CPU: {usage.CpuUsage:F2}% at {usage.CpuUsageTimestamp}, " +
+                    //       $"RAM: {usage.MemoryUsage}MB at {usage.MemoryUsageTimestamp}, " +
+                    //       $"GPU: {usage.GpuUsage}MB at {usage.GpuUsageTimestamp}"
+                    //   );
+                    //}
+                    //Console.WriteLine("----------------------------------------");
+                    var topGpuUsage = usageList
+                                        .Where(p => p.ProcessName != "_Total")
+                                        .OrderByDescending(u => u.MemoryUsage)
+                                        .OrderByDescending(u => u.CpuUsage)
+                                        .OrderByDescending(u => u.GpuUsage)
+                                        .Take(10);
+
+                    AnsiConsole.WriteLine($"Time: {DateTime.Now}");
+
+                    // Create a table
+                    var table = new Table();
+
+                    // Add columns
+                    table.AddColumn("No.");
+                    table.AddColumn("Process");
+                    table.AddColumn(new TableColumn("CPU Usage").RightAligned());
+                    table.AddColumn("CPU Timestamp");
+                    table.AddColumn(new TableColumn("RAM Usage").RightAligned());
+                    table.AddColumn("RAM Timestamp");
+                    table.AddColumn(new TableColumn("GPU Usage").RightAligned());
+                    table.AddColumn("GPU Timestamp");
+
+                    foreach (var (usage, index) in topGpuUsage.Select((usage, index) => (usage, index)))
                     {
-                        Console.WriteLine(
-                           $"Process: {usage.ProcessName}, " +
-                           $"CPU: {usage.CpuUsage:F2}% at {usage.CpuUsageTimestamp}, " +
-                           $"RAM: {usage.MemoryUsage}MB at {usage.MemoryUsageTimestamp}, " +
-                           $"GPU: {usage.GpuUsage}MB at {usage.GpuUsageTimestamp}"
-                       );
+                        table.AddRow(
+                            (index + 1).ToString(),
+                            usage.ProcessName,
+                            $"{usage.CpuUsage / 100:F2}%",
+                            usage.CpuUsageTimestamp.ToString(),
+                            $"{usage.MemoryUsage}",
+                            usage.MemoryUsageTimestamp.ToString(),
+                            $"{usage.GpuUsage:F2}%",
+                            usage.GpuUsageTimestamp.ToString()
+                        );
                     }
-                    Console.WriteLine("----------------------------------------");
+
+                    AnsiConsole.Write(table);
                 }
 
                 // Wait for the specified interval or stop if cancellation is requested
