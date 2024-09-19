@@ -195,29 +195,5 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             Console.WriteLine($"  {command}{new string(' ', MAX_DISTANCE - command.Length)} {description}");
         }
-
-        private void CreateMonkey()
-        {
-            string monkey = @"
-            __,__
-  .--.  .-""     ""-.  .--.
- / .. \/  .-. .-.  \/ .. \
-| |  '|  /   Y   \  |'  | |
-| \   \  \ 0 | 0 /  /   / |
- \ '- ,\.-""""""""""""""-./, -' /
-  `'-' /_   ^ ^   _\ '-'`
-      |  \._   _./  |
-      \   \ `~` /   /
-       '._ '-=-' _.'
-          '~---~'
-   |------------------|
-   | devcodemonkey.de |
-   |------------------|";
-
-            foreach (var line in monkey.Split('\n'))
-            {
-                Console.WriteLine($"{new string(' ', MAX_DISTANCE - MONKEY_DISTANCE)} {line}");
-            }
-        }
     }
 }
