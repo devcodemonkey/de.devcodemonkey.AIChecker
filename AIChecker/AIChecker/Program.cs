@@ -7,6 +7,7 @@ using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text;
 
 namespace de.devcodemonkey.AIChecker.AIChecker
 {
@@ -14,6 +15,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
     {
         static async Task Main(string[] args)
         {
+            // Set console encoding to UTF8 for stutus bar in Spectre.Console
+            Console.OutputEncoding = Encoding.UTF8;
             // Setup DI
             var serviceProvider = ConfigureServices();
 
