@@ -62,7 +62,7 @@ Source: "C:\Users\d-hoe\source\repos\masterarbeit\AIChecker\AIChecker\bin\publis
 [Registry]
 ; Add to system PATH for all users
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
-    ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}"; Flags: createvalueifdoesntexist uninsdeletevalue
+    ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}"; Flags: preservestringtype
 
 [Icons]
 ; Create a start menu shortcut for AiChecker with PowerShell
