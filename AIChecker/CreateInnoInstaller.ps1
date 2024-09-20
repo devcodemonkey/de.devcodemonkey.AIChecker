@@ -31,8 +31,29 @@ function New-SetupFile {
     New-Item -ItemType Directory -Path $revisionNumber    
     Move-Item "$fileName.exe" $revisionNumber   
 
+    # create a json revision file
 
+    $jsonFileName = "revision.json"
+    $jsonContent = @()
 
+    if (Test-Path $jsonFileName) {
+        $jsonContent = Get-Content -Path $jsonFileName | ConvertFrom-Json
+        if ($jsonContent -isnot [array]) {
+            $jsonContent = @($jsonContent)  # Convert to an array if it's not already one
+        }
+    }    
+
+    $jsonObject = @(
+        @{            
+            revision = "$revisionNumber";
+            file     = "$fileName.exe";            
+            version  = "$version";            
+        }
+    )
+
+    $jsonContent += $jsonObject
+    $jsonString = $jsonContent | ConvertTo-Json -Depth 3
+    Set-Content -Path $jsonFileName -Value $jsonString
 
     # Upload to FTP
     # Script from https://gist.github.com/TheUltimateC0der/dd59fa051c3f797c5a79a38df2e1bdc1
@@ -99,4 +120,4 @@ function New-SetupFile {
     # Upload Files - Stop
 }
 
-New-SetupFile -version 0.0.3-alpha
+New-SetupFile -version 0.0.1-alpha
