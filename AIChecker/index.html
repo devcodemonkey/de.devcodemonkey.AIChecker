@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AiChecker Versions</title>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>AiChecker Setup Versions</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Version</th>
+          <th>Download Link</th>
+        </tr>
+      </thead>
+      <tbody id="versionTable">
+        <!-- Data will be inserted here -->
+      </tbody>
+    </table>
+
+    <script>
+      // Fetch the JSON data from the file
+      fetch("revision.json")
+        .then((response) => response.json())
+        .then((jsonData) => {
+          const tableBody = document.getElementById("versionTable");
+
+          jsonData.forEach((item) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                        <td>${item.version}</td>                        
+                        <td>${item.file}</td>                        
+                        <td><a href="${item.link}" target="_blank">Download</a></td>
+                    `;
+            tableBody.appendChild(row);
+          });
+        })
+        .catch((error) => console.error("Error loading JSON data:", error));
+    </script>
+  </body>
+</html>
