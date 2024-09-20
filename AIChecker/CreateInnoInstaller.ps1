@@ -121,3 +121,4 @@ function New-SetupFile {
 }
 
 New-SetupFile -version 0.0.1-alpha
+git reset --hard
