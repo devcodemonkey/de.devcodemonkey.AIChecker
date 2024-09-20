@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "AiChecker"
-#define MyAppVersion "0.1.0-alpha"
+#define MyAppVersion "##testing##"
 #define MyAppPublisher "David Höll"
 #define MyAppURL "https://hl-dev.de"
 #define MyAppExeName "AIChecker.exe"
