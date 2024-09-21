@@ -88,7 +88,7 @@ public partial class AicheckerContext : DbContext
 
             entity.Property(e => e.ImagesId).ValueGeneratedNever();
             entity.Property(e => e.Img1)
-                .HasColumnType("image")
+                .HasColumnType("bytea")
                 .HasColumnName("Img");
 
             entity.HasOne(d => d.Answer).WithMany(p => p.Imgs)
