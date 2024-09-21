@@ -2,6 +2,7 @@
 using de.devcodemonkey.AIChecker.AIChecker.Commands;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using Spectre.Console;
+using System;
 using System.Reflection;
 
 namespace de.devcodemonkey.AIChecker.AIChecker
@@ -153,17 +154,22 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             await AnsiConsole.Status().StartAsync("Loading result sets...", async ctx =>
             {
                 var table = new Table();
-                table.AddColumn("ID");
-                table.AddColumn("Value");
-                table.AddColumn("Average Time");
+                table.AddColumn(new TableColumn("[bold yellow]ID[/]").Centered());
+                table.AddColumn(new TableColumn("[bold yellow]Value[/]").Centered());
+                table.AddColumn(new TableColumn("[bold yellow]Average Time (s)[/]").Centered());
 
                 var resultSets = await _viewResultSetsUseCase.ExecuteAsync();
                 foreach (var resultSet in resultSets)
                 {
-                    table.AddRow(resultSet.Item1.ResultSetId.ToString(), resultSet.Item1.Value, resultSet.Item2.TotalSeconds.ToString());
+                    table.AddRow(
+                        resultSet.Item1.ResultSetId.ToString(),
+                        resultSet.Item1.Value,
+                        resultSet.Item2.TotalSeconds.ToString("F2")  // Format to two decimal places for consistency
+                    );
                 }
 
-                AnsiConsole.WriteLine("Result sets:");
+                AnsiConsole.Write(new Rule("[yellow]Result sets:[/]").RuleStyle("green"));
+                
                 AnsiConsole.Write(table);
             });
         }
@@ -194,22 +200,30 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 foreach (var result in results)
                 {
                     table.AddRow(
-                        new Text(result.ResultSet.Value, new Style()),
-                        new Text(result.Model.Value, new Style()),
-                        new Text(result.SystemPromt.Value, new Style()),
-                        new Text(result.Asked.ToString(), new Style()),
-                        new Text(result.Message, new Style()),
-                        new Text(result.Temperature.ToString(), new Style()),
-                        new Text(result.MaxTokens.ToString(), new Style()),
-                        new Text(result.PromtTokens.ToString(), new Style()),
-                        new Text(result.CompletionTokens.ToString(), new Style()),
-                        new Text(result.TotalTokens.ToString(), new Style())
-                    );
+                        new Text(opts.FortmatTable ? Truncate(result.ResultSet.Value, 50) : result.ResultSet.Value, new Style()),
+                        new Text(opts.FortmatTable ? Truncate(result.Model.Value, 50) : result.Model.Value, new Style()),
+                        new Text(opts.FortmatTable ? Truncate(result.SystemPromt.Value, 50) : result.SystemPromt.Value, new Style()),
+                        new Text(opts.FortmatTable ? Truncate(result.Asked.ToString(), 50) : result.Asked.ToString(), new Style()),
+                        new Text(opts.FortmatTable ? Truncate(result.Message, 50) : result.Message, new Style()),
+                        new Text(opts.FortmatTable ? Truncate(result.Temperature.ToString(), 50) : result.Temperature.ToString(), new Style()),
+                        new Text(opts.FortmatTable ? Truncate(result.MaxTokens.ToString(), 50) : result.MaxTokens.ToString(), new Style()),
+                        new Text(opts.FortmatTable ? Truncate(result.PromtTokens.ToString(), 50) : result.PromtTokens.ToString(), new Style()),
+                        new Text(opts.FortmatTable ? Truncate(result.CompletionTokens.ToString(), 50) : result.CompletionTokens.ToString(), new Style()),
+                        new Text(opts.FortmatTable ? Truncate(result.TotalTokens.ToString(), 50) : result.TotalTokens.ToString(), new Style())
+                     );
                 }
 
-                AnsiConsole.WriteLine("Results:");
+                AnsiConsole.Write(new Rule("[yellow]Result[/]").RuleStyle("green"));                
                 AnsiConsole.Write(table);
             });
+        }
+
+        private string Truncate(string value, int maxLength)
+        {
+            if (string.IsNullOrEmpty(value))
+                return value;
+
+            return value.Length <= maxLength ? value : value.Substring(0, maxLength) + "...";
         }
 
         private async Task CreateMoreQuestionsAsync(CreateMoreQuestionsVerb opts)
