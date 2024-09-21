@@ -2,5 +2,5 @@
 
 public interface IImportQuestionAnswerUseCase
 {
-    Task ExecuteAsnc(string filePath);
+    Task ExecuteAsync(string filePath);
 }

@@ -17,7 +17,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             _defaultMethodesRepository = defaultMethodesRepository;
         }
 
-        public async Task ExecuteAsnc(string filePath)
+        public async Task ExecuteAsync(string filePath)
         {
             var deserializedQuestionAnswers = await _deserializer.DeserialzeFileAsync(filePath);
 
