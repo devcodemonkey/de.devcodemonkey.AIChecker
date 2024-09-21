@@ -6,6 +6,7 @@ using de.devcodemonkey.AIChecker.Importer.JsonDeserializer;
 using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 
@@ -28,11 +29,23 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private static IServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
+
+            services.AddDbContext<AicheckerContext>();
+            
+            // Create the database
+            using (var scope = services.BuildServiceProvider().CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<AicheckerContext>();
+                context.Database.Migrate();
+            }
+
+
+
+            services.AddScoped<IDefaultMethodesRepository, DefaultMethodesRepository>();
             // Register services
             services.AddSingleton<Application>();
             // Register plugins
-            services.AddSingleton<IDeserializer<QuestionAnswer>, Deserializer<QuestionAnswer>>();
-            services.AddScoped<IDefaultMethodesRepository, DefaultMethodesRepository>();
+            services.AddSingleton<IDeserializer<QuestionAnswer>, Deserializer<QuestionAnswer>>();            
             services.AddSingleton<IAPIRequester, APIRequester>();
             services.AddSingleton<ISystemMonitor, SystemMonitor>();
             // Register use cases
