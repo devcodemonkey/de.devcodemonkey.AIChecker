@@ -39,3 +39,9 @@ dotnet ef database update
 ```
 
 This will execute the migration and create the necessary database schema in PostgreSQL.
+
+## Scaffold the DbContext:
+
+```bash
+dotnet ef dbcontext scaffold "Host=localhost;Database=AiCheckerDB;Port=5432;User Id=AiChecker;Password=123" Npgsql.EntityFrameworkCore.PostgreSQL -o DbModels
+```
