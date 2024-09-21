@@ -143,32 +143,37 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                                         .OrderByDescending(u => u.GpuUsage)
                                         .Take(10);
 
-                    AnsiConsole.WriteLine($"Time: {DateTime.Now}, used GPU Memory: {topGpuUsage.FirstOrDefault().GpuTotalMemoryUsage} MB");
+                    AnsiConsole.Write(new Rule("[yellow]System Resource Usage[/]").RuleStyle("green"));                   
+
+                    AnsiConsole.MarkupLine($"Time: {DateTime.Now}, Used GPU Memory: {topGpuUsage.FirstOrDefault()?.GpuTotalMemoryUsage ?? 0} MB");
+
 
                     // Create a table
                     var table = new Table();
 
+                    //table.Title("System Resource Usage");
+
                     // Add columns
-                    table.AddColumn("No.");
-                    table.AddColumn("Process");
-                    table.AddColumn(new TableColumn("CPU Usage").RightAligned());
-                    table.AddColumn("CPU Timestamp");
-                    table.AddColumn(new TableColumn("RAM Usage").RightAligned());
-                    table.AddColumn("RAM Timestamp");
-                    table.AddColumn(new TableColumn("GPU Usage").RightAligned());
-                    table.AddColumn("GPU Timestamp");
+                    table.AddColumn("[bold yellow]No.[/]");
+                    table.AddColumn("[bold yellow]Process[/]");
+                    table.AddColumn(new TableColumn("[bold yellow]CPU Usage[/]").RightAligned());
+                    table.AddColumn("[bold yellow]CPU Timestamp[/]");
+                    table.AddColumn(new TableColumn("[bold yellow]RAM Usage[/]").RightAligned());
+                    table.AddColumn("[bold yellow]RAM Timestamp[/]");
+                    table.AddColumn(new TableColumn("[bold yellow]GPU Usage[/]").RightAligned());
+                    table.AddColumn("[bold yellow]GPU Timestamp[/]");
 
                     foreach (var (usage, index) in topGpuUsage.Select((usage, index) => (usage, index)))
                     {
                         table.AddRow(
                             (index + 1).ToString(),
-                            usage.ProcessName,
-                            $"{usage.CpuUsage / 100:F2}%",
-                            usage.CpuUsageTimestamp.ToString(),
-                            $"{usage.MemoryUsage}",
-                            usage.MemoryUsageTimestamp.ToString(),
-                            $"{usage.GpuUsage:F2}%",
-                            usage.GpuUsageTimestamp.ToString()
+                            $"[bold]{usage.ProcessName}[/]",  // Highlight process name
+                            $"[green]{usage.CpuUsage / 100:F2}%[/]",  // Display CPU usage with formatting
+                            usage.CpuUsageTimestamp.ToString("yyyy-MM-dd HH:mm:ss"),  // Format timestamps
+                            $"[blue]{usage.MemoryUsage} MB[/]",  // Display RAM usage in MB
+                            usage.MemoryUsageTimestamp.ToString("yyyy-MM-dd HH:mm:ss"),
+                            $"[red]{usage.GpuUsage:F2}%[/]",  // Display GPU usage with a different color
+                            usage.GpuUsageTimestamp.ToString("yyyy-MM-dd HH:mm:ss")
                         );
                     }
 
