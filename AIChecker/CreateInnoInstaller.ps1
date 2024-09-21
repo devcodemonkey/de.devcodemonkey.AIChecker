@@ -3,14 +3,17 @@ function New-SetupFile {
         $version,
         $upload = $false
 
-    )        
+    )     
+    $activeDirectory = Get-Location   
     $innoPath = "C:\Program Files (x86)\Inno Setup 6"
+    $basePath = "C:\Users\d-hoe\source\repos\masterarbeit\"
+
     if ($upload) {
         $secureFtpPassword = Read-Host -AsSecureString "Enter ftp password"    
     }
-    
 
-    Set-Location $PSScriptRoot
+    #Set-Location $PSScriptRoot
+    Set-Location $basePath
     # change version in the vs project file
     Set-Location .\AIChecker\
     [xml]$vsProjectFile = Get-Content .\AIChecker.csproj
@@ -132,6 +135,7 @@ function New-SetupFile {
     }
     # Upload Files - Stop
     git reset --hard
+    Set-Location $activeDirectory
 }
 
 #New-SetupFile -version 0.0.2-alpha -upload $true
