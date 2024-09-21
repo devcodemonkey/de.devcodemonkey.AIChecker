@@ -25,7 +25,7 @@ function New-SetupFile {
     
     # build the project
     Set-Location .\AIChecker\
-    . dotnet publish -c Release -o .\bin\publish
+    . dotnet publish -c Release -o .\bin\publish --self-contained -r win-x64
     Set-Location ..
     ."$innoPath\ISCC.exe" InstallerInno.iss        
 
@@ -133,5 +133,5 @@ function New-SetupFile {
     # Upload Files - Stop
 }
 
-New-SetupFile -version 0.0.1-alpha -upload $true
+New-SetupFile -version 0.0.2-alpha -upload $true
 git reset --hard
