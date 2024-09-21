@@ -1,13 +1,14 @@
 services:
   db:
     image: postgres
+    hostname: db
     restart: always
     environment:
-      POSTGRES_USER: david
+      POSTGRES_USER: AiChecker
       POSTGRES_PASSWORD: 123
-      #POSTGRES_DB: MyDB
+      POSTGRES_DB: AiCheckerDB
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
     ports:
       - 5432:5432
 
@@ -15,7 +16,10 @@ services:
     image: dpage/pgadmin4
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: hoell@hl-dev.de
+      PGADMIN_DEFAULT_EMAIL: AiChecker@hl-dev.de
       PGADMIN_DEFAULT_PASSWORD: 123
     ports:
       - 8080:80
+
+volumes:
+  db:
