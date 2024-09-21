@@ -14,19 +14,3 @@ git add .
 git commit -m "database backup $backupName"
 git push origin $backupName
 git checkout main
-cat <<'EOF'
-                 __,__
-        .--.  .-"     "-.  .--.
-      / .. \/  .-. .-.  \/ .. \
-      | |  '|  /   Y   \  |'  | |
-      | \   \  \ 0 | 0 /  /   / |
-      \ '- ,\.-"""""""-./, -' /
-        `'-' /_   ^ ^   _\ '-'`
-            |  \._   _./  |
-            \   \ `~` /   /
-            '._ '-=-' _.'
-               '~---~'
-        |------------------|
-        | devcodemonkey.de |
-        |------------------|
-EOF
