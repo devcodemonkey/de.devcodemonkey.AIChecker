@@ -131,7 +131,7 @@ function New-SetupFile {
         $webclient
     }
     # Upload Files - Stop
+    git reset --hard
 }
 
 #New-SetupFile -version 0.0.2-alpha -upload $true
-git reset --hard
