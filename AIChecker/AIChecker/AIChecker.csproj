@@ -7,13 +7,26 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>de.devcodemonkey.AIChecker.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-    <ApplicationIcon>logo.ico</ApplicationIcon>    
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.MD</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/devcodemonkey/de.devcodemonkey.AIChecker</RepositoryUrl>
+    <SignAssembly>True</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>    
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="logo.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.MD">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +62,8 @@
   <ItemGroup>
     <None Update="LICENSE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
     <None Update="logo.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
