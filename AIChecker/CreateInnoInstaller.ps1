@@ -18,7 +18,7 @@ function New-SetupFile {
     Set-Location .\AIChecker\
     [xml]$vsProjectFile = Get-Content .\AIChecker.csproj
     $vsProjectFile.Project.PropertyGroup.Version = $version
-    $vsProjectFile.Save(".\AIChecker\AIChecker.csproj")
+    $vsProjectFile.Save(".\AIChecker.csproj")
 
     # change version in the installer script
     Set-location ..           
