@@ -151,6 +151,25 @@ public partial class AicheckerContext : DbContext
                 .HasForeignKey(d => d.SystemPromtId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Results_SystemPromt");
+
+            // DateTime conversion to UTC
+            entity.Property(e => e.RequestCreated)
+            .HasConversion(
+                v => v.ToUniversalTime(), // Store as UTC
+                v => DateTime.SpecifyKind(v, DateTimeKind.Utc) // Retrieve as UTC
+            );
+
+            entity.Property(e => e.RequestStart)
+                .HasConversion(
+                    v => v.ToUniversalTime(),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                );
+
+            entity.Property(e => e.RequestEnd)
+                .HasConversion(
+                    v => v.ToUniversalTime(),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                );
         });
 
         modelBuilder.Entity<ResultSet>(entity =>
@@ -177,6 +196,31 @@ public partial class AicheckerContext : DbContext
                 .HasForeignKey(d => d.ResultSetId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SystemResourceUsage_ResultSets");
+
+            // DateTime conversion to UTC
+            entity.Property(e => e.CpuUsageTimestamp)
+            .HasConversion(
+                v => v.ToUniversalTime(),
+                v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+            );
+
+            entity.Property(e => e.MemoryUsageTimestamp)
+                .HasConversion(
+                    v => v.ToUniversalTime(),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                );
+
+            entity.Property(e => e.GpuUsageTimestamp)
+                .HasConversion(
+                    v => v.ToUniversalTime(),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                );
+
+            entity.Property(e => e.GpuTotalMemoryUsageTimestamp)
+                .HasConversion(
+                    v => v.ToUniversalTime(),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                );
         });
 
         OnModelCreatingPartial(modelBuilder);
