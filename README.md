@@ -18,65 +18,77 @@ To get help, simply run `AIChecker.exe` followed by the desired command.
    - **Description**: Display more information on a specific command.
    - **Command**: `help <command>`
 
-2. **version**
+2. **info**
+
+   - **Description**: Shows information about the developer of the AiChecker.
+   - **Command**: `info`
+
+3. **version**
 
    - **Description**: Display version information.
    - **Command**: `version`
 
-3. **viewResultSets**
+4. **recreateDatabase**
+
+   - **Description**: Recreates the database.
+   - **Command**: `recreateDatabase`
+
+5. **viewResultSets**
 
    - **Description**: View all result sets.
    - **Command**: `viewResultSets`
 
-4. **importQuestions**
+6. **importQuestions**
 
    - **Description**: Imports questions and answers into the database from a file.
    - **Command**: `importQuestions -p <Path>`
      - `-p`: Specifies the path to the file containing the questions and answers.
 
-5. **viewResults**
+7. **viewResults**
 
-   - **Description**: Displays the results of a specific result set.
-   - **Command**: `viewResults -r <ResultSet>`
+   - **Description**: Displays the results of a specific result set with optional formatting.
+   - **Command**: `viewResults -r <ResultSet> [-f]`
      - `-r`: Specifies the result set to view.
+     - `-f`: Optionally format the table for a better view.
 
-6. **viewAverage**
+8. **viewAverage**
 
    - **Description**: Displays the average time of API requests for a specific result set.
    - **Command**: `viewAverage -r <ResultSet>`
      - `-r`: Specifies the result set for which the average time is displayed.
 
-7. **view-used-gpu**
+9. **viewUsedGpu**
 
    - **Description**: Displays information about the currently used GPU.
    - **Command**: `view-used-gpu`
 
-8. **deleteAllQuestions**
+10. **deleteAllQuestions**
 
-   - **Description**: Deletes all questions and answers from the database.
-   - **Command**: `deleteAllQuestions`
+- **Description**: Deletes all questions and answers from the database.
+- **Command**: `deleteAllQuestions`
 
-9. **deleteResultSet**
+11. **deleteResultSet**
 
-   - **Description**: Deletes a specific result set from the database.
-   - **Command**: `deleteResultSet -r <ResultSet>`
-     - `-r`: Specifies the result set to delete.
+- **Description**: Deletes a specific result set from the database.
+- **Command**: `deleteResultSet -r <ResultSet>`
+  - `-r`: Specifies the result set to delete.
 
-10. **createMoreQuestions**
+12. **createMoreQuestions**
 
-    - **Description**: Creates more questions based on a system prompt and saves them under a specified result set.
-    - **Command**: `createMoreQuestions -r <ResultSet> -s <SystemPrompt> [-t <MaxTokens>] [-p <Temperature>]`
-      - `-r`: Result set name.
-      - `-s`: System prompt or path for question generation.
-      - `-t`: Maximum number of tokens (optional).
-      - `-p`: Temperature value (optional).
+- **Description**: Creates more questions based on a system prompt and saves them under a specified result set.
+- **Command**: `createMoreQuestions -r <ResultSet> -s <SystemPrompt> [-t <MaxTokens>] [-p <Temperature>]`
+  - `-r`: Result set name.
+  - `-s`: System prompt or path for question generation.
+  - `-t`: Maximum number of tokens (optional).
+  - `-p`: Temperature value (optional).
 
-11. **sendToLMS**
-    - **Description**: Sends an API request to LmStudio and saves the result to the database.
-    - **Command**: `sendToLMS -m <Message> -s <SystemPrompt> -r <ResultSet> [-t <MaxTokens>] [-p <Temperature>] [-c <RequestCount>]`
-      - `-m`: The user message to send.
-      - `-s`: System prompt for the request.
-      - `-r`: Result set name.
-      - `-t`: Maximum number of tokens (optional).
-      - `-p`: Temperature value (optional).
-      - `-c`: Number of requests (optional).
+13. **sendToLMS**
+
+- **Description**: Sends an API request to LmStudio and saves the result to the database.
+- **Command**: `sendToLms -m <Message> -s <SystemPrompt> -r <ResultSet> [-t <MaxTokens>] [-p <Temperature>] [-c <RequestCount>]`
+  - `-m`: The user message to send.
+  - `-s`: System prompt for the request.
+  - `-r`: Result set name.
+  - `-t`: Maximum number of tokens (optional).
+  - `-p`: Temperature value (optional).
+  - `-c`: Number of requests (optional).
