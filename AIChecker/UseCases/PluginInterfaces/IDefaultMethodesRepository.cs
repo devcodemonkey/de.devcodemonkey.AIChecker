@@ -19,5 +19,6 @@ namespace de.devcodemonkey.AIChecker.UseCases.PluginInterfaces
         Task RemoveResultSetAsync(Guid resultSetId);
         Task<Guid> GetResultSetIdByValueAsync(string resultSetValue);
         Task<IEnumerable<Result>> ViewResultsOfResultSetAsync(Guid resultSetId);
+        Task RecreateDatabaseAsync();
     }
 }

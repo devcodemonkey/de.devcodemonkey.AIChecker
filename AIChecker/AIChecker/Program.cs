@@ -49,6 +49,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             services.AddSingleton<IAPIRequester, APIRequester>();
             services.AddSingleton<ISystemMonitor, SystemMonitor>();
             // Register use cases
+            services.AddSingleton<IRecreateDatabaseUseCase, RecreateDatabaseUseCase>();
             services.AddSingleton<IImportQuestionAnswerUseCase, ImportQuestionAnswerUseCase>();
             services.AddSingleton<IDeleteAllQuestionAnswerUseCase, DeleteAllQuestionAnswerUseCase>();
             services.AddSingleton<IDeleteResultSetUseCase, DeleteResultSetUseCase>();

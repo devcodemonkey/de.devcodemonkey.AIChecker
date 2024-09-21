@@ -129,5 +129,10 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
 
             await _ctx.SaveChangesAsync();
         }
+
+        public Task RecreateDatabaseAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

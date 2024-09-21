@@ -12,6 +12,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private const int MAX_DISTANCE = 58;
         private const int MONKEY_DISTANCE = 12;
 
+        private readonly IRecreateDatabaseUseCase _recreateDatabaseUseCase;
         private readonly IImportQuestionAnswerUseCase _importQuestionAnswerUseCase;
         private readonly IDeleteAllQuestionAnswerUseCase _deleteAllQuestionAnswerUseCase;
         private readonly ICreateMoreQuestionsUseCase _createMoreQuestionsUseCase;
@@ -21,7 +22,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IDeleteResultSetUseCase _deleteResultSetUseCase;
         private readonly IViewResultsOfResultSetUseCase _viewResultsOfResultSetUseCase;
 
-        public Application(IImportQuestionAnswerUseCase importQuestionAnswerUseCase,
+
+        public Application(
+            IRecreateDatabaseUseCase recreateDatabaseUseCase,
+            IImportQuestionAnswerUseCase importQuestionAnswerUseCase,
             IDeleteAllQuestionAnswerUseCase deleteAllQuestionAnswerUseCase,
             IDeleteResultSetUseCase deleteResultSetUseCase,
             ICreateMoreQuestionsUseCase createMoreQuestionsUseCase,
@@ -30,6 +34,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             IViewResultSetsUseCase viewResultSetsUseCase,
             ISendAPIRequestToLmStudioAndSaveToDbUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase)
         {
+            _recreateDatabaseUseCase = recreateDatabaseUseCase;
             _importQuestionAnswerUseCase = importQuestionAnswerUseCase;
             _deleteAllQuestionAnswerUseCase = deleteAllQuestionAnswerUseCase;
             _deleteResultSetUseCase = deleteResultSetUseCase;
@@ -47,6 +52,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"];
             //args = ["view-used-gpu"];
             //args = ["info"];
+            //args = ["recreate-database"];
             if (args.Length == 0)
             {
                 await ViewResultSetsAsync();
@@ -60,6 +66,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 config.HelpWriter = Console.Out;
 
             }).ParseArguments<InfoVerb,
+                RecreateDatabaseVerb,
                 ImportQuestionsVerb,
                 ViewResultSetsVerb,
                 ViewAverageVerb,
@@ -77,10 +84,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                                         .InformationalVersion;
                         var repo = Assembly.GetExecutingAssembly()
                                         .GetCustomAttribute<AssemblyMetadataAttribute>()?
-                                        .Value;                        
+                                        .Value;
 
                         AnsiConsole.Write(
-                            new FigletText("AiChecker")                                
+                            new FigletText("AiChecker")
                                 .Color(Color.Green));
 
                         AnsiConsole.Write(
@@ -103,6 +110,23 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
                         return Task.FromResult(0);
                     },
+                    async (RecreateDatabaseVerb opts) =>
+                    {
+                        // Information about that all the data will be lost, type delete all data to confirm
+                        AnsiConsole.MarkupLine("[red]Warning![/] All data will be lost!");
+                        var confirm = AnsiConsole.Ask<string>("Type 'delete all data' to confirm: ");
+                        if (confirm != "delete all data")
+                        {
+                            AnsiConsole.MarkupLine("[red]Aborted![/]");
+                            return;
+                        }
+                        await AnsiConsole.Status()
+                            .StartAsync("Recreating database...", async ctx =>
+                            {
+                                await _recreateDatabaseUseCase.ExecuteAysnc();
+                            });
+                        AnsiConsole.MarkupLine("[green]Database recreated![/]");
+                    },
                     async (ViewUsedGpuVerb opts) =>
                     {
 
@@ -123,7 +147,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                                 );
                             }),
                     async (ImportQuestionsVerb opts)
-                        => await _importQuestionAnswerUseCase.ExecuteAsnc(opts.Path),
+                        => await _importQuestionAnswerUseCase.ExecuteAsync(opts.Path),
                     async (ViewResultSetsVerb opts)
                         => await ViewResultSetsAsync(),
                     async (ViewAverageVerb opts) =>
