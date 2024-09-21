@@ -143,7 +143,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                                         .OrderByDescending(u => u.GpuUsage)
                                         .Take(10);
 
-                    AnsiConsole.WriteLine($"Time: {DateTime.Now}");
+                    AnsiConsole.WriteLine($"Time: {DateTime.Now}, used GPU Memory: {topGpuUsage.FirstOrDefault().GpuTotalMemoryUsage} MB");
 
                     // Create a table
                     var table = new Table();
