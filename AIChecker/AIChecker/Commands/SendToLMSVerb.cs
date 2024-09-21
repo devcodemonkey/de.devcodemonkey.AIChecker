@@ -2,8 +2,8 @@
 
 namespace de.devcodemonkey.AIChecker.AIChecker.Commands
 {
-    [Verb("sendToLMS", HelpText = "Sends an API request to the LmStudio and saves the result to the db.")]
-    public class SendToLMSVerb
+    [Verb("sendToLms", HelpText = "Sends an API request to the LmStudio and saves the result to the db.")]
+    public class SendToLmsVerb
     {
         [Option('m', "message", Required = true, HelpText = "The user message.")]
         public string? Message { get; set; }

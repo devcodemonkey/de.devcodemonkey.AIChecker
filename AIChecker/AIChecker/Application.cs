@@ -66,12 +66,12 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             })
             .ParseArguments<InfoVerb, RecreateDatabaseVerb, ImportQuestionsVerb, ViewResultSetsVerb,
                             ViewAverageVerb, ViewResultsVerb, ViewUsedGpuVerb, DeleteAllQuestionsVerb,
-                            DeleteResultSetVerb, CreateMoreQuestionsVerb, SendToLMSVerb>(args)
+                            DeleteResultSetVerb, CreateMoreQuestionsVerb, SendToLmsVerb>(args)
             .MapResult(
                 (InfoVerb opts) => DisplayAppInfo(),
                 async (RecreateDatabaseVerb opts) => await RecreateDatabaseAsync(),
                 async (ViewUsedGpuVerb opts) => await ViewUsedGpuAsync(),
-                async (SendToLMSVerb opts) => await SendToLmsAsync(opts),
+                async (SendToLmsVerb opts) => await SendToLmsAsync(opts),
                 async (ImportQuestionsVerb opts) => await _importQuestionAnswerUseCase.ExecuteAsync(opts.Path),
                 async (ViewResultSetsVerb opts) => await ViewResultSetsAsync(),
                 async (ViewAverageVerb opts) => await ViewAverageAsync(opts),
@@ -132,7 +132,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             // Implementation of viewing used GPU
         }
 
-        private async Task SendToLmsAsync(SendToLMSVerb opts)
+        private async Task SendToLmsAsync(SendToLmsVerb opts)
         {
             await AnsiConsole.Status().StartAsync("Sending API request to LmStudio and saving to db...", async ctx =>
             {
