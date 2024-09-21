@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_USER: david
       POSTGRES_PASSWORD: 123
-      POSTGRES_DB: MyDB
+      #POSTGRES_DB: MyDB
     volumes:
       - ./data:/var/lib/postgresql/data
     ports:
