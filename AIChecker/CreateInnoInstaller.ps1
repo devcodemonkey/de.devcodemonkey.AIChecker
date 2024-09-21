@@ -133,5 +133,5 @@ function New-SetupFile {
     # Upload Files - Stop
 }
 
-New-SetupFile -version 0.0.2-alpha -upload $true
+#New-SetupFile -version 0.0.2-alpha -upload $true
 git reset --hard
