@@ -6,7 +6,7 @@ function New-SetupFile {
     )     
     $activeDirectory = Get-Location   
     $innoPath = "C:\Program Files (x86)\Inno Setup 6"
-    $basePath = "C:\Users\d-hoe\source\repos\masterarbeit\"
+    $basePath = "C:\Users\d-hoe\source\repos\masterarbeit\AIChecker\"
 
     if ($upload) {
         $secureFtpPassword = Read-Host -AsSecureString "Enter ftp password"    
