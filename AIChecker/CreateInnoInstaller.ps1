@@ -128,9 +128,10 @@ function New-SetupFile {
             $uri = New-Object System.Uri($DesFile) 
             $webclient.UploadFile($uri, $SrcFullname)
         }
+        $webclient
     }
     # Upload Files - Stop
 }
 
-New-SetupFile -version 0.0.1-alpha -upload $false
+New-SetupFile -version 0.0.1-alpha -upload $true
 git reset --hard
