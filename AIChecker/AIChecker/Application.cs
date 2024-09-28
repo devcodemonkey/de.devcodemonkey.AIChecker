@@ -4,6 +4,7 @@ using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using Spectre.Console;
 using System;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace de.devcodemonkey.AIChecker.AIChecker
 {
@@ -113,7 +114,15 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private async Task RecreateDatabaseAsync()
         {
             AnsiConsole.MarkupLine("[red]Warning![/] All data will be lost!");
-            var confirm = AnsiConsole.Ask<string>("Type 'delete all data' to confirm: ");
+            string confirm;
+            if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                confirm = AnsiConsole.Ask<string>("Type 'delete all data' to confirm: ");
+            else
+            {
+                System.Console.WriteLine("Type 'delete all data' to confirm: ");
+                confirm = Console.ReadLine() ?? string.Empty;
+            }
+
             if (confirm != "delete all data")
             {
                 AnsiConsole.MarkupLine("[red]Aborted![/]");
