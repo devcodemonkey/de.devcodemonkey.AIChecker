@@ -31,7 +31,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             string resultSetValue,
             int requestCount = 1,
             int maxTokens = -1,
-            double temperture = 0.7,
+            double temperature = 0.7,
             bool saveProcessUsage = true,
             int saveInterval = 5,
             bool writeOutput = true)
@@ -64,7 +64,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     }, saveInterval, cancellationTokenSource.Token, writeOutput: writeOutput);
 
                     // example process to monitor for 20 seconds
-                    await SaveApiRequest(userMessage, systemPromt, resultSetValue, requestCount, maxTokens, temperture);
+                    await SaveApiRequest(userMessage, systemPromt, resultSetValue, requestCount, maxTokens, temperature);
 
                     cancellationTokenSource.Cancel();
 
@@ -73,11 +73,11 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 }
             }
             else
-                await SaveApiRequest(userMessage, systemPromt, resultSetValue, requestCount, maxTokens, temperture);
+                await SaveApiRequest(userMessage, systemPromt, resultSetValue, requestCount, maxTokens, temperature);
 
         }
 
-        private async Task SaveApiRequest(string userMessage, string systemPromt, string resultSet, int requestCount, int maxTokens, double temperture)
+        private async Task SaveApiRequest(string userMessage, string systemPromt, string resultSet, int requestCount, int maxTokens, double temperature)
         {
             List<IMessage> messages = new();
             messages.Add(new Message
@@ -94,7 +94,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             for (int i = 0; i < requestCount; i++)
             {
 
-                var apiResult = await _apiRequester.SendChatRequestAsync(messages, maxTokens: maxTokens, temperature: temperture);
+                var apiResult = await _apiRequester.SendChatRequestAsync(messages, maxTokens: maxTokens, temperature: temperature);
 
 
                 Result result = new Result
@@ -103,7 +103,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     RequestId = apiResult?.Data?.Id,
                     Asked = messages[0].Content,
                     Message = apiResult?.Data?.Choices?.FirstOrDefault()?.Message?.Content,
-                    Temperature = temperture,
+                    Temperature = temperature,
                     MaxTokens = maxTokens,
                     PromtTokens = apiResult?.Data?.Usage?.PromptTokens ?? 0,
                     CompletionTokens = apiResult?.Data?.Usage?.CompletionTokens ?? 0,
