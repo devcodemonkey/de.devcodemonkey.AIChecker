@@ -54,9 +54,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["view-used-gpu"];
             //args = ["info"];
             //args = ["recreateDatabase"];
-            
+
             if (args.Length == 0)
-                if (args.Length == 0)
             {
                 await ViewResultSetsAsync();
                 return;
@@ -115,7 +114,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             AnsiConsole.MarkupLine("[red]Warning![/] All data will be lost!");
             string confirm;
-            if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 confirm = AnsiConsole.Ask<string>("Type 'delete all data' to confirm: ");
             else
             {
@@ -179,7 +178,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 }
 
                 AnsiConsole.Write(new Rule("[yellow]Result sets:[/]").RuleStyle("green"));
-                
+
                 AnsiConsole.Write(table);
             });
         }
@@ -223,7 +222,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                      );
                 }
 
-                AnsiConsole.Write(new Rule("[yellow]Result[/]").RuleStyle("green"));                
+                AnsiConsole.Write(new Rule("[yellow]Result[/]").RuleStyle("green"));
                 AnsiConsole.Write(table);
             });
         }
