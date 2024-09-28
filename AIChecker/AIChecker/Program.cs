@@ -8,6 +8,7 @@ using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Spectre.Console;
 using System.Text;
 
 namespace de.devcodemonkey.AIChecker.AIChecker
@@ -19,45 +20,45 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             // Set console encoding to UTF8 for stutus bar in Spectre.Console
             Console.OutputEncoding = Encoding.UTF8;
             // Setup DI
-            var serviceProvider = ConfigureServices();
+            var serviceProvider = await ConfigureServicesAsync();
 
             // Run the application
             var app = serviceProvider.GetRequiredService<Application>();
             await app.RunAsync(args);
         }
 
-        private static IServiceProvider ConfigureServices()
+        private static async Task<IServiceProvider> ConfigureServicesAsync()
         {
             var services = new ServiceCollection();
-
-            services.AddDbContext<AicheckerContext>();
-            
-            // Create the database
-            using (var scope = services.BuildServiceProvider().CreateScope())
+            await AnsiConsole.Status().StartAsync("Loading app services...", async ctx =>
             {
-                var context = scope.ServiceProvider.GetRequiredService<AicheckerContext>();
-                context.Database.Migrate();
-            }
+                services.AddDbContext<AicheckerContext>();
 
+                // Create the database
+                using (var scope = services.BuildServiceProvider().CreateScope())
+                {
+                    var context = scope.ServiceProvider.GetRequiredService<AicheckerContext>();
+                    context.Database.Migrate();
+                }
 
-
-            services.AddScoped<IDefaultMethodesRepository, DefaultMethodesRepository>();
-            // Register services
-            services.AddSingleton<Application>();
-            // Register plugins
-            services.AddSingleton<IDeserializer<QuestionAnswer>, Deserializer<QuestionAnswer>>();            
-            services.AddSingleton<IAPIRequester, APIRequester>();
-            services.AddSingleton<ISystemMonitor, SystemMonitor>();
-            // Register use cases
-            services.AddSingleton<IRecreateDatabaseUseCase, RecreateDatabaseUseCase>();
-            services.AddSingleton<IImportQuestionAnswerUseCase, ImportQuestionAnswerUseCase>();
-            services.AddSingleton<IDeleteAllQuestionAnswerUseCase, DeleteAllQuestionAnswerUseCase>();
-            services.AddSingleton<IDeleteResultSetUseCase, DeleteResultSetUseCase>();
-            services.AddSingleton<ICreateMoreQuestionsUseCase, CreateMoreQuestionsUseCase>();
-            services.AddSingleton<IViewAvarageTimeOfResultSetUseCase, ViewAvarageTimeOfResultSetUseCase>();
-            services.AddSingleton<IViewResultSetsUseCase, ViewResultSetsUseCase>();
-            services.AddSingleton<IViewResultsOfResultSetUseCase, ViewResultsOfResultSetUseCase>();
-            services.AddSingleton<ISendAPIRequestToLmStudioAndSaveToDbUseCase, SendAPIRequestToLmStudioAndSaveToDbUseCase>();
+                services.AddScoped<IDefaultMethodesRepository, DefaultMethodesRepository>();
+                // Register services
+                services.AddSingleton<Application>();
+                // Register plugins
+                services.AddSingleton<IDeserializer<QuestionAnswer>, Deserializer<QuestionAnswer>>();
+                services.AddSingleton<IAPIRequester, APIRequester>();
+                services.AddSingleton<ISystemMonitor, SystemMonitor>();
+                // Register use cases
+                services.AddSingleton<IRecreateDatabaseUseCase, RecreateDatabaseUseCase>();
+                services.AddSingleton<IImportQuestionAnswerUseCase, ImportQuestionAnswerUseCase>();
+                services.AddSingleton<IDeleteAllQuestionAnswerUseCase, DeleteAllQuestionAnswerUseCase>();
+                services.AddSingleton<IDeleteResultSetUseCase, DeleteResultSetUseCase>();
+                services.AddSingleton<ICreateMoreQuestionsUseCase, CreateMoreQuestionsUseCase>();
+                services.AddSingleton<IViewAvarageTimeOfResultSetUseCase, ViewAvarageTimeOfResultSetUseCase>();
+                services.AddSingleton<IViewResultSetsUseCase, ViewResultSetsUseCase>();
+                services.AddSingleton<IViewResultsOfResultSetUseCase, ViewResultsOfResultSetUseCase>();
+                services.AddSingleton<ISendAPIRequestToLmStudioAndSaveToDbUseCase, SendAPIRequestToLmStudioAndSaveToDbUseCase>();
+            });
 
             return services.BuildServiceProvider();
         }
