@@ -13,7 +13,8 @@
     <RepositoryUrl>https://github.com/devcodemonkey/de.devcodemonkey.AIChecker</RepositoryUrl>
     <SignAssembly>True</SignAssembly>
     <DelaySign>False</DelaySign>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>    
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>   
+    <RuntimeIdentifier>linux-x64;win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
