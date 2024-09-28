@@ -69,7 +69,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                             ViewAverageVerb, ViewResultsVerb, ViewUsedGpuVerb, DeleteAllQuestionsVerb,
                             DeleteResultSetVerb, CreateMoreQuestionsVerb, SendToLmsVerb>(args)
             .MapResult(
-                (InfoVerb opts) => DisplayAppInfo(),
+                async (InfoVerb opts) => await DisplayAppInfoAsync(),
                 async (RecreateDatabaseVerb opts) => await RecreateDatabaseAsync(),
                 async (ViewUsedGpuVerb opts) => await ViewUsedGpuAsync(),
                 async (SendToLmsVerb opts) => await SendToLmsAsync(opts),
@@ -86,7 +86,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             await parsingTask;
         }
 
-        private Task DisplayAppInfo()
+        private Task DisplayAppInfoAsync()
         {
             var version = Assembly.GetExecutingAssembly()
                                 .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
