@@ -17,8 +17,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
         public int MaxTokens { get; set; }
         [Option('p', "temperature", Default = 0.7, HelpText = "The temperature.")]
         public double Temperature { get; set; }
-        [Option('u', "saveProcessUsage", Default = true, HelpText = "Whether to save the process usage.")]
+        [Option('u', "saveProcessUsage", HelpText = "Save the process usage. Default is false.")]
         public bool SaveProcessUsage { get; set; }
+
         [Option('i', "saveInterval", Default = 5, HelpText = "The save interval.")]
         public int SaveInterval { get; set; }
         [Option('w', "writeOutput", Default = true, HelpText = "Write process output to console")]
