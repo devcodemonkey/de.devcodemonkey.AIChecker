@@ -7,6 +7,7 @@ using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console;
 using System.Text;
@@ -32,13 +33,33 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             var services = new ServiceCollection();
             await AnsiConsole.Status().StartAsync("Loading app services...", async ctx =>
             {
-                services.AddDbContext<AicheckerContext>();
+                var configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+                    .Build();
+
+                services.AddSingleton<IConfiguration>(configuration);
+
+                services.AddDbContext<AicheckerContext>(options =>
+                {
+                    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+                });
 
                 // Create the database
                 using (var scope = services.BuildServiceProvider().CreateScope())
                 {
                     var context = scope.ServiceProvider.GetRequiredService<AicheckerContext>();
-                    context.Database.Migrate();
+                    try
+                    {
+                        context.Database.Migrate();
+                    }
+                    catch (System.Exception e)
+                    {
+                        AnsiConsole.MarkupLine($"[red]Error: {e.Message}[/]");
+
+                        AnsiConsole.MarkupLine("[red]Please check your connection string in appsettings.json or start the database[/]");
+                    }
+
                 }
 
                 services.AddScoped<IDefaultMethodesRepository, DefaultMethodesRepository>();

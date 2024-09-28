@@ -12,12 +12,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
         public DefaultMethodesRepository(AicheckerContext context)
         {
             _ctx = context;
-        }
-
-        public DefaultMethodesRepository()
-        {
-            _ctx = new AicheckerContext();
-        }
+        }     
 
         public async Task RecreateDatabaseAsync()
         {

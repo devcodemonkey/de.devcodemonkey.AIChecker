@@ -1,17 +1,17 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
 
 public partial class AicheckerContext : DbContext
 {
-    public AicheckerContext()
-    {
-    }
+    private readonly IConfiguration _configuration;
 
-    public AicheckerContext(DbContextOptions<DbContext> options)
+    public AicheckerContext(DbContextOptions<AicheckerContext> options, IConfiguration configuration)
         : base(options)
     {
+        _configuration = configuration;
     }
 
     public virtual DbSet<Answer> Answers { get; set; }
@@ -40,9 +40,9 @@ public partial class AicheckerContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        // The if check is needed for the InMemory Test Database in the the test project
+        // The if check is needed for the InMemory Test Database in the the test project     
         if (!optionsBuilder.IsConfigured)
-            optionsBuilder.UseNpgsql("Host=localhost;Database=AiCheckerDB;Port=5432;User Id=AiChecker;Password=123");
+            optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
