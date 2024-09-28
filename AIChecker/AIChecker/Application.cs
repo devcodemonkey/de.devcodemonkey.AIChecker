@@ -52,7 +52,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"];
             //args = ["view-used-gpu"];
             //args = ["info"];
-            //args = ["recreate-database"];
+            //args = ["recreateDatabase"];
             
             if (args.Length == 0)
                 if (args.Length == 0)

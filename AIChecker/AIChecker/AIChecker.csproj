@@ -14,7 +14,8 @@
     <SignAssembly>True</SignAssembly>
     <DelaySign>False</DelaySign>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>   
-    <RuntimeIdentifier>linux-x64;win-x64</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="'$(OS)' == 'Windows_NT'">win-x64</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="'$(OS)' != 'Windows_NT'">linux-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
