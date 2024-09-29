@@ -28,7 +28,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                     {
                         ProcessId = i,
                         ProcessName = $"Process {i}",
-                        CpuUsage = new Random().Next(0, 100),
+                        CpuUsage = new Random().Next(0, 10000),
                         CpuUsageTimestamp = DateTime.Now,
                         MemoryUsage = new Random().Next(0, 1000),
                         MemoryUsageTimestamp = DateTime.Now,
@@ -38,7 +38,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                         GpuTotalMemoryUsageTimestamp = DateTime.Now,
                     });
                 }
-                
+
                 return applicationUsages;
             }
 
