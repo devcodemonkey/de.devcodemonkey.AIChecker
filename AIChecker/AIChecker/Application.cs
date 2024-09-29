@@ -55,7 +55,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["sendToLms", "-s", "", "-r" ,"Test result set", "-m", "write me a poem over 10 lines"];
             //args = ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"];
             //args = ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"];
-            args = ["viewUsedGpu"];
+            // args = ["viewUsedGpu"];
             //args = ["info"];
             //args = ["recreateDatabase"];
 
