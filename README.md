@@ -81,18 +81,26 @@ To get help, simply run `AIChecker.exe` followed by the desired command.
   - `-s`: System prompt or path for question generation.
   - `-t`: Maximum number of tokens (optional).
   - `-p`: Temperature value (optional).
+  - `--environmentTokenName`: The environment token name to set the bearer token for the API. (Default: `null`)
+  - `--source`: The source URL for the API request. (Default: `http://localhost:1234/v1/chat/completions`, Lm Studio default endpoint)
+  - `--model`: The model name to be used for generation. (Default: `nothing set`)
 
-13. **sendToLMS**
+13.  **sendToLMS**
 
 - **Description**: Sends an API request to LmStudio and saves the result to the database.
 - **Command**: `sendToLms -m <Message> -s <SystemPrompt> -r <ResultSet> [-t <MaxTokens>] [-p <Temperature>] [-c <RequestCount>] [-u] [-i <SaveInterval>] [-w]`
-  - `-m`: The user message to send.
-  - `-s`: System prompt for the request.
-  - `-r`: Result set name.
-  - `-t`: Maximum number of tokens (optional, default: -1).
-  - `-p`: Temperature value (optional, default: 0.7).
-  - `-c`: Number of requests (optional, default: 1).
-  - `-u`: Save the process usage (optional, default: false).
-  - `-i`: Save interval in seconds (optional, default: 5).
-  - `-w`: Write process output to console (optional, default: true).
+- 
+- `-m`: **Message** (required): The user message to send.
+- `-s`: **SystemPrompt** (required): System prompt for the request.
+- `-r`: **ResultSet** (required): Result set name to save the API response.
+- `-t`: **MaxTokens** (optional, default: -1): Maximum number of tokens for the request.
+- `-p`: **Temperature** (optional, default: 0.7): Controls the randomness of the output.
+- `-c`: **RequestCount** (optional, default: 1): Number of requests to send.
+- `-u`: **SaveProcessUsage** (optional, default: false): Saves the process usage statistics.
+- `-i`: **SaveInterval** (optional, default: 5): Interval in seconds to save process usage data.
+- `-w`: **WriteOutput** (optional, default: true): Whether to write the process output to the console.
+- `--environmentTokenName`: **EnvironmentTokenName** (optional): Name of the environment token to set the bearer token for the API.
+- `--source`: **Source URL** (optional, default: `http://localhost:1234/v1/chat/completions`): The source URL for the API.
+- `--model`: **Model Name** (optional, default: "nothing set"): Specifies the model name to use for the API request.
+
 

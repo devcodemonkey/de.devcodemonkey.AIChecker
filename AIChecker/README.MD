@@ -8,6 +8,17 @@
 
 ## Build app on linux
 
-``bash
+```bash
 dotnet publish -c Release --self-contained -r linux-x64 -p:PublishSingleFile=true
+```
+
+## Examples
+
+```bash
+./AIChecker sendToLms -m "create me a poem over 10 lines" -s "" -r "Test run 2024-09-29" -c 5
+./AIChecker 
+
+./AIChecker importQuestions -p /home/david/masterarbeit.wiki/06_00_00-Ticketexport/FAQs/FAQ-Outlook.json
+
+
 ```
