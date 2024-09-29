@@ -21,8 +21,6 @@ namespace de.devcodemonkey.AIChecker.UseCases
         {
             var deserializedQuestionAnswers = await _deserializer.DeserialzeFileAsync(filePath);
 
-            var questions = new List<Question>();
-
             foreach (var questionAnswer in deserializedQuestionAnswers)
             {
                 var question = new Question
@@ -44,11 +42,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
                         Img1 = File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(filePath)!, img))
                     });
                 }
-                questions.Add(question);
-            }
-
-            await _defaultMethodesRepository.AddAsync(questions);
+                await _defaultMethodesRepository.AddAsync(question);
+            }            
         }
-
     }
 }
