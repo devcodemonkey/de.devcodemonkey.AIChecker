@@ -58,6 +58,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             // args = ["viewUsedGpu"];
             //args = ["info"];
             //args = ["recreateDatabase"];
+            // args = ["importQuestions", "-p", "/home/david/masterarbeit.wiki/06_00_00-Ticketexport/FAQs/FAQ-Outlook.json"];
 
             if (args.Length == 0)
             {
@@ -160,7 +161,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     opts.MaxTokens,
                     opts.Temperature,
                     saveInterval: opts.SaveInterval,
-                    saveProcessUsage: opts.SaveProcessUsage
+                    saveProcessUsage: opts.SaveProcessUsage,
+                    model: opts.Model,
+                    source: opts.Source,
+                    environmentTokenName: opts.EnvironmentTokenName
                 );
             });
         }
