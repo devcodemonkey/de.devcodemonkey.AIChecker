@@ -5,7 +5,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <RootNamespace>de.devcodemonkey.AIChecker.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <ApplicationIcon>logo.ico</ApplicationIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
