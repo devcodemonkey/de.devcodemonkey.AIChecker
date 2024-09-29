@@ -27,14 +27,17 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
 
         public async Task ExecuteAsync(string userMessage,
-            string systemPromt,
+            string systemPrompt,
             string resultSetValue,
             int requestCount = 1,
             int maxTokens = -1,
             double temperature = 0.7,
             bool saveProcessUsage = true,
             int saveInterval = 5,
-            bool writeOutput = true)
+            bool writeOutput = true,
+            string? environmentTokenName = null,
+            string source = "http://localhost:1234/v1/chat/completions",
+            string model = "nothing set")
         {
             var resultSet = await _defaultMethodesRepository.AddAsync(new ResultSet
             {
@@ -64,7 +67,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     }, saveInterval, cancellationTokenSource.Token, writeOutput: writeOutput);
 
                     // example process to monitor for 20 seconds
-                    await SaveApiRequest(userMessage, systemPromt, resultSetValue, requestCount, maxTokens, temperature);
+                    await SaveApiRequest(userMessage, systemPrompt, resultSetValue, requestCount, maxTokens, temperature, environmentTokenName = null, source, model);
 
                     cancellationTokenSource.Cancel();
 
@@ -73,11 +76,11 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 }
             }
             else
-                await SaveApiRequest(userMessage, systemPromt, resultSetValue, requestCount, maxTokens, temperature);
+                await SaveApiRequest(userMessage, systemPrompt, resultSetValue, requestCount, maxTokens, temperature, environmentTokenName, source, model);
 
         }
 
-        private async Task SaveApiRequest(string userMessage, string systemPromt, string resultSet, int requestCount, int maxTokens, double temperature)
+        private async Task SaveApiRequest(string userMessage, string systemPrompt, string resultSet, int requestCount, int maxTokens, double temperature, string environmentBearerTokenName, string source, string model)
         {
             List<IMessage> messages = new();
             messages.Add(new Message
@@ -88,13 +91,13 @@ namespace de.devcodemonkey.AIChecker.UseCases
             messages.Add(new Message
             {
                 Role = "system",
-                Content = systemPromt
+                Content = systemPrompt
             });
 
             for (int i = 0; i < requestCount; i++)
             {
 
-                var apiResult = await _apiRequester.SendChatRequestAsync(messages, maxTokens: maxTokens, temperature: temperature);
+                var apiResult = await _apiRequester.SendChatRequestAsync(messages, maxTokens: maxTokens, temperature: temperature,model: model, source: source, environmentTokenName: environmentBearerTokenName);
 
 
                 Result result = new Result
@@ -114,7 +117,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 };
 
                 await SaveDependencies.SaveDependenciesFromResult(_defaultMethodesRepository,
-                    systemPromt,
+                    systemPrompt,
                     resultSet,
                     apiResult,
                     result,

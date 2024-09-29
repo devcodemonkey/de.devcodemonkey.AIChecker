@@ -24,5 +24,15 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
         public int SaveInterval { get; set; }
         [Option('w', "writeOutput", Default = true, HelpText = "Write process output to console")]
         public bool WriteOutput { get; set; }
+
+        [Option("environmentTokenName", Default = null, HelpText = "The environment token name to set the bearer token for the api.")]
+        public string EnvironmentTokenName { get; set; }
+
+        [Option("source", Default = "http://localhost:1234/v1/chat/completions", HelpText = "The source url. Default is http://localhost:1234/v1/chat/completions, default endpoint form Lm Studio.")]
+        public string Source { get; set; }
+
+        [Option("model", Default = "nothing set", HelpText = "The model name.")]
+        public string Model { get; set; }
+
     }
 }
