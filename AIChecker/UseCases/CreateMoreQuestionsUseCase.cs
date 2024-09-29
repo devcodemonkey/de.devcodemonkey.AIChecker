@@ -21,9 +21,12 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
         public async Task ExecuteAsync(
            string resultSet,
-           string systemPromt,
+           string systemPrompt,
            int maxTokens = -1,
-           double temperature = 0.7)
+           double temperature = 0.7,
+           string model = "nothing set",
+           string source = "http://localhost:1234/v1/chat/completions",
+           string? environmentTokenName = null)
         {
             var questions = await _defaultMethodesRepository.GetAllEntitiesAsync<Question>();
 
@@ -38,7 +41,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 messages.Add(new Message
                 {
                     Role = "system",
-                    Content = systemPromt
+                    Content = systemPrompt
                 });
 
                 var apiResult = await _apiRequester
@@ -65,7 +68,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 };
 
                 await SaveDependencies.SaveDependenciesFromResult(_defaultMethodesRepository,
-                    systemPromt,
+                    systemPrompt,
                     resultSet,
                     apiResult,
                     result,

@@ -2,6 +2,6 @@
 {
     public interface ICreateMoreQuestionsUseCase
     {
-        Task ExecuteAsync(string resultSet, string systemPromt, int maxTokens = -1, double temperture = 0.7);
+        Task ExecuteAsync(string resultSet, string systemPrompt, int maxTokens = -1, double temperature = 0.7, string model = "nothing set", string source = "http://localhost:1234/v1/chat/completions", string? environmentTokenName = null);
     }
 }

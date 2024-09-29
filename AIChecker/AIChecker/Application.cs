@@ -59,6 +59,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["info"];
             //args = ["recreateDatabase"];
             // args = ["importQuestions", "-p", "/home/david/masterarbeit.wiki/06_00_00-Ticketexport/FAQs/FAQ-Outlook.json"];
+            // args = ["createMoreQuestions", "-r", "Create more questions | model xy", "-s", "Create a new questions based on the answer"];
 
             if (args.Length == 0)
             {
@@ -249,18 +250,16 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private async Task CreateMoreQuestionsAsync(CreateMoreQuestionsVerb opts)
         {
             await AnsiConsole.Status().StartAsync("Creating more questions...", async ctx =>
-            {
-                if (opts.SystemPrompt.StartsWith("path:"))
-                {
-                    var filePath = opts.SystemPrompt.Substring(5);
-                    var promptContent = File.ReadAllText(filePath);
-                    await _createMoreQuestionsUseCase.ExecuteAsync(opts.ResultSet, promptContent, opts.MaxTokens, opts.Temperature);
-                }
-                else
-                {
-                    await _createMoreQuestionsUseCase.ExecuteAsync(opts.ResultSet, opts.SystemPrompt);
-                }
-            });
+                await _createMoreQuestionsUseCase.ExecuteAsync(
+                    opts.ResultSet,
+                    opts.SystemPrompt,
+                    opts.MaxTokens,
+                    opts.Temperature,
+                    opts.Model,
+                    opts.Source,
+                    opts.EnvironmentTokenName
+                )
+            );
         }
     }
 }
