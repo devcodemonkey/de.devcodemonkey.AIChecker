@@ -10,14 +10,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console;
+using Spectre.Console.Cli.Help;
 using System.Text;
 
 namespace de.devcodemonkey.AIChecker.AIChecker
 {
     internal class Program
     {
+        private static string[] _args;
         static async Task Main(string[] args)
         {
+            _args = args;
             // Set console encoding to UTF8 for stutus bar in Spectre.Console
             Console.OutputEncoding = Encoding.UTF8;
             // Setup DI
@@ -46,21 +49,21 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 });
 
                 // Create the database
-                using (var scope = services.BuildServiceProvider().CreateScope())
-                {
-                    var context = scope.ServiceProvider.GetRequiredService<AicheckerContext>();
-                    try
+                if (runMigration())
+                    using (var scope = services.BuildServiceProvider().CreateScope())
                     {
-                        context.Database.Migrate();
-                    }
-                    catch (System.Exception e)
-                    {
-                        AnsiConsole.MarkupLine($"[red]Error: {e.Message}[/]");
+                        var context = scope.ServiceProvider.GetRequiredService<AicheckerContext>();
+                        try
+                        {
+                            context.Database.Migrate();
+                        }
+                        catch (System.Exception e)
+                        {
+                            AnsiConsole.MarkupLine($"[red]Error: {e.Message}[/]");
 
-                        AnsiConsole.MarkupLine("[red]Please check your connection string in appsettings.json or start the database[/]");
+                            AnsiConsole.MarkupLine("[red]Please check your connection string in appsettings.json or start the database[/]");
+                        }
                     }
-
-                }
 
                 services.AddScoped<IDefaultMethodesRepository, DefaultMethodesRepository>();
                 // Register services
@@ -82,6 +85,16 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             });
 
             return services.BuildServiceProvider();
+        }
+
+        private static bool runMigration()
+        {
+            if (_args.Length == 1 && (
+                _args.Contains("help") || _args.Contains("-h") || _args.Contains("--help")
+            || _args.Contains("version") || _args.Contains("-v") || _args.Contains("--version")
+            || _args.Contains("info") || _args.Contains("-i") || _args.Contains("--info")))
+                return false;
+            return true;
         }
     }
 }
