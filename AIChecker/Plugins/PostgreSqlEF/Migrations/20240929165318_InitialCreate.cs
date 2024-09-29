@@ -84,15 +84,15 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SystemPromts",
+                name: "SystemPrompts",
                 columns: table => new
                 {
-                    SystemPromtId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SystemPromptId = table.Column<Guid>(type: "uuid", nullable: false),
                     Value = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SystemPromt", x => x.SystemPromtId);
+                    table.PrimaryKey("PK_SystemPrompt", x => x.SystemPromptId);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,10 +153,10 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     Asked = table.Column<string>(type: "text", nullable: true),
                     Message = table.Column<string>(type: "text", nullable: true),
                     ModelId = table.Column<Guid>(type: "uuid", nullable: false),
-                    SystemPromtId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SystemPromptId = table.Column<Guid>(type: "uuid", nullable: false),
                     Temperature = table.Column<double>(type: "double precision", nullable: false),
                     MaxTokens = table.Column<int>(type: "integer", nullable: false),
-                    PromtTokens = table.Column<int>(type: "integer", nullable: false),
+                    PromptTokens = table.Column<int>(type: "integer", nullable: false),
                     CompletionTokens = table.Column<int>(type: "integer", nullable: false),
                     TotalTokens = table.Column<int>(type: "integer", nullable: false),
                     RequestCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -192,10 +192,10 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                         principalTable: "ResultSets",
                         principalColumn: "ResultSetId");
                     table.ForeignKey(
-                        name: "FK_Results_SystemPromt",
-                        column: x => x.SystemPromtId,
-                        principalTable: "SystemPromts",
-                        principalColumn: "SystemPromtId");
+                        name: "FK_Results_SystemPrompts",
+                        column: x => x.SystemPromptId,
+                        principalTable: "SystemPrompts",
+                        principalColumn: "SystemPromptId");
                 });
 
             migrationBuilder.CreateTable(
@@ -275,9 +275,9 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                 column: "ResultSetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Results_SystemPromtId",
+                name: "IX_Results_SystemPromptId",
                 table: "Results",
-                column: "SystemPromtId");
+                column: "SystemPromptId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Unique_ResultSetId",
@@ -329,7 +329,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                 name: "ResultSets");
 
             migrationBuilder.DropTable(
-                name: "SystemPromts");
+                name: "SystemPrompts");
 
             migrationBuilder.DropTable(
                 name: "Questions");

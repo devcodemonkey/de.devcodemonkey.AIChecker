@@ -12,7 +12,7 @@ using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
 namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
 {
     [DbContext(typeof(AicheckerContext))]
-    [Migration("20240921203258_InitialCreate")]
+    [Migration("20240929165318_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -168,7 +168,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.Property<Guid>("ModelId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("PromtTokens")
+                    b.Property<int>("PromptTokens")
                         .HasColumnType("integer");
 
                     b.Property<Guid?>("QuestionId")
@@ -195,7 +195,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.Property<Guid>("ResultSetId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("SystemPromtId")
+                    b.Property<Guid>("SystemPromptId")
                         .HasColumnType("uuid");
 
                     b.Property<double>("Temperature")
@@ -216,7 +216,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
 
                     b.HasIndex("ResultSetId");
 
-                    b.HasIndex("SystemPromtId");
+                    b.HasIndex("SystemPromptId");
 
                     b.HasIndex(new[] { "ResultId" }, "IX_Unique_ResultSetId");
 
@@ -239,19 +239,19 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.ToTable("ResultSets");
                 });
 
-            modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.SystemPromt", b =>
+            modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.SystemPrompt", b =>
                 {
-                    b.Property<Guid>("SystemPromtId")
+                    b.Property<Guid>("SystemPromptId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("SystemPromtId")
-                        .HasName("PK_SystemPromt");
+                    b.HasKey("SystemPromptId")
+                        .HasName("PK_SystemPrompt");
 
-                    b.ToTable("SystemPromts");
+                    b.ToTable("SystemPrompts");
                 });
 
             modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.SystemResourceUsage", b =>
@@ -371,11 +371,11 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Results_ResultSets");
 
-                    b.HasOne("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.SystemPromt", "SystemPromt")
+                    b.HasOne("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.SystemPrompt", "SystemPrompt")
                         .WithMany("Results")
-                        .HasForeignKey("SystemPromtId")
+                        .HasForeignKey("SystemPromptId")
                         .IsRequired()
-                        .HasConstraintName("FK_Results_SystemPromt");
+                        .HasConstraintName("FK_Results_SystemPrompts");
 
                     b.Navigation("Model");
 
@@ -387,7 +387,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
 
                     b.Navigation("ResultSet");
 
-                    b.Navigation("SystemPromt");
+                    b.Navigation("SystemPrompt");
                 });
 
             modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.SystemResourceUsage", b =>
@@ -445,7 +445,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.Navigation("SystemResourceUsages");
                 });
 
-            modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.SystemPromt", b =>
+            modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.SystemPrompt", b =>
                 {
                     b.Navigation("Results");
                 });
