@@ -76,6 +76,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 services.AddSingleton<IViewResultSetsUseCase, ViewResultSetsUseCase>();
                 services.AddSingleton<IViewResultsOfResultSetUseCase, ViewResultsOfResultSetUseCase>();
                 services.AddSingleton<ISendAPIRequestToLmStudioAndSaveToDbUseCase, SendAPIRequestToLmStudioAndSaveToDbUseCase>();
+                services.AddSingleton<IViewGpuUsageUseCase, ViewGpuUsageUseCase>();
             });
 
             return services.BuildServiceProvider();

@@ -23,6 +23,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IDeleteResultSetUseCase _deleteResultSetUseCase;
         private readonly IViewResultsOfResultSetUseCase _viewResultsOfResultSetUseCase;
 
+        private readonly IViewGpuUsageUseCase _viewGpuUsageUseCase;
+
         public Application(
             IRecreateDatabaseUseCase recreateDatabaseUseCase,
             IImportQuestionAnswerUseCase importQuestionAnswerUseCase,
@@ -32,7 +34,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             IViewAverageTimeOfResultSetUseCase viewAverageTimeOfResultSetUseCase,
             IViewResultsOfResultSetUseCase viewResultsOfResultSetUseCase,
             IViewResultSetsUseCase viewResultSetsUseCase,
-            ISendAPIRequestToLmStudioAndSaveToDbUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase)
+            ISendAPIRequestToLmStudioAndSaveToDbUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase,
+            IViewGpuUsageUseCase viewGpuUsageUseCase)
         {
             _recreateDatabaseUseCase = recreateDatabaseUseCase;
             _importQuestionAnswerUseCase = importQuestionAnswerUseCase;
@@ -43,6 +46,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             _viewResultSetsUseCase = viewResultSetsUseCase;
             _viewResultsOfResultSetUseCase = viewResultsOfResultSetUseCase;
             _sendAPIRequestToLmStudioAndSaveToDbUseCase = sendAPIRequestToLmStudioAndSaveToDbUseCase;
+            _viewGpuUsageUseCase = viewGpuUsageUseCase;
         }
 
         public async Task RunAsync(string[] args)
@@ -51,7 +55,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["sendToLms", "-s", "", "-r" ,"Test result set", "-m", "write me a poem over 10 lines"];
             //args = ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"];
             //args = ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"];
-            //args = ["view-used-gpu"];
+            args = ["viewUsedGpu"];
             //args = ["info"];
             //args = ["recreateDatabase"];
 
@@ -138,7 +142,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         private async Task ViewUsedGpuAsync()
         {
-            // Implementation of viewing used GPU
+            await AnsiConsole.Status().StartAsync("Loading GPU usage...", async ctx =>
+            {
+                await _viewGpuUsageUseCase.ExecuteAsync();
+            });
         }
 
         private async Task SendToLmsAsync(SendToLmsVerb opts)
