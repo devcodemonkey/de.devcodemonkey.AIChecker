@@ -4,6 +4,7 @@ using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Spectre.Console;
 using System.Diagnostics;
 using System.Management;
+using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Text.Json;
 
@@ -16,6 +17,31 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
         public async Task<IEnumerable<SystemResourceUsage>> GetApplicationUsagesAsync()
         {
             List<SystemResourceUsage> applicationUsages = new List<SystemResourceUsage>();
+
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                System.Console.WriteLine("This method is only supported on Windows. Returning dummy data.");
+                
+                for (int i = 0; i < 10; i++)
+                {
+                    applicationUsages.Add(new SystemResourceUsage
+                    {
+                        ProcessId = i,
+                        ProcessName = $"Process {i}",
+                        CpuUsage = new Random().Next(0, 100),
+                        CpuUsageTimestamp = DateTime.Now,
+                        MemoryUsage = new Random().Next(0, 1000),
+                        MemoryUsageTimestamp = DateTime.Now,
+                        GpuUsage = new Random().Next(0, 100),
+                        GpuUsageTimestamp = DateTime.Now,
+                        GpuTotalMemoryUsage = new Random().Next(0, 1000),
+                        GpuTotalMemoryUsageTimestamp = DateTime.Now,
+                    });
+                }
+                
+                return applicationUsages;
+            }
+
 
             var gpuStat = await GetGpuUsageAsync();
 
@@ -65,6 +91,12 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 
         public async Task<GpuStatData> GetGpuUsageAsync()
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                System.Console.WriteLine("This method is only supported on Windows.");
+                return null;
+            }
+
             ProcessStartInfo start = new ProcessStartInfo
             {
                 FileName = Path.Combine("PythonGpuStat", "dist", "gpustat.exe"),  // Full path to the standalone gpustat executable
@@ -143,7 +175,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                                         .OrderByDescending(u => u.GpuUsage)
                                         .Take(10);
 
-                    AnsiConsole.Write(new Rule("[yellow]System Resource Usage[/]").RuleStyle("green"));                   
+                    AnsiConsole.Write(new Rule("[yellow]System Resource Usage[/]").RuleStyle("green"));
 
                     AnsiConsole.MarkupLine($"Time: {DateTime.Now}, Used GPU Memory: {topGpuUsage.FirstOrDefault()?.GpuTotalMemoryUsage ?? 0} MB");
 
