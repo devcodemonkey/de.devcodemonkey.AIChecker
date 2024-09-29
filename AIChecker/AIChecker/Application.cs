@@ -17,7 +17,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IImportQuestionAnswerUseCase _importQuestionAnswerUseCase;
         private readonly IDeleteAllQuestionAnswerUseCase _deleteAllQuestionAnswerUseCase;
         private readonly ICreateMoreQuestionsUseCase _createMoreQuestionsUseCase;
-        private readonly IViewAverageTimeOfResultSetUseCase _viewAvarageTimeOfResultSetUseCase;
+        private readonly IViewAverageTimeOfResultSetUseCase _viewAverageTimeOfResultSetUseCase;
         private readonly IViewResultSetsUseCase _viewResultSetsUseCase;
         private readonly ISendAPIRequestToLmStudioAndSaveToDbUseCase _sendAPIRequestToLmStudioAndSaveToDbUseCase;
         private readonly IDeleteResultSetUseCase _deleteResultSetUseCase;
@@ -29,7 +29,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             IDeleteAllQuestionAnswerUseCase deleteAllQuestionAnswerUseCase,
             IDeleteResultSetUseCase deleteResultSetUseCase,
             ICreateMoreQuestionsUseCase createMoreQuestionsUseCase,
-            IViewAverageTimeOfResultSetUseCase viewAvarageTimeOfResultSetUseCase,
+            IViewAverageTimeOfResultSetUseCase viewAverageTimeOfResultSetUseCase,
             IViewResultsOfResultSetUseCase viewResultsOfResultSetUseCase,
             IViewResultSetsUseCase viewResultSetsUseCase,
             ISendAPIRequestToLmStudioAndSaveToDbUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase)
@@ -39,7 +39,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             _deleteAllQuestionAnswerUseCase = deleteAllQuestionAnswerUseCase;
             _deleteResultSetUseCase = deleteResultSetUseCase;
             _createMoreQuestionsUseCase = createMoreQuestionsUseCase;
-            _viewAvarageTimeOfResultSetUseCase = viewAvarageTimeOfResultSetUseCase;
+            _viewAverageTimeOfResultSetUseCase = viewAverageTimeOfResultSetUseCase;
             _viewResultSetsUseCase = viewResultSetsUseCase;
             _viewResultsOfResultSetUseCase = viewResultsOfResultSetUseCase;
             _sendAPIRequestToLmStudioAndSaveToDbUseCase = sendAPIRequestToLmStudioAndSaveToDbUseCase;
@@ -185,7 +185,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         private async Task ViewAverageAsync(ViewAverageVerb opts)
         {
-            var result = await _viewAvarageTimeOfResultSetUseCase.ExecuteAsync(opts.ResultSet);
+            var result = await _viewAverageTimeOfResultSetUseCase.ExecuteAsync(opts.ResultSet);
             Console.WriteLine($"The average time of the API request for result set '{opts.ResultSet}' is {result.TotalSeconds} seconds.");
         }
 
@@ -209,16 +209,16 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 foreach (var result in results)
                 {
                     table.AddRow(
-                        new Text(opts.FortmatTable ? Truncate(result.ResultSet.Value, 50) : result.ResultSet.Value, new Style()),
-                        new Text(opts.FortmatTable ? Truncate(result.Model.Value, 50) : result.Model.Value, new Style()),
-                        new Text(opts.FortmatTable ? Truncate(result.SystemPrompt.Value, 50) : result.SystemPrompt.Value, new Style()),
-                        new Text(opts.FortmatTable ? Truncate(result.Asked.ToString(), 50) : result.Asked.ToString(), new Style()),
-                        new Text(opts.FortmatTable ? Truncate(result.Message, 50) : result.Message, new Style()),
-                        new Text(opts.FortmatTable ? Truncate(result.Temperature.ToString(), 50) : result.Temperature.ToString(), new Style()),
-                        new Text(opts.FortmatTable ? Truncate(result.MaxTokens.ToString(), 50) : result.MaxTokens.ToString(), new Style()),
-                        new Text(opts.FortmatTable ? Truncate(result.PromptTokens.ToString(), 50) : result.PromptTokens.ToString(), new Style()),
-                        new Text(opts.FortmatTable ? Truncate(result.CompletionTokens.ToString(), 50) : result.CompletionTokens.ToString(), new Style()),
-                        new Text(opts.FortmatTable ? Truncate(result.TotalTokens.ToString(), 50) : result.TotalTokens.ToString(), new Style())
+                        new Text(opts.FormatTable ? Truncate(result.ResultSet.Value, 50) : result.ResultSet.Value, new Style()),
+                        new Text(opts.FormatTable ? Truncate(result.Model.Value, 50) : result.Model.Value, new Style()),
+                        new Text(opts.FormatTable ? Truncate(result.SystemPrompt.Value, 50) : result.SystemPrompt.Value, new Style()),
+                        new Text(opts.FormatTable ? Truncate(result.Asked.ToString(), 50) : result.Asked.ToString(), new Style()),
+                        new Text(opts.FormatTable ? Truncate(result.Message, 50) : result.Message, new Style()),
+                        new Text(opts.FormatTable ? Truncate(result.Temperature.ToString(), 50) : result.Temperature.ToString(), new Style()),
+                        new Text(opts.FormatTable ? Truncate(result.MaxTokens.ToString(), 50) : result.MaxTokens.ToString(), new Style()),
+                        new Text(opts.FormatTable ? Truncate(result.PromptTokens.ToString(), 50) : result.PromptTokens.ToString(), new Style()),
+                        new Text(opts.FormatTable ? Truncate(result.CompletionTokens.ToString(), 50) : result.CompletionTokens.ToString(), new Style()),
+                        new Text(opts.FormatTable ? Truncate(result.TotalTokens.ToString(), 50) : result.TotalTokens.ToString(), new Style())
                      );
                 }
 

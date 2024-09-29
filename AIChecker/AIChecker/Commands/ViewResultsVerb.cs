@@ -9,6 +9,6 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
         public string? ResultSet { get; set; }
 
         [Option('f', "FormatTable", Required = false, Default = false, HelpText = "Format the table for a better view.")]
-        public bool FortmatTable { get; set; }
+        public bool FormatTable { get; set; }
     }
 }

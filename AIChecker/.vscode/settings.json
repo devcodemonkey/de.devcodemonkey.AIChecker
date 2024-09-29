@@ -3,11 +3,14 @@
         "Aichecker",
         "Ansi",
         "appsettings",
+        "Aysnc",
         "bytea",
         "devcodemonkey",
         "Expecteds",
+        "Höll",
         "IAPI",
         "Methodes",
-        "Npgsql"
+        "Npgsql",
+        "Requesttime"
     ]
 }
