@@ -50,21 +50,15 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
                 // Create the database
                 if (runMigration())
+                {
+                    // services.AddSingleton<MigrationService>();
                     using (var scope = services.BuildServiceProvider().CreateScope())
                     {
-                        var context = scope.ServiceProvider.GetRequiredService<AicheckerContext>();
-                        try
-                        {
-                            context.Database.Migrate();
-                        }
-                        catch (System.Exception e)
-                        {
-                            AnsiConsole.MarkupLine($"[red]Error: {e.Message}[/]");
-
-                            AnsiConsole.MarkupLine("[red]Please check your connection string in appsettings.json or start the database[/]");
-                        }
+                        var services = scope.ServiceProvider;
+                        MigrationService.RunMigrationIfNeeded(services);
                     }
 
+                }
                 services.AddScoped<IDefaultMethodesRepository, DefaultMethodesRepository>();
                 // Register services
                 services.AddSingleton<Application>();

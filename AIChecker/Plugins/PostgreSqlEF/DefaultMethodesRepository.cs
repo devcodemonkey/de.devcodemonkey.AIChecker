@@ -17,8 +17,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
         public async Task RecreateDatabaseAsync()
         {
             await _ctx.Database.EnsureDeletedAsync();
-            // will be called in the Program.cs
-            //await _ctx.Database.EnsureCreatedAsync();
+            await _ctx.Database.MigrateAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllEntitiesAsync<T>() where T : class
