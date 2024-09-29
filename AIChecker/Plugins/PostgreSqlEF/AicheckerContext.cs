@@ -8,6 +8,10 @@ public partial class AicheckerContext : DbContext
 {
     private readonly IConfiguration _configuration;
 
+    public AicheckerContext() : base()
+    {
+    }
+
     public AicheckerContext(DbContextOptions<AicheckerContext> options, IConfiguration configuration)
         : base(options)
     {
@@ -150,7 +154,7 @@ public partial class AicheckerContext : DbContext
             entity.HasOne(d => d.SystemPrompt).WithMany(p => p.Results)
                 .HasForeignKey(d => d.SystemPromptId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Results_SystemPromt");
+                .HasConstraintName("FK_Results_SystemPrompts");
 
             // DateTime conversion to UTC
             entity.Property(e => e.RequestCreated)
@@ -181,7 +185,7 @@ public partial class AicheckerContext : DbContext
 
         modelBuilder.Entity<SystemPrompt>(entity =>
         {
-            entity.HasKey(e => e.SystemPromptId).HasName("PK_SystemPromt");
+            entity.HasKey(e => e.SystemPromptId).HasName("PK_SystemPrompt");
 
             entity.Property(e => e.SystemPromptId).ValueGeneratedNever();
         });
