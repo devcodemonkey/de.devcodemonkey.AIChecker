@@ -27,7 +27,7 @@ dotnet ef migrations add <MigrationName>
 For example, to create an "InitialCreate" migration:
 
 ```bash
-dotnet ef migrations add InitialCreate
+dotnet ef migrations add InitialCreate --project PostgreSqlEF.csproj --startup-project ../../AIChecker
 ```
 
 ### 4. Update the database:
@@ -35,7 +35,7 @@ dotnet ef migrations add InitialCreate
 To apply the migration to your PostgreSQL database, use:
 
 ```bash
-dotnet ef database update
+dotnet ef database update --project PostgreSqlEF.csproj --startup-project ../../AIChecker --connection "Host=localhost;Database=AiCheckerDB;Port=5432;User Id=AiChecker;Password=123"
 ```
 
 This will execute the migration and create the necessary database schema in PostgreSQL.
