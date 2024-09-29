@@ -34,7 +34,7 @@ public partial class AicheckerContext : DbContext
 
     public virtual DbSet<ResultSet> ResultSets { get; set; }
 
-    public virtual DbSet<SystemPromt> SystemPromts { get; set; }
+    public virtual DbSet<SystemPrompt> SystemPrompts { get; set; }
 
     public virtual DbSet<SystemResourceUsage> SystemResourceUsages { get; set; }
 
@@ -147,8 +147,8 @@ public partial class AicheckerContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Results_ResultSets");
 
-            entity.HasOne(d => d.SystemPromt).WithMany(p => p.Results)
-                .HasForeignKey(d => d.SystemPromtId)
+            entity.HasOne(d => d.SystemPrompt).WithMany(p => p.Results)
+                .HasForeignKey(d => d.SystemPromptId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Results_SystemPromt");
 
@@ -179,11 +179,11 @@ public partial class AicheckerContext : DbContext
             entity.Property(e => e.ResultSetId).ValueGeneratedNever();
         });
 
-        modelBuilder.Entity<SystemPromt>(entity =>
+        modelBuilder.Entity<SystemPrompt>(entity =>
         {
-            entity.HasKey(e => e.SystemPromtId).HasName("PK_SystemPromt");
+            entity.HasKey(e => e.SystemPromptId).HasName("PK_SystemPromt");
 
-            entity.Property(e => e.SystemPromtId).ValueGeneratedNever();
+            entity.Property(e => e.SystemPromptId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<SystemResourceUsage>(entity =>

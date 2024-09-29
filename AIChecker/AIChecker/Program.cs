@@ -21,7 +21,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         static async Task Main(string[] args)
         {
             _args = args;
-            // Set console encoding to UTF8 for stutus bar in Spectre.Console
+            // Set console encoding to UTF8 for status bar in Spectre.Console
             Console.OutputEncoding = Encoding.UTF8;
             // Setup DI
             var serviceProvider = await ConfigureServicesAsync();
@@ -72,7 +72,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 services.AddSingleton<IDeleteAllQuestionAnswerUseCase, DeleteAllQuestionAnswerUseCase>();
                 services.AddSingleton<IDeleteResultSetUseCase, DeleteResultSetUseCase>();
                 services.AddSingleton<ICreateMoreQuestionsUseCase, CreateMoreQuestionsUseCase>();
-                services.AddSingleton<IViewAvarageTimeOfResultSetUseCase, ViewAvarageTimeOfResultSetUseCase>();
+                services.AddSingleton<IViewAverageTimeOfResultSetUseCase, ViewAverageTimeOfResultSetUseCase>();
                 services.AddSingleton<IViewResultSetsUseCase, ViewResultSetsUseCase>();
                 services.AddSingleton<IViewResultsOfResultSetUseCase, ViewResultsOfResultSetUseCase>();
                 services.AddSingleton<ISendAPIRequestToLmStudioAndSaveToDbUseCase, SendAPIRequestToLmStudioAndSaveToDbUseCase>();

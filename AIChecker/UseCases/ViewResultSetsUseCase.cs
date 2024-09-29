@@ -17,7 +17,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             List<Tuple<ResultSet, TimeSpan>> resultSets = new();
             foreach (var result in results)
             {
-                var average = await _defaultMethodesRepository.ViewAvarageTimeOfResultSet(result.ResultSetId);
+                var average = await _defaultMethodesRepository.ViewAverageTimeOfResultSet(result.ResultSetId);
                 resultSets.Add(new Tuple<ResultSet, TimeSpan>(result, average));
             }
             return resultSets;

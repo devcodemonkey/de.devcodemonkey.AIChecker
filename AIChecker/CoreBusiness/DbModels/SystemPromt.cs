@@ -2,9 +2,9 @@
 
 namespace de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 
-public partial class SystemPromt : IValue
+public partial class SystemPrompt : IValue
 {
-    public Guid SystemPromtId { get; set; }
+    public Guid SystemPromptId { get; set; }
 
     public string Value { get; set; } = null!;
 

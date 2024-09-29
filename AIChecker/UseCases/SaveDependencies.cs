@@ -43,17 +43,17 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 result.ResultSetId = resultSetExists.ResultSetId;
 
             // check if systemPromt exists in db
-            var systemPromtExists = await defaultMethodesRepository.ViewOverValue<SystemPromt>(systemPromt);
+            var systemPromtExists = await defaultMethodesRepository.ViewOverValue<SystemPrompt>(systemPromt);
             if (systemPromtExists == null)
             {
-                result.SystemPromt = new SystemPromt
+                result.SystemPrompt = new SystemPrompt
                 {
-                    SystemPromtId = Guid.NewGuid(),
+                    SystemPromptId = Guid.NewGuid(),
                     Value = systemPromt
                 };
             }
             else
-                result.SystemPromtId = systemPromtExists.SystemPromtId;
+                result.SystemPromptId = systemPromtExists.SystemPromptId;
 
             // check if requestObject exists in db
             var requestObjectExists = await defaultMethodesRepository.ViewOverValue<RequestObject>(requestObject);

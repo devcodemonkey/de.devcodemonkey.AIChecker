@@ -17,7 +17,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IImportQuestionAnswerUseCase _importQuestionAnswerUseCase;
         private readonly IDeleteAllQuestionAnswerUseCase _deleteAllQuestionAnswerUseCase;
         private readonly ICreateMoreQuestionsUseCase _createMoreQuestionsUseCase;
-        private readonly IViewAvarageTimeOfResultSetUseCase _viewAvarageTimeOfResultSetUseCase;
+        private readonly IViewAverageTimeOfResultSetUseCase _viewAvarageTimeOfResultSetUseCase;
         private readonly IViewResultSetsUseCase _viewResultSetsUseCase;
         private readonly ISendAPIRequestToLmStudioAndSaveToDbUseCase _sendAPIRequestToLmStudioAndSaveToDbUseCase;
         private readonly IDeleteResultSetUseCase _deleteResultSetUseCase;
@@ -29,7 +29,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             IDeleteAllQuestionAnswerUseCase deleteAllQuestionAnswerUseCase,
             IDeleteResultSetUseCase deleteResultSetUseCase,
             ICreateMoreQuestionsUseCase createMoreQuestionsUseCase,
-            IViewAvarageTimeOfResultSetUseCase viewAvarageTimeOfResultSetUseCase,
+            IViewAverageTimeOfResultSetUseCase viewAvarageTimeOfResultSetUseCase,
             IViewResultsOfResultSetUseCase viewResultsOfResultSetUseCase,
             IViewResultSetsUseCase viewResultSetsUseCase,
             ISendAPIRequestToLmStudioAndSaveToDbUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase)
@@ -211,12 +211,12 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     table.AddRow(
                         new Text(opts.FortmatTable ? Truncate(result.ResultSet.Value, 50) : result.ResultSet.Value, new Style()),
                         new Text(opts.FortmatTable ? Truncate(result.Model.Value, 50) : result.Model.Value, new Style()),
-                        new Text(opts.FortmatTable ? Truncate(result.SystemPromt.Value, 50) : result.SystemPromt.Value, new Style()),
+                        new Text(opts.FortmatTable ? Truncate(result.SystemPrompt.Value, 50) : result.SystemPrompt.Value, new Style()),
                         new Text(opts.FortmatTable ? Truncate(result.Asked.ToString(), 50) : result.Asked.ToString(), new Style()),
                         new Text(opts.FortmatTable ? Truncate(result.Message, 50) : result.Message, new Style()),
                         new Text(opts.FortmatTable ? Truncate(result.Temperature.ToString(), 50) : result.Temperature.ToString(), new Style()),
                         new Text(opts.FortmatTable ? Truncate(result.MaxTokens.ToString(), 50) : result.MaxTokens.ToString(), new Style()),
-                        new Text(opts.FortmatTable ? Truncate(result.PromtTokens.ToString(), 50) : result.PromtTokens.ToString(), new Style()),
+                        new Text(opts.FortmatTable ? Truncate(result.PromptTokens.ToString(), 50) : result.PromptTokens.ToString(), new Style()),
                         new Text(opts.FortmatTable ? Truncate(result.CompletionTokens.ToString(), 50) : result.CompletionTokens.ToString(), new Style()),
                         new Text(opts.FortmatTable ? Truncate(result.TotalTokens.ToString(), 50) : result.TotalTokens.ToString(), new Style())
                      );

@@ -20,13 +20,13 @@ public partial class Result
 
     public Guid ModelId { get; set; }
 
-    public Guid SystemPromtId { get; set; }
+    public Guid SystemPromptId { get; set; }
 
     public double Temperature { get; set; }
 
     public int MaxTokens { get; set; }
 
-    public int PromtTokens { get; set; }
+    public int PromptTokens { get; set; }
 
     public int CompletionTokens { get; set; }
 
@@ -50,5 +50,5 @@ public partial class Result
 
     public virtual ResultSet ResultSet { get; set; } = null!;
 
-    public virtual SystemPromt SystemPromt { get; set; } = null!;
+    public virtual SystemPrompt SystemPrompt { get; set; } = null!;
 }

@@ -74,7 +74,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
         {
             return await _ctx.Results
                 .Include(r => r.ResultSet)
-                .Include(s => s.SystemPromt)
+                .Include(s => s.SystemPrompt)
                 .Include(m => m.Model)
                 .Include(r => r.RequestObject)
                 .Include(r => r.RequestReason)
@@ -88,7 +88,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
             return resultSet!.ResultSetId;
         }
 
-        public async Task<TimeSpan> ViewAvarageTimeOfResultSet(Guid resultSetId)
+        public async Task<TimeSpan> ViewAverageTimeOfResultSet(Guid resultSetId)
         {
             List<long> timeDifferencesInTicks = await (from result in _ctx.Results
                                                        where result.ResultSetId == resultSetId
@@ -119,12 +119,12 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
             _ctx.Results.RemoveRange(results);
 
             var model = await _ctx.Models.FirstOrDefaultAsync(m => m.ModelId == results.First().ModelId);
-            var systemPrompt = await _ctx.SystemPromts.FirstOrDefaultAsync(sp => sp.SystemPromtId == results.First().SystemPromtId);
+            var systemPrompt = await _ctx.SystemPrompts.FirstOrDefaultAsync(sp => sp.SystemPromptId == results.First().SystemPromptId);
 
             if (model != null && !await _ctx.Results.AnyAsync(r => r.ModelId == model.ModelId))
                 _ctx.Models.Remove(model);
-            if (systemPrompt != null && !await _ctx.Results.AnyAsync(r => r.SystemPromtId == systemPrompt.SystemPromtId))
-                _ctx.SystemPromts.Remove(systemPrompt);
+            if (systemPrompt != null && !await _ctx.Results.AnyAsync(r => r.SystemPromptId == systemPrompt.SystemPromptId))
+                _ctx.SystemPrompts.Remove(systemPrompt);
             if (resultSet != null)
                 _ctx.ResultSets.Remove(resultSet);
 

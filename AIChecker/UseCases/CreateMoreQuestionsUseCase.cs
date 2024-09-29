@@ -56,7 +56,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     Message = apiResult?.Data?.Choices?.FirstOrDefault()?.Message?.Content,
                     Temperature = temperature,
                     MaxTokens = maxTokens,
-                    PromtTokens = apiResult?.Data?.Usage?.PromptTokens ?? 0,
+                    PromptTokens = apiResult?.Data?.Usage?.PromptTokens ?? 0,
                     CompletionTokens = apiResult?.Data?.Usage?.CompletionTokens ?? 0,
                     TotalTokens = apiResult?.Data?.Usage?.TotalTokens ?? 0,
                     RequestCreated = DateTimeOffset.FromUnixTimeSeconds(apiResult?.Data?.Created ?? 0).UtcDateTime,

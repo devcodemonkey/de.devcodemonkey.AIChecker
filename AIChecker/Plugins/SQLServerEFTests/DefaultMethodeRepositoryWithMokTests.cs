@@ -45,7 +45,7 @@ namespace SQLServerEFTests
 
             // Act 
             var repository = new DefaultMethodesRepository(aicheckerContextMock.Object);
-            var result = await repository.ViewAvarageTimeOfResultSet(resultSetId);
+            var result = await repository.ViewAverageTimeOfResultSet(resultSetId);
 
             // Calculate expected average TimeSpan manually:
             var expectedTicks = (new TimeSpan(0, 30, 0).Ticks + new TimeSpan(0, 15, 0).Ticks + new TimeSpan(0, 45, 0).Ticks) / 3;

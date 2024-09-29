@@ -3,18 +3,18 @@ using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 
 namespace de.devcodemonkey.AIChecker.UseCases
 {
-    public class ViewAvarageTimeOfResultSetUseCase : IViewAvarageTimeOfResultSetUseCase
+    public class ViewAverageTimeOfResultSetUseCase : IViewAverageTimeOfResultSetUseCase
     {
         private readonly IDefaultMethodesRepository _defaultMethodesRepository;
 
-        public ViewAvarageTimeOfResultSetUseCase(IDefaultMethodesRepository defaultMethodesRepository)
+        public ViewAverageTimeOfResultSetUseCase(IDefaultMethodesRepository defaultMethodesRepository)
             => _defaultMethodesRepository = defaultMethodesRepository;
 
         public async Task<TimeSpan> ExecuteAsync(string resultSet)
         {
             if (Guid.TryParse(resultSet, out Guid guid))
-                return await _defaultMethodesRepository.ViewAvarageTimeOfResultSet(guid);
-            return await _defaultMethodesRepository.ViewAvarageTimeOfResultSet(
+                return await _defaultMethodesRepository.ViewAverageTimeOfResultSet(guid);
+            return await _defaultMethodesRepository.ViewAverageTimeOfResultSet(
                 await _defaultMethodesRepository.GetResultSetIdByValueAsync(resultSet));
         }
     }
