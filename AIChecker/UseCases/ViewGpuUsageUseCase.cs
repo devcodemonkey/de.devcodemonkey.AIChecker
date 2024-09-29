@@ -12,7 +12,7 @@ public class ViewGpuUsageUseCase : IViewGpuUsageUseCase
         {
             await _systemMonitor.MonitorPerformanceEveryXSecondsAsync(async (action) =>
             {
-                await Task.Delay(10000);
+                await Task.Delay(TimeSpan.FromMinutes(1));
             }, 5, cancellationTokenSource.Token, writeOutput: true);
         }
     }

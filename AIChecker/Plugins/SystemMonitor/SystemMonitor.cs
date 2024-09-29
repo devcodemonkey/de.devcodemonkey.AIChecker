@@ -20,7 +20,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                System.Console.WriteLine("This method is only supported on Windows. Returning dummy data.");
+                AnsiConsole.MarkupLine("[red]This method is only supported on Windows. Returning dummy data.[/]");                
                 
                 for (int i = 0; i < 10; i++)
                 {
@@ -93,7 +93,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
         {
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                System.Console.WriteLine("This method is only supported on Windows.");
+                AnsiConsole.MarkupLine("[red]This method is only supported on Windows.[/]");                
                 return null;
             }
 
