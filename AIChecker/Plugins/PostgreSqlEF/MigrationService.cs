@@ -5,7 +5,7 @@ using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
 
 public static class MigrationService
 {
-    private static readonly string VersionFilePath = Path.Combine(AppContext.BaseDirectory, "app_version.txt");
+    private static readonly string VersionFilePath = Path.Combine(Path.GetTempPath(), Assembly.GetEntryAssembly()?.GetName().Name ?? "Unknown", "app_version.txt");
 
     public static void RunMigrationIfNeeded(IServiceProvider services)
     {
@@ -70,7 +70,11 @@ public static class MigrationService
     }
 
     private static void UpdateStoredAppVersion(string version)
-    {
+    {        
+        var directoryPath = Path.GetDirectoryName(VersionFilePath);
+        if (!string.IsNullOrEmpty(directoryPath) && !Directory.Exists(directoryPath))
+            Directory.CreateDirectory(directoryPath);
+
         File.WriteAllText(VersionFilePath, version);
     }
 }
