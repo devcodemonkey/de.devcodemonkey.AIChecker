@@ -7,6 +7,7 @@ using System.Management;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 
 namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
@@ -20,8 +21,8 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                AnsiConsole.MarkupLine("[red]This method is only supported on Windows. Returning dummy data.[/]");                
-                
+                AnsiConsole.MarkupLine("[red]This method is only supported on Windows. Returning dummy data.[/]");
+
                 for (int i = 0; i < 10; i++)
                 {
                     applicationUsages.Add(new SystemResourceUsage
@@ -93,7 +94,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
         {
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                AnsiConsole.MarkupLine("[red]This method is only supported on Windows.[/]");                
+                AnsiConsole.MarkupLine("[red]This method is only supported on Windows.[/]");
                 return null;
             }
 
@@ -224,6 +225,20 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
             }
 
             Console.WriteLine("Monitoring stopped.");
+        }
+
+        private bool GetProcessIdFromPid(string input, out int pid)
+        {
+            pid = -1;
+            string pattern = @"pid_(\d+)";
+            var match = Regex.Match(input, pattern);
+            if (match.Success)
+            {
+                var pidTmp = match.Groups[1].Value;
+                if (int.TryParse(pidTmp, out pid))
+                    return true;
+            }
+            return false;
         }
     }
 }
