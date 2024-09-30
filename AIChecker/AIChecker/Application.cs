@@ -67,7 +67,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             .MapResult(
                 async (InfoVerb opts) => await DisplayAppInfoAsync(),
                 async (RecreateDatabaseVerb opts) => await RecreateDatabaseAsync(),
-                async (ViewProcessUsageVerb opts) => await ViewUsedGpuAsync(),
+                async (ViewProcessUsageVerb opts) => await ViewProcessUsageAsync(),
                 async (SendToLmsVerb opts) => await SendToLmsAsync(opts),
                 async (ImportQuestionsVerb opts) => await _importQuestionAnswerUseCase.ExecuteAsync(opts.Path),
                 async (ViewResultSetsVerb opts) => await ViewResultSetsAsync(),
@@ -132,7 +132,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             AnsiConsole.MarkupLine("[green]Database recreated![/]");
         }
 
-        private async Task ViewUsedGpuAsync()
+        private async Task ViewProcessUsageAsync()
         {
             await AnsiConsole.Status().StartAsync("Loading GPU usage...", async ctx =>
             {
