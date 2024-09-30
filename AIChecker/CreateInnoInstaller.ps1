@@ -1,3 +1,11 @@
+function Set-SignToFile {
+    param (
+        $fileName
+    )    
+    $signToolPath = "C:\Program Files (x86)\Windows Kits\10\App Certification Kit\signtool.exe"    
+    & $signToolPath sign /debug /a /fd SHA256 $fileName
+}
+
 function New-SetupFile {
     param (
         $version,
@@ -5,9 +13,13 @@ function New-SetupFile {
 
     )     
     $activeDirectory = Get-Location   
-    $innoPath = "C:\Program Files (x86)\Inno Setup 6"
+    $innoPath = "C:\Program Files (x86)\Inno Setup 6"    
     $basePath = "C:\Users\d-hoe\source\repos\masterarbeit\AIChecker\"
-
+    
+    Write-Output "Please connect with SimplySign for Desktop to sign the installer and the exe file"
+    if (!$update) {
+        Read-host -Prompt "Press Enter to continue"
+    }
     if ($upload) {
         $secureFtpPassword = Read-Host -AsSecureString "Enter ftp password"    
     }
@@ -29,8 +41,9 @@ function New-SetupFile {
     # build the project
     Set-Location .\AIChecker\
     . dotnet publish -c Release -o .\bin\publish --self-contained -r win-x64 -p:PublishSingleFile=true -p:PublishReadyToRun=true
+    Set-SignToFile .\bin\publish\AIChecker.exe
     Set-Location ..
-    ."$innoPath\ISCC.exe" InstallerInno.iss        
+    ."$innoPath\ISCC.exe" InstallerInno.iss            
 
     # create revision number
     $revisionNumber = (Get-Date).ToString("yyyyMMddHHmmss")
@@ -134,8 +147,9 @@ function New-SetupFile {
         $webclient
     }
     # Upload Files - Stop
-    git reset --hard
+    #git reset --hard
     Set-Location $activeDirectory
 }
 
-#New-SetupFile -version 0.0.2-alpha -upload $true
+#New-SetupFile -version 1.0.0-beta -upload $false
+
