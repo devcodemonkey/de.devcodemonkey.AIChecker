@@ -157,6 +157,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
             return gpuMemoryUsageList;
         }
 
+        [Obsolete]
         public async Task<GpuStatData> GetGpuUsageAsync()
         {
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
