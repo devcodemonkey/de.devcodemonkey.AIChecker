@@ -77,8 +77,6 @@ Name: "{commondesktop}\AiChecker"; \
     Tasks: desktopicon_shortcut;
 
 [Run]
-; Update system PATH
-Filename: "{cmd}"; Parameters: "/c setx /M PATH ""%PATH%;{app}"""; Flags: runhidden
 
 ; Open web browser after installation
 Filename: "{cmd}"; \
