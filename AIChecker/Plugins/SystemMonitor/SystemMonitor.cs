@@ -120,7 +120,42 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
             return processUsageList;
         }
 
+        public List<GpuMemoryUsage> GetGpuMemoryUsages()
+        {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                AnsiConsole.MarkupLine("[red]This method is only supported on Windows.[/]");
+                return null;
+            }
+            var searcher = new ManagementObjectSearcher("select * from Win32_PerfFormattedData_GPUPerformanceCounters_GPUProcessMemory");
 
+            var gpuMemoryUsageList = new List<GpuMemoryUsage>();
+            foreach (var obj in searcher.Get())
+            {
+                string pid = obj["Name"].ToString();
+
+                if (GetProcessIdFromPid(pid, out int pidInt))
+                {
+                    var dedicatedUsage = Convert.ToInt64(obj["DedicatedUsage"]);
+                    var localUsage = Convert.ToInt64(obj["LocalUsage"]);
+                    var nonLocalUsage = Convert.ToInt64(obj["NonLocalUsage"]);
+                    var sharedUsage = Convert.ToInt64(obj["SharedUsage"]);
+                    var totalUsage = Convert.ToInt64(obj["TotalCommited"]);
+
+                    var gpuMemoryUsage = new GpuMemoryUsage
+                    {
+                        ProcessId = pidInt,
+                        LocalUsage = localUsage,
+                        NonLocalUsage = nonLocalUsage,
+                        SharedUsage = sharedUsage,
+                        TotalUsage = totalUsage,
+                        Timestamp = DateTime.Now,
+                    };
+                    gpuMemoryUsageList.Add(gpuMemoryUsage);
+                }
+            }
+            return gpuMemoryUsageList;
+        }
 
         public async Task<GpuStatData> GetGpuUsageAsync()
         {
@@ -171,7 +206,6 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                 // Wait for the process to exit
                 await process.WaitForExitAsync();
             }
-
             return gpuStat;
         }
 
