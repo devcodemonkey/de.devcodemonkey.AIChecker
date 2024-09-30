@@ -68,14 +68,14 @@ Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environmen
 ; Create a start menu shortcut for AiChecker with PowerShell
 Name: "{group}\AiChecker"; \
     Filename: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"; \
-    Parameters: "-NoExit -Command ""Set-Location 'C:\'; .'{app}\AiChecker.exe' --help"""; \
+    Parameters: "-NoExit -Command "".'{app}\AiChecker.exe' --help"""; \
     WorkingDir: "{app}"; \
     IconFilename: "{app}\AIChecker.exe"
 
 ; Create a desktop shortcut for AiChecker with PowerShell
 Name: "{commondesktop}\AiChecker"; \
     Filename: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"; \
-    Parameters: "-NoExit -Command ""Set-Location 'C:\'; .'{app}\AiChecker.exe' --help"""; \
+    Parameters: "-NoExit -Command "".'{app}\AiChecker.exe' --help"""; \
     WorkingDir: "{app}"; \
     IconFilename: "{app}\AIChecker.exe"; \
     Tasks: desktopicon_shortcut;
@@ -92,6 +92,6 @@ Filename: "{cmd}"; \
    
 ; Optional: Automatically launch AiChecker after installation if the user selects the option
 Filename: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"; \
-   Parameters: "-NoExit -Command ""$env:PATH = '{app};' + $env:PATH; Set-Location 'C:\'; .'{app}\AiChecker.exe' --help"""; \
+   Parameters: "-NoExit -Command ""$env:PATH = '{app};' + $env:PATH; Set-Location '{app}'; .'{app}\AiChecker.exe' --help"""; \
    Description: "{cm:LaunchAiChecker}"; \
    Flags: postinstall
