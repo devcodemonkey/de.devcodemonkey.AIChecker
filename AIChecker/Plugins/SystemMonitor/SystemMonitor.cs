@@ -91,7 +91,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
             return applicationUsages;
         }
 
-        public List<GpuProcessUsage> GetProcessUsageAsync()
+        public List<GpuProcessUsage> GetProcessUsage()
         {
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
