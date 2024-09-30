@@ -57,23 +57,18 @@ To get help, simply run `AIChecker.exe` followed by the desired command.
    - **Command**: `viewAverage -r <ResultSet>`
      - `-r`: Specifies the result set for which the average time is displayed.
 
-9. **viewUsedGpu**
+9. **deleteAllQuestions**
 
-   - **Description**: Displays information about the currently used GPU.
-   - **Command**: `view-used-gpu`
+   - **Description**: Deletes all questions and answers from the database.
+   - **Command**: `deleteAllQuestions`
 
-10. **deleteAllQuestions**
-
-- **Description**: Deletes all questions and answers from the database.
-- **Command**: `deleteAllQuestions`
-
-11. **deleteResultSet**
+10. **deleteResultSet**
 
 - **Description**: Deletes a specific result set from the database.
 - **Command**: `deleteResultSet -r <ResultSet>`
   - `-r`: Specifies the result set to delete.
 
-12. **createMoreQuestions**
+11. **createMoreQuestions**
 
 - **Description**: Creates more questions based on a system prompt and saves them under a specified result set.
 - **Command**: `createMoreQuestions -r <ResultSet> -s <SystemPrompt> [-t <MaxTokens>] [-p <Temperature>]`
@@ -82,25 +77,27 @@ To get help, simply run `AIChecker.exe` followed by the desired command.
   - `-t`: Maximum number of tokens (optional).
   - `-p`: Temperature value (optional).
   - `--environmentTokenName`: The environment token name to set the bearer token for the API. (Default: `null`)
-  - `--source`: The source URL for the API request. (Default: `http://localhost:1234/v1/chat/completions`, Lm Studio default endpoint)
+  - `--source`: The source URL for the API request. (Default: `http://localhost:1234/v1/chat/completions`, LM Studio default endpoint)
   - `--model`: The model name to be used for generation. (Default: `nothing set`)
 
-13.  **sendToLMS**
+12. **sendToLMS**
 
 - **Description**: Sends an API request to LmStudio and saves the result to the database.
 - **Command**: `sendToLms -m <Message> -s <SystemPrompt> -r <ResultSet> [-t <MaxTokens>] [-p <Temperature>] [-c <RequestCount>] [-u] [-i <SaveInterval>] [-w]`
-- 
-- `-m`: **Message** (required): The user message to send.
-- `-s`: **SystemPrompt** (required): System prompt for the request.
-- `-r`: **ResultSet** (required): Result set name to save the API response.
-- `-t`: **MaxTokens** (optional, default: -1): Maximum number of tokens for the request.
-- `-p`: **Temperature** (optional, default: 0.7): Controls the randomness of the output.
-- `-c`: **RequestCount** (optional, default: 1): Number of requests to send.
-- `-u`: **SaveProcessUsage** (optional, default: false): Saves the process usage statistics.
-- `-i`: **SaveInterval** (optional, default: 5): Interval in seconds to save process usage data.
-- `-w`: **WriteOutput** (optional, default: true): Whether to write the process output to the console.
-- `--environmentTokenName`: **EnvironmentTokenName** (optional): Name of the environment token to set the bearer token for the API.
-- `--source`: **Source URL** (optional, default: `http://localhost:1234/v1/chat/completions`): The source URL for the API.
-- `--model`: **Model Name** (optional, default: "nothing set"): Specifies the model name to use for the API request.
+  - `-m`: **Message** (required): The user message to send.
+  - `-s`: **SystemPrompt** (required): System prompt for the request.
+  - `-r`: **ResultSet** (required): Result set name to save the API response.
+  - `-t`: **MaxTokens** (optional): Maximum number of tokens for the request.
+  - `-p`: **Temperature** (optional): Controls the randomness of the output.
+  - `-c`: **RequestCount** (optional): Number of requests to send.
+  - `-u`: **SaveProcessUsage** (optional): Saves the process usage statistics.
+  - `-i`: **SaveInterval** (optional): Interval in seconds to save process usage data.
+  - `-w`: **WriteOutput** (optional): Whether to write the process output to the console.
+  - `--environmentTokenName`: **EnvironmentTokenName** (optional): Name of the environment token to set the bearer token for the API.
+  - `--source`: **Source URL** (optional): The source URL for the API.
+  - `--model`: **Model Name** (optional): Specifies the model name to use for the API request.
 
+13. **viewProcessUsage**
 
+- **Description**: View usage of each process.
+- **Command**: `viewProcessUsage`
