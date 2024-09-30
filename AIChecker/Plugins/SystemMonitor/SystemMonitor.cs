@@ -224,17 +224,6 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 
                 if (usageList != null && writeOutput)
                 {
-                    //Console.WriteLine("Current Performance Data:");
-                    //foreach (var usage in usageList)
-                    //{
-                    //    Console.WriteLine(
-                    //       $"Process: {usage.ProcessName}, " +
-                    //       $"CPU: {usage.CpuUsage:F2}% at {usage.CpuUsageTimestamp}, " +
-                    //       $"RAM: {usage.MemoryUsage}MB at {usage.MemoryUsageTimestamp}, " +
-                    //       $"GPU: {usage.GpuUsage}MB at {usage.GpuUsageTimestamp}"
-                    //   );
-                    //}
-                    //Console.WriteLine("----------------------------------------");
                     var topGpuUsage = usageList
                                         .Where(p => p.ProcessName != "_Total")
                                         .OrderByDescending(u => u.MemoryUsage)
@@ -244,13 +233,10 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 
                     AnsiConsole.Write(new Rule("[yellow]System Resource Usage[/]").RuleStyle("green"));
 
-                    AnsiConsole.MarkupLine($"Time: {DateTime.Now}, Used GPU Memory: {topGpuUsage.FirstOrDefault()?.GpuTotalMemoryUsage ?? 0} MB");
-
+                    AnsiConsole.MarkupLine($"Time: {DateTime.Now}, Used GPU Memory: {topGpuUsage.FirstOrDefault()?.GpuTotalMemoryUsage ?? 0} MB")
 
                     // Create a table
-                    var table = new Table();
-
-                    //table.Title("System Resource Usage");
+                    var table = new Table();                    
 
                     // Add columns
                     table.AddColumn("[bold yellow]No.[/]");
