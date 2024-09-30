@@ -17,7 +17,7 @@ function New-SetupFile {
     $basePath = "C:\Users\d-hoe\source\repos\masterarbeit\AIChecker\"
     
     Write-Output "Please connect with SimplySign for Desktop to sign the installer and the exe file"
-    if (!$update) {
+    if (!$upload) {
         Read-host -Prompt "Press Enter to continue"
     }
     if ($upload) {
