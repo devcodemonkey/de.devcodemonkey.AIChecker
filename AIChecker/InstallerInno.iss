@@ -59,11 +59,6 @@ Name: "desktopicon_shortcut"; Description: "{cm:CreateDesktopIconTerminal}"; Gro
 [Files]
 Source: "C:\Users\d-hoe\source\repos\masterarbeit\AIChecker\AIChecker\bin\publish\*"; DestDir: "{app}"; Flags: ignoreversion
 
-[Registry]
-; Add to system PATH for all users
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
-    ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}"; Flags: preservestringtype
-
 [Icons]
 ; Create a start menu shortcut for AiChecker with PowerShell
 Name: "{group}\AiChecker"; \
