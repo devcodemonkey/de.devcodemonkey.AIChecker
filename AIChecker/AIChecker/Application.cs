@@ -51,16 +51,6 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         public async Task RunAsync(string[] args)
         {
-            //args = ["sendToLms", "-m", "Schreib mir ein Gedicht mit 100 Zeilen", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "5", "-i", "5"];
-            // args = ["sendToLms", "-s", "", "-r" ,"Test result set", "-m", "write me a poem over 10 lines"];
-            //args = ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"];
-            //args = ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"];
-            args = ["viewUsedGpu"];
-            //args = ["info"];
-            //args = ["recreateDatabase"];
-            // args = ["importQuestions", "-p", "/home/david/masterarbeit.wiki/06_00_00-Ticketexport/FAQs/FAQ-Outlook.json"];
-            // args = ["createMoreQuestions", "-r", "Create more questions | model xy", "-s", "Create a new questions based on the answer"];
-
             if (args.Length == 0)
             {
                 await ViewResultSetsAsync();
@@ -72,12 +62,12 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 config.HelpWriter = Console.Out;
             })
             .ParseArguments<InfoVerb, RecreateDatabaseVerb, ImportQuestionsVerb, ViewResultSetsVerb,
-                            ViewAverageVerb, ViewResultsVerb, ViewUsedGpuVerb, DeleteAllQuestionsVerb,
+                            ViewAverageVerb, ViewResultsVerb, ViewProcessUsageVerb, DeleteAllQuestionsVerb,
                             DeleteResultSetVerb, CreateMoreQuestionsVerb, SendToLmsVerb>(args)
             .MapResult(
                 async (InfoVerb opts) => await DisplayAppInfoAsync(),
                 async (RecreateDatabaseVerb opts) => await RecreateDatabaseAsync(),
-                async (ViewUsedGpuVerb opts) => await ViewUsedGpuAsync(),
+                async (ViewProcessUsageVerb opts) => await ViewUsedGpuAsync(),
                 async (SendToLmsVerb opts) => await SendToLmsAsync(opts),
                 async (ImportQuestionsVerb opts) => await _importQuestionAnswerUseCase.ExecuteAsync(opts.Path),
                 async (ViewResultSetsVerb opts) => await ViewResultSetsAsync(),
