@@ -91,7 +91,6 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
             return applicationUsages;
         }
 
-        // get gpu usage from win32 wmi
         public List<GpuProcessUsage> GetProcessUsageAsync()
         {
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -120,6 +119,8 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
             }
             return processUsageList;
         }
+
+
 
         public async Task<GpuStatData> GetGpuUsageAsync()
         {
