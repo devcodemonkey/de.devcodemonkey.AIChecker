@@ -30,6 +30,7 @@ SetupIconFile={#PublishPath}\logo.ico
 WizardImageFile={#PublishPath}\logo.bmp
 WizardSmallImageFile={#PublishPath}\logo.bmp
 LicenseFile={#PublishPath}\LICENSE
+SignTool=sha256
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
