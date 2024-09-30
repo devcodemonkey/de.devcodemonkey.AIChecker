@@ -36,8 +36,8 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                         MemoryUsageTimestamp = DateTime.Now,
                         GpuUsage = new Random().Next(0, 100),
                         GpuUsageTimestamp = DateTime.Now,
-                        GpuTotalMemoryUsage = new Random().Next(0, 1000),
-                        GpuTotalMemoryUsageTimestamp = DateTime.Now,
+                        GpuMemoryUsage = new Random().Next(0, 1000),
+                        GpuMemoryUsageTimestamp = DateTime.Now,
                     });
                 }
 
@@ -62,22 +62,13 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                     var cpuUsage = Convert.ToInt32(obj["PercentProcessorTime"]);
                     var memoryUsage = Convert.ToInt32(Convert.ToInt64(obj["WorkingSet"]) / (1024 * 1024));  // RAM usage in MB                   
 
-                    //var gpuUsage = Convert.ToInt32((gpuStat.Gpus.FirstOrDefault()
-                    //            .Processes
-                    //            .Where(p => p.Pid == processId)
-                    //            .FirstOrDefault()?.CpuPercent ?? 0));
-
                     var gpuProcessUsageTmp = gpuProcessUsage
                                                 .Where(p => p.ProcessId == processId)
                                                 .FirstOrDefault();
 
-                    //var gpuTotalMemoryUsage = gpuStat.Gpus.FirstOrDefault()
-                    //            .MemoryUsed;
-
                     var gpuMemoryUsageTmp = gpuMemoryUsage
                                     .Where(p => p.ProcessId == processId)
                                     .FirstOrDefault();
-
 
                     var systeResourceUsage = new SystemResourceUsage
                     {
@@ -90,14 +81,14 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                         MemoryUsageTimestamp = cpuGpuTimestamp,
 
                         GpuUsage = gpuProcessUsageTmp?.GpuUsage ?? 0,
-                        GpuTotalMemoryUsage = Convert.ToInt32(gpuMemoryUsageTmp?.TotalUsage / (1024 * 1024)), // in MB                        
+                        GpuMemoryUsage = Convert.ToInt32(gpuMemoryUsageTmp?.TotalUsage / (1024 * 1024)), // in MB                        
                     };
 
-                    if (gpuProcessUsageTmp != null) 
+                    if (gpuProcessUsageTmp != null)
                         systeResourceUsage.GpuUsageTimestamp = gpuProcessUsageTmp.Timestamp;
-                    if(gpuMemoryUsageTmp != null)
-                        systeResourceUsage.GpuTotalMemoryUsageTimestamp = gpuMemoryUsageTmp.Timestamp;
-                    
+                    if (gpuMemoryUsageTmp != null)
+                        systeResourceUsage.GpuMemoryUsageTimestamp = gpuMemoryUsageTmp.Timestamp;
+
                     applicationUsages.Add(systeResourceUsage);
                 }
             });
@@ -243,12 +234,13 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                                         .Where(p => p.ProcessName != "_Total")
                                         .OrderByDescending(u => u.MemoryUsage)
                                         .OrderByDescending(u => u.CpuUsage)
+                                        .OrderByDescending(u => u.GpuMemoryUsage)
                                         .OrderByDescending(u => u.GpuUsage)
                                         .Take(10);
 
                     AnsiConsole.Write(new Rule("[yellow]System Resource Usage[/]").RuleStyle("green"));
 
-                    AnsiConsole.MarkupLine($"Time: {DateTime.Now}, Used GPU Memory: {topGpuUsage.FirstOrDefault()?.GpuTotalMemoryUsage ?? 0} MB");
+                    //AnsiConsole.MarkupLine($"Time: {DateTime.Now}, Used GPU Memory: {topGpuUsage.FirstOrDefault()?.GpuTotalMemoryUsage ?? 0} MB");
 
                     // Create a table
                     var table = new Table();
@@ -256,24 +248,38 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                     // Add columns
                     table.AddColumn("[bold yellow]No.[/]");
                     table.AddColumn("[bold yellow]Process[/]");
-                    table.AddColumn(new TableColumn("[bold yellow]CPU Usage[/]").RightAligned());
-                    table.AddColumn("[bold yellow]CPU Timestamp[/]");
-                    table.AddColumn(new TableColumn("[bold yellow]RAM Usage[/]").RightAligned());
-                    table.AddColumn("[bold yellow]RAM Timestamp[/]");
+
                     table.AddColumn(new TableColumn("[bold yellow]GPU Usage[/]").RightAligned());
                     table.AddColumn("[bold yellow]GPU Timestamp[/]");
+
+                    table.AddColumn(new TableColumn("[bold yellow]GPU Memory Usage[/]").RightAligned());
+                    table.AddColumn("[bold yellow]GPU Memory Timestamp[/]");
+
+                    table.AddColumn(new TableColumn("[bold yellow]CPU Usage[/]").RightAligned());
+                    table.AddColumn("[bold yellow]CPU Timestamp[/]");
+
+                    table.AddColumn(new TableColumn("[bold yellow]RAM Usage[/]").RightAligned());
+                    table.AddColumn("[bold yellow]RAM Timestamp[/]");
+
+                    
 
                     foreach (var (usage, index) in topGpuUsage.Select((usage, index) => (usage, index)))
                     {
                         table.AddRow(
                             (index + 1).ToString(),
                             $"[bold]{usage.ProcessName}[/]",  // Highlight process name
+
+                            $"[red]{usage.GpuUsage:F2}%[/]",  // Display GPU usage with a different color
+                            usage.GpuUsageTimestamp.ToString("yyyy-MM-dd HH:mm:ss"),
+
+                            $"[darkorange]{usage.GpuMemoryUsage} MB[/]",  // Display GPU memory usage in MB
+                            usage.GpuMemoryUsageTimestamp.ToString("yyyy-MM-dd HH:mm:ss"),
+                            
                             $"[green]{usage.CpuUsage / 100:F2}%[/]",  // Display CPU usage with formatting
                             usage.CpuUsageTimestamp.ToString("yyyy-MM-dd HH:mm:ss"),  // Format timestamps
+
                             $"[blue]{usage.MemoryUsage} MB[/]",  // Display RAM usage in MB
-                            usage.MemoryUsageTimestamp.ToString("yyyy-MM-dd HH:mm:ss"),
-                            $"[red]{usage.GpuUsage:F2}%[/]",  // Display GPU usage with a different color
-                            usage.GpuUsageTimestamp.ToString("yyyy-MM-dd HH:mm:ss")
+                            usage.MemoryUsageTimestamp.ToString("yyyy-MM-dd HH:mm:ss")                            
                         );
                     }
 

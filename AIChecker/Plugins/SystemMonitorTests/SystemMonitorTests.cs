@@ -19,12 +19,12 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor.Tests
 
             //write all properties to trace output in one line
             foreach (var item in applicationUsages
-                                    .OrderByDescending(g => g.GpuTotalMemoryUsage)
+                                    .OrderByDescending(g => g.GpuMemoryUsage)
                                     .ThenByDescending(g => g.GpuUsage)
                                     .ThenByDescending(c => c.CpuUsage)
                                     .ThenByDescending(r => r.MemoryUsage))
             {
-                Debug.WriteLine($"Process ID: {item.ProcessId}, Process Name: {item.ProcessName}, CPU Usage: {item.CpuUsage}, RAM Usage: {item.MemoryUsage}, GPU Usage: {item.GpuUsage}, GPU TotalMemory {item.GpuTotalMemoryUsage}");
+                Debug.WriteLine($"Process ID: {item.ProcessId}, Process Name: {item.ProcessName}, CPU Usage: {item.CpuUsage}, RAM Usage: {item.MemoryUsage}, GPU Usage: {item.GpuUsage}, GPU TotalMemory {item.GpuMemoryUsage}");
             }
 
 
@@ -43,7 +43,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor.Tests
             Assert.IsTrue(firstProcess.MemoryUsage >= 0, "RAM usage should be 0 or greater.");
 
             Assert.IsTrue(firstProcess.GpuUsage >= 0, "GPU usage should be 0 or greater.");
-            Assert.IsTrue(firstProcess.GpuTotalMemoryUsage >= 0, "GPU memory usage should be 0 or greater.");
+            Assert.IsTrue(firstProcess.GpuMemoryUsage >= 0, "GPU memory usage should be 0 or greater.");
         }
 
 

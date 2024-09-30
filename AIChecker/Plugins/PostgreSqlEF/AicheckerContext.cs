@@ -220,7 +220,7 @@ public partial class AicheckerContext : DbContext
                     v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
                 );
 
-            entity.Property(e => e.GpuTotalMemoryUsageTimestamp)
+            entity.Property(e => e.GpuMemoryUsageTimestamp)
                 .HasConversion(
                     v => v.ToUniversalTime(),
                     v => DateTime.SpecifyKind(v, DateTimeKind.Utc)

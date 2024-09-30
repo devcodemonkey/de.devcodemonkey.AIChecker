@@ -22,9 +22,9 @@ public partial class SystemResourceUsage
 
     public DateTime GpuUsageTimestamp { get; set; }
 
-    public int GpuTotalMemoryUsage { get; set; }
+    public int GpuMemoryUsage { get; set; }
 
-    public DateTime GpuTotalMemoryUsageTimestamp { get; set; }
+    public DateTime GpuMemoryUsageTimestamp { get; set; }
 
     public virtual ResultSet ResultSet { get; set; } = null!;
 }
