@@ -28,7 +28,7 @@ function New-SetupFile {
     
     # build the project
     Set-Location .\AIChecker\
-    . dotnet publish -c Release -o .\bin\publish --self-contained -r win-x64 -p:PublishSingleFile=true -p:PublishTrimmed=true
+    . dotnet publish -c Release -o .\bin\publish --self-contained -r win-x64 -p:PublishSingleFile=true
     Set-Location ..
     ."$innoPath\ISCC.exe" InstallerInno.iss        
 
