@@ -1,4 +1,5 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
+using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.CoreBusiness.ModelsSystemMonitor;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Spectre.Console;
@@ -88,6 +89,36 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
             });
 
             return applicationUsages;
+        }
+
+        // get gpu usage from win32 wmi
+        public List<GpuProcessUsage> GetProcessUsageAsync()
+        {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                AnsiConsole.MarkupLine("[red]This method is only supported on Windows.[/]");
+                return null;
+            }
+            var searcher = new ManagementObjectSearcher("select * from Win32_PerfFormattedData_GPUPerformanceCounters_GPUEngine");
+
+            var processUsageList = new List<GpuProcessUsage>();
+            foreach (var obj in searcher.Get())
+            {
+                string pid = obj["Name"].ToString();
+
+                if (GetProcessIdFromPid(pid, out int pidInt))
+                {
+                    var gpuUsage = Convert.ToInt32(obj["UtilizationPercentage"]);
+                    var gpuProcessUsage = new GpuProcessUsage
+                    {
+                        ProcessId = pidInt,
+                        GpuUsage = gpuUsage,
+                        Timestamp = DateTime.Now
+                    };
+                    processUsageList.Add(gpuProcessUsage);
+                }
+            }
+            return processUsageList;
         }
 
         public async Task<GpuStatData> GetGpuUsageAsync()
