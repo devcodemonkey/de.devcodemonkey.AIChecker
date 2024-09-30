@@ -45,7 +45,8 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
             }
 
 
-            var gpuStat = await GetGpuUsageAsync();
+            var gpuMemoryUsage = GetGpuMemoryUsages();
+            var gpuProcessUsage = GetGpuProcessUsage();
 
             await Task.Run(() =>
             {
@@ -61,16 +62,24 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                     var cpuUsage = Convert.ToInt32(obj["PercentProcessorTime"]);
                     var memoryUsage = Convert.ToInt32(Convert.ToInt64(obj["WorkingSet"]) / (1024 * 1024));  // RAM usage in MB                   
 
-                    var gpuUsage = Convert.ToInt32((gpuStat.Gpus.FirstOrDefault()
-                                .Processes
-                                .Where(p => p.Pid == processId)
-                                .FirstOrDefault()?.CpuPercent ?? 0));
+                    //var gpuUsage = Convert.ToInt32((gpuStat.Gpus.FirstOrDefault()
+                    //            .Processes
+                    //            .Where(p => p.Pid == processId)
+                    //            .FirstOrDefault()?.CpuPercent ?? 0));
 
-                    var gpuTotalMemoryUsage = gpuStat.Gpus.FirstOrDefault()
-                                .MemoryUsed;
+                    var gpuProcessUsageTmp = gpuProcessUsage
+                                                .Where(p => p.ProcessId == processId)
+                                                .FirstOrDefault();
+
+                    //var gpuTotalMemoryUsage = gpuStat.Gpus.FirstOrDefault()
+                    //            .MemoryUsed;
+
+                    var gpuMemoryUsageTmp = gpuMemoryUsage
+                                    .Where(p => p.ProcessId == processId)
+                                    .FirstOrDefault();
 
 
-                    applicationUsages.Add(new SystemResourceUsage
+                    var systeResourceUsage = new SystemResourceUsage
                     {
                         ProcessId = processId,
                         ProcessName = processName,
@@ -80,18 +89,23 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                         MemoryUsage = memoryUsage,
                         MemoryUsageTimestamp = cpuGpuTimestamp,
 
-                        GpuUsage = gpuUsage,
-                        GpuUsageTimestamp = gpuStat.QueryTime,
-                        GpuTotalMemoryUsageTimestamp = gpuStat.QueryTime,
-                        GpuTotalMemoryUsage = gpuTotalMemoryUsage,
-                    });
+                        GpuUsage = gpuProcessUsageTmp?.GpuUsage ?? 0,
+                        GpuTotalMemoryUsage = Convert.ToInt32(gpuMemoryUsageTmp?.TotalUsage / (1024 * 1024)), // in MB                        
+                    };
+
+                    if (gpuProcessUsageTmp != null) 
+                        systeResourceUsage.GpuUsageTimestamp = gpuProcessUsageTmp.Timestamp;
+                    if(gpuMemoryUsageTmp != null)
+                        systeResourceUsage.GpuTotalMemoryUsageTimestamp = gpuMemoryUsageTmp.Timestamp;
+                    
+                    applicationUsages.Add(systeResourceUsage);
                 }
             });
 
             return applicationUsages;
         }
 
-        public List<GpuProcessUsage> GetProcessUsage()
+        public List<GpuProcessUsage> GetGpuProcessUsage()
         {
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -140,7 +154,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                     var localUsage = Convert.ToInt64(obj["LocalUsage"]);
                     var nonLocalUsage = Convert.ToInt64(obj["NonLocalUsage"]);
                     var sharedUsage = Convert.ToInt64(obj["SharedUsage"]);
-                    var totalUsage = Convert.ToInt64(obj["TotalCommited"]);
+                    var totalUsage = Convert.ToInt64(obj["TotalCommitted"]);
 
                     var gpuMemoryUsage = new GpuMemoryUsage
                     {
@@ -234,10 +248,10 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 
                     AnsiConsole.Write(new Rule("[yellow]System Resource Usage[/]").RuleStyle("green"));
 
-                    AnsiConsole.MarkupLine($"Time: {DateTime.Now}, Used GPU Memory: {topGpuUsage.FirstOrDefault()?.GpuTotalMemoryUsage ?? 0} MB")
+                    AnsiConsole.MarkupLine($"Time: {DateTime.Now}, Used GPU Memory: {topGpuUsage.FirstOrDefault()?.GpuTotalMemoryUsage ?? 0} MB");
 
                     // Create a table
-                    var table = new Table();                    
+                    var table = new Table();
 
                     // Add columns
                     table.AddColumn("[bold yellow]No.[/]");

@@ -9,7 +9,7 @@ namespace de.devcodemonkey.AIChecker.UseCases.PluginInterfaces
         Task<IEnumerable<SystemResourceUsage>> GetApplicationUsagesAsync();
         List<GpuMemoryUsage> GetGpuMemoryUsages();
         Task<GpuStatData> GetGpuUsageAsync();
-        List<GpuProcessUsage> GetProcessUsage();
+        List<GpuProcessUsage> GetGpuProcessUsage();
         Task MonitorPerformanceEveryXSecondsAsync(Action<IEnumerable<SystemResourceUsage>> saveAction, int intervalSeconds, CancellationToken cancellationToken, bool writeOutput = false);
     }
 }
