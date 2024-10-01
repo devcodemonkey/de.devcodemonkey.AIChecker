@@ -85,8 +85,8 @@ To get help, simply run `AIChecker.exe` followed by the desired command.
 - **Description**: Sends an API request to LmStudio and saves the result to the database.
 - **Command**: `sendToLms -m <Message> -s <SystemPrompt> -r <ResultSet> [-t <MaxTokens>] [-p <Temperature>] [-c <RequestCount>] [-u] [-i <SaveInterval>] [-w]`
   - `-m`: **Message** (required): The user message to send.
-  - `-s`: **SystemPrompt** (required): System prompt for the request.
   - `-r`: **ResultSet** (required): Result set name to save the API response.
+  - `-s`: **SystemPrompt** (optional): System prompt for the request.
   - `-t`: **MaxTokens** (optional): Maximum number of tokens for the request.
   - `-p`: **Temperature** (optional): Controls the randomness of the output.
   - `-c`: **RequestCount** (optional): Number of requests to send.
