@@ -15,7 +15,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Tests
         public void StartDatabaseTest()
         {
             // Arrange
-            WslService dockerService = new WslService();
+            WslDatabaseService dockerService = new WslDatabaseService();
 
             // Act
             bool result = dockerService.StartDatabase();
@@ -28,7 +28,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Tests
         public void StopDatabaseTest()
         {
             // Arrange
-            WslService dockerService = new WslService();
+            WslDatabaseService dockerService = new WslDatabaseService();
 
             // Act
             bool result = dockerService.StopDatabase();
@@ -43,7 +43,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Tests
         {
             // Arrange
             string command = "echo HelloWorld";
-            WslService dockerService = new WslService();
+            WslDatabaseService dockerService = new WslDatabaseService();
 
             // Act
             bool result = dockerService.RunCommandOnWsl(command);
@@ -57,7 +57,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Tests
         {
             // Arrange
             string invalidCommand = "invalidcommand";
-            WslService dockerService = new WslService();
+            WslDatabaseService dockerService = new WslDatabaseService();
 
             // Act
             bool result = dockerService.RunCommandOnWsl(invalidCommand);

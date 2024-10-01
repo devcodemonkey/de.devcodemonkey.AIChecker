@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Runtime.Versioning;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF
 {
     [SupportedOSPlatform("windows")]
-    public class WslService
+    public class WslDatabaseService : IWslDatabaseService
     {
         public bool StartDatabase(bool runInBackground = false)
         {
