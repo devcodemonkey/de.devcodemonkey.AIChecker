@@ -12,7 +12,53 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF
     [SupportedOSPlatform("windows")]
     public class WslService
     {
-        public bool runCommandOnWsl(string command)
+        public bool StartDatabase(bool runInBackground = false)
+        {
+            string addD = string.Empty;
+            if (runInBackground)
+                addD = " -d";
+
+            string command = "wsl -- bash -c 'mkdir -p /tmp/AiChecker && " +
+                     "cd /tmp/AiChecker && " +
+                     "rm -f docker-compose.yml && " +
+                     "curl -L -o docker-compose.yml https://raw.github.com/devcodemonkey/de.devcodemonkey.AIChecker/main/AIChecker/docker/PostgreSQL/docker-compose.yml && " +
+                     $"docker-compose up{addD}'";
+
+            return RunCommandInPowershell(command);
+        }
+
+        public bool StopDatabase()
+        {
+            if (!RunCommandOnWsl("cd /tmp/AiChecker && docker-compose down"))
+                return false;
+            return true;
+        }
+
+        public bool RunCommandInPowershell(string command)
+        {
+            string powershellCommand = $"-NoExit -Command \"{command}\"";
+
+            ProcessStartInfo processInfo = new ProcessStartInfo
+            {
+                FileName = "powershell.exe",
+                Arguments = powershellCommand,
+                UseShellExecute = true,
+                CreateNoWindow = false
+            };
+
+            try
+            {
+                Process.Start(processInfo);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return false;
+            }
+        }
+
+        public bool RunCommandOnWsl(string command)
         {
             ProcessStartInfo processInfo = new ProcessStartInfo
             {
@@ -38,7 +84,8 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF
                     if (!string.IsNullOrEmpty(error))
                     {
                         Console.WriteLine($"Error: {error}");
-                        return false;
+                        if (!error.ToLower().Contains("container"))
+                            return false;
                     }
                 }
             }

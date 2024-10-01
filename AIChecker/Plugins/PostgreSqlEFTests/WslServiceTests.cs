@@ -9,8 +9,35 @@ using System.Threading.Tasks;
 namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Tests
 {
     [TestClass()]
-    public class DockerServiceTests
+    public class WslServiceTests
     {
+        [TestMethod()]
+        public void StartDatabaseTest()
+        {
+            // Arrange
+            WslService dockerService = new WslService();
+
+            // Act
+            bool result = dockerService.StartDatabase();
+
+            // Assert
+            Assert.IsTrue(result, "The database should start successfully.");
+        }
+
+        [TestMethod()]
+        public void StopDatabaseTest()
+        {
+            // Arrange
+            WslService dockerService = new WslService();
+
+            // Act
+            bool result = dockerService.StopDatabase();
+
+            // Assert
+            Assert.IsTrue(result, "The database should stop successfully.");
+        }
+
+
         [TestMethod]
         public void RunValidCommandOnWsl_ShouldReturnTrue()
         {
@@ -19,7 +46,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Tests
             WslService dockerService = new WslService();
 
             // Act
-            bool result = dockerService.runCommandOnWsl(command);
+            bool result = dockerService.RunCommandOnWsl(command);
 
             // Assert
             Assert.IsTrue(result, "The command should run successfully on WSL.");
@@ -33,7 +60,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Tests
             WslService dockerService = new WslService();
 
             // Act
-            bool result = dockerService.runCommandOnWsl(invalidCommand);
+            bool result = dockerService.RunCommandOnWsl(invalidCommand);
 
             // Assert
             Assert.IsFalse(result, "The command should fail due to invalid input.");
