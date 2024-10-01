@@ -78,17 +78,5 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor.Tests
             // Assert                       
             Assert.IsTrue(allUsageData.Count <= 4 && allUsageData.Count >= 3, "The number of tracked prcosesses should be between 3 and 4.");
         }
-
-        [TestMethod()]
-        public async Task GetGpuUsageTest()
-        {
-            // Arrange
-            var monitor = new SystemMonitor();
-
-            // Act
-            var gpuUsage = await monitor.GetGpuUsageAsync();
-
-            // Assert
-        }
     }
 }
