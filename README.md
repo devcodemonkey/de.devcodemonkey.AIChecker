@@ -2,6 +2,8 @@
 
 This is currently a `beta program`.
 
+The beta releases will deploy to [https://devcodemonkey.de/AiChecker/](https://devcodemonkey.de/AiChecker/)
+
 The program is designed to compare various Large Language Models (LLMs) based on their performance, accuracy, and resource efficiency. The primary goal is to evaluate LLMs across multiple dimensions, including inference speed, model size, and fine-tuning capabilities. The program can connect to:
 
 - LM Studio API
