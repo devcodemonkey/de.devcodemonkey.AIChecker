@@ -1,10 +1,12 @@
 ﻿using CommandLine;
 using de.devcodemonkey.AIChecker.AIChecker.Commands;
+using de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using Spectre.Console;
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace de.devcodemonkey.AIChecker.AIChecker
 {
@@ -22,8 +24,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly ISendAPIRequestToLmStudioAndSaveToDbUseCase _sendAPIRequestToLmStudioAndSaveToDbUseCase;
         private readonly IDeleteResultSetUseCase _deleteResultSetUseCase;
         private readonly IViewResultsOfResultSetUseCase _viewResultsOfResultSetUseCase;
-
         private readonly IViewGpuUsageUseCase _viewGpuUsageUseCase;
+        private readonly IStartStopDatabaseUseCase _startStopDatabaseUseCase;
 
         public Application(
             IRecreateDatabaseUseCase recreateDatabaseUseCase,
@@ -35,7 +37,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             IViewResultsOfResultSetUseCase viewResultsOfResultSetUseCase,
             IViewResultSetsUseCase viewResultSetsUseCase,
             ISendAPIRequestToLmStudioAndSaveToDbUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase,
-            IViewGpuUsageUseCase viewGpuUsageUseCase)
+            IViewGpuUsageUseCase viewGpuUsageUseCase,
+            IStartStopDatabaseUseCase startStopDatabaseUseCase
+            )
         {
             _recreateDatabaseUseCase = recreateDatabaseUseCase;
             _importQuestionAnswerUseCase = importQuestionAnswerUseCase;
@@ -47,6 +51,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             _viewResultsOfResultSetUseCase = viewResultsOfResultSetUseCase;
             _sendAPIRequestToLmStudioAndSaveToDbUseCase = sendAPIRequestToLmStudioAndSaveToDbUseCase;
             _viewGpuUsageUseCase = viewGpuUsageUseCase;
+            _startStopDatabaseUseCase = startStopDatabaseUseCase;
         }
 
         public async Task RunAsync(string[] args)
@@ -63,7 +68,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             })
             .ParseArguments<InfoVerb, RecreateDatabaseVerb, ImportQuestionsVerb, ViewResultSetsVerb,
                             ViewAverageVerb, ViewResultsVerb, ViewProcessUsageVerb, DeleteAllQuestionsVerb,
-                            DeleteResultSetVerb, CreateMoreQuestionsVerb, SendToLmsVerb>(args)
+                            DeleteResultSetVerb, CreateMoreQuestionsVerb, SendToLmsVerb, DatabaseVerb>(args)
             .MapResult(
                 async (InfoVerb opts) => await DisplayAppInfoAsync(),
                 async (RecreateDatabaseVerb opts) => await RecreateDatabaseAsync(),
@@ -76,10 +81,19 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 async (DeleteResultSetVerb opts) => await _deleteResultSetUseCase.ExecuteAsync(opts.ResultSet),
                 async (DeleteAllQuestionsVerb opts) => await _deleteAllQuestionAnswerUseCase.ExecuteAsync(),
                 async (CreateMoreQuestionsVerb opts) => await CreateMoreQuestionsAsync(opts),
+                async (DatabaseVerb opts) => await StartStopDatabase(opts),
                 errs => Task.FromResult(0)
             );
 
             await parsingTask;
+        }
+
+        private async Task StartStopDatabase(DatabaseVerb opts)
+        {
+            if (opts.Stop)
+                await _startStopDatabaseUseCase.ExecuteAsync(false);
+            else
+                await _startStopDatabaseUseCase.ExecuteAsync(true);
         }
 
         private Task DisplayAppInfoAsync()
@@ -251,5 +265,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 )
             );
         }
+
+
     }
 }

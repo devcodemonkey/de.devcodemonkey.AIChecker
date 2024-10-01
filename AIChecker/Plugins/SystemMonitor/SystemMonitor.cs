@@ -12,8 +12,7 @@ using System.Text.RegularExpressions;
 
 
 namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
-{
-    [SupportedOSPlatform("windows")]
+{    
     public class SystemMonitor : ISystemMonitor
     {
         public async Task<IEnumerable<SystemResourceUsage>> GetApplicationUsagesAsync()

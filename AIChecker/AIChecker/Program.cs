@@ -1,6 +1,7 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester;
 using de.devcodemonkey.AIChecker.DataSource.SystemMonitor;
+using de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
 using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
 using de.devcodemonkey.AIChecker.Importer.JsonDeserializer;
 using de.devcodemonkey.AIChecker.UseCases;
@@ -29,6 +30,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["recreateDatabase"];
             // args = ["importQuestions", "-p", "/home/david/masterarbeit.wiki/06_00_00-Ticketexport/FAQs/FAQ-Outlook.json"];
             // args = ["createMoreQuestions", "-r", "Create more questions | model xy", "-s", "Create a new questions based on the answer"];
+            //args = ["database"];
+            //args = ["database", "-r"];
+            //args = ["database", "-s"];
 
             _args = args;
             // Set console encoding to UTF8 for status bar in Spectre.Console
@@ -75,7 +79,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 // Register plugins
                 services.AddSingleton<IDeserializer<QuestionAnswer>, Deserializer<QuestionAnswer>>();
                 services.AddSingleton<IAPIRequester, APIRequester>();
-                services.AddSingleton<ISystemMonitor, SystemMonitor>();
+                services.AddSingleton<ISystemMonitor, SystemMonitor>();     
+                services.AddSingleton<IWslDatabaseService, WslDatabaseService>();
+
                 // Register use cases
                 services.AddSingleton<IRecreateDatabaseUseCase, RecreateDatabaseUseCase>();
                 services.AddSingleton<IImportQuestionAnswerUseCase, ImportQuestionAnswerUseCase>();
@@ -87,6 +93,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 services.AddSingleton<IViewResultsOfResultSetUseCase, ViewResultsOfResultSetUseCase>();
                 services.AddSingleton<ISendAPIRequestToLmStudioAndSaveToDbUseCase, SendAPIRequestToLmStudioAndSaveToDbUseCase>();
                 services.AddSingleton<IViewGpuUsageUseCase, ViewGpuUsageUseCase>();
+                services.AddSingleton<IStartStopDatabaseUseCase, StartStopDatabaseUseCase>();
             });
 
             return services.BuildServiceProvider();
