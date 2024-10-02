@@ -9,6 +9,10 @@ The program is designed to compare various Large Language Models (LLMs) based on
 - LM Studio API
 - OpenAI API
 
+# Third-Party Licenses
+
+This software uses third-party libraries, which can be looked up under the following link: [Third-Party Licenses](https://github.com/devcodemonkey/de.devcodemonkey.AIChecker/blob/main/THIRD_PARTY_LICENSES.md)
+
 ## Commands:
 
 To get help, simply run `AIChecker.exe` followed by the desired command.
