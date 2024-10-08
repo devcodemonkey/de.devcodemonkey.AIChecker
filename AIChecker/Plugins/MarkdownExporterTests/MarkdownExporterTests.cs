@@ -1,8 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
-using System.Threading.Tasks;
-
-namespace MarkdownExporter.Tests
+﻿namespace MarkdownExporter.Tests
 {
     [TestClass]
     public class MarkdownExporterTests
