@@ -1,10 +1,10 @@
 ﻿namespace MarkdownExporter
 {
-    public class MarkdownFontStyles
+    public class MdFontStyles
     {
-        private MarkdownFile File { get; }
+        private MdFile File { get; }
 
-        public MarkdownFontStyles(MarkdownFile file)
+        public MdFontStyles(MdFile file)
         {
             File = file ?? throw new ArgumentNullException(nameof(file));
         }

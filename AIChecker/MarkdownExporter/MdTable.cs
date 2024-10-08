@@ -1,18 +1,18 @@
 ﻿namespace MarkdownExporter
 {
-    public class MarkdownTable
+    public class MdTable
     {
-        private MarkdownFile? File { get; }
+        private MdFile? File { get; }
         private List<string> Headers { get; }
         private List<List<string>> Rows { get; }        
 
-        public MarkdownTable(params string[] headers)
+        public MdTable(params string[] headers)
         {
             Headers = new List<string>(headers);
             Rows = new List<List<string>>();
         }
 
-        public MarkdownTable(MarkdownFile file, params string[] headers) : this(headers)
+        public MdTable(MdFile file, params string[] headers) : this(headers)
         {
             File = file;            
         }
@@ -35,7 +35,7 @@
             return table;
         }
 
-        public void Save()
+        public void AddTable()
         {
             if (File == null)            
                 throw new InvalidOperationException("File is not set.");

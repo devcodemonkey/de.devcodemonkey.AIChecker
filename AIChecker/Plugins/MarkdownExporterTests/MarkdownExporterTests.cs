@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Threading.Tasks;
-using System;
 
 namespace MarkdownExporter.Tests
 {
@@ -29,39 +28,42 @@ namespace MarkdownExporter.Tests
         public async Task TestMarkdownExport()
         {
             // Arrange: Create the markdown file with data
-            var markdownFile = new MarkdownFile();
+            var markdownFile = new MdFile();
 
             // Add test heading and tables as described in the input
             var fontStyles = markdownFile.MarkdownFontStyles;
             fontStyles.AddH2Text("Test");
             fontStyles.AddH3Text("Testdaten:");
-            
-            var testDataTable = new MarkdownTable(markdownFile, "**Parameter**", "**Wert**");
-            testDataTable.AddRow("**Datum des Ausdrucks**", "[Datum des Ausdrucks hier einfügen]");
-            testDataTable.AddRow("**Testdatum**", "[Testdatum hier einfügen]");
-            testDataTable.AddRow("**Zieldefinition**", "");
-            testDataTable.AddRow("**Fragestellung**", "");
-            testDataTable.AddRow("**Anzahl der Antworten**", "[Anzahl der Antworten hier einfügen]");
-            testDataTable.Save();
+
+            // Add a table for test data
+            var testDataTable = new MdTable(markdownFile, MdFontStyles.Bold("Parameter"), MdFontStyles.Bold("Wert"));
+            testDataTable.AddRow(MdFontStyles.Bold("Datum des Ausdrucks"), "[Datum des Ausdrucks hier einfügen]");
+            testDataTable.AddRow(MdFontStyles.Bold("Testdatum"), "[Testdatum hier einfügen]");
+            testDataTable.AddRow(MdFontStyles.Bold("Zieldefinition"), "");
+            testDataTable.AddRow(MdFontStyles.Bold("Fragestellung"), "");
+            testDataTable.AddRow(MdFontStyles.Bold("Anzahl der Antworten"), "[Anzahl der Antworten hier einfügen]");
+            testDataTable.AddTable();
 
             fontStyles.AddH3Text("Bewertungsbogen:");
             fontStyles.AddH4Text("Modellkonfigurationen:");
 
-            var modelConfigTable = new MarkdownTable(markdownFile, "**Modell**", "**Temperatur**", "**Geschätzte Token**");
+            // Add a table for model configurations
+            var modelConfigTable = new MdTable(markdownFile, MdFontStyles.Bold("Modell"), MdFontStyles.Bold("Temperatur"), MdFontStyles.Bold("Geschätzte Token"));
             modelConfigTable.AddRow("1. {Modellname}", "", "");
             modelConfigTable.AddRow("2. {Modellname}", "", "");
             modelConfigTable.AddRow("3. {Modellname}", "", "");
             modelConfigTable.AddRow("4. {Modellname}", "", "");
-            modelConfigTable.Save();
+            modelConfigTable.AddTable();
 
             fontStyles.AddH4Text("Auswertung");
 
-            var evaluationTable = new MarkdownTable(markdownFile, "**Modell**", "**Bewertung (1-10)**", "**Punkte**", "**Frage**", "**Ausgabe**");
+            // Add a table for evaluation
+            var evaluationTable = new MdTable(markdownFile, MdFontStyles.Bold("Modell"), MdFontStyles.Bold("Bewertung (1-10)"), MdFontStyles.Bold("Punkte"), MdFontStyles.Bold("Frage"), MdFontStyles.Bold("Ausgabe"));
             evaluationTable.AddRow("1. {Modellname}", "5", "", "", "");
             evaluationTable.AddRow("2. {Modellname}", "3", "", "", "");
             evaluationTable.AddRow("3. {Modellname}", "8", "", "", "");
             evaluationTable.AddRow("4. {Modellname}", "6", "", "", "");
-            evaluationTable.Save();
+            evaluationTable.AddTable();
 
             // Act: Export to markdown, HTML, and PDF
             markdownFile.ExportAsMarkdown(MarkdownFilePath);

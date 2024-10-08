@@ -4,17 +4,17 @@ using System.Text;
 
 namespace MarkdownExporter
 {
-    public class MarkdownFile
+    public class MdFile
     {
         public StringBuilder Text { get; }
-        public MarkdownTable MarkdownTable { get; private set; }
-        public MarkdownFontStyles MarkdownFontStyles { get; private set; }
+        public MdTable MarkdownTable { get; private set; }
+        public MdFontStyles MarkdownFontStyles { get; private set; }
 
-        public MarkdownFile()
+        public MdFile()
         {
             Text = new StringBuilder();
-            MarkdownTable = new MarkdownTable(this);
-            MarkdownFontStyles = new MarkdownFontStyles(this);
+            MarkdownTable = new MdTable(this);
+            MarkdownFontStyles = new MdFontStyles(this);
         }
 
         public void ExportAsMarkdown(string path)
