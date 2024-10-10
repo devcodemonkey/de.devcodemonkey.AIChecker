@@ -22,6 +22,8 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Tests
 
             // Assert
             Assert.IsTrue(result, "The database should start successfully.");
+
+            dockerService.StopDatabase();
         }
 
         [TestMethod()]
@@ -29,6 +31,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Tests
         {
             // Arrange
             WslDatabaseService dockerService = new WslDatabaseService();
+            dockerService.StartDatabase();
 
             // Act
             bool result = dockerService.StopDatabase();
@@ -64,6 +67,24 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Tests
 
             // Assert
             Assert.IsFalse(result, "The command should fail due to invalid input.");
+        }
+
+        [TestMethod()]
+        public void BackupDatabaseToGitTest()
+        {
+            // Arrange
+            WslDatabaseService dockerService = new WslDatabaseService();
+            dockerService.StartDatabase();
+            // sleep for 10 seconds to allow the database to start
+            Thread.Sleep(10000);            
+
+            // Act
+            bool result = dockerService.BackupDatabaseToGit("ssh://git@gitlab.hl-dev.de:39566/aichecker", "de.devcocdemonkey.aichecker.dbbackup");
+
+            // Assert
+            Assert.IsTrue(result, "The database should be backed up to Git successfully.");
+
+            dockerService.StopDatabase();
         }
     }
 }
