@@ -79,9 +79,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 // Register plugins
                 services.AddSingleton<IDeserializer<QuestionAnswer>, Deserializer<QuestionAnswer>>();
                 services.AddSingleton<IAPIRequester, APIRequester>();
-                services.AddSingleton<ISystemMonitor, SystemMonitor>();     
+                services.AddSingleton<ISystemMonitor, SystemMonitor>();
                 services.AddSingleton<IWslDatabaseService, WslDatabaseService>();
-
                 // Register use cases
                 services.AddSingleton<IRecreateDatabaseUseCase, RecreateDatabaseUseCase>();
                 services.AddSingleton<IImportQuestionAnswerUseCase, ImportQuestionAnswerUseCase>();
@@ -94,6 +93,18 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 services.AddSingleton<ISendAPIRequestToLmStudioAndSaveToDbUseCase, SendAPIRequestToLmStudioAndSaveToDbUseCase>();
                 services.AddSingleton<IViewGpuUsageUseCase, ViewGpuUsageUseCase>();
                 services.AddSingleton<IStartStopDatabaseUseCase, StartStopDatabaseUseCase>();
+                services.AddSingleton<IBackupDatabaseUseCase, BackupDatabaseUseCase>(provider =>
+                {
+                    var wslDatabaseService = provider.GetRequiredService<IWslDatabaseService>();
+                    var configuration = provider.GetRequiredService<IConfiguration>();
+
+                    // Retrieve the Git settings from configuration
+                    string gitRemoteUrl = configuration["Git:GitRemoteUrl"];
+                    string gitRepositoryName = configuration["Git:GitRemoteName"];
+
+                    // Create an instance of BackupDatabaseUseCase with the required parameters
+                    return new BackupDatabaseUseCase(wslDatabaseService, gitRemoteUrl, gitRepositoryName);
+                });
             });
 
             return services.BuildServiceProvider();

@@ -40,7 +40,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF
             string repoPath = $"/tmp/{gitRepositoryName}";
 
             // Step 1: Clone the Git repository
-            if (!RunCommandOnWsl($"cd /tmp && git clone {gitRemoteUrl}/{gitRepositoryName}.git"))
+            if (!RunCommandOnWsl($"cd /tmp && rm {gitRepositoryName} -r -f && git clone {gitRemoteUrl}/{gitRepositoryName}.git"))
                 return false;
 
             // Step 2: Create a new branch for the backup

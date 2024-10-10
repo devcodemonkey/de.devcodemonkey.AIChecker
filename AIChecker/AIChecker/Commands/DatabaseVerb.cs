@@ -10,5 +10,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
 
         [Option('r', "start", HelpText = "Start the database.")]
         public bool Start { get; set; }
+
+        [Option('b', "backup", HelpText = "Backup the database.")]
+        public bool Backup { get; set; }
     }
 }

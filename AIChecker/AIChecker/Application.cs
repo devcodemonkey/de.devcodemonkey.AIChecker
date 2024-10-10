@@ -1,12 +1,10 @@
 ﻿using CommandLine;
 using de.devcodemonkey.AIChecker.AIChecker.Commands;
-using de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
+using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using Spectre.Console;
-using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading;
 
 namespace de.devcodemonkey.AIChecker.AIChecker
 {
@@ -26,6 +24,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IViewResultsOfResultSetUseCase _viewResultsOfResultSetUseCase;
         private readonly IViewGpuUsageUseCase _viewGpuUsageUseCase;
         private readonly IStartStopDatabaseUseCase _startStopDatabaseUseCase;
+        private readonly IBackupDatabaseUseCase _backupDatabaseUseCase;
 
         public Application(
             IRecreateDatabaseUseCase recreateDatabaseUseCase,
@@ -38,7 +37,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             IViewResultSetsUseCase viewResultSetsUseCase,
             ISendAPIRequestToLmStudioAndSaveToDbUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase,
             IViewGpuUsageUseCase viewGpuUsageUseCase,
-            IStartStopDatabaseUseCase startStopDatabaseUseCase
+            IStartStopDatabaseUseCase startStopDatabaseUseCase,
+            IBackupDatabaseUseCase backupDatabaseUseCase
             )
         {
             _recreateDatabaseUseCase = recreateDatabaseUseCase;
@@ -52,6 +52,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             _sendAPIRequestToLmStudioAndSaveToDbUseCase = sendAPIRequestToLmStudioAndSaveToDbUseCase;
             _viewGpuUsageUseCase = viewGpuUsageUseCase;
             _startStopDatabaseUseCase = startStopDatabaseUseCase;
+            _backupDatabaseUseCase = backupDatabaseUseCase;
         }
 
         public async Task RunAsync(string[] args)
@@ -90,6 +91,15 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         private async Task StartStopDatabase(DatabaseVerb opts)
         {
+            if (opts.Backup)
+            {
+                var backupSuccess = _backupDatabaseUseCase.Execute();
+                if (backupSuccess)
+                    AnsiConsole.Markup("[green]Database backup successful.[/]");                
+                else
+                    AnsiConsole.Markup("[red]Database backup failed.[/]");
+                return;
+            }
             if (opts.Stop)
                 await _startStopDatabaseUseCase.ExecuteAsync(false);
             else
