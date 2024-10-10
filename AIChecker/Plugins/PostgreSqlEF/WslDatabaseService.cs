@@ -28,6 +28,51 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF
             return true;
         }
 
+        public bool BackupDatabaseToGit(string gitRemoteUrl, string gitRepositoryName)
+        {            
+            if (string.IsNullOrEmpty(gitRemoteUrl))
+                throw new ArgumentNullException("remote url must be set");
+            if (string.IsNullOrEmpty(gitRepositoryName))
+                throw new ArgumentNullException("repository name must be set");
+
+            string backupName = $"{DateTime.Now:yyyyMMdd_HHmmss}_AiCheckerDB_backup";
+            string gitBranchName = $"backup/{backupName}";
+            string repoPath = $"/tmp/{gitRepositoryName}";
+
+            // Step 1: Clone the Git repository
+            if (!RunCommandOnWsl($"cd /tmp && git clone {gitRemoteUrl}/{gitRepositoryName}.git"))
+                return false;
+
+            // Step 2: Create a new branch for the backup
+            if (!RunCommandOnWsl($"cd {repoPath} && git checkout -b {gitBranchName}"))
+                return false;
+
+            // Step 3: Execute the database backup using Docker and store the output in a .sql file
+            string backupFilePath = $"/tmp/{gitRepositoryName}/{backupName}.sql";
+            string dockerCommand = $"docker exec -it aichecker-db-1 pg_dump -U AiChecker -h localhost -p 5432 AiCheckerDB > {backupFilePath}";
+            if (!RunCommandOnWsl(dockerCommand))
+                return false;
+
+            // Step 4: Add the backup file to Git
+            if (!RunCommandOnWsl($"cd {repoPath} && git add {backupName}.sql"))
+                return false;
+
+            // Step 5: Commit the backup file with a message
+            if (!RunCommandOnWsl($"cd {repoPath} && git commit -m \"database backup {backupName}\""))
+                return false;
+
+            // Step 6: Push the new branch to the remote repository
+            if (!RunCommandOnWsl($"cd {repoPath} && git push origin {gitBranchName}"))
+                return false;
+
+            // Step 7: Clean up the temporary files
+            if (!RunCommandOnWsl($"cd /tmp && rm -rf {gitRepositoryName}"))
+                return false;
+
+            return true;
+        }
+
+
         public bool RunCommandInPowershell(string command)
         {
             string powershellCommand = $"-NoExit -Command \"{command}\"";
@@ -68,18 +113,18 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF
             {
                 using (Process process = Process.Start(processInfo))
                 {
-                    string output = process.StandardOutput.ReadToEnd();
-                    string error = process.StandardError.ReadToEnd();
+                    process.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
+                    process.ErrorDataReceived += (sender, args) => Console.WriteLine(args.Data);
 
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
                     process.WaitForExit();
 
-                    Console.WriteLine($"Output {output}");
-
-                    if (!string.IsNullOrEmpty(error))
+                    // Check if the process exited successfully
+                    if (process.ExitCode != 0)
                     {
-                        Console.WriteLine($"Error: {error}");
-                        if (!error.ToLower().Contains("container"))
-                            return false;
+                        Console.WriteLine($"Command failed with exit code {process.ExitCode}");
+                        return false;
                     }
                 }
             }
