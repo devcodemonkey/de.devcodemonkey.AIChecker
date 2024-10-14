@@ -38,6 +38,8 @@ public partial class Result
 
     public DateTime RequestEnd { get; set; }
 
+    public int? Rating { get; set; }
+
     public virtual ICollection<ExpectedsResult> ExpectedsResults { get; set; } = new List<ExpectedsResult>();
 
     public virtual Model Model { get; set; } = null!;
