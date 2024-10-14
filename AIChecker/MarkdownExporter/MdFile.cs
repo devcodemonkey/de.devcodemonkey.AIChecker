@@ -2,7 +2,7 @@
 using PuppeteerSharp;
 using System.Text;
 
-namespace MarkdownExporter
+namespace de.devcodemonkey.AIChecker.MarkdownExporter
 {
     public class MdFile
     {

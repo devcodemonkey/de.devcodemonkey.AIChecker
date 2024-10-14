@@ -1,4 +1,6 @@
-﻿namespace MarkdownExporter.Tests
+﻿using de.devcodemonkey.AIChecker.MarkdownExporter;
+
+namespace MarkdownExporter.Tests
 {
     [TestClass]
     public class MarkdownExporterTests
