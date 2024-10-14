@@ -1,5 +1,6 @@
 ﻿using CommandLine;
 using de.devcodemonkey.AIChecker.AIChecker.Commands;
+using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using Spectre.Console;
@@ -25,6 +26,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IViewGpuUsageUseCase _viewGpuUsageUseCase;
         private readonly IStartStopDatabaseUseCase _startStopDatabaseUseCase;
         private readonly IBackupDatabaseUseCase _backupDatabaseUseCase;
+        private readonly IAddModelUseCase _addModelUseCase;
 
         public Application(
             IRecreateDatabaseUseCase recreateDatabaseUseCase,
@@ -38,7 +40,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             ISendAPIRequestToLmStudioAndSaveToDbUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase,
             IViewGpuUsageUseCase viewGpuUsageUseCase,
             IStartStopDatabaseUseCase startStopDatabaseUseCase,
-            IBackupDatabaseUseCase backupDatabaseUseCase
+            IBackupDatabaseUseCase backupDatabaseUseCase,
+            IAddModelUseCase addModelUseCase
             )
         {
             _recreateDatabaseUseCase = recreateDatabaseUseCase;
@@ -53,6 +56,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             _viewGpuUsageUseCase = viewGpuUsageUseCase;
             _startStopDatabaseUseCase = startStopDatabaseUseCase;
             _backupDatabaseUseCase = backupDatabaseUseCase;
+            _addModelUseCase = addModelUseCase;
         }
 
         public async Task RunAsync(string[] args)
@@ -69,7 +73,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             })
             .ParseArguments<InfoVerb, RecreateDatabaseVerb, ImportQuestionsVerb, ViewResultSetsVerb,
                             ViewAverageVerb, ViewResultsVerb, ViewProcessUsageVerb, DeleteAllQuestionsVerb,
-                            DeleteResultSetVerb, CreateMoreQuestionsVerb, SendToLmsVerb, DatabaseVerb>(args)
+                            DeleteResultSetVerb, CreateMoreQuestionsVerb, SendToLmsVerb, DatabaseVerb, ModelVerb>(args)
             .MapResult(
                 async (InfoVerb opts) => await DisplayAppInfoAsync(),
                 async (RecreateDatabaseVerb opts) => await RecreateDatabaseAsync(),
@@ -83,10 +87,36 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 async (DeleteAllQuestionsVerb opts) => await _deleteAllQuestionAnswerUseCase.ExecuteAsync(),
                 async (CreateMoreQuestionsVerb opts) => await CreateMoreQuestionsAsync(opts),
                 async (DatabaseVerb opts) => await StartStopDatabase(opts),
+                async (ModelVerb opts) => await ManageModel(opts),
                 errs => Task.FromResult(0)
             );
 
             await parsingTask;
+        }
+
+        private async Task ManageModel(ModelVerb opts)
+        {
+            switch (opts)
+            {
+                case { Add: true }:
+                    var value = AnsiConsole.Ask<string>("Enter the model name: ");
+                    var basicModel = AnsiConsole.Ask<string>("Enter the basic models: ");
+                    var link = AnsiConsole.Ask<string>("Enter the link: ");
+                    var size = AnsiConsole.Ask<double>("Enter the size: ");
+                    var model = new Model()
+                    {
+                        ModelId = Guid.NewGuid(),
+                        Value = value,
+                        BasicModells = basicModel,
+                        Link = link,
+                        Size = size
+                    };
+                    await _addModelUseCase.ExecuteAsync(model);
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         private async Task StartStopDatabase(DatabaseVerb opts)
@@ -95,7 +125,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             {
                 var backupSuccess = _backupDatabaseUseCase.Execute();
                 if (backupSuccess)
-                    AnsiConsole.Markup("[green]Database backup successful.[/]");                
+                    AnsiConsole.Markup("[green]Database backup successful.[/]");
                 else
                     AnsiConsole.Markup("[red]Database backup failed.[/]");
                 return;
