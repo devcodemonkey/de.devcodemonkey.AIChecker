@@ -6,13 +6,12 @@ using Spectre.Console;
 using System.Diagnostics;
 using System.Management;
 using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
 
 namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
-{    
+{
     public class SystemMonitor : ISystemMonitor
     {
         public async Task<IEnumerable<SystemResourceUsage>> GetApplicationUsagesAsync()
