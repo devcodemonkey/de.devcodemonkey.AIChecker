@@ -50,7 +50,7 @@ namespace LmsWrapper
                     }
 
                     // Optionally, log the successful output
-                    Console.WriteLine($"Output: {output}");
+                    //Console.WriteLine($"Output: {output}");
                 }
 
                 return true; // Process ran successfully

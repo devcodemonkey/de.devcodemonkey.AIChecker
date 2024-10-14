@@ -132,6 +132,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     table.AddColumn("Max Tokens");
                     table.AddRow(result.Model.Value, result.SystemPrompt.Value, result.Message, result.MaxTokens.ToString());
                     AnsiConsole.Write(table);
+                },
+                statusHandler: (statusMessage, action) =>
+                {                 
+                    AnsiConsole.Status().Start(statusMessage, ctx => action());
                 }
             );
         }

@@ -19,6 +19,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
         private readonly ILoadUnloadLms _loadUnloadLms;
         private readonly IAPIRequester _apiRequester;
 
+        public delegate void StatusHandler(string statusMessage, Action action);
+
         public CreatePromptRatingUseCase(IDefaultMethodesRepository defaultMethodesRepository, ILoadUnloadLms loadUnloadLms, IAPIRequester aPIRequester)
         {
             _defaultMethodesRepository = defaultMethodesRepository;
@@ -27,7 +29,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
         }
 
         public async Task ExecuteAsync(string[] modelNames, int maxTokens, string resultSet, Func<string> systemPrompt,
-            Func<string> message, Func<int> ranking, Func<bool> newImprovement, Action<Result> DisplayResult)
+            Func<string> message, Func<int> ranking, Func<bool> newImprovement, Action<Result> DisplayResult,
+            StatusHandler? statusHandler = null)
         {
             do
             {
@@ -47,10 +50,15 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 foreach (var modelName in modelNames)
                 {
                     // change model
-                    _loadUnloadLms.Load(modelName);
+                    await HandleStatus(statusHandler, $"Loading model '{modelName}'...", async () =>
+                    {
+                        _loadUnloadLms.Load(modelName);
+                    });
 
-                    IApiResult<ResponseData> apiResult = await _apiRequester.SendChatRequestAsync(messages, maxTokens: maxTokens);
-
+                    IApiResult<ResponseData> apiResult = await HandleStatus(statusHandler, $"Sending chat request for '{modelName}'...", async () =>
+                    {
+                        return await _apiRequester.SendChatRequestAsync(messages, maxTokens: maxTokens);
+                    });
 
                     // save result                    
                     var result = new Result
@@ -87,19 +95,55 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     var rankingValue = ranking();
                     result.Rating = rankingValue;
 
-                    await SaveDependencies.SaveDependenciesFromResult(_defaultMethodesRepository,
-                        messages[1]!.Content!,
-                        resultSet,
-                        apiResult,
-                        result,
-                        apiResult!.Data!.Object!,
-                        apiResult?.Data?.Choices?.FirstOrDefault()?.FinishReason ?? string.Empty
+                    await HandleStatus(statusHandler, $"Saving dependencies for '{modelName}'...", async () =>
+                    {
+                        await SaveDependencies.SaveDependenciesFromResult(
+                            _defaultMethodesRepository,
+                            messages[1]!.Content!,
+                            resultSet,
+                            apiResult,
+                            result,
+                            apiResult!.Data!.Object!,
+                            apiResult?.Data?.Choices?.FirstOrDefault()?.FinishReason ?? string.Empty
                         );
+                    });
 
-                    await _defaultMethodesRepository.AddAsync(result);
+                    await HandleStatus(statusHandler, $"Adding result to repository for '{modelName}'...", async () =>
+                    {
+                        await _defaultMethodesRepository.AddAsync(result);
+                    });
                 }
             }
             while (newImprovement());
+        }
+
+        private async Task<T> HandleStatus<T>(StatusHandler? statusHandler, string statusMessage, Func<Task<T>> action)
+        {
+            if (statusHandler != null)
+            {
+                T result = default!;
+                statusHandler(statusMessage, () =>
+                {
+                    result = action().Result;
+                });
+                return result;
+            }
+            return await action();
+        }
+
+        private async Task HandleStatus(StatusHandler? statusHandler, string statusMessage, Func<Task> action)
+        {
+            if (statusHandler != null)
+            {
+                statusHandler(statusMessage, () =>
+                {
+                    action().Wait();
+                });
+            }
+            else
+            {
+                await action();
+            }
         }
     }
 }
