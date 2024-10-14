@@ -40,6 +40,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["model", "-l"];
             //args = ["model", "-u"];
 
+            //args = ["rankPrompt", "--help"];
+            args = ["rankPrompt", "-r", "Test result set", "-m", "lmstudio-community/Phi-3.5-mini-instruct-GGUF,TheBloke/SauerkrautLM-7B-HerO-GGUF"];
+
+
             _args = args;
             // Set console encoding to UTF8 for status bar in Spectre.Console
             Console.OutputEncoding = Encoding.UTF8;
@@ -104,6 +108,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 services.AddSingleton<IViewModels, ViewModels>();
                 services.AddSingleton<ILoadModelUseCase, LoadModelUseCase>();
                 services.AddSingleton<IUnloadModelUseCase, UnloadModelUseCase>();
+                services.AddSingleton<ICreatePromptRatingUseCase, CreatePromptRatingUseCase>();
 
                 services.AddSingleton<IBackupDatabaseUseCase, BackupDatabaseUseCase>(provider =>
                 {

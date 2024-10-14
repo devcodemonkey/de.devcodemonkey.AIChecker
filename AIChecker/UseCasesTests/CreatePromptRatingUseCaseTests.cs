@@ -26,7 +26,7 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
             var model2 = await defaultMethodesRepository.AddAsync(new Model { ModelId = Guid.NewGuid(), Value = "TheBloke/SauerkrautLM-7B-HerO-GGUF" });
 
             // Act
-            await createPromptRatingUseCase.ExecuteAsync(new string[] { model1.Value, model2.Value }, 300, "resultSet", () => "You are helpful assistent", () => "Create me a poem", () => 1, () => false, (ResponseData responseData) => { });
+            await createPromptRatingUseCase.ExecuteAsync(new string[] { model1.Value, model2.Value }, 300, "resultSet", () => "You are helpful assistent", () => "Create me a poem", () => 1, () => false, (Result result) => { });
 
         }
     }

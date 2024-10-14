@@ -29,6 +29,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IViewModels _viewModels;
         private readonly ILoadModelUseCase _loadModelUseCase;
         private readonly IUnloadModelUseCase _unloadModelUseCase;
+        private readonly ICreatePromptRatingUseCase _createPromptRatingUseCase;
 
         public Application(
             IRecreateDatabaseUseCase recreateDatabaseUseCase,
@@ -46,7 +47,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             IAddModelUseCase addModelUseCase,
             IViewModels viewModels,
             ILoadModelUseCase loadModelUseCase,
-            IUnloadModelUseCase unloadModelUseCase)
+            IUnloadModelUseCase unloadModelUseCase,
+            ICreatePromptRatingUseCase createPromptRatingUseCase)
         {
             _recreateDatabaseUseCase = recreateDatabaseUseCase;
             _importQuestionAnswerUseCase = importQuestionAnswerUseCase;
@@ -64,6 +66,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             _viewModels = viewModels;
             _loadModelUseCase = loadModelUseCase;
             _unloadModelUseCase = unloadModelUseCase;
+            _createPromptRatingUseCase = createPromptRatingUseCase;
         }
 
         public async Task RunAsync(string[] args)
@@ -80,7 +83,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             })
             .ParseArguments<InfoVerb, RecreateDatabaseVerb, ImportQuestionsVerb, ViewResultSetsVerb,
                             ViewAverageVerb, ViewResultsVerb, ViewProcessUsageVerb, DeleteAllQuestionsVerb,
-                            DeleteResultSetVerb, CreateMoreQuestionsVerb, SendToLmsVerb, DatabaseVerb, ModelVerb>(args)
+                            DeleteResultSetVerb, CreateMoreQuestionsVerb, SendToLmsVerb, DatabaseVerb, ModelVerb,
+                            RankPromptVerb>(args)
             .MapResult(
                 async (InfoVerb opts) => await DisplayAppInfoAsync(),
                 async (RecreateDatabaseVerb opts) => await RecreateDatabaseAsync(),
@@ -95,10 +99,41 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 async (CreateMoreQuestionsVerb opts) => await CreateMoreQuestionsAsync(opts),
                 async (DatabaseVerb opts) => await StartStopDatabase(opts),
                 async (ModelVerb opts) => await ManageModel(opts),
+                async (RankPromptVerb opts) => await RankPrompt(opts),
                 errs => Task.FromResult(0)
             );
 
             await parsingTask;
+        }
+
+        private async Task RankPrompt(RankPromptVerb opts)
+        {
+            await _createPromptRatingUseCase.ExecuteAsync(opts.Models.ToArray(),
+                opts.MaxTokens,
+                opts.ResultSet,
+                systemPrompt: () => AnsiConsole.Ask<string>("System Prompt: "),
+                message: () => AnsiConsole.Ask<string>("Message: "),
+                ranking: () =>
+                {
+                    int rank = 0;
+                    do
+                    {
+                        rank = AnsiConsole.Ask<int>("Ranking (1-10): ");
+                    } while (rank < 1 || rank > 10);
+                    return rank;
+                },
+                newImprovement: () => AnsiConsole.Confirm("New Improvement: "),
+                DisplayResult: (result) =>
+                {
+                    Table table = new();
+                    table.AddColumn("Model");
+                    table.AddColumn("System Prompt");
+                    table.AddColumn("Message");
+                    table.AddColumn("Max Tokens");
+                    table.AddRow(result.Model.Value, result.SystemPrompt.Value, result.Message, result.MaxTokens.ToString());
+                    AnsiConsole.Write(table);
+                }
+            );
         }
 
         private async Task ManageModel(ModelVerb opts)
