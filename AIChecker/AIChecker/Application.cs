@@ -1,7 +1,6 @@
 ﻿using CommandLine;
 using de.devcodemonkey.AIChecker.AIChecker.Commands;
 using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
-using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using Spectre.Console;
 using System.Reflection;
@@ -28,6 +27,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IBackupDatabaseUseCase _backupDatabaseUseCase;
         private readonly IAddModelUseCase _addModelUseCase;
         private readonly IViewModels _viewModels;
+        private readonly ILoadModelUseCase _loadModelUseCase;
+        private readonly IUnloadModelUseCase _unloadModelUseCase;
 
         public Application(
             IRecreateDatabaseUseCase recreateDatabaseUseCase,
@@ -43,8 +44,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             IStartStopDatabaseUseCase startStopDatabaseUseCase,
             IBackupDatabaseUseCase backupDatabaseUseCase,
             IAddModelUseCase addModelUseCase,
-            IViewModels viewModels
-            )
+            IViewModels viewModels,
+            ILoadModelUseCase loadModelUseCase,
+            IUnloadModelUseCase unloadModelUseCase)
         {
             _recreateDatabaseUseCase = recreateDatabaseUseCase;
             _importQuestionAnswerUseCase = importQuestionAnswerUseCase;
@@ -60,6 +62,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             _backupDatabaseUseCase = backupDatabaseUseCase;
             _addModelUseCase = addModelUseCase;
             _viewModels = viewModels;
+            _loadModelUseCase = loadModelUseCase;
+            _unloadModelUseCase = unloadModelUseCase;
         }
 
         public async Task RunAsync(string[] args)
@@ -101,6 +105,28 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             switch (opts)
             {
+                case { Load: true }:
+                    var modelsAllProperties = await _viewModels.ExecuteAsync();
+                    var modelNames = modelsAllProperties.Select(m => m.Value).ToArray();
+                    var modelName = AnsiConsole.Prompt(
+                        new SelectionPrompt<string>()
+                            .Title("Select a model to load")
+                            .PageSize(10)
+                            .AddChoices(modelNames)
+                    );
+                    var success = await _loadModelUseCase.ExecuteAsync(modelName);
+                    if (success)
+                        AnsiConsole.Markup($"[green]Model '{modelName}' loaded successfully.[/]");
+                    else
+                        AnsiConsole.Markup($"[red]Model '{modelName}' could not be loaded.[/]");
+                    break;
+                case { Unload: true }:
+                    var successUnload = await _unloadModelUseCase.ExecuteAsync();
+                    if (successUnload)
+                        AnsiConsole.Markup("[green]Model unloaded successfully.[/]");
+                    else
+                        AnsiConsole.Markup("[red]Model could not be unloaded.[/]");
+                    break;
                 case { Add: true }:
                     var value = AnsiConsole.Ask<string>("Enter the model name: ");
                     var basicModel = AnsiConsole.Ask<string>("Enter the basic models: ");

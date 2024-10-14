@@ -10,6 +10,6 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
         public AddModelUseCase(IDefaultMethodesRepository defaultMethodesRepository) => _defaultMethodesRepository = defaultMethodesRepository;
 
-        public async Task ExecuteAsync(Model model) => _defaultMethodesRepository.AddAsync(model);
+        public async Task ExecuteAsync(Model model) => await _defaultMethodesRepository.AddAsync(model);
     }
 }

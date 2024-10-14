@@ -58,6 +58,7 @@
     <ProjectReference Include="..\Plugins\APIRequester\APIRequester.csproj" />
     <ProjectReference Include="..\CoreBusiness\CoreBusiness.csproj" />
     <ProjectReference Include="..\Plugins\JsonDeserializer\JsonDeserializer.csproj" />
+    <ProjectReference Include="..\Plugins\LmsWrapper\LmsWrapper.csproj" />
     <ProjectReference Include="..\Plugins\PostgreSqlEF\PostgreSqlEF.csproj" />
     <ProjectReference Include="..\Plugins\SystemMonitor\SystemMonitor.csproj" />    
     <ProjectReference Include="..\UseCases\UseCases.csproj" />

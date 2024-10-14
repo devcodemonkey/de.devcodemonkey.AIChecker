@@ -1,8 +1,7 @@
 ﻿namespace de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+
+public interface ILoadUnloadLms
 {
-    public interface ILoadUnloadLms
-    {
-        bool Load(string modelName);
-        bool Unload();
-    }
+    bool Load(string modelName);
+    bool Unload();
 }

@@ -10,5 +10,11 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
 
         [Option('a', "add", HelpText = "Add a new model")]
         public bool Add { get; set; }
+
+        [Option('l', "load", HelpText = "Load a model")]
+        public bool Load { get; set; }
+
+        [Option('u', "unload", HelpText = "Unload a model")]
+        public bool Unload { get; set; }
     }
 }

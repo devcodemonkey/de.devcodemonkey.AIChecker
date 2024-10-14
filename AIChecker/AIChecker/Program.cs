@@ -7,6 +7,7 @@ using de.devcodemonkey.AIChecker.Importer.JsonDeserializer;
 using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using LmsWrapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,8 +34,11 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["database"];
             //args = ["database", "-r"];
             //args = ["database", "-s"];
+            //args = ["model"];
             //args = ["model", "-a"];
-            args = ["model", "-v"];
+            //args = ["model", "-v"];
+            //args = ["model", "-l"];
+            //args = ["model", "-u"];
 
             _args = args;
             // Set console encoding to UTF8 for status bar in Spectre.Console
@@ -83,6 +87,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 services.AddSingleton<IAPIRequester, APIRequester>();
                 services.AddSingleton<ISystemMonitor, SystemMonitor>();
                 services.AddSingleton<IWslDatabaseService, WslDatabaseService>();
+                services.AddSingleton<ILoadUnloadLms, LoadUnloadLms>();
                 // Register use cases
                 services.AddSingleton<IRecreateDatabaseUseCase, RecreateDatabaseUseCase>();
                 services.AddSingleton<IImportQuestionAnswerUseCase, ImportQuestionAnswerUseCase>();
@@ -97,6 +102,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 services.AddSingleton<IStartStopDatabaseUseCase, StartStopDatabaseUseCase>();
                 services.AddSingleton<IAddModelUseCase, AddModelUseCase>();
                 services.AddSingleton<IViewModels, ViewModels>();
+                services.AddSingleton<ILoadModelUseCase, LoadModelUseCase>();
+                services.AddSingleton<IUnloadModelUseCase, UnloadModelUseCase>();
+
                 services.AddSingleton<IBackupDatabaseUseCase, BackupDatabaseUseCase>(provider =>
                 {
                     var wslDatabaseService = provider.GetRequiredService<IWslDatabaseService>();
