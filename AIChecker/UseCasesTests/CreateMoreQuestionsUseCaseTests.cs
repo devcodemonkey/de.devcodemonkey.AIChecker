@@ -10,7 +10,7 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
         public async Task CreateMoreQuestionsUseCaseTest()
         {
             CreateMoreQuestionsUseCase createMoreQuestionsUseCase = new CreateMoreQuestionsUseCase(
-                new APIRequester(), new DefaultMethodesRepository());
+                new APIRequester(), new DefaultMethodesRepository(new AicheckerContext()));
 
 
             // deactivating this test because it is a real request to the API

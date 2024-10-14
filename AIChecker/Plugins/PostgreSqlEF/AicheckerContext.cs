@@ -12,6 +12,11 @@ public partial class AicheckerContext : DbContext
     {
     }
 
+    public AicheckerContext(DbContextOptions<DbContext> options)
+        : base(options)
+    {
+    }
+
     public AicheckerContext(DbContextOptions<AicheckerContext> options, IConfiguration configuration)
         : base(options)
     {
