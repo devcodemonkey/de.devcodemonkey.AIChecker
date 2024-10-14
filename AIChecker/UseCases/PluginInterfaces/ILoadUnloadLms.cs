@@ -2,7 +2,7 @@
 {
     public interface ILoadUnloadLms
     {
-        bool LoadLms(string modelName);
-        bool UnloadLms();
+        bool Load(string modelName);
+        bool Unload();
     }
 }

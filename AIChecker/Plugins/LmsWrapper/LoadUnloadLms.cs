@@ -5,13 +5,13 @@ namespace LmsWrapper
 {
     public class LoadUnloadLms : ILoadUnloadLms
     {
-        public bool LoadLms(string modelName)
+        public bool Load(string modelName)
         {
-            UnloadLms();
+            Unload();
             return RunProcess("lms", $"load {modelName} --gpu max");
         }
 
-        public bool UnloadLms()
+        public bool Unload()
         {
             return RunProcess("lms", $"unload --all");
         }

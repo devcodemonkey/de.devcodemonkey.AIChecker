@@ -18,7 +18,7 @@ namespace LmsWrapper.Tests
             LoadUnloadLms loadUnloadLms = new LoadUnloadLms();
 
             // Act
-            bool result = loadUnloadLms.LoadLms("lmstudio-community/Phi-3.5-mini-instruct-GGUF");
+            bool result = loadUnloadLms.Load("lmstudio-community/Phi-3.5-mini-instruct-GGUF");
 
             // Assert
             Assert.IsTrue(result);
@@ -32,8 +32,8 @@ namespace LmsWrapper.Tests
 
             // Act
             var modelName = "lmstudio-community/Phi-3.5-mini-instruct-GGUF";
-            loadUnloadLms.LoadLms(modelName);
-            bool result = loadUnloadLms.UnloadLms();
+            loadUnloadLms.Load(modelName);
+            bool result = loadUnloadLms.Unload();
 
             // Assert
             Assert.IsTrue(result);
