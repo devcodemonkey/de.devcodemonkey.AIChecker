@@ -27,6 +27,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IStartStopDatabaseUseCase _startStopDatabaseUseCase;
         private readonly IBackupDatabaseUseCase _backupDatabaseUseCase;
         private readonly IAddModelUseCase _addModelUseCase;
+        private readonly IViewModels _viewModels;
 
         public Application(
             IRecreateDatabaseUseCase recreateDatabaseUseCase,
@@ -41,7 +42,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             IViewGpuUsageUseCase viewGpuUsageUseCase,
             IStartStopDatabaseUseCase startStopDatabaseUseCase,
             IBackupDatabaseUseCase backupDatabaseUseCase,
-            IAddModelUseCase addModelUseCase
+            IAddModelUseCase addModelUseCase,
+            IViewModels viewModels
             )
         {
             _recreateDatabaseUseCase = recreateDatabaseUseCase;
@@ -57,6 +59,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             _startStopDatabaseUseCase = startStopDatabaseUseCase;
             _backupDatabaseUseCase = backupDatabaseUseCase;
             _addModelUseCase = addModelUseCase;
+            _viewModels = viewModels;
         }
 
         public async Task RunAsync(string[] args)
@@ -113,8 +116,23 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     };
                     await _addModelUseCase.ExecuteAsync(model);
                     break;
-
                 default:
+                    var models = await _viewModels.ExecuteAsync();
+                    var table = new Table();
+                    table.AddColumn("Model");
+                    table.AddColumn("Basic Models");
+                    table.AddColumn("Link");
+                    table.AddColumn("Size");
+                    foreach (var m in models)
+                    {
+                        table.AddRow(
+                            m.Value,
+                            m.BasicModells,
+                            m.Link,
+                            m.Size.ToString()
+                        );
+                    }
+                    AnsiConsole.Write(table);
                     break;
             }
         }

@@ -33,7 +33,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["database"];
             //args = ["database", "-r"];
             //args = ["database", "-s"];
-            args = ["model", "-a"];
+            //args = ["model", "-a"];
+            args = ["model", "-v"];
 
             _args = args;
             // Set console encoding to UTF8 for status bar in Spectre.Console
@@ -95,6 +96,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 services.AddSingleton<IViewGpuUsageUseCase, ViewGpuUsageUseCase>();
                 services.AddSingleton<IStartStopDatabaseUseCase, StartStopDatabaseUseCase>();
                 services.AddSingleton<IAddModelUseCase, AddModelUseCase>();
+                services.AddSingleton<IViewModels, ViewModels>();
                 services.AddSingleton<IBackupDatabaseUseCase, BackupDatabaseUseCase>(provider =>
                 {
                     var wslDatabaseService = provider.GetRequiredService<IWslDatabaseService>();
