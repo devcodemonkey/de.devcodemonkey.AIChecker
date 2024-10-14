@@ -1,4 +1,5 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
+using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 
 namespace de.devcodemonkey.AIChecker.UseCases
