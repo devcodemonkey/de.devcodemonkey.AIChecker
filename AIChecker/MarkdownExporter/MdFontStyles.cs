@@ -1,6 +1,8 @@
-﻿namespace de.devcodemonkey.AIChecker.MarkdownExporter
+﻿using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+
+namespace de.devcodemonkey.AIChecker.MarkdownExporter
 {
-    public class MdFontStyles
+    public class MdFontStyles : IMdFontStyles
     {
         private MdFile File { get; }
 
@@ -19,7 +21,7 @@
 
         public void AddItalicText(string text) => File.Text.AppendLine(Italic(text));
 
-        public void AddBoldItalicText(string text) => File.Text.AppendLine(BoldItalic(text));        
+        public void AddBoldItalicText(string text) => File.Text.AppendLine(BoldItalic(text));
 
         public static string H1(string text) => $"# {text}";
 

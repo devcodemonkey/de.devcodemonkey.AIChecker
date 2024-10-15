@@ -29,7 +29,7 @@ namespace MarkdownExporter.Tests
             var markdownFile = new MdFile();
 
             // Add test heading and tables as described in the input
-            var fontStyles = markdownFile.MarkdownFontStyles;
+            var fontStyles = new MdFontStyles(markdownFile);
             fontStyles.AddH2Text("Test");
             fontStyles.AddH3Text("Testdaten:");
 
