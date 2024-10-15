@@ -36,9 +36,7 @@ public partial class Result
 
     public DateTime RequestStart { get; set; }
 
-    public DateTime RequestEnd { get; set; }
-
-    public int? Rating { get; set; }
+    public DateTime RequestEnd { get; set; }    
 
     public virtual ICollection<ExpectedsResult> ExpectedsResults { get; set; } = new List<ExpectedsResult>();
 
@@ -53,4 +51,6 @@ public partial class Result
     public virtual ResultSet ResultSet { get; set; } = null!;
 
     public virtual SystemPrompt SystemPrompt { get; set; } = null!;
+
+    public virtual PromptRatingRound? PromptRatingRound { get; set; } = null!;
 }

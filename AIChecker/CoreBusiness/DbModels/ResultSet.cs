@@ -7,6 +7,7 @@ public partial class ResultSet : IValue
     public Guid ResultSetId { get; set; }
 
     public string Value { get; set; } = null!;
+
     public string? PromptRequierements { get; set; }
 
     public virtual ICollection<Result> Results { get; set; } = new List<Result>();
