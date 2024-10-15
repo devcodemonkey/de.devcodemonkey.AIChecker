@@ -114,8 +114,11 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         }
 
         private async Task ExportRankVerb(ExportPromptRankVerb opts)
-        {
-            await _exportPromptRatingUseCase.ExecuteAsync(DataExportType.Pdf, opts.ResultSet);
+        {            
+            await AnsiConsole.Status().StartAsync("Exporting prompt rating...", async ctx =>
+                await _exportPromptRatingUseCase.ExecuteAsync(DataExportType.Pdf, opts.ResultSet)
+            );            
+            AnsiConsole.MarkupLine("[green]Prompt rating exported![/]");
         }
 
         private async Task RankPrompt(RankPromptVerb opts)
