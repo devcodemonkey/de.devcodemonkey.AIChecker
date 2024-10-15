@@ -33,6 +33,15 @@ namespace de.devcodemonkey.AIChecker.UseCases
             StatusHandler? statusHandler = null)
         {
             int round = 0;
+
+            var resultSetObject = await _defaultMethodesRepository.AddAsync(new ResultSet
+            {
+                ResultSetId = Guid.NewGuid(),
+                Value = resultSet,
+                PromptRequierements = promptRequierements
+            });
+
+
             do
             {
                 round++;
@@ -49,6 +58,12 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     Role = "system",
                     Content = systemPrompt()
                 });
+
+                var systemPromptObject = new SystemPrompt
+                {
+                    SystemPromptId = Guid.NewGuid(),
+                    Value = messages[1]!.Content!,
+                };
 
                 foreach (var modelName in modelNames)
                 {
@@ -77,13 +92,9 @@ namespace de.devcodemonkey.AIChecker.UseCases
                         RequestCreated = DateTimeOffset.FromUnixTimeSeconds(apiResult?.Data?.Created ?? 0).UtcDateTime,
                         RequestStart = apiResult!.RequestStart,
                         RequestEnd = apiResult.RequestEnd,
+                        SystemPrompt = systemPromptObject,
 
-                        SystemPrompt = new SystemPrompt
-                        {
-                            SystemPromptId = Guid.NewGuid(),
-                            Value = messages[1]!.Content!,
-                        },
-
+                        //TODO: must be delete
                         Model = new Model
                         {
                             ModelId = Guid.NewGuid(),
@@ -96,17 +107,10 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     DisplayResult(result);
 
                     // set ranking
-                    var rankingValue = ranking();    
+                    var rankingValue = ranking();
 
                     await HandleStatus(statusHandler, $"Saving dependencies for '{modelName}'...", async () =>
                     {
-                        result.ResultSet = new ResultSet
-                        {
-                            ResultSetId = Guid.NewGuid(),
-                            Value = resultSet,
-                            PromptRequierements = promptRequierements,
-                        };
-
                         await SaveDependencies.SaveDependenciesFromResult(
                             _defaultMethodesRepository,
                             messages[1]!.Content!,
@@ -116,27 +120,21 @@ namespace de.devcodemonkey.AIChecker.UseCases
                             apiResult!.Data!.Object!,
                             apiResult?.Data?.Choices?.FirstOrDefault()?.FinishReason ?? string.Empty
                         );
-                    });
 
-                    await HandleStatus(statusHandler, $"Adding result to repository for '{modelName}'...", async () =>
-                    {
-                        await _defaultMethodesRepository.AddAsync(result);
-                    });
-
-
-
-                    await HandleStatus(statusHandler, $"Add rannking for '{modelName}'...", async () =>
-                    {
-                        // set ranking
                         PromptRatingRound promptRatingRound = new PromptRatingRound
                         {
                             PromptRatingRoundId = Guid.NewGuid(),
                             ResultId = result.ResultId,
                             Rating = rankingValue,
-                            Round = round
+                            Round = round,
+                            Result = result
                         };
 
-                        await _defaultMethodesRepository.AddAsync(promptRatingRound);
+
+                        result.PromptRatingRound = promptRatingRound;
+
+
+                        await _defaultMethodesRepository.AddAsync(result);
                     });
                 }
             }
