@@ -108,11 +108,17 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         private async Task RankPrompt(RankPromptVerb opts)
         {
+            int listNumber = 1;
             await _createPromptRatingUseCase.ExecuteAsync(opts.Models.ToArray(),
                 opts.MaxTokens,
                 opts.ResultSet,
+                opts.promptRequierements,
                 systemPrompt: () => AnsiConsole.Ask<string>("System Prompt: "),
-                message: () => AnsiConsole.Ask<string>("Message: "),
+                message: () =>
+                {
+                    AnsiConsole.Write(new Rule($"[yellow]{listNumber}. Run[/]").RuleStyle("green"));                    
+                    return AnsiConsole.Ask<string>("Message: ");
+                },
                 ranking: () =>
                 {
                     int rank = 0;
@@ -122,19 +128,20 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     } while (rank < 1 || rank > 10);
                     return rank;
                 },
-                newImprovement: () => AnsiConsole.Confirm("New Improvement: "),
+                newImprovement: () => AnsiConsole.Confirm($"New Improvement ({++listNumber}. Run ): "),
                 DisplayResult: (result) =>
                 {
                     Table table = new();
                     table.AddColumn("Model");
+                    table.AddColumn("Prompt Requierements");
                     table.AddColumn("System Prompt");
                     table.AddColumn("Message");
                     table.AddColumn("Max Tokens");
-                    table.AddRow(result.Model.Value, result.SystemPrompt.Value, result.Message, result.MaxTokens.ToString());
+                    table.AddRow(result.Model.Value, opts.promptRequierements, result.SystemPrompt.Value, result.Message, result.MaxTokens.ToString());
                     AnsiConsole.Write(table);
                 },
                 statusHandler: (statusMessage, action) =>
-                {                 
+                {
                     AnsiConsole.Status().Start(statusMessage, ctx => action());
                 }
             );

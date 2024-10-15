@@ -41,7 +41,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["model", "-u"];
 
             //args = ["rankPrompt", "--help"];
-            args = ["rankPrompt", "-r", "Test result set", "-m", "lmstudio-community/Phi-3.5-mini-instruct-GGUF,TheBloke/SauerkrautLM-7B-HerO-GGUF"];
+            //args = ["rankPrompt", "-r", "Test result set", "-m", "lmstudio-community/Phi-3.5-mini-instruct-GGUF,TheBloke/SauerkrautLM-7B-HerO-GGUF"];
+
+            args = ["rankPrompt", "-r", "Test result set", "-p", "* JSON format\n* other things", "-m", "TheBloke/em_german_mistral_v01-GGUF"];
 
 
             _args = args;
