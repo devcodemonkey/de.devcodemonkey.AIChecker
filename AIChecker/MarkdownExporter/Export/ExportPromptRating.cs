@@ -72,7 +72,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             output.AppendLine(modelTable.ToString());
 
             // Append total score
-            output.AppendLine(MdFontStyles.Bold($"Punkte Durchschnitt: {totalScore / modelRatings.Count}"));
+            output.AppendLine(MdFontStyles.Bold($"Punkte Durchschnitt: {(double)totalScore / modelRatings.Count}"));
 
             return output.ToString();
         }
