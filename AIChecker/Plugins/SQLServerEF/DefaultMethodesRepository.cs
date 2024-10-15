@@ -59,7 +59,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
             await _ctx.SaveChangesAsync();
         }
 
-        public async Task<Model> ViewModelOverValue(string value)
+        public async Task<Model> ViewModelOverValueAysnc(string value)
         {
             return await _ctx.Models.FirstOrDefaultAsync(m => m.Value == value);
         }

@@ -78,6 +78,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
                         return await _apiRequester.SendChatRequestAsync(messages, maxTokens: maxTokens);
                     });
 
+                    var model = await _defaultMethodesRepository.ViewModelOverValueAysnc(modelName);
+
                     // save result                    
                     var result = new Result
                     {
@@ -93,13 +95,14 @@ namespace de.devcodemonkey.AIChecker.UseCases
                         RequestStart = apiResult!.RequestStart,
                         RequestEnd = apiResult.RequestEnd,
                         SystemPrompt = systemPromptObject,
+                        Model = model,
 
                         //TODO: must be delete
-                        Model = new Model
-                        {
-                            ModelId = Guid.NewGuid(),
-                            Value = modelName
-                        }
+                        //Model = new Model
+                        //{
+                        //    ModelId = Guid.NewGuid(),
+                        //    Value = modelName
+                        //}
                     };
 
 

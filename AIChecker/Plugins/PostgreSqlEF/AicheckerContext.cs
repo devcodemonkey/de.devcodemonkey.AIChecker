@@ -244,6 +244,19 @@ public partial class AicheckerContext : DbContext
             entity.Property(e => e.PromptRatingRoundId).ValueGeneratedNever();
         });
 
+        // add default data
+        modelBuilder.Entity<Model>().HasData(
+            new Model
+            {
+                ModelId = Guid.NewGuid(),
+                Value = "lmstudio-community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf",
+            },
+            new Model
+            {
+                ModelId = Guid.NewGuid(),
+                Value = "TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf"
+            });
+
         OnModelCreatingPartial(modelBuilder);
     }
 
