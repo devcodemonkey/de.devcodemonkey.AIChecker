@@ -1,9 +1,12 @@
 ﻿using CommandLine;
 using de.devcodemonkey.AIChecker.AIChecker.Commands;
 using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
+using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
+using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Spectre.Console;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 
 namespace de.devcodemonkey.AIChecker.AIChecker
@@ -30,6 +33,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly ILoadModelUseCase _loadModelUseCase;
         private readonly IUnloadModelUseCase _unloadModelUseCase;
         private readonly ICreatePromptRatingUseCase _createPromptRatingUseCase;
+        private readonly IExportPromptRatingUseCase _exportPromptRatingUseCase;
 
         public Application(
             IRecreateDatabaseUseCase recreateDatabaseUseCase,
@@ -48,7 +52,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             IViewModels viewModels,
             ILoadModelUseCase loadModelUseCase,
             IUnloadModelUseCase unloadModelUseCase,
-            ICreatePromptRatingUseCase createPromptRatingUseCase)
+            ICreatePromptRatingUseCase createPromptRatingUseCase,
+            IExportPromptRatingUseCase exportPromptRatingUseCase)
         {
             _recreateDatabaseUseCase = recreateDatabaseUseCase;
             _importQuestionAnswerUseCase = importQuestionAnswerUseCase;
@@ -67,6 +72,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             _loadModelUseCase = loadModelUseCase;
             _unloadModelUseCase = unloadModelUseCase;
             _createPromptRatingUseCase = createPromptRatingUseCase;
+            _exportPromptRatingUseCase = exportPromptRatingUseCase;
         }
 
         public async Task RunAsync(string[] args)
@@ -84,7 +90,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             .ParseArguments<InfoVerb, RecreateDatabaseVerb, ImportQuestionsVerb, ViewResultSetsVerb,
                             ViewAverageVerb, ViewResultsVerb, ViewProcessUsageVerb, DeleteAllQuestionsVerb,
                             DeleteResultSetVerb, CreateMoreQuestionsVerb, SendToLmsVerb, DatabaseVerb, ModelVerb,
-                            RankPromptVerb>(args)
+                            RankPromptVerb, ExportPromptRankVerb>(args)
             .MapResult(
                 async (InfoVerb opts) => await DisplayAppInfoAsync(),
                 async (RecreateDatabaseVerb opts) => await RecreateDatabaseAsync(),
@@ -100,10 +106,16 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 async (DatabaseVerb opts) => await StartStopDatabase(opts),
                 async (ModelVerb opts) => await ManageModel(opts),
                 async (RankPromptVerb opts) => await RankPrompt(opts),
+                async (ExportPromptRankVerb opts) => await ExportRankVerb(opts),
                 errs => Task.FromResult(0)
             );
 
             await parsingTask;
+        }
+
+        private async Task ExportRankVerb(ExportPromptRankVerb opts)
+        {
+            await _exportPromptRatingUseCase.ExecuteAsync(DataExportType.Pdf, opts.ResultSet);
         }
 
         private async Task RankPrompt(RankPromptVerb opts)
@@ -116,7 +128,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 systemPrompt: () => AnsiConsole.Ask<string>("System Prompt: "),
                 message: () =>
                 {
-                    AnsiConsole.Write(new Rule($"[yellow]{listNumber}. Run[/]").RuleStyle("green"));                    
+                    AnsiConsole.Write(new Rule($"[yellow]{listNumber}. Run[/]").RuleStyle("green"));
                     return AnsiConsole.Ask<string>("Message: ");
                 },
                 ranking: () =>

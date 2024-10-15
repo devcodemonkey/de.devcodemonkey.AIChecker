@@ -4,9 +4,9 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
 {
     public class MdFontStyles : IMdFontStyles
     {
-        private MdFile File { get; }
+        private IMdFile File { get; }
 
-        public MdFontStyles(MdFile file)
+        public MdFontStyles(IMdFile file)
         {
             File = file ?? throw new ArgumentNullException(nameof(file));
         }

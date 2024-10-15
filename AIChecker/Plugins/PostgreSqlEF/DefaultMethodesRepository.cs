@@ -12,7 +12,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
         public DefaultMethodesRepository(AicheckerContext context)
         {
             _ctx = context;
-        }     
+        }
 
         public async Task RecreateDatabaseAsync()
         {
@@ -78,6 +78,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
                 .Include(m => m.Model)
                 .Include(r => r.RequestObject)
                 .Include(r => r.RequestReason)
+                .Include(r => r.PromptRatingRound)
                 .Where(r => r.ResultSetId == resultSetId)
                 .ToListAsync();
         }

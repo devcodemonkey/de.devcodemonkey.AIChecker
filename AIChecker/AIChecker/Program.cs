@@ -4,6 +4,8 @@ using de.devcodemonkey.AIChecker.DataSource.SystemMonitor;
 using de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
 using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
 using de.devcodemonkey.AIChecker.Importer.JsonDeserializer;
+using de.devcodemonkey.AIChecker.MarkdownExporter;
+using de.devcodemonkey.AIChecker.MarkdownExporter.Export;
 using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
@@ -27,8 +29,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"];
             //args = ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"];
             //args = ["viewProcessUsage"];
-            //args = ["info"];
-            //args = ["recreateDatabase"];
+            //args = ["info"];            
             // args = ["importQuestions", "-p", "/home/david/masterarbeit.wiki/06_00_00-Ticketexport/FAQs/FAQ-Outlook.json"];
             // args = ["createMoreQuestions", "-r", "Create more questions | model xy", "-s", "Create a new questions based on the answer"];
             //args = ["database"];
@@ -41,10 +42,12 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["model", "-u"];
 
             //args = ["rankPrompt", "--help"];
-            //args = ["rankPrompt", "-r", "Test result set", "-m", "lmstudio-community/Phi-3.5-mini-instruct-GGUF,TheBloke/SauerkrautLM-7B-HerO-GGUF"];
 
-            args = ["rankPrompt", "-r", "Test result set", "-p", "* JSON format\n* other things", "-m", "TheBloke/em_german_mistral_v01-GGUF"];
 
+            //args = ["rankPrompt", "-r", "Test result set", "-p", "JSON format\nother things", "-m", "lmstudio-community/Phi-3.5-mini-instruct-GGUF,TheBloke/SauerkrautLM-7B-HerO-GGUF"];
+
+            args = ["exportPromptRank", "-r", "Test result set"];
+            //args = ["recreateDatabase"];
 
             _args = args;
             // Set console encoding to UTF8 for status bar in Spectre.Console
@@ -86,6 +89,11 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
                 }
                 services.AddScoped<IDefaultMethodesRepository, DefaultMethodesRepository>();
+
+                services.AddScoped<IExportPromptRating, ExportPromptRating>();
+                services.AddScoped<IMdFile, MdFile>();
+                services.AddScoped<IMdFontStyles, MdFontStyles>();
+
                 // Register services
                 services.AddSingleton<Application>();
                 // Register plugins
@@ -111,6 +119,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 services.AddSingleton<ILoadModelUseCase, LoadModelUseCase>();
                 services.AddSingleton<IUnloadModelUseCase, UnloadModelUseCase>();
                 services.AddSingleton<ICreatePromptRatingUseCase, CreatePromptRatingUseCase>();
+
+                services.AddSingleton<IExportPromptRatingUseCase, ExportPromptRatingUseCase>();
 
                 services.AddSingleton<IBackupDatabaseUseCase, BackupDatabaseUseCase>(provider =>
                 {

@@ -55,6 +55,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MarkdownExporter\MarkdownExporter.csproj" />
     <ProjectReference Include="..\Plugins\APIRequester\APIRequester.csproj" />
     <ProjectReference Include="..\CoreBusiness\CoreBusiness.csproj" />
     <ProjectReference Include="..\Plugins\JsonDeserializer\JsonDeserializer.csproj" />

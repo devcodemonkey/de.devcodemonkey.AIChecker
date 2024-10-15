@@ -9,10 +9,8 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             string datumDesAusdrucks,
             string testdatum,
             string anzahlDerAntworten,
-            string zieldefinition = "",
-            string fragestellung = "",
-            string geschaetzteToken = "",
-            string temperatur = "")
+            string geschaetzteToken ,
+            string temperatur)
         {
             var output = new StringBuilder();
             output.AppendLine(MdFontStyles.H3("Testdaten"));
@@ -26,15 +24,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
 
             table.AddRow(
                 MdFontStyles.Bold("Testdatum"),
-                MdFontStyles.Bold(testdatum));
-
-            table.AddRow(
-                MdFontStyles.Bold("Zieldefinition"),
-                zieldefinition);
-
-            table.AddRow(
-                MdFontStyles.Bold("Fragestellung"),
-                fragestellung);
+                MdFontStyles.Bold(testdatum));            
 
             table.AddRow(
                 MdFontStyles.Bold("Anzahl der Antworten"),
@@ -53,7 +43,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             return output.ToString();
         }
 
-        public string GetFirstRunTable(
+        public string GetRunTable(
            int runNumber,
            string promptAnforderungen,
            string prompt,
