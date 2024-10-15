@@ -12,8 +12,8 @@ using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
 namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
 {
     [DbContext(typeof(AicheckerContext))]
-    [Migration("20241015110330_PromtRequierementsToResultSets")]
-    partial class PromtRequierementsToResultSets
+    [Migration("20241015151926_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,6 +115,28 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.ToTable("Models");
                 });
 
+            modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.PromptRatingRound", b =>
+                {
+                    b.Property<Guid>("PromptRatingRoundId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("ResultId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Round")
+                        .HasColumnType("integer");
+
+                    b.HasKey("PromptRatingRoundId");
+
+                    b.HasIndex("ResultId")
+                        .IsUnique();
+
+                    b.ToTable("PromptRatingRounds");
+                });
+
             modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Question", b =>
                 {
                     b.Property<Guid>("QuestionId")
@@ -181,9 +203,6 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
 
                     b.Property<Guid?>("QuestionId")
                         .HasColumnType("uuid");
-
-                    b.Property<int?>("Rating")
-                        .HasColumnType("integer");
 
                     b.Property<DateTime>("RequestCreated")
                         .HasColumnType("timestamp with time zone");
@@ -354,6 +373,17 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.Navigation("Answer");
                 });
 
+            modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.PromptRatingRound", b =>
+                {
+                    b.HasOne("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Result", "Result")
+                        .WithOne("PromptRatingRound")
+                        .HasForeignKey("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.PromptRatingRound", "ResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Result");
+                });
+
             modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Result", b =>
                 {
                     b.HasOne("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Model", "Model")
@@ -450,6 +480,8 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
             modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Result", b =>
                 {
                     b.Navigation("ExpectedsResults");
+
+                    b.Navigation("PromptRatingRound");
                 });
 
             modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.ResultSet", b =>

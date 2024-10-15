@@ -47,6 +47,8 @@ public partial class AicheckerContext : DbContext
 
     public virtual DbSet<SystemResourceUsage> SystemResourceUsages { get; set; }
 
+    public virtual DbSet<PromptRatingRound> PromptRatingRounds { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         // The if check is needed for the InMemory Test Database in the the test project     
@@ -161,6 +163,11 @@ public partial class AicheckerContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Results_SystemPrompts");
 
+            entity.HasOne(d => d.PromptRatingRound)
+                .WithOne(d => d.Result)
+                .HasForeignKey<PromptRatingRound>(e => e.ResultId);
+
+
             // DateTime conversion to UTC
             entity.Property(e => e.RequestCreated)
             .HasConversion(
@@ -230,6 +237,11 @@ public partial class AicheckerContext : DbContext
                     v => v.ToUniversalTime(),
                     v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
                 );
+        });
+
+        modelBuilder.Entity<PromptRatingRound>(entity =>
+        {
+            entity.Property(e => e.PromptRatingRoundId).ValueGeneratedNever();
         });
 
         OnModelCreatingPartial(modelBuilder);

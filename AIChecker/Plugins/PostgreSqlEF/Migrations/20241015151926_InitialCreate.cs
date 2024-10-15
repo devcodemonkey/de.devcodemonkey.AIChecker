@@ -28,7 +28,10 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                 columns: table => new
                 {
                     ModelId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Value = table.Column<string>(type: "text", nullable: false)
+                    Value = table.Column<string>(type: "text", nullable: true),
+                    BasicModells = table.Column<string>(type: "text", nullable: true),
+                    Link = table.Column<string>(type: "text", nullable: true),
+                    Size = table.Column<double>(type: "double precision", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,7 +79,8 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                 columns: table => new
                 {
                     ResultSetId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Value = table.Column<string>(type: "text", nullable: false)
+                    Value = table.Column<string>(type: "text", nullable: false),
+                    PromptRequierements = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -127,8 +131,8 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     MemoryUsageTimestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     GpuUsage = table.Column<int>(type: "integer", nullable: false),
                     GpuUsageTimestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    GpuTotalMemoryUsage = table.Column<int>(type: "integer", nullable: false),
-                    GpuTotalMemoryUsageTimestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    GpuMemoryUsage = table.Column<int>(type: "integer", nullable: false),
+                    GpuMemoryUsageTimestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -238,6 +242,26 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                         principalColumn: "ResultId");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PromptRatingRounds",
+                columns: table => new
+                {
+                    PromptRatingRoundId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Rating = table.Column<int>(type: "integer", nullable: false),
+                    Round = table.Column<int>(type: "integer", nullable: false),
+                    ResultId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PromptRatingRounds", x => x.PromptRatingRoundId);
+                    table.ForeignKey(
+                        name: "FK_PromptRatingRounds_Results_ResultId",
+                        column: x => x.ResultId,
+                        principalTable: "Results",
+                        principalColumn: "ResultId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Unique_AnswerId",
                 table: "Answers",
@@ -248,6 +272,12 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                 name: "IX_Img_AnswerId",
                 table: "Img",
                 column: "AnswerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PromptRatingRounds_ResultId",
+                table: "PromptRatingRounds",
+                column: "ResultId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Results_ModelId",
@@ -305,19 +335,25 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                 name: "Img");
 
             migrationBuilder.DropTable(
+                name: "PromptRatingRounds");
+
+            migrationBuilder.DropTable(
                 name: "SystemResourceUsage");
 
             migrationBuilder.DropTable(
                 name: "Expecteds");
 
             migrationBuilder.DropTable(
-                name: "Results");
-
-            migrationBuilder.DropTable(
                 name: "Answers");
 
             migrationBuilder.DropTable(
+                name: "Results");
+
+            migrationBuilder.DropTable(
                 name: "Models");
+
+            migrationBuilder.DropTable(
+                name: "Questions");
 
             migrationBuilder.DropTable(
                 name: "RequestObjects");
@@ -330,9 +366,6 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
 
             migrationBuilder.DropTable(
                 name: "SystemPrompts");
-
-            migrationBuilder.DropTable(
-                name: "Questions");
         }
     }
 }
