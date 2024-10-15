@@ -1,8 +1,9 @@
-﻿using System.Text;
+﻿using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using System.Text;
 
 namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
 {
-    public class ExportPromptRating
+    public class ExportPromptRating : IExportPromptRating
     {
         public string GetTableTestdata(
             string datumDesAusdrucks,

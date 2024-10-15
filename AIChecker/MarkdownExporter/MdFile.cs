@@ -1,20 +1,17 @@
-﻿using Markdig;
+﻿using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using Markdig;
 using PuppeteerSharp;
 using System.Text;
 
 namespace de.devcodemonkey.AIChecker.MarkdownExporter
 {
-    public class MdFile
+    public class MdFile : IMdFile
     {
-        public StringBuilder Text { get; }
-        public MdTable MarkdownTable { get; private set; }
-        public MdFontStyles MarkdownFontStyles { get; private set; }
+        public StringBuilder Text { get; }        
 
         public MdFile()
         {
-            Text = new StringBuilder();
-            MarkdownTable = new MdTable(this);
-            MarkdownFontStyles = new MdFontStyles(this);
+            Text = new StringBuilder();            
         }
 
         public void ExportAsMarkdown(string path)
