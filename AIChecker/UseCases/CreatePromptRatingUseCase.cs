@@ -32,8 +32,11 @@ namespace de.devcodemonkey.AIChecker.UseCases
             Func<string> message, Func<int> ranking, Func<bool> newImprovement, Action<Result> DisplayResult,
             StatusHandler? statusHandler = null)
         {
+            int round = 0;
             do
             {
+                round++;
+
                 // send message
                 List<IMessage> messages = new();
                 messages.Add(new Message
@@ -91,9 +94,9 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
                     // return result to show in UI
                     DisplayResult(result);
+
                     // set ranking
-                    var rankingValue = ranking();
-                    result.Rating = rankingValue;
+                    var rankingValue = ranking();    
 
                     await HandleStatus(statusHandler, $"Saving dependencies for '{modelName}'...", async () =>
                     {
@@ -118,6 +121,22 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     await HandleStatus(statusHandler, $"Adding result to repository for '{modelName}'...", async () =>
                     {
                         await _defaultMethodesRepository.AddAsync(result);
+                    });
+
+
+
+                    await HandleStatus(statusHandler, $"Add rannking for '{modelName}'...", async () =>
+                    {
+                        // set ranking
+                        PromptRatingRound promptRatingRound = new PromptRatingRound
+                        {
+                            PromptRatingRoundId = Guid.NewGuid(),
+                            ResultId = result.ResultId,
+                            Rating = rankingValue,
+                            Round = round
+                        };
+
+                        await _defaultMethodesRepository.AddAsync(promptRatingRound);
                     });
                 }
             }
