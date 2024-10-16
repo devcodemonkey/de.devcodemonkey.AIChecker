@@ -1,12 +1,14 @@
 ﻿using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using System.Diagnostics;
 
 namespace de.devcodemonkey.AIChecker.UseCases
 {
     public enum DataExportType
     {
         Pdf,
-        Markdown
+        Markdown,
+        Html
     }
 
     public class ExportPromptRatingUseCase : IExportPromptRatingUseCase
@@ -25,7 +27,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             _defaultMethodesRepository = defaultMethodesRepository;
         }
 
-        public async Task ExecuteAsync(DataExportType dataExportType, string resultSet)
+        public async Task ExecuteAsync(string resultSet, DataExportType dataExportType = DataExportType.Pdf, bool openFolder = true)
         {
             _mdFontStyles.AddH2Text("Prompt Bewertung");
 
@@ -50,7 +52,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
 
             // loop rounds
-            for (var i = 1; i < orderedResults.Count() - 1; i++)
+            for (var i = 1; i < orderedResults.Count(); i++)
             {
                 var round = orderedResults.Where(r => r.PromptRatingRound.Round == i).ToList();
 
@@ -70,7 +72,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             var models = orderedResults.Where(r => r.PromptRatingRound.Round == 1)
                 .Select(m => m.Model).ToList();
 
-            for (var i = 1; i < models.Count() - 1; i++)
+            for (var i = 1; i < models.Count(); i++)
             {
                 var model = models[i];
 
@@ -85,7 +87,32 @@ namespace de.devcodemonkey.AIChecker.UseCases
             }
 
             // export file
-            await _mdFile.ExportToPdfAsync(Path.Combine("c:\\temp", "PromptRating.pdf"));
+            var exportPath = Path.Combine(Path.GetTempPath(), "AiExports");
+            if (!Directory.Exists(exportPath))
+                Directory.CreateDirectory(exportPath);
+            var fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+
+            switch (dataExportType)
+            {
+                case DataExportType.Markdown:
+                    _mdFile.ExportAsMarkdown(Path.Combine(exportPath, $"{fileName}.md"));
+                    break;
+                case DataExportType.Html:
+                    _mdFile.ExportAsHtml(Path.Combine(exportPath, $"{fileName}.html"));
+                    break;
+                default:
+                    await _mdFile.ExportToPdfAsync(Path.Combine(exportPath, $"{fileName}.pdf"));
+                    break;
+            }
+
+            if (openFolder)
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = exportPath,
+                    UseShellExecute = true
+                });
+            }
         }
     }
 }

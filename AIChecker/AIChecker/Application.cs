@@ -5,6 +5,7 @@ using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Spectre.Console;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
@@ -93,7 +94,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                             RankPromptVerb, ExportPromptRankVerb>(args)
             .MapResult(
                 async (InfoVerb opts) => await DisplayAppInfoAsync(),
-                async (RecreateDatabaseVerb opts) => await RecreateDatabaseAsync(),
+                async (RecreateDatabaseVerb opts) => await RecreateDatabaseAsync(opts),
                 async (ViewProcessUsageVerb opts) => await ViewProcessUsageAsync(),
                 async (SendToLmsVerb opts) => await SendToLmsAsync(opts),
                 async (ImportQuestionsVerb opts) => await _importQuestionAnswerUseCase.ExecuteAsync(opts.Path),
@@ -114,10 +115,20 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         }
 
         private async Task ExportRankVerb(ExportPromptRankVerb opts)
-        {            
+        {
             await AnsiConsole.Status().StartAsync("Exporting prompt rating...", async ctx =>
-                await _exportPromptRatingUseCase.ExecuteAsync(DataExportType.Pdf, opts.ResultSet)
-            );            
+            {
+                //try parse the enum
+                DataExportType fileType = opts.FileType?.ToLower() switch
+                {
+                    "pdf" => DataExportType.Pdf,
+                    "markdown" => DataExportType.Markdown,
+                    "html" => DataExportType.Html,
+                    _ => DataExportType.Pdf
+                };
+                await _exportPromptRatingUseCase.ExecuteAsync(opts.ResultSet, fileType, !opts.NotOpenFolder);
+            }
+            );
             AnsiConsole.MarkupLine("[green]Prompt rating exported![/]");
         }
 
@@ -265,28 +276,30 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             return Task.CompletedTask;
         }
 
-        private async Task RecreateDatabaseAsync()
+        private async Task RecreateDatabaseAsync(RecreateDatabaseVerb opts)
         {
-            AnsiConsole.MarkupLine("[red]Warning![/] All data will be lost!");
-            string confirm;
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                confirm = AnsiConsole.Ask<string>("Type 'delete all data' to confirm: ");
-            else
+            if (!opts.Force)
             {
-                System.Console.WriteLine("Type 'delete all data' to confirm: ");
-                confirm = Console.ReadLine() ?? string.Empty;
-            }
+                AnsiConsole.MarkupLine("[red]Warning![/] All data will be lost!");
+                string confirm;
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    confirm = AnsiConsole.Ask<string>("Type 'delete all data' to confirm: ");
+                else
+                {
+                    System.Console.WriteLine("Type 'delete all data' to confirm: ");
+                    confirm = Console.ReadLine() ?? string.Empty;
+                }
 
-            if (confirm != "delete all data")
-            {
-                AnsiConsole.MarkupLine("[red]Aborted![/]");
-                return;
+                if (confirm != "delete all data")
+                {
+                    AnsiConsole.MarkupLine("[red]Aborted![/]");
+                    return;
+                }
             }
-
             await AnsiConsole.Status().StartAsync("Recreating database...", async ctx =>
-            {
-                await _recreateDatabaseUseCase.ExecuteAysnc();
-            });
+                {
+                    await _recreateDatabaseUseCase.ExecuteAysnc();
+                });
 
             AnsiConsole.MarkupLine("[green]Database recreated![/]");
         }
