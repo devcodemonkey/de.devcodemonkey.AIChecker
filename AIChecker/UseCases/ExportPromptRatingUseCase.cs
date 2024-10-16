@@ -68,6 +68,25 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 _mdFile.Text.AppendLine(tableRound);
             }
 
+            // loop models
+            _mdFontStyles.AddH3Text("Modell Informationen");
+
+            var models = orderedResults.Where(r => r.PromptRatingRound.Round == 1)
+                .Select(m => m.Model).ToList();
+
+            for (var i = 1; i < models.Count() - 1; i++)
+            {
+                var model = models[i];
+
+                var tableModel = _exportPromptRating.GetModelDetailsTable(
+                    modelNumber: i,
+                    modelName: model.Value,
+                    baseModel: model.BasicModells,
+                    modelDescriptionLink: model.Link,
+                    modelSize: model.Size.ToString()
+                    );
+                _mdFile.Text.AppendLine(tableModel);
+            }
 
             // export file
             await _mdFile.ExportToPdfAsync(Path.Combine("c:\\temp", "PromptRating.pdf"));
