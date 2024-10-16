@@ -4,12 +4,6 @@ using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 
 namespace de.devcodemonkey.AIChecker.UseCases
 {
@@ -50,14 +44,14 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 List<IMessage> messages = new();
                 messages.Add(new Message
                 {
-                    Role = "user",
-                    Content = message()
-                });
-                messages.Add(new Message
-                {
                     Role = "system",
                     Content = systemPrompt()
                 });
+                messages.Add(new Message
+                {
+                    Role = "user",
+                    Content = message()
+                });                
 
                 var systemPromptObject = new SystemPrompt
                 {

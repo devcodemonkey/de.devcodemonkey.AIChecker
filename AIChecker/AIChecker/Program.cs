@@ -44,10 +44,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //args = ["rankPrompt", "--help"];
 
 
-            //args = ["rankPrompt", "-r", "Test result set", "-p", "JSON format\nother things", "-m", "lmstudio-community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf,TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf"];
+            args = ["rankPrompt", "-r", "Test result set", "-p", "JSON format\nother things", "-m", "lmstudio-community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf,TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf"];
 
             //args = ["exportPromptRank", "-r", "Test result set", "-t", "Markdown"];
-            args = ["exportPromptRank", "-r", "Test result set"];
+            //args = ["exportPromptRank", "-r", "Test result set"];
             //args = ["recreateDatabase", "-f"];
 
             _args = args;

@@ -139,12 +139,12 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 opts.MaxTokens,
                 opts.ResultSet,
                 opts.promptRequierements,
-                systemPrompt: () => AnsiConsole.Ask<string>("System Prompt: "),
-                message: () =>
+                systemPrompt: () =>
                 {
                     AnsiConsole.Write(new Rule($"[yellow]{listNumber}. Run[/]").RuleStyle("green"));
-                    return AnsiConsole.Ask<string>("Message: ");
+                    return AnsiConsole.Ask<string>("System Prompt: ");
                 },
+                message: () => AnsiConsole.Ask<string>("Message: "),
                 ranking: () =>
                 {
                     int rank = 0;
