@@ -96,13 +96,6 @@ namespace de.devcodemonkey.AIChecker.UseCases
                         RequestEnd = apiResult.RequestEnd,
                         SystemPrompt = systemPromptObject,
                         Model = model,
-
-                        //TODO: must be delete
-                        //Model = new Model
-                        //{
-                        //    ModelId = Guid.NewGuid(),
-                        //    Value = modelName
-                        //}
                     };
 
 

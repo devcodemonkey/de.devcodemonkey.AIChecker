@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
 {
     /// <inheritdoc />
@@ -262,6 +264,15 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Models",
+                columns: new[] { "ModelId", "BasicModells", "Link", "Size", "Value" },
+                values: new object[,]
+                {
+                    { new Guid("67e3379c-22f5-4273-97a6-76bbaa706d7a"), null, null, null, "TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf" },
+                    { new Guid("c722c6a8-cc86-439a-ae18-dd8b32cd5002"), null, null, null, "lmstudio-community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Unique_AnswerId",
                 table: "Answers",
@@ -272,6 +283,12 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                 name: "IX_Img_AnswerId",
                 table: "Img",
                 column: "AnswerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Unique_ModelValue",
+                table: "Models",
+                column: "Value",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PromptRatingRounds_ResultId",
@@ -318,6 +335,12 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                 name: "IX_Unique_ResultId",
                 table: "ResultSets",
                 column: "ResultSetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Unique_ResultSetValue",
+                table: "ResultSets",
+                column: "Value",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_SystemResourceUsage_ResultSetId",

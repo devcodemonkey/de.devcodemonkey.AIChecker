@@ -109,8 +109,9 @@ public partial class AicheckerContext : DbContext
         });
 
         modelBuilder.Entity<Model>(entity =>
-        {
-            entity.Property(e => e.ModelId).ValueGeneratedNever();
+        {            
+            entity.Property(e => e.ModelId).ValueGeneratedNever();            
+            entity.HasIndex(e => e.Value, "IX_Unique_ModelValue").IsUnique();
         });
 
         modelBuilder.Entity<Question>(entity =>
@@ -132,7 +133,7 @@ public partial class AicheckerContext : DbContext
         {
             entity.HasIndex(e => e.ResultId, "IX_Unique_ResultSetId");
 
-            entity.Property(e => e.ResultId).ValueGeneratedNever();
+            entity.Property(e => e.ResultId).ValueGeneratedNever();            
 
             entity.HasOne(d => d.Model).WithMany(p => p.Results)
                 .HasForeignKey(d => d.ModelId)
@@ -193,6 +194,8 @@ public partial class AicheckerContext : DbContext
             entity.HasIndex(e => e.ResultSetId, "IX_Unique_ResultId");
 
             entity.Property(e => e.ResultSetId).ValueGeneratedNever();
+
+            entity.HasIndex(e => e.Value, "IX_Unique_ResultSetValue").IsUnique();
         });
 
         modelBuilder.Entity<SystemPrompt>(entity =>

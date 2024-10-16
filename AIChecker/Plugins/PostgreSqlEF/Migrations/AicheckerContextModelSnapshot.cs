@@ -109,17 +109,20 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
 
                     b.HasKey("ModelId");
 
+                    b.HasIndex(new[] { "Value" }, "IX_Unique_ModelValue")
+                        .IsUnique();
+
                     b.ToTable("Models");
 
                     b.HasData(
                         new
                         {
-                            ModelId = new Guid("b0186383-69c7-4575-b3b7-efd3d57724b4"),
+                            ModelId = new Guid("c722c6a8-cc86-439a-ae18-dd8b32cd5002"),
                             Value = "lmstudio-community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf"
                         },
                         new
                         {
-                            ModelId = new Guid("1ad360ed-6bf5-4237-ad8b-31cf95e6221d"),
+                            ModelId = new Guid("67e3379c-22f5-4273-97a6-76bbaa706d7a"),
                             Value = "TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf"
                         });
                 });
@@ -277,6 +280,9 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.HasKey("ResultSetId");
 
                     b.HasIndex(new[] { "ResultSetId" }, "IX_Unique_ResultId");
+
+                    b.HasIndex(new[] { "Value" }, "IX_Unique_ResultSetValue")
+                        .IsUnique();
 
                     b.ToTable("ResultSets");
                 });
