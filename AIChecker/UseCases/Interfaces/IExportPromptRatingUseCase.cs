@@ -1,5 +1,5 @@
 ﻿
-namespace de.devcodemonkey.AIChecker.UseCases
+namespace de.devcodemonkey.AIChecker.UseCases.Interfaces
 {
     public interface IExportPromptRatingUseCase
     {
