@@ -81,7 +81,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 var tableModel = _exportPromptRating.GetModelDetailsTable(
                     modelNumber: i,
                     modelName: model.Value,
-                    baseModel: model.BasicModells,
+                    baseModel: model.BaseModels,
                     modelDescriptionLink: model.Link,
                     modelSize: model.Size.ToString()
                     );

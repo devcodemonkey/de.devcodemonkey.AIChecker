@@ -8,7 +8,7 @@ public partial class Model : IValue
 
     public string? Value { get; set; }
 
-    public string? BasicModells { get; set; }
+    public string? BaseModels { get; set; }
 
     public string? Link { get; set; }
 

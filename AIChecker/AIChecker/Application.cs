@@ -197,7 +197,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     {
                         ModelId = Guid.NewGuid(),
                         Value = value,
-                        BasicModells = basicModel,
+                        BaseModels = basicModel,
                         Link = link,
                         Size = size
                     };
@@ -214,7 +214,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     {
                         table.AddRow(
                             m.Value,
-                            m.BasicModells,
+                            m.BaseModels,
                             m.Link,
                             m.Size.ToString()
                         );
