@@ -95,7 +95,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.Property<Guid>("ModelId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("BasicModells")
+                    b.Property<string>("BaseModels")
                         .HasColumnType("text");
 
                     b.Property<string>("Link")
@@ -117,12 +117,12 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.HasData(
                         new
                         {
-                            ModelId = new Guid("c722c6a8-cc86-439a-ae18-dd8b32cd5002"),
+                            ModelId = new Guid("66d05f26-1799-4904-89f8-fff29d244711"),
                             Value = "lmstudio-community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf"
                         },
                         new
                         {
-                            ModelId = new Guid("67e3379c-22f5-4273-97a6-76bbaa706d7a"),
+                            ModelId = new Guid("fc68316b-8380-4843-a96a-042fa6a76207"),
                             Value = "TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf"
                         });
                 });

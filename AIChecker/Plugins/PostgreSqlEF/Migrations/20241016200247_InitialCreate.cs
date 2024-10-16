@@ -31,7 +31,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                 {
                     ModelId = table.Column<Guid>(type: "uuid", nullable: false),
                     Value = table.Column<string>(type: "text", nullable: true),
-                    BasicModells = table.Column<string>(type: "text", nullable: true),
+                    BaseModels = table.Column<string>(type: "text", nullable: true),
                     Link = table.Column<string>(type: "text", nullable: true),
                     Size = table.Column<double>(type: "double precision", nullable: true)
                 },
@@ -266,11 +266,11 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
 
             migrationBuilder.InsertData(
                 table: "Models",
-                columns: new[] { "ModelId", "BasicModells", "Link", "Size", "Value" },
+                columns: new[] { "ModelId", "BaseModels", "Link", "Size", "Value" },
                 values: new object[,]
                 {
-                    { new Guid("67e3379c-22f5-4273-97a6-76bbaa706d7a"), null, null, null, "TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf" },
-                    { new Guid("c722c6a8-cc86-439a-ae18-dd8b32cd5002"), null, null, null, "lmstudio-community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf" }
+                    { new Guid("66d05f26-1799-4904-89f8-fff29d244711"), null, null, null, "lmstudio-community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf" },
+                    { new Guid("fc68316b-8380-4843-a96a-042fa6a76207"), null, null, null, "TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf" }
                 });
 
             migrationBuilder.CreateIndex(
