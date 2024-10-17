@@ -59,7 +59,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             output.AppendLine(MdFontStyles.H4($"{runNumber}. Durchlauf"));
 
             // Create the first table for Prompt Anforderungen, Prompt, and System Prompt
-            var promptTable = new MdTable("Prompt Anfoderungen", "Prompt", "System Prompt");
+            var promptTable = new MdTable("Prompt Anforderungen", "Prompt", "System Prompt");
             promptTable.AddRow(promptAnforderungen, prompt, systemPrompt);
             output.AppendLine(promptTable.ToString());
 
