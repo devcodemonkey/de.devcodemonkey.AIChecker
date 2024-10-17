@@ -237,8 +237,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     {
                         table.AddRow(
                             m.Value,
-                            m.BaseModels,
-                            m.Link,
+                            m.BaseModels ?? "",
+                            m.Link ?? "",
                             m.Size.ToString()
                         );
                     }
