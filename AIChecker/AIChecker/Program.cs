@@ -23,42 +23,48 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private static string[] _args;
         static async Task Main(string[] args)
         {
-            //args = ["sendToLms", "-m", "Schreib mir ein Gedicht mit 100 Zeilen", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "5", "-i", "5"];
-            // args = ["sendToLms", "-s", "", "-r" ,"Test result set", "-m", "write me a poem over 10 lines"];
-            //args = ["sendToLms", "-r" ,"Test result set", "-m", "write me a poem over 10 lines"];
-            //args = ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"];
-            //args = ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"];
-            //args = ["viewProcessUsage"];
-            //args = ["info"];            
-            // args = ["importQuestions", "-p", "/home/david/masterarbeit.wiki/06_00_00-Ticketexport/FAQs/FAQ-Outlook.json"];
-            // args = ["createMoreQuestions", "-r", "Create more questions | model xy", "-s", "Create a new questions based on the answer"];
-            //args = ["database"];
-            //args = ["database", "-r"];
-            //args = ["database", "-s"];
-            //args = ["model"];
-            //args = ["model", "-a"];
-            //args = ["model", "-v"];
-            //args = ["model", "-l"];
-            //args = ["model", "-u"];
-
-            //args = ["rankPrompt", "--help"];
-
-
-            args = ["rankPrompt", "-r", "Test result set", "-p", "JSON format\nother things", "-m", "lmstudio-community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf,TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf"];
-
-            //args = ["exportPromptRank", "-r", "Test result set", "-t", "Markdown"];
-            //args = ["exportPromptRank", "-r", "Test result set"];
-            //args = ["recreateDatabase", "-f"];
-
             _args = args;
             // Set console encoding to UTF8 for status bar in Spectre.Console
             Console.OutputEncoding = Encoding.UTF8;
             // Setup DI
             var serviceProvider = await ConfigureServicesAsync();
 
-            // Run the application
-            var app = serviceProvider.GetRequiredService<Application>();
-            await app.RunAsync(args);
+            //await RunWithScopeAsync(serviceProvider, ["sendToLms", "-m", "Schreib mir ein Gedicht mit 100 Zeilen", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "5", "-i", "5"]);
+            //await RunWithScopeAsync(serviceProvider, ["sendToLms", "-r", "Test result set", "-m", "write me a poem over 10 lines"]);
+            //await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"]);
+            //await RunWithScopeAsync(serviceProvider, ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"]);
+            //await RunWithScopeAsync(serviceProvider, ["viewProcessUsage"]);
+            //await RunWithScopeAsync(serviceProvider, ["info"]);
+            //await RunWithScopeAsync(serviceProvider, ["importQuestions", "-p", "/home/david/masterarbeit.wiki/06_00_00-Ticketexport/FAQs/FAQ-Outlook.json"]);
+            //await RunWithScopeAsync(serviceProvider, ["createMoreQuestions", "-r", "Create more questions | model xy", "-s", "Create a new question based on the answer"]);
+            //await RunWithScopeAsync(serviceProvider, ["database", "-r"]);
+            //await RunWithScopeAsync(serviceProvider, ["model", "-a"]);
+            //await RunWithScopeAsync(serviceProvider, ["model", "-v"]);
+            //await RunWithScopeAsync(serviceProvider, ["model", "-l"]);
+            //await RunWithScopeAsync(serviceProvider, ["model", "-u"]);
+            //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "--help"]);
+
+            //await RunWithScopeAsync(serviceProvider, ["recreateDatabase", "-f"]);
+            //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Test result set", "-p", "* JSON format\n* other things", "-m", "lmstudio-community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf,TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf"]);
+            //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set", "-t", "Markdown"]);
+            //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set", "-t", "Html"]);
+            //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set"]);
+
+            await RunWithScopeAsync(serviceProvider, args);
+        }
+
+        // The extracted method that runs the application with a scoped service provider.
+        private static async Task RunWithScopeAsync(IServiceProvider serviceProvider, string[] args)
+        {
+            // Manually create a scope for scoped services
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var scopedProvider = scope.ServiceProvider;
+
+                // Run the application with the provided args
+                var app = scopedProvider.GetRequiredService<Application>();
+                await app.RunAsync(args);
+            }
         }
 
         private static async Task<IServiceProvider> ConfigureServicesAsync()
@@ -91,10 +97,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 }
                 services.AddScoped<IDefaultMethodesRepository, DefaultMethodesRepository>();
 
-                MdServiceRegistrationExtensions.AddServiceAndDependencies(services);                
+                MdServiceRegistrationExtensions.AddServiceAndDependencies(services);
 
                 // Register services
-                services.AddSingleton<Application>();
+                services.AddScoped<Application>();
                 // Register plugins
                 services.AddSingleton<IDeserializer<QuestionAnswer>, Deserializer<QuestionAnswer>>();
                 services.AddSingleton<IAPIRequester, APIRequester>();
@@ -119,7 +125,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 services.AddSingleton<IUnloadModelUseCase, UnloadModelUseCase>();
                 services.AddSingleton<ICreatePromptRatingUseCase, CreatePromptRatingUseCase>();
 
-                services.AddSingleton<IExportPromptRatingUseCase, ExportPromptRatingUseCase>();
+                services.AddScoped<IExportPromptRatingUseCase, ExportPromptRatingUseCase>();
 
                 services.AddSingleton<IBackupDatabaseUseCase, BackupDatabaseUseCase>(provider =>
                 {
