@@ -1,0 +1,1 @@
+Get-ChildItem *.cs | Get-Content | Set-Clipboard
