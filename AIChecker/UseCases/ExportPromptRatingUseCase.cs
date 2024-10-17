@@ -72,12 +72,12 @@ namespace de.devcodemonkey.AIChecker.UseCases
             var models = orderedResults.Where(r => r.PromptRatingRound.Round == 1)
                 .Select(m => m.Model).ToList();
 
-            for (var i = 1; i < models.Count(); i++)
+            for (var i = 0; i < models.Count(); i++)
             {
                 var model = models[i];
 
                 var tableModel = _exportPromptRating.GetModelDetailsTable(
-                    modelNumber: i,
+                    modelNumber: i + 1,
                     modelName: model.Value,
                     baseModel: model.BaseModels,
                     modelDescriptionLink: model.Link,
