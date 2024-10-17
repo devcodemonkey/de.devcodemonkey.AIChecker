@@ -3,11 +3,8 @@ using de.devcodemonkey.AIChecker.AIChecker.Commands;
 using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
-using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Spectre.Console;
-using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 
 namespace de.devcodemonkey.AIChecker.AIChecker
