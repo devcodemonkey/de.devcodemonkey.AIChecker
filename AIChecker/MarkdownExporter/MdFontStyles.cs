@@ -11,11 +11,11 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
             File = file ?? throw new ArgumentNullException(nameof(file));
         }
 
-        public static string Bold(string text) => $"**{text}**";
+        public static string Bold(string text) => $"**{text.Trim()}**";
 
-        public static string Italic(string text) => $"_{text}_";
+        public static string Italic(string text) => $"_{text.Trim()}_";
 
-        public static string BoldItalic(string text) => $"***{text}***";
+        public static string BoldItalic(string text) => $"***{text.Trim()}***";
 
         public void AddBoldText(string text) => File.Text.AppendLine(Bold(text));
 
