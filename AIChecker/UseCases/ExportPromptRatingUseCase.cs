@@ -40,7 +40,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
             var firstResult = results.FirstOrDefault();
 
-            var tableTestdata = _exportPromptRating.GetTableTestdata(DateTime.Now.ToString(), firstResult!.RequestCreated.ToShortDateString(), results.Count().ToString(), firstResult.MaxTokens.ToString(), firstResult.Temperature.ToString());
+            var tableTestdata = _exportPromptRating.GetTableTestdata(DateTime.Now.ToString(), firstResult!.RequestCreated.ToShortDateString(), resultSet, results.Count().ToString(), firstResult.MaxTokens.ToString(), firstResult.Temperature.ToString());
             _mdFile.Text.AppendLine(tableTestdata);
 
             // set rating

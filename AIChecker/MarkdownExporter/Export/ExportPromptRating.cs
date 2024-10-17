@@ -8,6 +8,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
         public string GetTableTestdata(
             string datumDesAusdrucks,
             string testdatum,
+            string resultSet,
             string anzahlDerAntworten,
             string geschaetzteToken,
             string temperatur)
@@ -25,6 +26,10 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             table.AddRow(
                 MdFontStyles.Bold("Testdatum"),
                 testdatum);
+
+            table.AddRow(
+                MdFontStyles.Bold("ResultSet"),
+                resultSet);
 
             table.AddRow(
                 MdFontStyles.Bold("Anzahl der Antworten"),
