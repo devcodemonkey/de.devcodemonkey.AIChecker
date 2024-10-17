@@ -27,7 +27,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
         {
             var pipeline = new MarkdownPipelineBuilder()
                 .UseAdvancedExtensions()
-                .UseBootstrap()
+                //.UseBootstrap()
                 .Build();
 
             // add footer
@@ -38,6 +38,9 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
 </footer>");
 
             var html = Markdown.ToHtml(Text.ToString(), pipeline);
+
+            // Add Bootstrap's table classes for styling
+            html = html.Replace("<table>", "<table class=\"table table-striped table-bordered\">");
 
             // Inject padding directly to the body element
             var css = @"<style>body { padding: 50px; }</style>
