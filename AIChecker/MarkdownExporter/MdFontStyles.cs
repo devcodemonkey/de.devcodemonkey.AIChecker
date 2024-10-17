@@ -23,17 +23,17 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
 
         public void AddBoldItalicText(string text) => File.Text.AppendLine(BoldItalic(text));
 
-        public static string H1(string text) => $"# {text}";
+        public static string H1(string text) => $"# {text}\n";
 
-        public static string H2(string text) => $"## {text}";
+        public static string H2(string text) => $"## {text}\n";
 
-        public static string H3(string text) => $"### {text}";
+        public static string H3(string text) => $"### {text} \n";
 
-        public static string H4(string text) => $"#### {text}";
+        public static string H4(string text) => $"#### {text} \n";
 
-        public static string H5(string text) => $"##### {text}";
+        public static string H5(string text) => $"##### {text} \n";
 
-        public static string H6(string text) => $"###### {text}";
+        public static string H6(string text) => $"###### {text} \n";
 
         public void AddH1Text(string text) => File.Text.AppendLine(H1(text));
 
