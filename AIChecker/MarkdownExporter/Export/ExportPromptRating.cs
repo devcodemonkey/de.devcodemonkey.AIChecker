@@ -85,7 +85,8 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             string modelSize)
         {
             var output = new StringBuilder();
-            output.AppendLine(MdFontStyles.H4($"{modelNumber}. {modelName}"));
+            output.AppendLine(MdFontStyles.Bold($"{modelNumber}. {modelName}"));
+            output.AppendLine();
 
             // Create the table for model details
             var modelDetailsTable = new MdTable("Parameter", "Wert");
