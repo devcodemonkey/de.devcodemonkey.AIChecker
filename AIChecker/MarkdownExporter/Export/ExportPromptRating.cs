@@ -9,7 +9,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             string datumDesAusdrucks,
             string testdatum,
             string anzahlDerAntworten,
-            string geschaetzteToken ,
+            string geschaetzteToken,
             string temperatur)
         {
             var output = new StringBuilder();
@@ -20,15 +20,15 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             // Adding rows to the table using the MdFontStyles for bold
             table.AddRow(
                 MdFontStyles.Bold("Datum des Ausdrucks"),
-                MdFontStyles.Bold(datumDesAusdrucks));
+                datumDesAusdrucks);
 
             table.AddRow(
                 MdFontStyles.Bold("Testdatum"),
-                MdFontStyles.Bold(testdatum));            
+                testdatum);
 
             table.AddRow(
                 MdFontStyles.Bold("Anzahl der Antworten"),
-                MdFontStyles.Bold(anzahlDerAntworten));
+                anzahlDerAntworten);
 
             table.AddRow(
                 MdFontStyles.Bold("Geschätzte Token"),
@@ -85,7 +85,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             string modelSize)
         {
             var output = new StringBuilder();
-            output.AppendLine(MdFontStyles.H4($"{modelNumber}. {MdFontStyles.Bold(modelName)}"));
+            output.AppendLine(MdFontStyles.H4($"{modelNumber}. {modelName}"));
 
             // Create the table for model details
             var modelDetailsTable = new MdTable("Parameter", "Wert");
@@ -93,7 +93,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             // Adding rows to the table using the MdFontStyles for bold where necessary
             modelDetailsTable.AddRow(
                 MdFontStyles.Bold("Modellname"),
-                MdFontStyles.Bold(modelName));
+                modelName);
 
             modelDetailsTable.AddRow(
                 MdFontStyles.Bold("Basismodell/e"),
