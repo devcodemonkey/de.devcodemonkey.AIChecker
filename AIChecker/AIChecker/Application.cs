@@ -142,9 +142,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 systemPrompt: () =>
                 {
                     AnsiConsole.Write(new Rule($"[yellow]{listNumber}. Run[/]").RuleStyle("green"));
-                    return AnsiConsole.Ask<string>("System Prompt: ");
+                    return MulitLineInput("System Prompt");
                 },
-                message: () => AnsiConsole.Ask<string>("Message: "),
+                message: () => MulitLineInput("Message"),
                 ranking: () =>
                 {
                     int rank = 0;
@@ -171,6 +171,20 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     AnsiConsole.Status().Start(statusMessage, ctx => action());
                 }
             );
+        }
+
+        private string MulitLineInput(string text)
+        {
+            Console.WriteLine($"Enter your multi-line input (press Enter on an empty line to finish) for {text}:");
+            var inputLines = new List<string>();
+            string line;
+            do
+            {
+                line = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(line))
+                    inputLines.Add(line);
+            } while (!string.IsNullOrWhiteSpace(line));
+            return string.Join(Environment.NewLine, inputLines);
         }
 
         private async Task ManageModel(ModelVerb opts)
