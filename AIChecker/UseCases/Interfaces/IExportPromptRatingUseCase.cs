@@ -1,5 +1,7 @@
 ﻿
 
+using de.devcodemonkey.AIChecker.CoreBusiness.MarkDownExporterModels;
+
 namespace de.devcodemonkey.AIChecker.UseCases.Interfaces
 {
     public interface IExportPromptRatingUseCase

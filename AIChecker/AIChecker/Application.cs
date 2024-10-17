@@ -1,6 +1,7 @@
 ﻿using CommandLine;
 using de.devcodemonkey.AIChecker.AIChecker.Commands;
 using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
+using de.devcodemonkey.AIChecker.CoreBusiness.MarkDownExporterModels;
 using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using Spectre.Console;

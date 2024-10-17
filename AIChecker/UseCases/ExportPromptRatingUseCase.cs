@@ -1,16 +1,10 @@
-﻿using de.devcodemonkey.AIChecker.UseCases.Interfaces;
+﻿using de.devcodemonkey.AIChecker.CoreBusiness.MarkDownExporterModels;
+using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using System.Diagnostics;
 
 namespace de.devcodemonkey.AIChecker.UseCases
 {
-    public enum DataExportType
-    {
-        Pdf,
-        Markdown,
-        Html
-    }
-
     public class ExportPromptRatingUseCase : IExportPromptRatingUseCase
     {
         private readonly IExportPromptRating _exportPromptRating;
@@ -90,20 +84,9 @@ namespace de.devcodemonkey.AIChecker.UseCases
             var exportPath = Path.Combine(Path.GetTempPath(), "AiExports");
             if (!Directory.Exists(exportPath))
                 Directory.CreateDirectory(exportPath);
-            var fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            var fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss");            
 
-            switch (dataExportType)
-            {
-                case DataExportType.Markdown:
-                    _mdFile.ExportAsMarkdown(Path.Combine(exportPath, $"{fileName}.md"));
-                    break;
-                case DataExportType.Html:
-                    _mdFile.ExportAsHtml(Path.Combine(exportPath, $"{fileName}.html"));
-                    break;
-                default:
-                    await _mdFile.ExportToPdfAsync(Path.Combine(exportPath, $"{fileName}.pdf"));
-                    break;
-            }
+            _mdFile.Export(exportPath, dataExportType);
 
             if (openFolder)
             {

@@ -1,4 +1,5 @@
-﻿using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+﻿using de.devcodemonkey.AIChecker.CoreBusiness.MarkDownExporterModels;
+using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Markdig;
 using PuppeteerSharp;
 using System.Text;
@@ -73,6 +74,25 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
             if (!path.EndsWith(".pdf"))
                 path += ".pdf";
             await page.PdfAsync(path);
+        }
+
+        public async Task Export(string path, DataExportType dataExportType)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                throw new ArgumentException("Path is required.", nameof(path));
+
+            switch (dataExportType)
+            {
+                case DataExportType.Markdown:
+                    ExportAsMarkdown(path);
+                    break;
+                case DataExportType.Html:
+                    ExportAsHtml(path);
+                    break;
+                default:
+                    await ExportToPdfAsync(path);
+                    break;
+            }
         }
     }
 }
