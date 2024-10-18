@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.37.0" />
     <PackageReference Include="PuppeteerSharp" Version="20.0.2" />
+    <PackageReference Include="ScottPlot" Version="5.0.40" />
   </ItemGroup>
 
   <ItemGroup>
