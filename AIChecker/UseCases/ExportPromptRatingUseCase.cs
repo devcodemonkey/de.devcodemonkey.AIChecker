@@ -72,9 +72,12 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
 
             var exportPath = Path.Combine(Path.GetTempPath(), "AiExports");
-            var imagePath = Path.Combine(exportPath, "img");            
+            var imagePath = Path.Combine(exportPath, "img");
 
-            _mdCharts.CreateBarChartAndAddToMd(imagePath, "img",values.ToArray(), descriptions.ToArray(), "chart");
+            if (dataExportType != DataExportType.Docx)
+                _mdCharts.CreateBarChartAndAddToMd(imagePath, "img", values.ToArray(), descriptions.ToArray(), "chart");
+            else
+                _mdCharts.CreateBarChartAndAddToMd(imagePath, "img", values.ToArray(), descriptions.ToArray(), "chart", 600, 400);
 
 
             // loop models
