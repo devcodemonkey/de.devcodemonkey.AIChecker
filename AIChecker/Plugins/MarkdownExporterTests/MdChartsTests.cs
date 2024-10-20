@@ -20,7 +20,7 @@
             string[] descriptions = { "A", "B", "C" };
 
             // Act
-            _chartService.CreateBarChart(values, descriptions);
+            _chartService.CreateBarChart(Configuration.TempPath, values, descriptions);
         }
 
         [TestMethod]
@@ -32,7 +32,7 @@
             string[] descriptions = null;
 
             // Act
-            _chartService.CreateBarChart(values, descriptions);
+            _chartService.CreateBarChart(Configuration.TempPath, values, descriptions);
         }
 
         [TestMethod]
@@ -44,7 +44,7 @@
             string[] descriptions = { "A", "B" }; // different length
 
             // Act
-            _chartService.CreateBarChart(values, descriptions);
+            _chartService.CreateBarChart(Configuration.TempPath, values, descriptions);
         }
 
         [TestMethod]
@@ -52,10 +52,10 @@
         {
             // Arrange
             double[] values = { 1, 2, 3 };
-            string[] descriptions = { "A", "B", "C" };            
+            string[] descriptions = { "A", "B", "C" };
 
             // Act
-            string fileName = _chartService.CreateBarChart(values, descriptions);
+            string fileName = _chartService.CreateBarChart(Configuration.TempPath, values, descriptions);
 
             // Assert
             Assert.IsFalse(string.IsNullOrEmpty(fileName), "File name should not be null or empty.");

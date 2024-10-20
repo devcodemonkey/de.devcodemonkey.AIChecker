@@ -5,6 +5,8 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
 {
     public class MdCharts
     {
+        private const string MdImageString = "![{0}]({1})";
+
         private readonly IMdFile _mdFile;
 
         public MdCharts()
@@ -17,7 +19,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
             _mdFile = mdFile;
         }
 
-        public string CreateBarChart(double[] values, string[] descriptions, int width = 400, int heigth = 300)
+        public string CreateBarChart(string path, double[] values, string[] descriptions, int width = 400, int heigth = 300)
         {
             if (values == null || values.Length == 0)
                 throw new ArgumentException("Values are required.", nameof(values));
@@ -55,6 +57,17 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
             plot.SavePng(filePath, width, heigth);
 
             return filePath;
+        }
+
+        public void CreateBarChartAndAddToMd(string path, double[] values, string[] descriptions, string title, int width = 400, int heigth = 300)
+        {
+            var filePath = CreateBarChart(path, values, descriptions, width, heigth);
+
+            var file = Path.GetFileName(filePath);
+
+            var mdImage = string.Format(MdImageString, title, filePath);
+
+            _mdFile.Text.AppendLine(mdImage + "\n");
         }
     }
 }
