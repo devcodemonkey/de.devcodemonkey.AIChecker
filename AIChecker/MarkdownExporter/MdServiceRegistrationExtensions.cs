@@ -12,6 +12,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
             services.AddScoped<IMdFontStyles, MdFontStyles>();
             services.AddScoped<IExportPromptRating, ExportPromptRating>();            
             services.AddScoped<IMdTable, MdTable>();
+            services.AddScoped<IMdCharts, MdCharts>();
             return services;
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace de.devcodemonkey.AIChecker.MarkdownExporter
+﻿using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+
+namespace de.devcodemonkey.AIChecker.MarkdownExporter
 {
     public class MdTable : IMdTable
     {

@@ -2,6 +2,7 @@
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using System.Diagnostics;
+using System.Text;
 
 namespace de.devcodemonkey.AIChecker.UseCases
 {
@@ -10,14 +11,17 @@ namespace de.devcodemonkey.AIChecker.UseCases
         private readonly IExportPromptRating _exportPromptRating;
         private readonly IMdFile _mdFile;
         private readonly IMdFontStyles _mdFontStyles;
+        private readonly IMdCharts _mdCharts;
         private readonly IDefaultMethodesRepository _defaultMethodesRepository;
 
 
-        public ExportPromptRatingUseCase(IExportPromptRating exportPromptRating, IMdFile mdFile, IDefaultMethodesRepository defaultMethodesRepository, IMdFontStyles mdFontStyles)
+        public ExportPromptRatingUseCase(IExportPromptRating exportPromptRating, IMdFile mdFile, IMdCharts mdCharts,
+            IDefaultMethodesRepository defaultMethodesRepository, IMdFontStyles mdFontStyles)
         {
             _exportPromptRating = exportPromptRating;
             _mdFile = mdFile;
             _mdFontStyles = mdFontStyles;
+            _mdCharts = mdCharts;
             _defaultMethodesRepository = defaultMethodesRepository;
         }
 
@@ -46,7 +50,9 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
 
             // loop rounds
-            for (var i = 1; i < orderedResults.Count(); i++)
+            List<double> values = new();
+            List<string> descriptions = new();
+            for (var i = 1; i < orderedResults.Count() - 1; i++)
             {
                 var round = orderedResults.Where(r => r.PromptRatingRound.Round == i).ToList();
 
@@ -58,7 +64,18 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     modelRatings: round.Select(r => (r.Model.Value, r.PromptRatingRound.Rating)).ToList()
                     );
                 _mdFile.Text.AppendLine(tableRound);
+
+                double sumOfRatings = round.Select(r => r.PromptRatingRound.Rating).Sum();
+                values.Add(sumOfRatings / round.Count);
+                descriptions.Add($"{i}. Durchlauf");
             }
+
+
+            var exportPath = Path.Combine(Path.GetTempPath(), "AiExports");
+            var imagePath = Path.Combine(exportPath, "img");            
+
+            _mdCharts.CreateBarChartAndAddToMd(imagePath, "img",values.ToArray(), descriptions.ToArray(), "chart");
+
 
             // loop models
             _mdFontStyles.AddH3Text("Modell Informationen");
@@ -81,12 +98,9 @@ namespace de.devcodemonkey.AIChecker.UseCases
             }
 
             // export file
-            var exportPath = Path.Combine(Path.GetTempPath(), "AiExports");
-            if (!Directory.Exists(exportPath))
-                Directory.CreateDirectory(exportPath);
-            var fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss");            
+            var fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
-            _mdFile.Export(exportPath, dataExportType);
+            await _mdFile.Export(Path.Combine(exportPath, fileName), dataExportType);
 
             if (openFolder)
             {

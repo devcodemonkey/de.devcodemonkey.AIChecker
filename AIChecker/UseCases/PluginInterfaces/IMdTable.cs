@@ -1,4 +1,4 @@
-﻿namespace de.devcodemonkey.AIChecker.MarkdownExporter
+﻿namespace de.devcodemonkey.AIChecker.UseCases.PluginInterfaces
 {
     public interface IMdTable
     {

@@ -48,9 +48,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Test result set", "-p", "* JSON format\n* other things", "-m", "lmstudio-community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf,TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set", "-t", "Markdown"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set", "-t", "Html"]);
-            //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set"]);
+            await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set"]);
 
-            await RunWithScopeAsync(serviceProvider, args);
+            //await RunWithScopeAsync(serviceProvider, args);
         }
 
         // The extracted method that runs the application with a scoped service provider.

@@ -3,7 +3,7 @@ using ScottPlot;
 
 namespace de.devcodemonkey.AIChecker.MarkdownExporter
 {
-    public class MdCharts
+    public class MdCharts : IMdCharts
     {
         private const string MdImageString = "![{0}]({1})";
 
@@ -49,23 +49,23 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
             plot.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(ticks);
 
 
-            if (!Path.Exists(Configuration.TempPath))
-                Directory.CreateDirectory(Configuration.TempPath);
+            if (!Path.Exists(path))
+                Directory.CreateDirectory(path);
 
-            var filePath = Path.Combine(Configuration.TempPath, $"{DateTime.Now.ToString("yyyyMMddHHmmss")}.png");
+            var filePath = Path.Combine(path, $"{DateTime.Now.ToString("yyyyMMddHHmmss")}.png");
 
             plot.SavePng(filePath, width, heigth);
 
             return filePath;
         }
 
-        public void CreateBarChartAndAddToMd(string path, double[] values, string[] descriptions, string title, int width = 400, int heigth = 300)
+        public void CreateBarChartAndAddToMd(string path, string urlPath, double[] values, string[] descriptions, string title, int width = 400, int heigth = 300)
         {
             var filePath = CreateBarChart(path, values, descriptions, width, heigth);
 
             var file = Path.GetFileName(filePath);
 
-            var mdImage = string.Format(MdImageString, title, filePath);
+            var mdImage = string.Format(MdImageString, title, $"{urlPath}/{file}");
 
             _mdFile.Text.AppendLine(mdImage + "\n");
         }
