@@ -20,7 +20,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
             _mdFile = mdFile;
         }
 
-        public string CreateBarChart(string path, double[] values, string[] descriptions, int width = 400, int height = 300)
+        public string CreateBarChart(string path, double[] values, string[] descriptions, int width = 800, int height = 600)
         {
             if (values == null || values.Length == 0)
                 throw new ArgumentException("Values are required.", nameof(values));
@@ -60,7 +60,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
             return filePath;
         }
 
-        public void CreateBarChartAndAddToMd(string path, string urlPath, double[] values, string[] descriptions, string title, int width = 400, int height = 300)
+        public void CreateBarChartAndAddToMd(string path, string urlPath, double[] values, string[] descriptions, string title, int width = 800, int height = 600)
         {
             var filePath = CreateBarChart(path, values, descriptions, width, height);
 
