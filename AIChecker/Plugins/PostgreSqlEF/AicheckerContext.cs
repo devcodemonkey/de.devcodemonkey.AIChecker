@@ -258,6 +258,16 @@ public partial class AicheckerContext : DbContext
             {
                 ModelId = Guid.NewGuid(),
                 Value = "TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf"
+            },
+            new Model
+            {
+                ModelId = Guid.NewGuid(),
+                Value = "Qwen/Qwen2-0.5B-Instruct-GGUF/qwen2-0_5b-instruct-q4_0.gguf"
+            },
+            new Model
+            {
+                ModelId = Guid.NewGuid(),
+                Value = "HuggingFaceTB/smollm-360M-instruct-v0.2-Q8_0-GGUF/smollm-360m-instruct-add-basics-q8_0.gguf"
             });
 
         OnModelCreatingPartial(modelBuilder);

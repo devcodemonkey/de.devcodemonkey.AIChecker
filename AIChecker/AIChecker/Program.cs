@@ -46,6 +46,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
             //await RunWithScopeAsync(serviceProvider, ["recreateDatabase", "-f"]);
             //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Test result set", "-p", "* JSON format\n* other things", "-m", "lmstudio-community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf,TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf"]);
+            //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Test result set", "-p", "* JSON format\n* other things", "-m", "Qwen/Qwen2-0.5B-Instruct-GGUF/qwen2-0_5b-instruct-q4_0.gguf,HuggingFaceTB/smollm-360M-instruct-v0.2-Q8_0-GGUF/smollm-360m-instruct-add-basics-q8_0.gguf"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set", "-t", "Markdown"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set", "-t", "Html"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set"]);
