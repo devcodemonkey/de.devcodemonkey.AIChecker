@@ -52,7 +52,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             // loop rounds
             List<double> values = new();
             List<string> descriptions = new();
-            for (var i = 1; i < orderedResults.Count() - 1; i++)
+            for (var i = 1; i < orderedResults.Count(); i++)
             {
                 var round = orderedResults.Where(r => r.PromptRatingRound.Round == i).ToList();
 
