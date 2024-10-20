@@ -50,7 +50,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set", "-t", "Html"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set"]);
 
-            //await RunWithScopeAsync(serviceProvider, args);
+            await RunWithScopeAsync(serviceProvider, args);
         }
 
         // The extracted method that runs the application with a scoped service provider.
