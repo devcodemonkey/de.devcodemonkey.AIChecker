@@ -114,7 +114,7 @@ To get help, simply run `AIChecker.exe` followed by the desired command.
     - **Description**: Exports the ranking of the prompts.
     - **Command**: `exportPromptRank -r <ResultSet> [-t <FileType>] [-o]`
       - `-r, --resultSet`: Specifies the result set name.
-      - `-t, --fileType`: File type to export (optional, default is PDF, possible options: PDF, HTML, Markdown).
+      - `-t, --fileType`: File type to export (optional, default is PDF, possible options: PDF, HTML, Docx, Markdown).
       - `-o, --notOpenFolder`: Prevent opening the folder after export (optional).
 
 15. **rankPrompt**
