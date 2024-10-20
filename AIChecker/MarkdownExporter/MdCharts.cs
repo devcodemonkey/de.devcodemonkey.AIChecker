@@ -1,5 +1,6 @@
 ﻿using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using ScottPlot;
+using ScottPlot.PlotStyles;
 
 namespace de.devcodemonkey.AIChecker.MarkdownExporter
 {
@@ -19,7 +20,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
             _mdFile = mdFile;
         }
 
-        public string CreateBarChart(string path, double[] values, string[] descriptions, int width = 400, int heigth = 300)
+        public string CreateBarChart(string path, double[] values, string[] descriptions, int width = 400, int height = 300)
         {
             if (values == null || values.Length == 0)
                 throw new ArgumentException("Values are required.", nameof(values));
@@ -54,20 +55,28 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
 
             var filePath = Path.Combine(path, $"{DateTime.Now.ToString("yyyyMMddHHmmss")}.png");
 
-            plot.SavePng(filePath, width, heigth);
+            plot.SavePng(filePath, width, height);
 
             return filePath;
         }
 
-        public void CreateBarChartAndAddToMd(string path, string urlPath, double[] values, string[] descriptions, string title, int width = 400, int heigth = 300)
+        public void CreateBarChartAndAddToMd(string path, string urlPath, double[] values, string[] descriptions, string title, int width = 400, int height = 300)
         {
-            var filePath = CreateBarChart(path, values, descriptions, width, heigth);
+            var filePath = CreateBarChart(path, values, descriptions, width, height);
 
-            var file = Path.GetFileName(filePath);
+            // Read the image from file and convert to base64
+            string base64Image;
+            using (var image = File.OpenRead(filePath))
+            {
+                byte[] imageBytes = new byte[image.Length];
+                image.Read(imageBytes, 0, imageBytes.Length);
+                base64Image = Convert.ToBase64String(imageBytes);
+            }
 
-            var mdImage = string.Format(MdImageString, title, $"{urlPath}/{file}");
-
-            _mdFile.Text.AppendLine(mdImage + "\n");
+            //  Create the markdown image string            
+            var base64MdImage = $"![{title}](data:image/png;base64,{base64Image})";
+            
+            _mdFile.Text.AppendLine(base64MdImage + "\n");
         }
     }
 }
