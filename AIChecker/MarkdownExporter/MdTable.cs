@@ -1,6 +1,6 @@
 ﻿namespace de.devcodemonkey.AIChecker.MarkdownExporter
 {
-    public class MdTable
+    public class MdTable : IMdTable
     {
         private MdFile? File { get; }
         private List<string> Headers { get; }
