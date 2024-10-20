@@ -4,6 +4,7 @@
     {
         Pdf,
         Markdown,
-        Html
+        Html,
+        Docx
     }
 }

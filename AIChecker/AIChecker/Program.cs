@@ -49,6 +49,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Test result set", "-p", "* JSON format\n* other things", "-m", "Qwen/Qwen2-0.5B-Instruct-GGUF/qwen2-0_5b-instruct-q4_0.gguf,HuggingFaceTB/smollm-360M-instruct-v0.2-Q8_0-GGUF/smollm-360m-instruct-add-basics-q8_0.gguf"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set", "-t", "Markdown"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set", "-t", "Html"]);
+            //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set", "-t", "Docx"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set"]);
 
             await RunWithScopeAsync(serviceProvider, args);

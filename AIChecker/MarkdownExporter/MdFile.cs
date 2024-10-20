@@ -1,7 +1,11 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.MarkDownExporterModels;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using HtmlToOpenXml;
 using Markdig;
 using PuppeteerSharp;
+using System.Net.Http;
 using System.Text;
 
 namespace de.devcodemonkey.AIChecker.MarkdownExporter
@@ -60,6 +64,39 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
             File.WriteAllText(path, ExportToHtml());
         }
 
+        public void ExportAsDocx(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                throw new ArgumentException("Path is required.", nameof(path));
+            if (!path.EndsWith(".docx"))
+                path += ".docx";
+
+            var html = ExportToHtml();
+            
+            // Convert HTML to DOCX
+            using (WordprocessingDocument wordDoc = WordprocessingDocument.Create(path, DocumentFormat.OpenXml.WordprocessingDocumentType.Document))
+            {
+                // Add a main document part
+                MainDocumentPart mainPart = wordDoc.AddMainDocumentPart();
+                mainPart.Document = new Document();
+                Body body = new Body();
+                mainPart.Document.Append(body);
+
+                // Convert HTML to OpenXml
+                HtmlConverter converter = new HtmlConverter(mainPart);
+                var paragraphs = converter.Parse(html);
+
+                // Append paragraphs to the DOCX document
+                foreach (var paragraph in paragraphs)
+                {
+                    body.Append(paragraph);
+                }
+
+                // Save changes to the DOCX file
+                mainPart.Document.Save();
+            }
+        }
+
         public async Task ExportToPdfAsync(string path)
         {
             string html = ExportToHtml();
@@ -88,6 +125,9 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
                     break;
                 case DataExportType.Html:
                     ExportAsHtml(path);
+                    break;
+                case DataExportType.Docx:
+                    ExportAsDocx(path);
                     break;
                 default:
                     await ExportToPdfAsync(path);

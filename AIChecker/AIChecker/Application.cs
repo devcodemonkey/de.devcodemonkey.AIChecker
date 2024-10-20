@@ -122,6 +122,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     "pdf" => DataExportType.Pdf,
                     "markdown" => DataExportType.Markdown,
                     "html" => DataExportType.Html,
+                    "docx" => DataExportType.Docx,
                     _ => DataExportType.Pdf
                 };
                 await _exportPromptRatingUseCase.ExecuteAsync(opts.ResultSet, fileType, !opts.NotOpenFolder);
