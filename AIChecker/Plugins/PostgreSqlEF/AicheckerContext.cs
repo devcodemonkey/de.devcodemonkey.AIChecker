@@ -23,11 +23,7 @@ public partial class AicheckerContext : DbContext
         _configuration = configuration;
     }
 
-    public virtual DbSet<Answer> Answers { get; set; }
-
-    public virtual DbSet<Expected> Expecteds { get; set; }
-
-    public virtual DbSet<ExpectedsResult> ExpectedsResults { get; set; }
+    public virtual DbSet<Answer> Answers { get; set; }    
 
     public virtual DbSet<Img> Imgs { get; set; }
 
@@ -67,29 +63,7 @@ public partial class AicheckerContext : DbContext
             entity.HasOne(d => d.Question).WithOne(p => p.Answer)
                 .HasForeignKey<Answer>(d => d.QuestionId)
                 .HasConstraintName("FK_Answer_Question");
-        });
-
-        modelBuilder.Entity<Expected>(entity =>
-        {
-            entity.HasKey(e => e.ExpectedId).HasName("PK_Expected");
-
-            entity.Property(e => e.ExpectedId).ValueGeneratedNever();
-        });
-
-        modelBuilder.Entity<ExpectedsResult>(entity =>
-        {
-            entity.HasKey(e => new { e.ExpectedId, e.ResultsId });
-
-            entity.HasOne(d => d.Expected).WithMany(p => p.ExpectedsResults)
-                .HasForeignKey(d => d.ExpectedId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ExpectedsResults_Expected");
-
-            entity.HasOne(d => d.ExpectedNavigation).WithMany(p => p.ExpectedsResults)
-                .HasForeignKey(d => d.ExpectedId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ExpectedsResults_Result");
-        });
+        });        
 
         modelBuilder.Entity<Img>(entity =>
         {
