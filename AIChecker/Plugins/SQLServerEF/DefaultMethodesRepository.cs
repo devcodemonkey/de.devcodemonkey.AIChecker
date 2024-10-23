@@ -91,7 +91,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
         {
             List<long> timeDifferencesInTicks = await (from result in _ctx.Results
                                                        where result.ResultSetId == resultSetId
-                                                       select (result.RequestEnd - result.RequestStart).Ticks)
+                                                       select (result.RequestEnd.HasValue && result.RequestStart.HasValue ? (result.RequestEnd.Value - result.RequestStart.Value).Ticks : 0))
                                                       .ToListAsync();
 
             if (timeDifferencesInTicks.Count == 0)

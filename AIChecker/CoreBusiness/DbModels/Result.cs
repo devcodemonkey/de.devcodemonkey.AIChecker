@@ -8,9 +8,9 @@ public partial class Result
 
     public Guid ResultSetId { get; set; }
 
-    public Guid RequestObjectId { get; set; }
+    public Guid? RequestObjectId { get; set; }
 
-    public Guid RequestReasonId { get; set; }
+    public Guid? RequestReasonId { get; set; }
 
     public string? RequestId { get; set; } = null!;
 
@@ -20,23 +20,23 @@ public partial class Result
 
     public Guid ModelId { get; set; }
 
-    public Guid SystemPromptId { get; set; }
+    public Guid? SystemPromptId { get; set; }
 
-    public double Temperature { get; set; }
+    public double? Temperature { get; set; }
 
-    public int MaxTokens { get; set; }
+    public int? MaxTokens { get; set; }
 
-    public int PromptTokens { get; set; }
+    public int? PromptTokens { get; set; }
 
-    public int CompletionTokens { get; set; }
+    public int? CompletionTokens { get; set; }
 
-    public int TotalTokens { get; set; }
+    public int? TotalTokens { get; set; }
 
-    public DateTime RequestCreated { get; set; }
+    public DateTime? RequestCreated { get; set; }
 
-    public DateTime RequestStart { get; set; }
+    public DateTime? RequestStart { get; set; }
 
-    public DateTime RequestEnd { get; set; }        
+    public DateTime? RequestEnd { get; set; }        
 
     public virtual Model Model { get; set; } = null!;
 

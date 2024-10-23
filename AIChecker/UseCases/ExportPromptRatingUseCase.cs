@@ -38,7 +38,14 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
             var firstResult = results.FirstOrDefault();
 
-            var tableTestdata = _exportPromptRating.GetTableTestdata(DateTime.Now.ToString(), firstResult!.RequestCreated.ToShortDateString(), resultSet, results.Count().ToString(), firstResult.MaxTokens.ToString(), firstResult.Temperature.ToString());
+            var tableTestdata = _exportPromptRating.GetTableTestdata(
+                DateTime.Now.ToString(),
+                firstResult?.RequestCreated?.ToShortDateString() ?? string.Empty,
+                resultSet,
+                results.Count().ToString(),
+                firstResult?.MaxTokens?.ToString() ?? string.Empty,
+                firstResult?.Temperature?.ToString() ?? string.Empty
+            );
             _mdFile.Text.AppendLine(tableTestdata);
 
             // set rating
@@ -48,28 +55,26 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 .OrderBy(r => r.PromptRatingRound.Round)
                 .ThenBy(r => r.Model.Value);
 
-
             // loop rounds
             List<double> values = new();
             List<string> descriptions = new();
-            for (var i = 1; i < orderedResults.Count(); i++)
+            for (var i = 1; i <= orderedResults.Count(); i++)
             {
                 var round = orderedResults.Where(r => r.PromptRatingRound.Round == i).ToList();
 
                 var tableRound = _exportPromptRating.GetRunTable(
                     runNumber: i,
-                    promptAnforderungen: round.FirstOrDefault().ResultSet.PromptRequierements.ToString(),
-                    prompt: round.FirstOrDefault().Asked,
-                    systemPrompt: round.FirstOrDefault().SystemPrompt.Value,
+                    promptAnforderungen: round.FirstOrDefault()?.ResultSet.PromptRequierements.ToString() ?? string.Empty,
+                    prompt: round.FirstOrDefault()?.Asked ?? string.Empty,
+                    systemPrompt: round.FirstOrDefault()?.SystemPrompt?.Value ?? string.Empty,
                     modelRatings: round.Select(r => (r.Model.Value, r.PromptRatingRound.Rating)).ToList()
-                    );
+                );
                 _mdFile.Text.AppendLine(tableRound);
 
                 double sumOfRatings = round.Select(r => r.PromptRatingRound.Rating).Sum();
                 values.Add(sumOfRatings / round.Count);
                 descriptions.Add($"{i}. Durchlauf");
             }
-
 
             var exportPath = Path.Combine(Path.GetTempPath(), "AiExports");
             var imagePath = Path.Combine(exportPath, "img");
@@ -78,7 +83,6 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 _mdCharts.CreateBarChartAndAddToMd(imagePath, "img", values.ToArray(), descriptions.ToArray(), "chart");
             else
                 _mdCharts.CreateBarChartAndAddToMd(imagePath, "img", values.ToArray(), descriptions.ToArray(), "chart", 600, 400);
-
 
             // loop models
             _mdFontStyles.AddH3Text("Modell Informationen");
@@ -96,7 +100,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     baseModel: model.BaseModels,
                     modelDescriptionLink: model.Link,
                     modelSize: model.Size.ToString()
-                    );
+                );
                 _mdFile.Text.AppendLine(tableModel);
             }
 

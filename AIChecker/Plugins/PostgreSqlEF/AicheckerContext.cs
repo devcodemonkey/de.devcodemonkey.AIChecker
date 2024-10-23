@@ -1,4 +1,5 @@
-﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
+﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModelInterfaces;
+using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -23,7 +24,7 @@ public partial class AicheckerContext : DbContext
         _configuration = configuration;
     }
 
-    public virtual DbSet<Answer> Answers { get; set; }    
+    public virtual DbSet<Answer> Answers { get; set; }
 
     public virtual DbSet<Img> Imgs { get; set; }
 
@@ -63,7 +64,7 @@ public partial class AicheckerContext : DbContext
             entity.HasOne(d => d.Question).WithOne(p => p.Answer)
                 .HasForeignKey<Answer>(d => d.QuestionId)
                 .HasConstraintName("FK_Answer_Question");
-        });        
+        });
 
         modelBuilder.Entity<Img>(entity =>
         {
@@ -83,8 +84,8 @@ public partial class AicheckerContext : DbContext
         });
 
         modelBuilder.Entity<Model>(entity =>
-        {            
-            entity.Property(e => e.ModelId).ValueGeneratedNever();            
+        {
+            entity.Property(e => e.ModelId).ValueGeneratedNever();
             entity.HasIndex(e => e.Value, "IX_Unique_ModelValue").IsUnique();
         });
 
@@ -107,7 +108,7 @@ public partial class AicheckerContext : DbContext
         {
             entity.HasIndex(e => e.ResultId, "IX_Unique_ResultSetId");
 
-            entity.Property(e => e.ResultId).ValueGeneratedNever();            
+            entity.Property(e => e.ResultId).ValueGeneratedNever();
 
             entity.HasOne(d => d.Model).WithMany(p => p.Results)
                 .HasForeignKey(d => d.ModelId)
@@ -146,20 +147,20 @@ public partial class AicheckerContext : DbContext
             // DateTime conversion to UTC
             entity.Property(e => e.RequestCreated)
             .HasConversion(
-                v => v.ToUniversalTime(), // Store as UTC
-                v => DateTime.SpecifyKind(v, DateTimeKind.Utc) // Retrieve as UTC
+                v => v.HasValue ? v.Value.ToUniversalTime() : (DateTime?)null,
+                v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : null
             );
 
             entity.Property(e => e.RequestStart)
                 .HasConversion(
-                    v => v.ToUniversalTime(),
-                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                    v => v.HasValue ? v.Value.ToUniversalTime() : (DateTime?)null,
+                    v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : null
                 );
 
             entity.Property(e => e.RequestEnd)
                 .HasConversion(
-                    v => v.ToUniversalTime(),
-                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                    v => v.HasValue ? v.Value.ToUniversalTime() : (DateTime?)null,
+                    v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : null
                 );
         });
 
@@ -226,14 +227,6 @@ public partial class AicheckerContext : DbContext
             new Model
             {
                 ModelId = Guid.NewGuid(),
-                Value = "gpt-4o-2024-08-06",
-                Description = @"GPT-4o ist ein Modell, das von OpenAI entwickelt wurde. Es ist ein Sprachmodell, das auf der GPT-4-Architektur basiert.
-Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste Version der GPT-4o Familie, die am 06.08.2024 veröffentlich wurde",
-                Link = "https://platform.openai.com/docs/models/gpt-4o",
-            },
-            new Model
-            {
-                ModelId = Guid.NewGuid(),
                 Value = "gpt-4o-mini-2024-07-18",
                 Description = @"GPT-4o ist ein Modell, das von OpenAI entwickelt wurde. Es ist ein Sprachmodell, das auf der GPT-4-Architektur basiert.
 Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste Version der GPT-4o Familie, die am 18.07.2024 veröffentlich wurde",
@@ -260,7 +253,49 @@ Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste V
                 Value = "HuggingFaceTB/smollm-360M-instruct-v0.2-Q8_0-GGUF/smollm-360m-instruct-add-basics-q8_0.gguf"
             });
 
+        AddImagePromptTest(modelBuilder);
+
         OnModelCreatingPartial(modelBuilder);
+    }
+
+    private void AddImagePromptTest(ModelBuilder modelBuilder)
+    {
+        var resultSet = new ResultSet
+        {
+            ResultSetId = Guid.NewGuid(),
+            Value = "Bild Beschreibungen über ChatGpt erstellen",
+            PromptRequierements = "Erstellt eine aussagekräftige Test von einem Bild als Bildbeschreibung."
+        };
+        modelBuilder.Entity<ResultSet>().HasData(resultSet);
+
+        var model = new Model
+        {
+            ModelId = Guid.NewGuid(),
+            Value = "gpt-4o-2024-08-06",
+            Description = @"GPT-4o ist ein Modell, das von OpenAI entwickelt wurde. Es ist ein Sprachmodell, das auf der GPT-4-Architektur basiert.
+Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste Version der GPT-4o Familie, die am 06.08.2024 veröffentlich wurde",
+            Link = "https://platform.openai.com/docs/models/gpt-4o",
+        };
+
+        modelBuilder.Entity<Model>().HasData(model);
+
+        var result = new Result
+        {
+            ResultId = Guid.NewGuid(),
+            ResultSetId = resultSet.ResultSetId,
+            ModelId = model.ModelId
+        };
+
+        modelBuilder.Entity<Result>().HasData(result);
+
+        modelBuilder.Entity<PromptRatingRound>().HasData(
+            new PromptRatingRound
+            {
+                PromptRatingRoundId = Guid.NewGuid(),
+                ResultId = result.ResultId,
+                Round = 1,
+                Rating = 1
+            });
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
