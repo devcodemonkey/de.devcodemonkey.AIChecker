@@ -252,7 +252,23 @@ public partial class AicheckerContext : DbContext
             new Model
             {
                 ModelId = Guid.NewGuid(),
-                Value = "lmstudio-community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf",
+                Value = "gpt-4o-2024-08-06",
+                Description = @"GPT-4o ist ein Modell, das von OpenAI entwickelt wurde. Es ist ein Sprachmodell, das auf der GPT-4-Architektur basiert.
+Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste Version der GPT-4o Familie, die am 06.08.2024 veröffentlich wurde",
+                Link = "https://platform.openai.com/docs/models/gpt-4o",
+            },
+            new Model
+            {
+                ModelId = Guid.NewGuid(),
+                Value = "gpt-4o-mini-2024-07-18",
+                Description = @"GPT-4o ist ein Modell, das von OpenAI entwickelt wurde. Es ist ein Sprachmodell, das auf der GPT-4-Architektur basiert.
+Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste Version der GPT-4o Familie, die am 18.07.2024 veröffentlich wurde",
+                Link = "https://platform.openai.com/docs/models/gpt-4o-mini",
+            },
+            new Model
+            {
+                ModelId = Guid.NewGuid(),
+                Value = "lmstudio -community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf",
             },
             new Model
             {
