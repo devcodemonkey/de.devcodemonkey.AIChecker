@@ -52,6 +52,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
            int runNumber,
            string promptAnforderungen,
            string prompt,
+           string message,
            string systemPrompt,
            List<(string modelName, int rating)> modelRatings)
         {
@@ -71,7 +72,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             {
                 var (modelName, rating) = modelRatings[i];
                 totalScore += rating;
-                modelTable.AddRow($"{i + 1}. {MdFontStyles.Bold(modelName)}", string.Empty, rating.ToString());
+                modelTable.AddRow($"{i + 1}. {MdFontStyles.Bold(modelName)}", message, rating.ToString());
             }
 
             output.AppendLine(modelTable.ToString());

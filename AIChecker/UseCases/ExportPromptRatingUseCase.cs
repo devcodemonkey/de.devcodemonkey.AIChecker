@@ -66,6 +66,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     runNumber: i,
                     promptAnforderungen: round.FirstOrDefault()?.ResultSet.PromptRequierements.ToString() ?? string.Empty,
                     prompt: round.FirstOrDefault()?.Asked ?? string.Empty,
+                    message: round.FirstOrDefault()?.Message ?? string.Empty,
                     systemPrompt: round.FirstOrDefault()?.SystemPrompt?.Value ?? string.Empty,
                     modelRatings: round.Select(r => (r.Model.Value, r.PromptRatingRound.Rating)).ToList()
                 );
