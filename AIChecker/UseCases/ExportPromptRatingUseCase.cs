@@ -55,10 +55,12 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 .OrderBy(r => r.PromptRatingRound.Round)
                 .ThenBy(r => r.Model.Value);
 
+            var promptRating = orderedResults.Select(r => r?.PromptRatingRound?.Round).Distinct();
+
             // loop rounds
             List<double> values = new();
             List<string> descriptions = new();
-            for (var i = 1; i <= orderedResults.Count(); i++)
+            for (var i = 1; i <= promptRating.Count(); i++)
             {
                 var round = orderedResults.Where(r => r.PromptRatingRound.Round == i).ToList();
 
