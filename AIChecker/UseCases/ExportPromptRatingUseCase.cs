@@ -108,7 +108,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             }
 
             // export file
-            var fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            var fileName = $"{DateTime.Now.ToString("yyyyMMdd_HHmmss")}_{resultSet.Replace(" ", "_")}";
 
             await _mdFile.Export(Path.Combine(exportPath, fileName), dataExportType);
 
