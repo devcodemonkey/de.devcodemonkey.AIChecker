@@ -1,5 +1,6 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.MarkDownExporterModels;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using HtmlToOpenXml;
@@ -92,8 +93,74 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
                     body.Append(paragraph);
                 }
 
+                // Apply additional styling to simulate Bootstrap's table design
+                ApplyTableStyles(body);
+
                 // Save changes to the DOCX file
                 mainPart.Document.Save();
+            }
+        }
+
+        // Method to simulate Bootstrap-like table styles in Word document
+        private void ApplyTableStyles(Body body)
+        {
+            foreach (var tbl in body.Elements<Table>())
+            {
+                // Apply table properties such as borders
+                TableProperties tblProperties = new TableProperties();
+
+                // Add borders similar to Bootstrap table styles
+                TableBorders borders = new TableBorders(
+                    new TopBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
+                    new BottomBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
+                    new LeftBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
+                    new RightBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
+                    new InsideHorizontalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 6 },
+                    new InsideVerticalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 6 });
+
+                tblProperties.Append(borders);
+
+                // Set table width to 100%
+                TableWidth tableWidth = new TableWidth() { Width = "5000", Type = TableWidthUnitValues.Pct };
+                tblProperties.Append(tableWidth);
+                tbl.AppendChild(tblProperties);
+
+                // Apply padding to each table cell and add striped row styles
+                bool isStriped = false;  // Variable to alternate row striping
+
+                foreach (var row in tbl.Elements<TableRow>())
+                {
+                    // Alternate the background color for each row
+                    isStriped = !isStriped;
+
+                    foreach (var cell in row.Elements<TableCell>())
+                    {
+                        TableCellProperties cellProps = new TableCellProperties();
+
+                        // Add padding to the cells
+                        TableCellMargin cellMargins = new TableCellMargin
+                        {
+                            TopMargin = new TopMargin { Width = "100", Type = TableWidthUnitValues.Dxa },    // Padding at the top
+                            BottomMargin = new BottomMargin { Width = "100", Type = TableWidthUnitValues.Dxa },  // Padding at the bottom
+                            LeftMargin = new LeftMargin { Width = "100", Type = TableWidthUnitValues.Dxa },   // Padding at the left
+                            RightMargin = new RightMargin { Width = "100", Type = TableWidthUnitValues.Dxa }  // Padding at the right
+                        };
+                        cellProps.Append(cellMargins);
+
+                        // If it's a striped row, set the background color
+                        if (isStriped)
+                        {
+                            Shading shading = new Shading()
+                            {
+                                Fill = "E6E6E6", // Light gray color for the background (similar to Bootstrap striped)
+                                Val = ShadingPatternValues.Clear
+                            };
+                            cellProps.Append(shading);
+                        }
+
+                        cell.Append(cellProps);
+                    }
+                }
             }
         }
 
