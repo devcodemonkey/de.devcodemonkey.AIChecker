@@ -20,16 +20,16 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
 
             // Adding rows to the table using the MdFontStyles for bold
             table.AddRow(
+                MdFontStyles.Bold("ResultSet"),
+                resultSet);
+
+            table.AddRow(
                 MdFontStyles.Bold("Datum des Ausdrucks"),
                 datumDesAusdrucks);
 
             table.AddRow(
                 MdFontStyles.Bold("Testdatum"),
-                testdatum);
-
-            table.AddRow(
-                MdFontStyles.Bold("ResultSet"),
-                resultSet);
+                testdatum);            
 
             table.AddRow(
                 MdFontStyles.Bold("Anzahl der Antworten"),
