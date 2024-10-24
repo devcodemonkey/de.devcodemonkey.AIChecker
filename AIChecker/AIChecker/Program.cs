@@ -52,6 +52,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set", "-t", "Docx"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set"]);
 
+            //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Bild Beschreibungen über ChatGpt erstellen"]);
+
             await RunWithScopeAsync(serviceProvider, args);
         }
 
