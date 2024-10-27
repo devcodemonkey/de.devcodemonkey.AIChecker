@@ -39,7 +39,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     QuestionId = Guid.NewGuid(),
                     Value = questionAnswer.Question,
                     Answer = answer,
-                    AnswerId = answer.AnswerId // Set the AnswerId to match the created Answer
+                    AnswerId = answer.AnswerId
                 };
             }).ToList();
 
