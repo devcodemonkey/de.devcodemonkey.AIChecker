@@ -40,9 +40,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarkdownExporter", "Markdow
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarkdownExporterTests", "Plugins\MarkdownExporterTests\MarkdownExporterTests.csproj", "{A90C03E1-CF00-403E-89E7-496F62A5D922}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LmsWrapper", "Plugins\LmsWrapper\LmsWrapper.csproj", "{1D11E60E-E179-41E9-8764-73A8B6D1227D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LmsWrapper", "Plugins\LmsWrapper\LmsWrapper.csproj", "{1D11E60E-E179-41E9-8764-73A8B6D1227D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LmsWrapperTests", "Plugins\LmsWrapperTests\LmsWrapperTests.csproj", "{ADEE733F-FC1C-4A6D-8051-9CB7AB6A0544}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LmsWrapperTests", "Plugins\LmsWrapperTests\LmsWrapperTests.csproj", "{ADEE733F-FC1C-4A6D-8051-9CB7AB6A0544}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
