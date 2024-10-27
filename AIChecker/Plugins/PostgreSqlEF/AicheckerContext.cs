@@ -56,13 +56,18 @@ public partial class AicheckerContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Answer>(entity =>
-        {
-            entity.HasIndex(e => e.QuestionId, "IX_Unique_AnswerId").IsUnique();
-
+        {            
             entity.Property(e => e.AnswerId).ValueGeneratedNever();
+        });
 
-            entity.HasOne(d => d.Question).WithOne(p => p.Answer)
-                .HasForeignKey<Answer>(d => d.QuestionId)
+        modelBuilder.Entity<Question>(entity =>
+        {
+            entity.Property(e => e.QuestionId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Answer)
+                .WithMany(p => p.Questions)
+                .HasForeignKey(d => d.AnswerId)
+                .IsRequired(false)
                 .HasConstraintName("FK_Answer_Question");
         });
 
@@ -87,11 +92,6 @@ public partial class AicheckerContext : DbContext
         {
             entity.Property(e => e.ModelId).ValueGeneratedNever();
             entity.HasIndex(e => e.Value, "IX_Unique_ModelValue").IsUnique();
-        });
-
-        modelBuilder.Entity<Question>(entity =>
-        {
-            entity.Property(e => e.QuestionId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<RequestObject>(entity =>
