@@ -21,29 +21,30 @@ namespace de.devcodemonkey.AIChecker.UseCases
         {
             var deserializedQuestionAnswers = await _deserializer.DeserialzeFileAsync(filePath);
 
-            foreach (var questionAnswer in deserializedQuestionAnswers)
+            var questions = deserializedQuestionAnswers.Select(questionAnswer =>
             {
-                var question = new Question
+                var answer = new Answer
                 {
-                    QuestionId = Guid.NewGuid(),
-                    Value = questionAnswer.Question,
-                    Answer = new Answer
-                    {
-                        AnswerId = Guid.NewGuid(),
-                        Value = questionAnswer.Answer!,
-                        Imgs = new List<Img>()
-                    }
-                };
-                foreach (var img in questionAnswer!.Images!)
-                {
-                    question.Answer.Imgs.Add(new Img
+                    AnswerId = Guid.NewGuid(),
+                    Value = questionAnswer.Answer!,
+                    Imgs = questionAnswer.Images!.Select(img => new Img
                     {
                         ImagesId = Guid.NewGuid(),
                         Img1 = File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(filePath)!, img))
-                    });
-                }
-                await _defaultMethodesRepository.AddAsync(question);
-            }            
+                    }).ToList()
+                };
+
+                return new Question
+                {
+                    QuestionId = Guid.NewGuid(),
+                    Value = questionAnswer.Question,
+                    Answer = answer,
+                    AnswerId = answer.AnswerId // Set the AnswerId to match the created Answer
+                };
+            }).ToList();
+
+            await _defaultMethodesRepository.AddRangeAsync(questions);
         }
     }
 }
+

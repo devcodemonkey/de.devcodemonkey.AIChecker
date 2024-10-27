@@ -89,6 +89,23 @@ namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF
         }
 
         // Write Operation with SemaphoreSlim
+        public async Task<IEnumerable<T>> AddRangeAsync<T>(IEnumerable<T> entities) where T : class
+        {
+            await _semaphore.WaitAsync();
+            try
+            {
+                _ctx.Set<T>().AddRange(entities);
+                await _ctx.SaveChangesAsync();
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+
+            return entities;
+        }
+
+        // Write Operation with SemaphoreSlim
         public async Task<T> RemoveAsync<T>(T entity) where T : class
         {
             await _semaphore.WaitAsync();
