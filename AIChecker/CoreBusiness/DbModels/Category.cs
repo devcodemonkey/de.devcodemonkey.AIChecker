@@ -9,7 +9,11 @@ namespace de.devcodemonkey.AIChecker.CoreBusiness.DbModels
     public class Category
     {
         public Guid CategoryId { get; set; }
-        public string FileName { get; set; }
-        public string CategoryName { get; set; }
+
+        public string? FileName { get; set; }
+
+        public string Value { get; set; } = null!;
+
+        public ICollection<Question> Questions { get; set; } = null!;
     }
 }

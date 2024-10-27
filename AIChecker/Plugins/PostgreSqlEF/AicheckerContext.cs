@@ -24,13 +24,15 @@ public partial class AicheckerContext : DbContext
         _configuration = configuration;
     }
 
+    public virtual DbSet<Question> Questions { get; set; }
+
+    public virtual DbSet<Category> Categories { get; set; }
+
     public virtual DbSet<Answer> Answers { get; set; }
 
     public virtual DbSet<Img> Imgs { get; set; }
 
-    public virtual DbSet<Model> Models { get; set; }
-
-    public virtual DbSet<Question> Questions { get; set; }
+    public virtual DbSet<Model> Models { get; set; }    
 
     public virtual DbSet<RequestObject> RequestObjects { get; set; }
 
@@ -60,6 +62,11 @@ public partial class AicheckerContext : DbContext
             entity.Property(e => e.AnswerId).ValueGeneratedNever();
         });
 
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.Property(e => e.CategoryId).ValueGeneratedNever();
+        });
+
         modelBuilder.Entity<Question>(entity =>
         {
             entity.Property(e => e.QuestionId).ValueGeneratedNever();
@@ -69,7 +76,14 @@ public partial class AicheckerContext : DbContext
                 .HasForeignKey(d => d.AnswerId)
                 .IsRequired(false)
                 .HasConstraintName("FK_Answer_Question");
+
+            entity.HasOne(d => d.Category)
+                .WithMany(p => p.Questions)
+                .HasForeignKey(d => d.CategoryId)                
+                .HasConstraintName("FK_Category_Question");
         });
+
+        
 
         modelBuilder.Entity<Img>(entity =>
         {
