@@ -27,17 +27,11 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.Property<Guid>("AnswerId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("QuestionId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("AnswerId");
-
-                    b.HasIndex(new[] { "QuestionId" }, "IX_Unique_AnswerId")
-                        .IsUnique();
 
                     b.ToTable("Answers");
                 });
@@ -92,59 +86,59 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.HasData(
                         new
                         {
-                            ModelId = new Guid("bafce308-ebbf-4c8a-b056-ee0c25ba5088"),
+                            ModelId = new Guid("6a76ff1a-4a7d-4dba-9029-cdd7c05e7d80"),
                             Description = "GPT-4o ist ein Modell, das von OpenAI entwickelt wurde. Es ist ein Sprachmodell, das auf der GPT-4-Architektur basiert.\r\nMit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste Version der GPT-4o Familie, die am 18.07.2024 veröffentlich wurde",
                             Link = "https://platform.openai.com/docs/models/gpt-4o-mini",
                             Value = "gpt-4o-mini-2024-07-18"
                         },
                         new
                         {
-                            ModelId = new Guid("298ac212-d13e-49e4-92a9-d5c87e9a9013"),
+                            ModelId = new Guid("497dba5e-8d7d-4a24-9c1d-b3fb974db56c"),
                             Description = "GPT-4o ist ein Modell, das von OpenAI entwickelt wurde. Es ist ein Sprachmodell, das auf der GPT-4-Architektur basiert.\r\nMit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste Version der GPT-4o Familie, die am 06.08.2024 veröffentlich wurde",
                             Link = "https://platform.openai.com/docs/models/gpt-4o",
                             Value = "gpt-4o-2024-08-06"
                         },
                         new
                         {
-                            ModelId = new Guid("d77205c2-5aec-4a31-bf45-49ed4ae25325"),
+                            ModelId = new Guid("f7ecdf28-846d-4c4e-ae36-5cf7549a3143"),
                             Value = "lmstudio -community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf"
                         },
                         new
                         {
-                            ModelId = new Guid("0e6d1bf1-838f-4b26-9ef2-90f3bdb97182"),
+                            ModelId = new Guid("0ae1ada4-d61e-4767-ac46-62e9417a46c9"),
                             Value = "TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf"
                         },
                         new
                         {
-                            ModelId = new Guid("aee9741a-0384-4670-ba16-56aabc3e985c"),
+                            ModelId = new Guid("db9c5659-a896-4bf1-b4dd-97d557632dcc"),
                             Value = "Qwen/Qwen2-0.5B-Instruct-GGUF/qwen2-0_5b-instruct-q4_0.gguf"
                         },
                         new
                         {
-                            ModelId = new Guid("b518a96d-aff7-42bf-8af8-4fab75afe0bf"),
+                            ModelId = new Guid("f4735aa8-d1e8-4fd8-afec-289eb9151b24"),
                             Value = "HuggingFaceTB/smollm-360M-instruct-v0.2-Q8_0-GGUF/smollm-360m-instruct-add-basics-q8_0.gguf"
                         },
                         new
                         {
-                            ModelId = new Guid("4e791b09-6ae4-4c5c-bc5c-66110b26b108"),
+                            ModelId = new Guid("6ae118bb-3985-4316-a0ae-c8fb68c564eb"),
                             Link = "https://platform.openai.com/docs/models/gpt-4o",
                             Value = "GPT-4 (Clipboard_-_16._Mai_2022_18_28.png)"
                         },
                         new
                         {
-                            ModelId = new Guid("560d4510-9568-43b0-9210-975d8071ae45"),
+                            ModelId = new Guid("07e59c3c-7a67-4c7c-846c-faff7623cbd5"),
                             Link = "https://platform.openai.com/docs/models/gpt-4o",
                             Value = "GPT-4 (MSTeamsReset_PD.png)"
                         },
                         new
                         {
-                            ModelId = new Guid("1ae1db7b-0e46-4eef-b9d6-a9b0a140ab94"),
+                            ModelId = new Guid("e3cfb249-8a0d-422a-bf68-795853223213"),
                             Link = "https://platform.openai.com/docs/models/gpt-4o",
                             Value = "GPT-4 (csm_teams-besprechung-fremde-kalender_a4f18f9c04.jpg)"
                         },
                         new
                         {
-                            ModelId = new Guid("10cec07d-9823-4eb2-a002-f1e16abb538f"),
+                            ModelId = new Guid("e86149bf-9664-46ef-8184-0513956e8638"),
                             Link = "https://platform.openai.com/docs/models/gpt-4o",
                             Value = "GPT-4 (csm_exchange_ressourcen_small_8c82c9fb36.jpg)"
                         });
@@ -174,86 +168,86 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.HasData(
                         new
                         {
-                            PromptRatingRoundId = new Guid("e1507d31-cb0f-4449-9666-2a14862727c6"),
+                            PromptRatingRoundId = new Guid("b7f1b42b-b7a9-4cf4-8015-818753d95357"),
                             Rating = 8,
-                            ResultId = new Guid("2e1cac63-bef9-4e09-8696-57e6b24545df"),
+                            ResultId = new Guid("a2b56476-6ee2-493e-9288-da5a24a01175"),
                             Round = 1
                         },
                         new
                         {
-                            PromptRatingRoundId = new Guid("7a8cc490-b95a-4b6f-9f2d-ffdb3c5e72d5"),
+                            PromptRatingRoundId = new Guid("cbad112a-1ed8-489c-83a5-08db74b2183b"),
                             Rating = 7,
-                            ResultId = new Guid("5ceb114a-4cdb-46a1-9013-eb6e7db3137b"),
+                            ResultId = new Guid("615a5d4a-dd47-469a-8582-abe5e507c629"),
                             Round = 1
                         },
                         new
                         {
-                            PromptRatingRoundId = new Guid("f8aff731-472e-4d6d-becc-b803cd691731"),
+                            PromptRatingRoundId = new Guid("443c1973-edb9-422f-9d4a-bbd251ffe2c4"),
                             Rating = 9,
-                            ResultId = new Guid("71343451-466d-4fb4-a61d-9ca36e96c8cb"),
+                            ResultId = new Guid("73d0c893-99b9-4611-bf75-d3fd0ce894ae"),
                             Round = 1
                         },
                         new
                         {
-                            PromptRatingRoundId = new Guid("be1c4ad6-180d-4165-966a-3dc1a484332f"),
+                            PromptRatingRoundId = new Guid("fa421820-b90e-4d87-93bb-2f9375cfa468"),
                             Rating = 8,
-                            ResultId = new Guid("a30dd10e-d33b-49e6-97ca-7168fb59f808"),
+                            ResultId = new Guid("a7bbe677-d26e-47e4-9d56-11ff4737a1ca"),
                             Round = 1
                         },
                         new
                         {
-                            PromptRatingRoundId = new Guid("39d9364d-9d89-4276-9c38-36f6f9b202fd"),
+                            PromptRatingRoundId = new Guid("3750ef7c-dee3-416d-907b-50980ccdeb5b"),
                             Rating = 9,
-                            ResultId = new Guid("5e862612-aba5-4a00-ae16-05d38317e602"),
+                            ResultId = new Guid("a4b0f5ba-722c-44a0-a3ee-a9593c329513"),
                             Round = 2
                         },
                         new
                         {
-                            PromptRatingRoundId = new Guid("970d0fc1-58c7-4c16-9890-3130560fb048"),
+                            PromptRatingRoundId = new Guid("a83d7704-be48-4f55-99d4-93a813d63e64"),
                             Rating = 9,
-                            ResultId = new Guid("54f1e640-36ea-4c42-90e8-1a1dca526815"),
+                            ResultId = new Guid("26c8dad6-85d3-45d7-aeb3-e67ffbc96b67"),
                             Round = 2
                         },
                         new
                         {
-                            PromptRatingRoundId = new Guid("9695fa7c-7287-43f6-ba2d-c1a235e83bbf"),
+                            PromptRatingRoundId = new Guid("9cdb2faa-3ea0-45c7-92fd-bfe97519a659"),
                             Rating = 9,
-                            ResultId = new Guid("a362f73e-b951-43ff-ad34-e849b297cafb"),
+                            ResultId = new Guid("a48508ef-2fec-406b-8abd-2ea621428ccb"),
                             Round = 2
                         },
                         new
                         {
-                            PromptRatingRoundId = new Guid("d356064b-4bbc-4553-abe0-42a0b038ed83"),
+                            PromptRatingRoundId = new Guid("b748b75b-055f-4386-b0f0-b8d395162b3a"),
                             Rating = 9,
-                            ResultId = new Guid("79ac5bb5-fbfe-46ed-9d05-5e066805020a"),
+                            ResultId = new Guid("6c659da6-f0eb-4d3b-b466-a1dc9859250a"),
                             Round = 2
                         },
                         new
                         {
-                            PromptRatingRoundId = new Guid("f9e8c322-a5fa-48e4-a0ef-a009d4d7efb3"),
+                            PromptRatingRoundId = new Guid("1cd08fd4-f830-42e9-b9b6-c926ffdaf5da"),
                             Rating = 7,
-                            ResultId = new Guid("8ae7673b-e33b-46a9-8a6f-a2d95e8e6cec"),
+                            ResultId = new Guid("ca7b6d2d-277b-4a60-9807-ef70de132786"),
                             Round = 3
                         },
                         new
                         {
-                            PromptRatingRoundId = new Guid("99491a5e-3441-4e89-8a60-3ec5f9406a0d"),
+                            PromptRatingRoundId = new Guid("0677d43b-baff-43ec-ad38-ea9d03e6bc3c"),
                             Rating = 10,
-                            ResultId = new Guid("3990dcbd-6fe2-44ce-99ef-bc7db16541b5"),
+                            ResultId = new Guid("47175946-91fd-400d-88e1-8a6729582032"),
                             Round = 3
                         },
                         new
                         {
-                            PromptRatingRoundId = new Guid("6fba120c-2348-4c3c-8364-28015762d360"),
+                            PromptRatingRoundId = new Guid("171732a4-d3cc-4272-ba16-6db4933d9f17"),
                             Rating = 7,
-                            ResultId = new Guid("752560ff-c847-48cb-951f-aa211991c5ae"),
+                            ResultId = new Guid("863c3076-5465-420d-932b-c194c7ce111d"),
                             Round = 3
                         },
                         new
                         {
-                            PromptRatingRoundId = new Guid("8f347e1e-8e78-41e8-88cd-282b0ac2b46b"),
+                            PromptRatingRoundId = new Guid("4f8a9059-91b6-44ca-9e00-1a09c7acc2ac"),
                             Rating = 10,
-                            ResultId = new Guid("ad36d55e-d466-4c2e-9f9e-45109b5597d3"),
+                            ResultId = new Guid("e20a591d-5a75-4f2a-a93c-308af329ade9"),
                             Round = 3
                         });
                 });
@@ -263,10 +257,15 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.Property<Guid>("QuestionId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("AnswerId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Value")
                         .HasColumnType("text");
 
                     b.HasKey("QuestionId");
+
+                    b.HasIndex("AnswerId");
 
                     b.ToTable("Questions");
                 });
@@ -376,123 +375,123 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.HasData(
                         new
                         {
-                            ResultId = new Guid("2e1cac63-bef9-4e09-8696-57e6b24545df"),
+                            ResultId = new Guid("a2b56476-6ee2-493e-9288-da5a24a01175"),
                             Asked = "Es wurde nur das Bild über den GPT hochgeladen",
                             Message = "Das Bild zeigt ein Dialogfenster mit einer Fehlermeldung unter Windows. Hier sind die Details:\r\n\r\n- **Titel des Fensters**: Profilpeicherplatz\r\n- **Symbol**: Ein rotes Kreis-Symbol mit einem weißen Kreuz auf der linken Seite, das auf einen Fehler hinweist.\r\n- **Text der Fehlermeldung**: \r\n  - \"Der Profilpeicherplatz ist ausgelastet. Bevor Sie sich abmelden können, müssen Sie einige Profilelemente in das Netzwerk oder auf den lokalen Computer verschieben.\"\r\n- **Schaltflächen**: Eine Schaltfläche mit der Beschriftung \"OK\" unten rechts.\r\n\r\nDie Fehlermeldung deutet darauf hin, dass der Speicherplatz für das Benutzerprofil voll ist und Daten verschoben werden müssen, bevor eine Abmeldung möglich ist.",
-                            ModelId = new Guid("4e791b09-6ae4-4c5c-bc5c-66110b26b108"),
+                            ModelId = new Guid("6ae118bb-3985-4316-a0ae-c8fb68c564eb"),
                             RequestCreated = new DateTime(2024, 10, 23, 22, 0, 0, 0, DateTimeKind.Utc),
-                            ResultSetId = new Guid("51a0265a-ef30-4633-aa59-a926e7140f01"),
-                            SystemPromptId = new Guid("ba86a58a-6a8b-4da2-95e9-48fe0f0c3901")
+                            ResultSetId = new Guid("8f9e7434-1f6a-42a4-b49f-800ba32e4373"),
+                            SystemPromptId = new Guid("e22dea4f-4d75-49bc-95e7-55b4c257a341")
                         },
                         new
                         {
-                            ResultId = new Guid("5ceb114a-4cdb-46a1-9013-eb6e7db3137b"),
+                            ResultId = new Guid("615a5d4a-dd47-469a-8582-abe5e507c629"),
                             Asked = "Es wurde nur das Bild über den GPT hochgeladen",
                             Message = "Das Bild zeigt einen Ausschnitt des Startmenüs eines Windows-Betriebssystems mit einer Liste installierter Programme. Im Detail:\r\n\r\n- **Hintergrundfarbe**: Dunkelgrau\r\n- **Programmliste**:\r\n  1. Microsoft Outlook\r\n  2. Microsoft Outlook Postfach Reparatur\r\n  3. Microsoft PowerPoint\r\n  4. Microsoft Teams\r\n  5. **Microsoft Teams Reset** (hervorgehoben mit einem gelben Rahmen)\r\n  6. Microsoft Word\r\n  7. Mozilla Firefox\r\n  8. Notepad++\r\n\r\n- **Hervorgehobenes Element**: \r\n  - \"Microsoft Teams Reset\" ist mit einem gelben Rahmen markiert. Dies könnte eine spezielle Funktion oder ein Skript zum Zurücksetzen von Microsoft Teams darstellen.\r\n  \r\nAuf der linken Seite des Menüs befinden sich weitere Symbole für Benutzer, Datei-Explorer, Einstellungen und E-Mail.",
-                            ModelId = new Guid("560d4510-9568-43b0-9210-975d8071ae45"),
+                            ModelId = new Guid("07e59c3c-7a67-4c7c-846c-faff7623cbd5"),
                             RequestCreated = new DateTime(2024, 10, 23, 22, 0, 0, 0, DateTimeKind.Utc),
-                            ResultSetId = new Guid("51a0265a-ef30-4633-aa59-a926e7140f01"),
-                            SystemPromptId = new Guid("ba86a58a-6a8b-4da2-95e9-48fe0f0c3901")
+                            ResultSetId = new Guid("8f9e7434-1f6a-42a4-b49f-800ba32e4373"),
+                            SystemPromptId = new Guid("e22dea4f-4d75-49bc-95e7-55b4c257a341")
                         },
                         new
                         {
-                            ResultId = new Guid("71343451-466d-4fb4-a61d-9ca36e96c8cb"),
+                            ResultId = new Guid("73d0c893-99b9-4611-bf75-d3fd0ce894ae"),
                             Asked = "Es wurde nur das Bild über den GPT hochgeladen",
                             Message = "Das Bild zeigt ein Dialogfenster mit einer Fehlermeldung von **Microsoft Teams**. Hier sind die Details:\r\n\r\n- **Titel des Fensters**: Microsoft Teams\r\n- **Text der Fehlermeldung**: \r\n  - \"Fehler beim Planen der Besprechung. Bitte versuchen Sie es später erneut.\"\r\n- **Schaltflächen**: Eine Schaltfläche mit der Beschriftung \"OK\" unten rechts.\r\n\r\nDie Meldung deutet darauf hin, dass ein Problem beim Erstellen oder Planen einer Besprechung in Microsoft Teams aufgetreten ist und der Nutzer gebeten wird, es später erneut zu versuchen.",
-                            ModelId = new Guid("1ae1db7b-0e46-4eef-b9d6-a9b0a140ab94"),
+                            ModelId = new Guid("e3cfb249-8a0d-422a-bf68-795853223213"),
                             RequestCreated = new DateTime(2024, 10, 23, 22, 0, 0, 0, DateTimeKind.Utc),
-                            ResultSetId = new Guid("51a0265a-ef30-4633-aa59-a926e7140f01"),
-                            SystemPromptId = new Guid("ba86a58a-6a8b-4da2-95e9-48fe0f0c3901")
+                            ResultSetId = new Guid("8f9e7434-1f6a-42a4-b49f-800ba32e4373"),
+                            SystemPromptId = new Guid("e22dea4f-4d75-49bc-95e7-55b4c257a341")
                         },
                         new
                         {
-                            ResultId = new Guid("a30dd10e-d33b-49e6-97ca-7168fb59f808"),
+                            ResultId = new Guid("a7bbe677-d26e-47e4-9d56-11ff4737a1ca"),
                             Asked = "Es wurde nur das Bild über den GPT hochgeladen",
                             Message = "Das Bild zeigt eine kurze Erklärung zur Unterscheidung von verschiedenen Symbolen (Icons) für bestimmte Typen, wahrscheinlich in einer IT-Anwendung oder einem E-Mail-Client. Hier sind die Details:\r\n\r\n- **Text**: \r\n  - \"Durch die Icons wird die Unterscheidung zwischen den verschiedenen Typen verdeutlicht\"\r\n  - **Shared Mailbox**: Ein Symbol eines Nutzers (Kopf und Schultern) über einem Briefumschlag.\r\n  - **Raum**: Ein Symbol eines Kalenders oder eines Raumes.\r\n  - **Ausrüstung**: Ein Symbol eines Bildschirms oder Projektors.\r\n\r\nDiese Symbole sollen vermutlich dabei helfen, verschiedene Objekte wie gemeinsam genutzte Postfächer, Räume oder Ausrüstungen visuell voneinander zu unterscheiden.",
-                            ModelId = new Guid("10cec07d-9823-4eb2-a002-f1e16abb538f"),
+                            ModelId = new Guid("e86149bf-9664-46ef-8184-0513956e8638"),
                             RequestCreated = new DateTime(2024, 10, 23, 22, 0, 0, 0, DateTimeKind.Utc),
-                            ResultSetId = new Guid("51a0265a-ef30-4633-aa59-a926e7140f01"),
-                            SystemPromptId = new Guid("ba86a58a-6a8b-4da2-95e9-48fe0f0c3901")
+                            ResultSetId = new Guid("8f9e7434-1f6a-42a4-b49f-800ba32e4373"),
+                            SystemPromptId = new Guid("e22dea4f-4d75-49bc-95e7-55b4c257a341")
                         },
                         new
                         {
-                            ResultId = new Guid("5e862612-aba5-4a00-ae16-05d38317e602"),
+                            ResultId = new Guid("a4b0f5ba-722c-44a0-a3ee-a9593c329513"),
                             Asked = "Es wurde nur das Bild über den GPT hochgeladen",
                             Message = "1. Anwendung: Windows-Betriebssystem (Hinweis auf ein typisches Windows-Fehlermeldungsfenster)\r\n2. Fensterüberschrift: **\"Profilspeicherplatz\"**\r\n3. Fehlermeldung: \r\n   - **Text:** \"Der Profilspeicherplatz ist ausgelastet. Bevor Sie sich abmelden können, müssen Sie einige Profilelemente in das Netzwerk oder auf den lokalen Computer verschieben.\"\r\n4. Schaltflächen:\r\n   - **OK** (rechts unten)\r\n5. Symbol: Rotes Kreis-Symbol mit weißem Kreuz auf der linken Seite, typisches Fehler-/Warnsymbol in Windows.",
-                            ModelId = new Guid("4e791b09-6ae4-4c5c-bc5c-66110b26b108"),
+                            ModelId = new Guid("6ae118bb-3985-4316-a0ae-c8fb68c564eb"),
                             RequestCreated = new DateTime(2024, 10, 23, 22, 0, 0, 0, DateTimeKind.Utc),
-                            ResultSetId = new Guid("51a0265a-ef30-4633-aa59-a926e7140f01"),
-                            SystemPromptId = new Guid("169eec0f-0acd-464a-af7c-1703f56f5dd6")
+                            ResultSetId = new Guid("8f9e7434-1f6a-42a4-b49f-800ba32e4373"),
+                            SystemPromptId = new Guid("b7d10278-c39c-438d-bc8c-7178698db270")
                         },
                         new
                         {
-                            ResultId = new Guid("54f1e640-36ea-4c42-90e8-1a1dca526815"),
+                            ResultId = new Guid("26c8dad6-85d3-45d7-aeb3-e67ffbc96b67"),
                             Asked = "Es wurde nur das Bild über den GPT hochgeladen",
                             Message = "1. Anwendung: Startmenü von Windows\r\n        2. Geöffnete Programme im Startmenü:\r\n           - **Microsoft Outlook**\r\n           - **Microsoft Outlook Postfach Reparatur**\r\n           - **Microsoft PowerPoint**\r\n           - **Microsoft Teams**\r\n           - **Microsoft Teams Reset** (markiert mit einem gelben Rahmen)\r\n           - **Microsoft Word**\r\n           - **Mozilla Firefox**\r\n           - **Notepad++**\r\n\r\n        3. Markiertes Element: **Microsoft Teams Reset** (mit einem Symbol einer Datei und einem Zahnrad)",
-                            ModelId = new Guid("560d4510-9568-43b0-9210-975d8071ae45"),
+                            ModelId = new Guid("07e59c3c-7a67-4c7c-846c-faff7623cbd5"),
                             RequestCreated = new DateTime(2024, 10, 23, 22, 0, 0, 0, DateTimeKind.Utc),
-                            ResultSetId = new Guid("51a0265a-ef30-4633-aa59-a926e7140f01"),
-                            SystemPromptId = new Guid("169eec0f-0acd-464a-af7c-1703f56f5dd6")
+                            ResultSetId = new Guid("8f9e7434-1f6a-42a4-b49f-800ba32e4373"),
+                            SystemPromptId = new Guid("b7d10278-c39c-438d-bc8c-7178698db270")
                         },
                         new
                         {
-                            ResultId = new Guid("a362f73e-b951-43ff-ad34-e849b297cafb"),
+                            ResultId = new Guid("a48508ef-2fec-406b-8abd-2ea621428ccb"),
                             Asked = "Es wurde nur das Bild über den GPT hochgeladen",
                             Message = "1. Anwendung: Microsoft Teams\r\n        2. Fensterüberschrift: **\"Microsoft Teams\"**\r\n        3. Fehlermeldung: \r\n           - **Text:** \"Fehler beim Planen der Besprechung. Bitte versuchen Sie es später erneut.\"\r\n        4. Schaltflächen:\r\n           - **OK** (rechts unten, hervorgehoben mit blauem Rahmen)",
-                            ModelId = new Guid("1ae1db7b-0e46-4eef-b9d6-a9b0a140ab94"),
+                            ModelId = new Guid("e3cfb249-8a0d-422a-bf68-795853223213"),
                             RequestCreated = new DateTime(2024, 10, 23, 22, 0, 0, 0, DateTimeKind.Utc),
-                            ResultSetId = new Guid("51a0265a-ef30-4633-aa59-a926e7140f01"),
-                            SystemPromptId = new Guid("169eec0f-0acd-464a-af7c-1703f56f5dd6")
+                            ResultSetId = new Guid("8f9e7434-1f6a-42a4-b49f-800ba32e4373"),
+                            SystemPromptId = new Guid("b7d10278-c39c-438d-bc8c-7178698db270")
                         },
                         new
                         {
-                            ResultId = new Guid("79ac5bb5-fbfe-46ed-9d05-5e066805020a"),
+                            ResultId = new Guid("6c659da6-f0eb-4d3b-b466-a1dc9859250a"),
                             Asked = "Es wurde nur das Bild über den GPT hochgeladen",
                             Message = "1. Text: **\"Durch die Icons wird die Unterscheidung zwischen den verschiedenen Typen verdeutlicht\"**\r\n        2. Auflistung mit Icons:\r\n           - **Shared Mailbox:** Symbol eines orangefarbenen Kopfes mit einem Briefumschlag\r\n           - **Raum:** Symbol einer gelben Tür\r\n           - **Ausrüstung:** Symbol eines Bildschirms mit einem Ständer und einer Projektionsleinwand",
-                            ModelId = new Guid("10cec07d-9823-4eb2-a002-f1e16abb538f"),
+                            ModelId = new Guid("e86149bf-9664-46ef-8184-0513956e8638"),
                             RequestCreated = new DateTime(2024, 10, 23, 22, 0, 0, 0, DateTimeKind.Utc),
-                            ResultSetId = new Guid("51a0265a-ef30-4633-aa59-a926e7140f01"),
-                            SystemPromptId = new Guid("169eec0f-0acd-464a-af7c-1703f56f5dd6")
+                            ResultSetId = new Guid("8f9e7434-1f6a-42a4-b49f-800ba32e4373"),
+                            SystemPromptId = new Guid("b7d10278-c39c-438d-bc8c-7178698db270")
                         },
                         new
                         {
-                            ResultId = new Guid("8ae7673b-e33b-46a9-8a6f-a2d95e8e6cec"),
+                            ResultId = new Guid("ca7b6d2d-277b-4a60-9807-ef70de132786"),
                             Asked = "Es wurde nur das Bild über den GPT hochgeladen",
                             Message = "Der Eintrag enthält Bild/er:\r\n\r\n- Es handelt sich um ein Windows-Fehlermeldungsfenster.\r\n- Oben links befindet sich ein kleines Icon, das ein weißes Blatt mit einem Knick darstellt.\r\n- Titel des Fensters: „Profilspeicherplatz“.\r\n- Darunter ist ein rotes Kreis-Symbol mit einem weißen Kreuz in der Mitte.\r\n- Text im Fenster: „Der Profilspeicherplatz ist ausgelastet. Bevor Sie sich abmelden können, müssen Sie einige Profilelemente in das Netzwerk oder auf den lokalen Computer verschieben.“\r\n- Unten rechts gibt es eine Schaltfläche mit der Beschriftung „OK“.",
-                            ModelId = new Guid("4e791b09-6ae4-4c5c-bc5c-66110b26b108"),
+                            ModelId = new Guid("6ae118bb-3985-4316-a0ae-c8fb68c564eb"),
                             RequestCreated = new DateTime(2024, 10, 23, 22, 0, 0, 0, DateTimeKind.Utc),
-                            ResultSetId = new Guid("51a0265a-ef30-4633-aa59-a926e7140f01"),
-                            SystemPromptId = new Guid("22d33939-8bbc-40cb-b355-21c7f92b4aff")
+                            ResultSetId = new Guid("8f9e7434-1f6a-42a4-b49f-800ba32e4373"),
+                            SystemPromptId = new Guid("f6b29822-5252-4236-845c-780597a6fd3a")
                         },
                         new
                         {
-                            ResultId = new Guid("3990dcbd-6fe2-44ce-99ef-bc7db16541b5"),
+                            ResultId = new Guid("47175946-91fd-400d-88e1-8a6729582032"),
                             Asked = "Es wurde nur das Bild über den GPT hochgeladen",
                             Message = "Der Eintrag enthält Bild/er:\r\n\r\n- Ein Ausschnitt des Startmenüs von Windows mit einer Liste installierter Programme.\r\n- Zu sehen sind unter anderem:\r\n  - Microsoft Outlook\r\n  - Microsoft Outlook Postfach Reparatur\r\n  - Microsoft PowerPoint\r\n  - Microsoft Teams\r\n  - **Markiert in einem gelben Rahmen:** „Microsoft Teams Reset“ mit einem Symbol, das eine Uhr und ein Blatt Papier zeigt.\r\n  - Microsoft Word\r\n  - Mozilla Firefox\r\n  - Notepad++\r\n- Links im Menü sind folgende Symbole sichtbar: \r\n  - Benutzerprofil\r\n  - Datei-Explorer\r\n  - Einstellungen",
-                            ModelId = new Guid("560d4510-9568-43b0-9210-975d8071ae45"),
+                            ModelId = new Guid("07e59c3c-7a67-4c7c-846c-faff7623cbd5"),
                             RequestCreated = new DateTime(2024, 10, 23, 22, 0, 0, 0, DateTimeKind.Utc),
-                            ResultSetId = new Guid("51a0265a-ef30-4633-aa59-a926e7140f01"),
-                            SystemPromptId = new Guid("22d33939-8bbc-40cb-b355-21c7f92b4aff")
+                            ResultSetId = new Guid("8f9e7434-1f6a-42a4-b49f-800ba32e4373"),
+                            SystemPromptId = new Guid("f6b29822-5252-4236-845c-780597a6fd3a")
                         },
                         new
                         {
-                            ResultId = new Guid("752560ff-c847-48cb-951f-aa211991c5ae"),
+                            ResultId = new Guid("863c3076-5465-420d-932b-c194c7ce111d"),
                             Asked = "Es wurde nur das Bild über den GPT hochgeladen",
                             Message = "Der Eintrag enthält Bild/er:\r\n\r\n- Es handelt sich um ein Microsoft Teams-Fehlermeldungsfenster.\r\n- Der Titel des Fensters lautet „Microsoft Teams“.\r\n- Text im Fenster: „Fehler beim Planen der Besprechung. Bitte versuchen Sie es später erneut.“\r\n- Unten rechts befindet sich eine Schaltfläche mit der Beschriftung „OK“.",
-                            ModelId = new Guid("1ae1db7b-0e46-4eef-b9d6-a9b0a140ab94"),
+                            ModelId = new Guid("e3cfb249-8a0d-422a-bf68-795853223213"),
                             RequestCreated = new DateTime(2024, 10, 23, 22, 0, 0, 0, DateTimeKind.Utc),
-                            ResultSetId = new Guid("51a0265a-ef30-4633-aa59-a926e7140f01"),
-                            SystemPromptId = new Guid("22d33939-8bbc-40cb-b355-21c7f92b4aff")
+                            ResultSetId = new Guid("8f9e7434-1f6a-42a4-b49f-800ba32e4373"),
+                            SystemPromptId = new Guid("f6b29822-5252-4236-845c-780597a6fd3a")
                         },
                         new
                         {
-                            ResultId = new Guid("ad36d55e-d466-4c2e-9f9e-45109b5597d3"),
+                            ResultId = new Guid("e20a591d-5a75-4f2a-a93c-308af329ade9"),
                             Asked = "Es wurde nur das Bild über den GPT hochgeladen",
                             Message = "Der Eintrag enthält Bild/er:\r\n\r\n- Oben steht der Text: „Durch die Icons wird die Unterscheidung zwischen den verschiedenen Typen verdeutlicht“.\r\n- Darunter folgen drei Kategorien mit Symbolen:\r\n  - **Shared Mailbox:** Symbol einer Person mit einem orangefarbenen Kreis hinter dem Kopf.\r\n  - **Raum:** Symbol eines Kalenders oder Notizblocks mit einem Uhrensymbol.\r\n  - **Ausrüstung:** Symbol eines Bildschirms mit einem Ständer und einer Darstellung darauf.",
-                            ModelId = new Guid("10cec07d-9823-4eb2-a002-f1e16abb538f"),
+                            ModelId = new Guid("e86149bf-9664-46ef-8184-0513956e8638"),
                             RequestCreated = new DateTime(2024, 10, 23, 22, 0, 0, 0, DateTimeKind.Utc),
-                            ResultSetId = new Guid("51a0265a-ef30-4633-aa59-a926e7140f01"),
-                            SystemPromptId = new Guid("22d33939-8bbc-40cb-b355-21c7f92b4aff")
+                            ResultSetId = new Guid("8f9e7434-1f6a-42a4-b49f-800ba32e4373"),
+                            SystemPromptId = new Guid("f6b29822-5252-4236-845c-780597a6fd3a")
                         });
                 });
 
@@ -520,7 +519,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.HasData(
                         new
                         {
-                            ResultSetId = new Guid("51a0265a-ef30-4633-aa59-a926e7140f01"),
+                            ResultSetId = new Guid("8f9e7434-1f6a-42a4-b49f-800ba32e4373"),
                             PromptRequierements = "**Erstelle eine aussagekräftige Beschreibung des hochgeladenen Bildes**\r\n- Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden\r\n- Textbeschreibungen sollen, falls vorhanden, ausgelesen werden\r\n- Erkennen der Anwendung\r\n- Ausgabe als Liste\r\n- Ausgabe in deutscher Sprache",
                             Value = "Bild Beschreibungen über ChatGpt erstellen"
                         });
@@ -543,17 +542,17 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.HasData(
                         new
                         {
-                            SystemPromptId = new Guid("ba86a58a-6a8b-4da2-95e9-48fe0f0c3901"),
+                            SystemPromptId = new Guid("e22dea4f-4d75-49bc-95e7-55b4c257a341"),
                             Value = "Erstelle aus dem hochgeladenen Bild eine Textbeschreibung über das Aussehen. Sollte Text im Bild vorhanden sein, lesen diesen aus und fügen ihn der Beschreibung hinzu. Bei den Bildern handelt es sich um Screenshots von Anwendungen aus dem IT-Bereich. Versuche zu erkennen, um welche Anwendung es sich bei den Screenshots handelt. Gebe das Ergebnis in Form einer Liste zurück. Die Bildbeschreibung erfolgt in der deutschen Sprache."
                         },
                         new
                         {
-                            SystemPromptId = new Guid("169eec0f-0acd-464a-af7c-1703f56f5dd6"),
+                            SystemPromptId = new Guid("b7d10278-c39c-438d-bc8c-7178698db270"),
                             Value = "Erstelle aus dem hochgeladenen Bild eine Textbeschreibung über das Aussehen. Sollte Text im Bild vorhanden sein, lesen diesen aus und fügen ihn der Beschreibung hinzu. Bei den Bildern handelt es sich um Screenshots von Anwendungen aus dem IT-Bereich. Versuche zu erkennen, um welche Anwendung es sich bei den Screenshots handelt. Gebe das Ergebnis in Form einer Liste zurück. Die Bildbeschreibung erfolgt in der deutschen Sprache. Erstelle keine Interpretation des Bildes."
                         },
                         new
                         {
-                            SystemPromptId = new Guid("22d33939-8bbc-40cb-b355-21c7f92b4aff"),
+                            SystemPromptId = new Guid("f6b29822-5252-4236-845c-780597a6fd3a"),
                             Value = "Erstelle aus dem hochgeladenen Bild eine Textbeschreibung über das Aussehen. Sollte Text im Bild vorhanden sein, lesen diesen aus und fügen ihn der Beschreibung hinzu. Bei den Bildern handelt es sich um Screenshots von Anwendungen aus dem IT-Bereich. Versuche zu erkennen, um welche Anwendung es sich bei den Screenshots handelt. Gebe das Ergebnis in Form einer Liste zurück. Stelle an den Anfang jeder Antwort den folgenden Satz: \"Der Eintrag enthält Bild/er:\" Die Bildbeschreibung erfolgt in der deutschen Sprache. Erstelle keine Interpretation des Bildes."
                         });
                 });
@@ -604,16 +603,6 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                     b.ToTable("SystemResourceUsage", (string)null);
                 });
 
-            modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Answer", b =>
-                {
-                    b.HasOne("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Question", "Question")
-                        .WithOne("Answer")
-                        .HasForeignKey("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Answer", "QuestionId")
-                        .HasConstraintName("FK_Answer_Question");
-
-                    b.Navigation("Question");
-                });
-
             modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Img", b =>
                 {
                     b.HasOne("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Answer", "Answer")
@@ -634,6 +623,16 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
                         .IsRequired();
 
                     b.Navigation("Result");
+                });
+
+            modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Question", b =>
+                {
+                    b.HasOne("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Answer", "Answer")
+                        .WithMany("Questions")
+                        .HasForeignKey("AnswerId")
+                        .HasConstraintName("FK_Answer_Question");
+
+                    b.Navigation("Answer");
                 });
 
             modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Result", b =>
@@ -697,6 +696,8 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
             modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Answer", b =>
                 {
                     b.Navigation("Imgs");
+
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Model", b =>
@@ -706,8 +707,6 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Migrations
 
             modelBuilder.Entity("de.devcodemonkey.AIChecker.CoreBusiness.DbModels.Question", b =>
                 {
-                    b.Navigation("Answer");
-
                     b.Navigation("Results");
                 });
 
