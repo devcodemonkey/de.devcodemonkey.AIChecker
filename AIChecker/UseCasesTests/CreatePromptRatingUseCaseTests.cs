@@ -1,4 +1,4 @@
-﻿using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
+﻿using de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
 using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester;
 using LmsWrapper;

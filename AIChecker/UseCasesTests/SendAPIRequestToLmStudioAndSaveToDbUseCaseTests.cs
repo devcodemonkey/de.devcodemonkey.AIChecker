@@ -1,7 +1,7 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester;
 using de.devcodemonkey.AIChecker.DataSource.SystemMonitor;
-using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
+using de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Microsoft.EntityFrameworkCore;
 

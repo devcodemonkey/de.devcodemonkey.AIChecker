@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
+using de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
 
 #nullable disable
 

@@ -1,5 +1,4 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
-using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
 using Moq;
 using Moq.EntityFrameworkCore;
 

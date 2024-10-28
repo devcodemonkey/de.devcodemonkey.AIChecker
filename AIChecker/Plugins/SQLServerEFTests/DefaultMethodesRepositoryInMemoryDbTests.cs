@@ -2,7 +2,7 @@
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF.Tests
+namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Tests
 {
     [TestClass()]
     public class DefaultMethodesRepositoryInMemoryDbTests

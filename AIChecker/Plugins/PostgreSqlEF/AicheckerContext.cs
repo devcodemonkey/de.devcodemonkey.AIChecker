@@ -3,7 +3,7 @@ using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
+namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
 
 public partial class AicheckerContext : DbContext
 {

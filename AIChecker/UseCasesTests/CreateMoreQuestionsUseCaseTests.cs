@@ -1,5 +1,5 @@
 ﻿using de.devcodemonkey.AIChecker.DataSource.APIRequester;
-using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
+using de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
 
 namespace de.devcodemonkey.AIChecker.UseCases.Tests
 {

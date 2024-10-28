@@ -1,7 +1,8 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
+
+namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
 
 public static class MigrationService
 {
