@@ -4,7 +4,7 @@ public partial class Result
 {
     public Guid ResultId { get; set; }
 
-    public Guid? QuestionId { get; set; }
+    public Guid? AnswerId { get; set; }
 
     public Guid ResultSetId { get; set; }
 
@@ -40,7 +40,7 @@ public partial class Result
 
     public virtual Model Model { get; set; } = null!;
 
-    public virtual Question? Question { get; set; }
+    public virtual Answer? Answer { get; set; }
 
     public virtual RequestObject RequestObject { get; set; } = null!;
 

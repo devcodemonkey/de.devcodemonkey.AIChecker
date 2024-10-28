@@ -14,7 +14,5 @@ public partial class Question
 
     public virtual QuestionCategory Category { get; set; } = null!;
 
-    public virtual ICollection<Result> Results { get; set; } = new List<Result>();
-
     public virtual ICollection<TestProcedure> TestProcedures { get; set; } = new List<TestProcedure>();
 }

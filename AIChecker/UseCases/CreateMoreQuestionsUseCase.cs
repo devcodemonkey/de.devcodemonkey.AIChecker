@@ -28,15 +28,15 @@ namespace de.devcodemonkey.AIChecker.UseCases
            string source = "http://localhost:1234/v1/chat/completions",
            string? environmentTokenName = null)
         {
-            var questions = await _defaultMethodesRepository.GetAllEntitiesAsync<Question>();
+            var answers = await _defaultMethodesRepository.GetAllEntitiesAsync<Answer>();
 
-            foreach (var question in questions)
+            foreach (var answer in answers)
             {
                 List<IMessage> messages = new();
                 messages.Add(new Message
                 {
                     Role = "user",
-                    Content = question.Value
+                    Content = answer.Value
                 });
                 messages.Add(new Message
                 {
@@ -53,7 +53,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 Result result = new Result
                 {
                     ResultId = Guid.NewGuid(),
-                    QuestionId = question.QuestionId,
+                    AnswerId = answer.AnswerId,
                     RequestId = apiResult?.Data?.Id,
                     Asked = messages[0].Content,
                     Message = apiResult?.Data?.Choices?.FirstOrDefault()?.Message?.Content,

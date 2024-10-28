@@ -10,5 +10,7 @@ public partial class Answer
 
     public virtual ICollection<Img> Imgs { get; set; } = new List<Img>();
 
+    public virtual ICollection<Result> Results { get; set; } = new List<Result>();
+
     public virtual ICollection<TestProcedure> TestProcedures { get; set; } = new List<TestProcedure>();
 }
