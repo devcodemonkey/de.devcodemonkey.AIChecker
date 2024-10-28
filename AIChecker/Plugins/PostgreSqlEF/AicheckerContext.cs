@@ -122,6 +122,18 @@ public partial class AicheckerContext : DbContext
         {
             entity.Property(e => e.ModelId).ValueGeneratedNever();
             entity.HasIndex(e => e.Value, "IX_Unique_ModelValue").IsUnique();
+
+            entity.Property(e => e.Timestamp)
+                .HasConversion(
+                    v => v.HasValue ? v.Value.ToUniversalTime() : (DateTime?)null,
+                    v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : null
+                );
+
+            entity.Property(e => e.LastModelUpdate)
+                .HasConversion(
+                    v => v.HasValue ? v.Value.ToUniversalTime() : (DateTime?)null,
+                    v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : null
+                );
         });
 
         modelBuilder.Entity<RequestObject>(entity =>
@@ -258,6 +270,8 @@ public partial class AicheckerContext : DbContext
             {
                 ModelId = Guid.NewGuid(),
                 Value = "gpt-4o-mini-2024-07-18",
+                Timestamp = DateTime.Parse("2024-10-23"),
+                LastModelUpdate = DateTime.Parse("2024-07-18"),
                 Description = @"GPT-4o ist ein Modell, das von OpenAI entwickelt wurde. Es ist ein Sprachmodell, das auf der GPT-4-Architektur basiert.
 Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste Version der GPT-4o Familie, die am 18.07.2024 veröffentlich wurde",
                 Link = "https://platform.openai.com/docs/models/gpt-4o-mini",
@@ -266,29 +280,127 @@ Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste V
             {
                 ModelId = Guid.NewGuid(),
                 Value = "gpt-4o-2024-08-06",
+                Timestamp = DateTime.Parse("2024-10-23"),
+                LastModelUpdate = DateTime.Parse("2024-08-06"),
                 Description = @"GPT-4o ist ein Modell, das von OpenAI entwickelt wurde. Es ist ein Sprachmodell, das auf der GPT-4-Architektur basiert.
 Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste Version der GPT-4o Familie, die am 06.08.2024 veröffentlich wurde",
                 Link = "https://platform.openai.com/docs/models/gpt-4o",
             },
+             //new Model
+             //{
+             //    ModelId = Guid.NewGuid(),
+             //    Value = "lmstudio -community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf",
+             //},
+             //new Model
+             //{
+             //    ModelId = Guid.NewGuid(),
+             //    Value = "TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf"
+             //},
+             //new Model
+             //{
+             //    ModelId = Guid.NewGuid(),
+             //    Value = "Qwen/Qwen2-0.5B-Instruct-GGUF/qwen2-0_5b-instruct-q4_0.gguf"
+             //},
+             //new Model
+             //{
+             //    ModelId = Guid.NewGuid(),
+             //    Value = "HuggingFaceTB/smollm-360M-instruct-v0.2-Q8_0-GGUF/smollm-360m-instruct-add-basics-q8_0.gguf"
+             //}
+             new Model
+             {
+                 ModelId = Guid.NewGuid(),
+                 LastModelUpdate = DateTime.Parse("2023-10-10"),
+                 Timestamp = DateTime.Parse("2024-10-28"),
+                 Value = "TheBloke/em_german_leo_mistral-GGUF",
+                 Description = "EM German Leo Mistral",
+                 BaseModels = "Llama2/Mistral/LeoLM-based -> EM German Leo Mistral -> em_german_leo_mistral-GGUF",
+                 Link = "https://huggingface.co/TheBloke/em_german_leo_mistral-GGUF",
+                 Size = 4.11,
+                 Quantification = "Q_4_0"
+             },
             new Model
             {
                 ModelId = Guid.NewGuid(),
-                Value = "lmstudio -community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf",
+                LastModelUpdate = DateTime.Parse("2024-07-28"),
+                Timestamp = DateTime.Parse("2024-10-28"),
+                Value = "lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF",
+                Description = "Meta-Llama-3.1-8B-Instruct",
+                BaseModels = "Meta-Llama-3.1-8B-Instruct -> Meta-Llama-3.1-8B-Instruct-GGUF",
+                Link = "https://huggingface.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF",
+                Size = 4.92,
+                Quantification = "Q_K_M"
             },
             new Model
             {
                 ModelId = Guid.NewGuid(),
-                Value = "TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf"
+                LastModelUpdate = DateTime.Parse("2024-09-25"),
+                Timestamp = DateTime.Parse("2024-10-28"),
+                Value = "bartowski/Llama-3.2-1B-Instruct-GGUF",
+                Description = "Llama-3.2-1B-Instruct",
+                BaseModels = "Llama-3.2-1B-Instruct -> Llama-3.2-1B-Instruct-GGUF",
+                Link = "https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF",
+                Size = 0.773,
+                Quantification = "Q_4_0"
             },
             new Model
             {
                 ModelId = Guid.NewGuid(),
-                Value = "Qwen/Qwen2-0.5B-Instruct-GGUF/qwen2-0_5b-instruct-q4_0.gguf"
+                LastModelUpdate = DateTime.Parse("2024-09-25"),
+                Timestamp = DateTime.Parse("2024-10-28"),
+                Value = "bartowski/Llama-3.2-3B-Instruct-GGUF",
+                Description = "Llama-3.2-3B-Instruct",
+                BaseModels = "Llama-3.2-3B-Instruct -> Llama-3.2-3B-Instruct-GGUF",
+                Link = "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF",
+                Size = 1.92,
+                Quantification = "Q_4_0"
             },
             new Model
             {
                 ModelId = Guid.NewGuid(),
-                Value = "HuggingFaceTB/smollm-360M-instruct-v0.2-Q8_0-GGUF/smollm-360m-instruct-add-basics-q8_0.gguf"
+                LastModelUpdate = DateTime.Parse("2024-10-21"),
+                Timestamp = DateTime.Parse("2024-10-28"),
+                Value = "bartowski/Ministral-8B-Instruct-2410-GGUF",
+                Description = "Ministral-8B-Instruct-2410",
+                BaseModels = "Ministral-8B-Instruct-2410 -> Ministral-8B-Instruct-2410-GGUF",
+                Link = "https://huggingface.co/bartowski/Ministral-8B-Instruct-2410-GGUF",
+                Size = 4.67,
+                Quantification = "Q_4_0"
+            },
+            new Model
+            {
+                ModelId = Guid.NewGuid(),
+                LastModelUpdate = DateTime.Parse("2024-07-22"),
+                Timestamp = DateTime.Parse("2024-10-28"),
+                Value = "QuantFactory/Mistral-Nemo-Instruct-2407-GGUF",
+                Description = "Mistral-Nemo-Instruct-2407",
+                BaseModels = "Mistral-Nemo-Instruct-2407 -> Mistral-Nemo-Instruct-2407-GGUF",
+                Link = "https://huggingface.co/QuantFactory/Mistral-Nemo-Instruct-2407-GGUF",
+                Size = 7.07,
+                Quantification = "Q_4_0"
+            },
+            new Model
+            {
+                ModelId = Guid.NewGuid(),
+                LastModelUpdate = DateTime.Parse("2024-09-19"),
+                Timestamp = DateTime.Parse("2024-10-28"),
+                Value = "bartowski/Mistral-Small-Instruct-2409-GGUF",
+                Description = "Mistral-Small-Instruct-2409",
+                BaseModels = "Mistral-Small-Instruct-2409 -> Mistral-Small-Instruct-2409-GGUF",
+                Link = "https://huggingface.co/bartowski/Mistral-Small-Instruct-2409-GGUF",
+                Size = 11.61,
+                Quantification = "Q_4_0"
+            },
+            new Model
+            {
+                ModelId = Guid.NewGuid(),
+                LastModelUpdate = DateTime.Parse("2023-12-11"),
+                Timestamp = DateTime.Parse("2024-10-28"),
+                Value = "TheBloke/Mixtral-8x7B-Instruct-v0.1-GGUF",
+                Description = "Mixtral 8X7B Instruct v0.1",
+                BaseModels = "Mixtral 8X7B Instruct v0.1 -> Mixtral-8x7B-Instruct-v0.1-GGUF",
+                Link = "https://huggingface.co/TheBloke/Mixtral-8x7B-Instruct-v0.1-GGUF",
+                Size = 15.64,
+                Quantification = "Q2_K"
             });
 
         AddImagePromptTest(modelBuilder);
@@ -315,6 +427,8 @@ Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste V
         {
             ModelId = Guid.NewGuid(),
             Value = "GPT-4 (Clipboard_-_16._Mai_2022_18_28.png)",
+            LastModelUpdate = new DateTime(2024, 8, 6),
+            Timestamp = new DateTime(2024, 10, 23),
             Link = "https://platform.openai.com/docs/models/gpt-4o",
         };
 
@@ -324,6 +438,8 @@ Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste V
         {
             ModelId = Guid.NewGuid(),
             Value = "GPT-4 (MSTeamsReset_PD.png)",
+            LastModelUpdate = new DateTime(2024, 8, 6),
+            Timestamp = new DateTime(2024, 10, 23),
             Link = "https://platform.openai.com/docs/models/gpt-4o",
         };
 
@@ -333,6 +449,8 @@ Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste V
         {
             ModelId = Guid.NewGuid(),
             Value = "GPT-4 (csm_teams-besprechung-fremde-kalender_a4f18f9c04.jpg)",
+            LastModelUpdate = new DateTime(2024, 8, 6),
+            Timestamp = new DateTime(2024, 10, 23),
             Link = "https://platform.openai.com/docs/models/gpt-4o",
         };
 
@@ -342,6 +460,8 @@ Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste V
         {
             ModelId = Guid.NewGuid(),
             Value = "GPT-4 (csm_exchange_ressourcen_small_8c82c9fb36.jpg)",
+            LastModelUpdate = new DateTime(2024, 8, 6),
+            Timestamp = new DateTime(2024, 10, 23),
             Link = "https://platform.openai.com/docs/models/gpt-4o",
         };
 

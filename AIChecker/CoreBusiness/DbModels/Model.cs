@@ -6,6 +6,10 @@ public partial class Model : IValue
 {
     public Guid ModelId { get; set; }
 
+    public DateTime? LastModelUpdate { get; set; }
+
+    public DateTime? Timestamp { get; set; }
+
     public string? Value { get; set; }
 
     public string? Description { get; set; }
@@ -15,6 +19,8 @@ public partial class Model : IValue
     public string? Link { get; set; }
 
     public double? Size { get; set; }
+
+    public string? Quantification { get; set; }
 
     public virtual ICollection<Result> Results { get; set; } = new List<Result>();
 }
