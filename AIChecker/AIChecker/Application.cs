@@ -95,7 +95,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 async (RecreateDatabaseVerb opts) => await RecreateDatabaseAsync(opts),
                 async (ViewProcessUsageVerb opts) => await ViewProcessUsageAsync(),
                 async (SendToLmsVerb opts) => await SendToLmsAsync(opts),
-                async (ImportQuestionsVerb opts) => await _importQuestionAnswerUseCase.ExecuteAsync(opts.Path),
+                async (ImportQuestionsVerb opts) => await _importQuestionAnswerUseCase.ExecuteAsync(opts.Path, opts.Category),
                 async (ViewResultSetsVerb opts) => await ViewResultSetsAsync(),
                 async (ViewAverageVerb opts) => await ViewAverageAsync(opts),
                 async (ViewResultsVerb opts) => await ViewResultsAsync(opts),

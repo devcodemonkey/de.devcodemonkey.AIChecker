@@ -17,9 +17,16 @@ namespace de.devcodemonkey.AIChecker.UseCases
             _defaultMethodesRepository = defaultMethodesRepository;
         }
 
-        public async Task ExecuteAsync(string filePath)
+        public async Task ExecuteAsync(string filePath, string Category)
         {
             var deserializedQuestionAnswers = await _deserializer.DeserialzeFileAsync(filePath);
+
+            var category = new Category
+            {
+                CategoryId = Guid.NewGuid(),
+                FileName = Path.GetFileName(filePath),
+                Value = Category
+            };
 
             var questions = deserializedQuestionAnswers.Select(questionAnswer =>
             {
@@ -39,7 +46,9 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     QuestionId = Guid.NewGuid(),
                     Value = questionAnswer.Question,
                     Answer = answer,
-                    AnswerId = answer.AnswerId
+                    AnswerId = answer.AnswerId,
+                    Category = category,
+                    CategoryId = category.CategoryId
                 };
             }).ToList();
 
