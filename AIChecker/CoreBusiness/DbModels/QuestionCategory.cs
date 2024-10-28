@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace de.devcodemonkey.AIChecker.CoreBusiness.DbModels
 {
-    public class Category
+    public class QuestionCategory
     {
-        public Guid CategoryId { get; set; }
+        public Guid QuestionCategoryId { get; set; }
 
         public string? FileName { get; set; }
 

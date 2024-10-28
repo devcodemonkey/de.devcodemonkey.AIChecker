@@ -26,13 +26,15 @@ public partial class AicheckerContext : DbContext
 
     public virtual DbSet<Question> Questions { get; set; }
 
-    public virtual DbSet<Category> Categories { get; set; }
+    public virtual DbSet<QuestionCategory> QuestionCategories { get; set; }
 
     public virtual DbSet<Answer> Answers { get; set; }
 
+    public virtual DbSet<TestProcedure> TestProcedures { get; set; }
+
     public virtual DbSet<Img> Imgs { get; set; }
 
-    public virtual DbSet<Model> Models { get; set; }    
+    public virtual DbSet<Model> Models { get; set; }
 
     public virtual DbSet<RequestObject> RequestObjects { get; set; }
 
@@ -58,13 +60,13 @@ public partial class AicheckerContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Answer>(entity =>
-        {            
+        {
             entity.Property(e => e.AnswerId).ValueGeneratedNever();
         });
 
-        modelBuilder.Entity<Category>(entity =>
+        modelBuilder.Entity<QuestionCategory>(entity =>
         {
-            entity.Property(e => e.CategoryId).ValueGeneratedNever();
+            entity.Property(e => e.QuestionCategoryId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Question>(entity =>
@@ -79,11 +81,25 @@ public partial class AicheckerContext : DbContext
 
             entity.HasOne(d => d.Category)
                 .WithMany(p => p.Questions)
-                .HasForeignKey(d => d.CategoryId)                
+                .HasForeignKey(d => d.CategoryId)
                 .HasConstraintName("FK_Category_Question");
         });
 
-        
+        modelBuilder.Entity<TestProcedure>(entity =>
+        {
+            entity.Property(e => e.QuestionId).ValueGeneratedNever();
+            entity.Property(e => e.AnswerId).ValueGeneratedNever();
+            entity.Property(e => e.TestProcedureCategoryId).ValueGeneratedNever();
+
+            modelBuilder.Entity<TestProcedure>()
+                .HasKey(e => new { e.QuestionId, e.AnswerId, e.TestProcedureCategoryId });
+
+            entity.HasOne(d => d.TestProcedureCategory)
+                .WithMany(p => p.TestProcedures)
+                .HasForeignKey(d => d.TestProcedureCategoryId)
+                .HasConstraintName("FK_TestProcedure_TestProcedureCategory");
+        });
+
 
         modelBuilder.Entity<Img>(entity =>
         {

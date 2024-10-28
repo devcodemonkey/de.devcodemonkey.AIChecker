@@ -21,9 +21,9 @@ namespace de.devcodemonkey.AIChecker.UseCases
         {
             var deserializedQuestionAnswers = await _deserializer.DeserialzeFileAsync(filePath);
 
-            var category = new Category
+            var category = new QuestionCategory
             {
-                CategoryId = Guid.NewGuid(),
+                QuestionCategoryId = Guid.NewGuid(),
                 FileName = Path.GetFileName(filePath),
                 Value = Category
             };
@@ -48,7 +48,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     Answer = answer,
                     AnswerId = answer.AnswerId,
                     Category = category,
-                    CategoryId = category.CategoryId
+                    CategoryId = category.QuestionCategoryId
                 };
             }).ToList();
 
