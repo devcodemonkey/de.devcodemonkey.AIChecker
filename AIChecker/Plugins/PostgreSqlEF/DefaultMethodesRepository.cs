@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
 
-    public class DefaultMethodesRepository : IDefaultMethodesRepository
+public class DefaultMethodesRepository : IDefaultMethodesRepository
 {
     private readonly AicheckerContext _ctx;
     private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
@@ -167,7 +167,7 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
     // Read-Only Operation (SemaphoreSlim not necessary)
     public async Task<Guid> GetResultSetIdByValueAsync(string resultSetValue)
     {
-        var resultSet = await _ctx.ResultSets.FirstOrDefaultAsync(rs => rs.Value == resultSetValue);
+        var resultSet = await _ctx.ResultSets.FirstOrDefaultAsync(rs => rs.Value.Trim() == resultSetValue.Trim());
         return resultSet!.ResultSetId;
     }
 
@@ -196,26 +196,29 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
         {
             var results = await _ctx.Results.Where(r => r.ResultSetId == resultSetId).ToListAsync();
 
-            if (!results.Any())
-            {
-                Console.WriteLine("No results found for the specified ResultSet.");
-                return;
-            }
-
+            // Attempt to retrieve resultSet and systemPrompt regardless of whether results are found
             var resultSet = await _ctx.ResultSets.FirstOrDefaultAsync(rs => rs.ResultSetId == resultSetId);
+            var systemPrompt = results.Any()
+                ? await _ctx.SystemPrompts.FirstOrDefaultAsync(sp => sp.SystemPromptId == results.First().SystemPromptId)
+                : null;
 
-            _ctx.Results.RemoveRange(results);
+            // Remove all results if any are found
+            if (results.Any())
+                _ctx.Results.RemoveRange(results);
+            else
+                Console.WriteLine("No results found for the specified ResultSet.");
 
-            var model = await _ctx.Models.FirstOrDefaultAsync(m => m.ModelId == results.First().ModelId);
-            var systemPrompt = await _ctx.SystemPrompts.FirstOrDefaultAsync(sp => sp.SystemPromptId == results.First().SystemPromptId);
 
-            if (model != null && !await _ctx.Results.AnyAsync(r => r.ModelId == model.ModelId))
-                _ctx.Models.Remove(model);
+            // Check for orphaned systemPrompt and delete if necessary
             if (systemPrompt != null && !await _ctx.Results.AnyAsync(r => r.SystemPromptId == systemPrompt.SystemPromptId))
                 _ctx.SystemPrompts.Remove(systemPrompt);
+
+
+            // Remove resultSet if it was found
             if (resultSet != null)
                 _ctx.ResultSets.Remove(resultSet);
 
+            // Save changes if any entities were modified
             await _ctx.SaveChangesAsync();
         }
         finally
