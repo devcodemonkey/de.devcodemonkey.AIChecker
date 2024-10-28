@@ -6,7 +6,7 @@ public partial class Question
 
     public Guid? AnswerId { get; set; }
 
-    public Guid? CategoryId { get; set; }
+    public Guid? QuestionCategoryId { get; set; }
 
     public string Value { get; set; } = null!;
 

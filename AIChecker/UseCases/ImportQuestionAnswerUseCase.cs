@@ -48,7 +48,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     Answer = answer,
                     AnswerId = answer.AnswerId,
                     Category = category,
-                    CategoryId = category.QuestionCategoryId
+                    QuestionCategoryId = category.QuestionCategoryId
                 };
             }).ToList();
 

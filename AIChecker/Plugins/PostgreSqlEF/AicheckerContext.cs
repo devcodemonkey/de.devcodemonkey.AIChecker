@@ -81,7 +81,7 @@ public partial class AicheckerContext : DbContext
 
             entity.HasOne(d => d.Category)
                 .WithMany(p => p.Questions)
-                .HasForeignKey(d => d.CategoryId)
+                .HasForeignKey(d => d.QuestionCategoryId)
                 .HasConstraintName("FK_Category_Question");
         });
 
