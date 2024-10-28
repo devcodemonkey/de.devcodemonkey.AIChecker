@@ -51,7 +51,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 {
                     Role = "user",
                     Content = message()
-                });                
+                });
 
                 var systemPromptObject = new SystemPrompt
                 {
@@ -59,17 +59,34 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     Value = messages[1]!.Content!,
                 };
 
+
+                bool OpenAiModel = false;
                 foreach (var modelName in modelNames)
                 {
+                    if (modelName.ToLower().Contains("gpt"))
+                        OpenAiModel = true;
+
                     // change model
-                    await HandleStatus(statusHandler, $"Loading model '{modelName}'...", async () =>
-                    {
-                        _loadUnloadLms.Load(modelName);
-                    });
+                    if (!OpenAiModel)
+                        await HandleStatus(statusHandler, $"Loading model '{modelName}'...", async () =>
+                        {
+                            _loadUnloadLms.Load(modelName);
+                        });
 
                     IApiResult<ResponseData> apiResult = await HandleStatus(statusHandler, $"Sending chat request for '{modelName}'...", async () =>
                     {
-                        return await _apiRequester.SendChatRequestAsync(messages, maxTokens: maxTokens);
+                        // use openai api, if it's a openai model
+                        if (!OpenAiModel)
+                            return await _apiRequester.SendChatRequestAsync(messages, maxTokens: maxTokens);
+                        else
+                        {
+                            if (maxTokens == -1)
+                            return await _apiRequester.SendChatRequestAsync(messages, model: modelName, temperature: 0.7,
+                                source: "https://api.openai.com/v1/chat/completions", environmentTokenName: "OPEN_AI_TOKEN");
+                            else
+                                return await _apiRequester.SendChatRequestAsync(messages, model: modelName, maxTokens: maxTokens, temperature: 0.7,
+                                source: "https://api.openai.com/v1/chat/completions", environmentTokenName: "OPEN_AI_TOKEN");
+                        }
                     });
 
                     var model = await _defaultMethodesRepository.ViewModelOverValueAysnc(modelName);
