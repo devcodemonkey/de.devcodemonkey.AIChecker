@@ -2,10 +2,8 @@
 using de.devcodemonkey.AIChecker.DataSource.APIRequester;
 using de.devcodemonkey.AIChecker.DataSource.SystemMonitor;
 using de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
-using de.devcodemonkey.AIChecker.DataStore.SQLServerEF;
 using de.devcodemonkey.AIChecker.Importer.JsonDeserializer;
 using de.devcodemonkey.AIChecker.MarkdownExporter;
-using de.devcodemonkey.AIChecker.MarkdownExporter.Export;
 using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
@@ -55,7 +53,13 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set"]);
 
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Bild Beschreibungen über ChatGpt erstellen"]);
+            //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Bild Beschreibungen über ChatGpt erstellen", "-t", "Markdown"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Bild Beschreibungen über ChatGpt erstellen", "-t", "Docx"]);
+
+            //await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Rank"]);
+
+            //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "ChatGpt Test", "-p", "Prüft ob die Ausgabe funktioniert", "-m", "gpt-4o-mini-2024-07-18"]);
+            //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "ChatGpt Test", "-t", "pdf"]);
 
             await RunWithScopeAsync(serviceProvider, args);
         }
