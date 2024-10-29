@@ -13,11 +13,11 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
 {
     public class MdFile : IMdFile
     {
-        public StringBuilder Text { get; }        
+        public StringBuilder Text { get; }
 
         public MdFile()
         {
-            Text = new StringBuilder();            
+            Text = new StringBuilder();
         }
 
         public void ExportAsMarkdown(string path)
@@ -73,7 +73,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
                 path += ".docx";
 
             var html = ExportToHtml();
-            
+
             // Convert HTML to DOCX
             using (WordprocessingDocument wordDoc = WordprocessingDocument.Create(path, DocumentFormat.OpenXml.WordprocessingDocumentType.Document))
             {
@@ -177,7 +177,28 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
             await page.SetContentAsync(html);
             if (!path.EndsWith(".pdf"))
                 path += ".pdf";
-            await page.PdfAsync(path);
+
+            // Export as a PDF with landscape orientation
+            var pdfOptions = new PdfOptions
+            {
+                Format = PuppeteerSharp.Media.PaperFormat.A4,
+                Landscape = true, // Set to landscape orientation
+                DisplayHeaderFooter = true,
+                FooterTemplate = @"
+            <div style='width: 100%; text-align: center; font-size: 10px;'>                
+                Page <span class='pageNumber'></span> of <span class='totalPages'></span>
+            </div>"
+                ,
+                MarginOptions = new PuppeteerSharp.Media.MarginOptions
+                {
+                    Top = "1cm",
+                    Bottom = "1.5cm",
+                    Left = "1cm",
+                    Right = "1cm"
+                }
+            };
+
+            await page.PdfAsync(path, pdfOptions);
         }
 
         public async Task Export(string path, DataExportType dataExportType)
