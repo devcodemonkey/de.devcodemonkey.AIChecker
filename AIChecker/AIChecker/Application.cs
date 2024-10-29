@@ -5,6 +5,7 @@ using de.devcodemonkey.AIChecker.CoreBusiness.MarkDownExporterModels;
 using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using Spectre.Console;
+using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -141,15 +142,17 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 systemPrompt: () =>
                 {
                     AnsiConsole.Write(new Rule($"[yellow]{listNumber}. Run[/]").RuleStyle("green"));
-                    return MulitLineInput("System Prompt");
+                    var str = MultiLineInput("System Prompt");
+                    return str;
                 },
-                message: () => MulitLineInput("Message"),
-                ranking: () =>
+                message: () => MultiLineInput("Message"),
+                ratingReason: () => MultiLineInput("Rating Reason"),
+                rating: () =>
                 {
                     int rank = 0;
                     do
                     {
-                        rank = AnsiConsole.Ask<int>("Ranking (1-10): ");
+                        rank = AnsiConsole.Ask<int>("Rating (1-10): ");
                     } while (rank < 1 || rank > 10);
                     return rank;
                 },
@@ -172,17 +175,61 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             );
         }
 
-        private string MulitLineInput(string text)
+        private string MultiLineInput(string text)
         {
-            Console.WriteLine($"Enter your multi-line input (press Enter on an empty line to finish) for {text}:");
+            Console.WriteLine($"Enter your multi-line input (press Ctrl+D in a new line to finish, or press Ctrl+O in a new line to open a text editor) for {text}:");
             var inputLines = new List<string>();
             string line;
-            do
+            string fileContent = string.Empty;
+
+            while (true)
             {
-                line = Console.ReadLine();
-                if (!string.IsNullOrWhiteSpace(line))
-                    inputLines.Add(line);
-            } while (!string.IsNullOrWhiteSpace(line));
+                var keyInfo = Console.ReadKey(intercept: true);
+
+                // Detect Ctrl+O
+                if (keyInfo.Key == ConsoleKey.O && (keyInfo.Modifiers & ConsoleModifiers.Control) != 0)
+                {
+                    fileContent = string.Join(Environment.NewLine, inputLines);
+                    // Create or reuse the temporary file with existing content
+                    string tempFilePath = Path.GetTempFileName() + ".txt";
+                    File.WriteAllText(tempFilePath, fileContent);
+
+                    // Launch default editor (e.g., Notepad on Windows) with the temporary file
+                    Process editorProcess = Process.Start("notepad.exe", tempFilePath);
+                    editorProcess.WaitForExit();
+
+                    // Read the file content
+                    fileContent = File.ReadAllText(tempFilePath);
+
+                    // Display the imported content in the console
+                    Console.WriteLine("\nImported content from editor:");
+                    Console.WriteLine(fileContent);
+
+                    inputLines.Clear();
+                    inputLines.Add(fileContent);
+
+                    // Delete the temp file after reading
+                    File.Delete(tempFilePath);
+
+                    // Prompt for confirmation
+                    Console.WriteLine("Press Ctrl+D to finish, or press Ctrl+O to return to a text editor.");
+                }
+                // Detect Ctrl+D
+                else if (keyInfo.Key == ConsoleKey.D && (keyInfo.Modifiers & ConsoleModifiers.Control) != 0)
+                {
+                    break;
+                }
+                else
+                {
+                    // Start the line with the first key, then capture the rest
+                    Console.Write(keyInfo.KeyChar);
+                    line = keyInfo.KeyChar + Console.ReadLine();
+
+                    if (!string.IsNullOrWhiteSpace(line))
+                        inputLines.Add(line);
+                }
+            }
+
             return string.Join(Environment.NewLine, inputLines);
         }
 

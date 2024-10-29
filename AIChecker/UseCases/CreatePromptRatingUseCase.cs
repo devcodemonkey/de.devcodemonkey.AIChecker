@@ -23,7 +23,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
         }
 
         public async Task ExecuteAsync(string[] modelNames, int maxTokens, string resultSet, string promptRequierements, Func<string> systemPrompt,
-            Func<string> message, Func<int> ranking, Func<bool> newImprovement, Action<Result> DisplayResult,
+            Func<string> message, Func<string> ratingReason, Func<int> rating, Func<bool> newImprovement, Action<Result> DisplayResult,
             StatusHandler? statusHandler = null)
         {
             int round = 0;
@@ -81,8 +81,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
                         else
                         {
                             if (maxTokens == -1)
-                            return await _apiRequester.SendChatRequestAsync(messages, model: modelName, temperature: 0,
-                                source: "https://api.openai.com/v1/chat/completions", environmentTokenName: "OPEN_AI_TOKEN");
+                                return await _apiRequester.SendChatRequestAsync(messages, model: modelName, temperature: 0,
+                                    source: "https://api.openai.com/v1/chat/completions", environmentTokenName: "OPEN_AI_TOKEN");
                             else
                                 return await _apiRequester.SendChatRequestAsync(messages, model: modelName, maxTokens: maxTokens, temperature: 0,
                                 source: "https://api.openai.com/v1/chat/completions", environmentTokenName: "OPEN_AI_TOKEN");
@@ -113,8 +113,9 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     // return result to show in UI
                     DisplayResult(result);
 
-                    // set ranking
-                    var rankingValue = ranking();
+                    // set rating
+                    var ratingValue = rating();
+                    var ratingReasonValue = ratingReason();
 
                     await HandleStatus(statusHandler, $"Saving dependencies for '{modelName}'...", async () =>
                     {
@@ -132,7 +133,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
                         {
                             PromptRatingRoundId = Guid.NewGuid(),
                             ResultId = result.ResultId,
-                            Rating = rankingValue,
+                            Rating = ratingValue,
+                            ReasenRating = ratingReasonValue,
                             Round = round,
                             Result = result
                         };
