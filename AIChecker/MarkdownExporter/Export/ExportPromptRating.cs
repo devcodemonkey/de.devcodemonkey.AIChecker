@@ -29,7 +29,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
 
             table.AddRow(
                 MdFontStyles.Bold("Testdatum"),
-                testdatum);            
+                testdatum);
 
             table.AddRow(
                 MdFontStyles.Bold("Anzahl der Antworten"),
@@ -54,7 +54,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
            string prompt,
            string message,
            string systemPrompt,
-           List<(string modelName, int rating)> modelRatings)
+           List<(string modelName, int rating, string reason)> modelRatings)
         {
             var output = new StringBuilder();
             output.AppendLine(MdFontStyles.H4($"{runNumber}. Durchlauf"));
@@ -65,14 +65,14 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             output.AppendLine(promptTable.ToString());
 
             // Create the second table for model evaluations
-            var modelTable = new MdTable("Modell", "Ausgabe", "Bewertung (1-10)");
+            var modelTable = new MdTable("Modell", "Ausgabe", "Bewertung (1-10)", "Begründung");
 
             int totalScore = 0;
             for (int i = 0; i < modelRatings.Count; i++)
             {
-                var (modelName, rating) = modelRatings[i];
+                var (modelName, rating, reason) = modelRatings[i];
                 totalScore += rating;
-                modelTable.AddRow($"{i + 1}. {MdFontStyles.Bold(modelName)}", message, rating.ToString());
+                modelTable.AddRow($"{i + 1}. {MdFontStyles.Bold(modelName)}", message, rating.ToString(), reason);
             }
 
             output.AppendLine(modelTable.ToString());

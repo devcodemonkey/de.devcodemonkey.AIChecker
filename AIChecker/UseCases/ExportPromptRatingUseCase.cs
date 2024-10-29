@@ -66,11 +66,11 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
                 var tableRound = _exportPromptRating.GetRunTable(
                     runNumber: i,
-                    promptAnforderungen: round.FirstOrDefault()?.ResultSet.PromptRequierements.ToString() ?? string.Empty,
+                    promptAnforderungen: round.FirstOrDefault()?.ResultSet.PromptRequierements ?? string.Empty,
                     prompt: round.FirstOrDefault()?.Asked ?? string.Empty,
                     message: round.FirstOrDefault()?.Message ?? string.Empty,
                     systemPrompt: round.FirstOrDefault()?.SystemPrompt?.Value ?? string.Empty,
-                    modelRatings: round.Select(r => (r.Model.Value, r.PromptRatingRound.Rating)).ToList()
+                    modelRatings: round.Select(r => (r.Model.Value ?? string.Empty, r.PromptRatingRound?.Rating ?? 0, r.PromptRatingRound?.ReasenRating ?? string.Empty)).ToList()
                 );
                 _mdFile.Text.AppendLine(tableRound);
 
@@ -108,7 +108,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             }
 
             // export file
-            var fileName = $"{DateTime.Now.ToString("yyyyMMdd_HHmmss")}_{resultSet.Replace(" ", "_")}";
+            var fileName = $"{DateTime.Now.ToString("yyyyMMdd_HHmmss")}_{resultSet.Replace(" ", "_").Replace(":", "_")}";
 
             await _mdFile.Export(Path.Combine(exportPath, fileName), dataExportType);
 

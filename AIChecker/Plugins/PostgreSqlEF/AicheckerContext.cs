@@ -2,6 +2,7 @@
 using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Runtime.ConstrainedExecution;
 
 namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
 
@@ -413,7 +414,7 @@ Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste V
         var resultSet = new ResultSet
         {
             ResultSetId = Guid.NewGuid(),
-            Value = "Bild Beschreibungen über ChatGpt erstellen",
+            Value = "Prompt Bewertung: Bildbeschreibungen über ChatGpt erstellen",
             PromptRequierements = @"**Erstelle eine aussagekräftige Beschreibung des hochgeladenen Bildes**
 - Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
 - Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
@@ -503,7 +504,15 @@ Die Fehlermeldung deutet darauf hin, dass der Speicherplatz für das Benutzerpro
                 PromptRatingRoundId = Guid.NewGuid(),
                 ResultId = result.ResultId,
                 Round = 1,
-                Rating = 8
+                Rating = 8,
+                ReasenRating = @"Anforderungen wurden erfüllt:
+✔️ Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
+✔️ Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
+✔️ Erkennen der Anwendung
+✔️ Ausgabe als Liste
+✔️ Ausgabe in deutscher Sprache
+
+- Bei einer Interpretatation besteht die Gefahr, dass das Bild falsch interpretiert wird und es soll noch Luft für Verbesserungen nach oben sein."
             });
 
         result = new Result
@@ -541,7 +550,15 @@ Auf der linken Seite des Menüs befinden sich weitere Symbole für Benutzer, Dat
                 PromptRatingRoundId = Guid.NewGuid(),
                 ResultId = result.ResultId,
                 Round = 1,
-                Rating = 7
+                Rating = 7,
+                ReasenRating = @"Anforderungen wurden erfüllt:
+✔️ Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
+✔️ Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
+✔️ Erkennen der Anwendung
+✔️ Ausgabe als Liste
+✔️ Ausgabe in deutscher Sprache
+
+- Bei einer Interpretatation besteht die Gefahr, dass das Bild falsch interpretiert wird und es soll noch Luft für Verbesserungen nach oben sein."
             });
 
         result = new Result
@@ -570,7 +587,15 @@ Die Meldung deutet darauf hin, dass ein Problem beim Erstellen oder Planen einer
                 PromptRatingRoundId = Guid.NewGuid(),
                 ResultId = result.ResultId,
                 Round = 1,
-                Rating = 9
+                Rating = 9,
+                ReasenRating = @"Anforderungen wurden erfüllt:
+✔️ Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
+✔️ Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
+✔️ Erkennen der Anwendung
+✔️ Ausgabe als Liste
+✔️ Ausgabe in deutscher Sprache
+
+- Bei einer Interpretatation besteht die Gefahr, dass das Bild falsch interpretiert wird und es soll noch Luft für Verbesserungen nach oben sein."
             });
 
         result = new Result
@@ -600,7 +625,15 @@ Diese Symbole sollen vermutlich dabei helfen, verschiedene Objekte wie gemeinsam
                 PromptRatingRoundId = Guid.NewGuid(),
                 ResultId = result.ResultId,
                 Round = 1,
-                Rating = 8
+                Rating = 8,
+                ReasenRating = @"Anforderungen wurden erfüllt:
+✔️ Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
+✔️ Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
+✔️ Erkennen der Anwendung
+✔️ Ausgabe als Liste
+✔️ Ausgabe in deutscher Sprache
+
+- Bei einer Interpretatation besteht die Gefahr, dass das Bild falsch interpretiert wird und es soll noch Luft für Verbesserungen nach oben sein."
             });
 
 
@@ -638,7 +671,15 @@ Diese Symbole sollen vermutlich dabei helfen, verschiedene Objekte wie gemeinsam
                 PromptRatingRoundId = Guid.NewGuid(),
                 ResultId = result.ResultId,
                 Round = 2,
-                Rating = 9
+                Rating = 9,
+                ReasenRating = @"Anforderungen wurden erfüllt:
+✔️ Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
+✔️ Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
+✔️ Erkennen der Anwendung
+✔️ Ausgabe als Liste
+✔️ Ausgabe in deutscher Sprache
+
+- Problem der Interpretation konnte behoben werden."
             });
 
         result = new Result
@@ -671,7 +712,15 @@ Diese Symbole sollen vermutlich dabei helfen, verschiedene Objekte wie gemeinsam
                 PromptRatingRoundId = Guid.NewGuid(),
                 ResultId = result.ResultId,
                 Round = 2,
-                Rating = 9
+                Rating = 9,
+                ReasenRating = @"Anforderungen wurden erfüllt:
+✔️ Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
+✔️ Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
+✔️ Erkennen der Anwendung
+✔️ Ausgabe als Liste
+✔️ Ausgabe in deutscher Sprache
+
+- Problem der Interpretation konnte behoben werden."
             });
 
         result = new Result
@@ -698,7 +747,15 @@ Diese Symbole sollen vermutlich dabei helfen, verschiedene Objekte wie gemeinsam
                 PromptRatingRoundId = Guid.NewGuid(),
                 ResultId = result.ResultId,
                 Round = 2,
-                Rating = 9
+                Rating = 9,
+                ReasenRating = @"Anforderungen wurden erfüllt:
+✔️ Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
+✔️ Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
+✔️ Erkennen der Anwendung
+✔️ Ausgabe als Liste
+✔️ Ausgabe in deutscher Sprache
+
+- Problem der Interpretation konnte behoben werden."
             });
 
         result = new Result
@@ -724,7 +781,15 @@ Diese Symbole sollen vermutlich dabei helfen, verschiedene Objekte wie gemeinsam
                 PromptRatingRoundId = Guid.NewGuid(),
                 ResultId = result.ResultId,
                 Round = 2,
-                Rating = 9
+                Rating = 9,
+                ReasenRating = @"Anforderungen wurden erfüllt:
+✔️ Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
+✔️ Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
+✔️ Erkennen der Anwendung
+✔️ Ausgabe als Liste
+✔️ Ausgabe in deutscher Sprache
+
+- Problem der Interpretation konnte behoben werden."
             });
 
         // 3rd Round
@@ -763,7 +828,17 @@ Diese Symbole sollen vermutlich dabei helfen, verschiedene Objekte wie gemeinsam
                 PromptRatingRoundId = Guid.NewGuid(),
                 ResultId = result.ResultId,
                 Round = 3,
-                Rating = 7
+                Rating = 7,
+                ReasenRating = @"Anforderungen wurden erfüllt:
+✔️ Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
+✔️ Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
+✔️ Erkennen der Anwendung
+✔️ Ausgabe als Liste
+✔️ Ausgabe in deutscher Sprache
+
+- Durch das hinzufügen des Texte 'Der Eintrag enthält Bild / er:' sollte eine Vereinfacherung für das spätere zusammenführen erreicht werden
+- Die übersichtliche Nummerierung und hervorgehobene Textstellen sind dadurch verschwunden, was zu einer schlechteren Bewertung führt
+- Der Text kann auch manuell hinzugefügt werden"
             });
 
         result = new Result
@@ -800,7 +875,17 @@ Diese Symbole sollen vermutlich dabei helfen, verschiedene Objekte wie gemeinsam
                 PromptRatingRoundId = Guid.NewGuid(),
                 ResultId = result.ResultId,
                 Round = 3,
-                Rating = 10
+                Rating = 7,
+                ReasenRating = @"Anforderungen wurden erfüllt:
+✔️ Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
+✔️ Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
+✔️ Erkennen der Anwendung
+✔️ Ausgabe als Liste
+✔️ Ausgabe in deutscher Sprache
+
+- Durch das hinzufügen des Texte 'Der Eintrag enthält Bild / er:' sollte eine Vereinfacherung für das spätere zusammenführen erreicht werden
+- Die übersichtliche Nummerierung und hervorgehobene Textstellen sind dadurch verschwunden, was zu einer schlechteren Bewertung führt
+- Der Text kann auch manuell hinzugefügt werden"
             });
 
         result = new Result
@@ -827,7 +912,17 @@ Diese Symbole sollen vermutlich dabei helfen, verschiedene Objekte wie gemeinsam
                 PromptRatingRoundId = Guid.NewGuid(),
                 ResultId = result.ResultId,
                 Round = 3,
-                Rating = 7
+                Rating = 7,
+                ReasenRating = @"Anforderungen wurden erfüllt:
+✔️ Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
+✔️ Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
+✔️ Erkennen der Anwendung
+✔️ Ausgabe als Liste
+✔️ Ausgabe in deutscher Sprache
+
+- Durch das hinzufügen des Texte 'Der Eintrag enthält Bild / er:' sollte eine Vereinfacherung für das spätere zusammenführen erreicht werden
+- Die übersichtliche Nummerierung und hervorgehobene Textstellen sind dadurch verschwunden, was zu einer schlechteren Bewertung führt
+- Der Text kann auch manuell hinzugefügt werden"
             });
 
         result = new Result
@@ -855,7 +950,17 @@ Diese Symbole sollen vermutlich dabei helfen, verschiedene Objekte wie gemeinsam
                 PromptRatingRoundId = Guid.NewGuid(),
                 ResultId = result.ResultId,
                 Round = 3,
-                Rating = 10
+                Rating = 8,
+                ReasenRating = @"Anforderungen wurden erfüllt:
+✔️ Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
+✔️ Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
+✔️ Erkennen der Anwendung
+✔️ Ausgabe als Liste
+✔️ Ausgabe in deutscher Sprache
+
+- Durch das hinzufügen des Texte 'Der Eintrag enthält Bild / er:' sollte eine Vereinfacherung für das spätere zusammenführen erreicht werden
+- Die übersichtliche Nummerierung und hervorgehobene Textstellen sind dadurch verschwunden, was zu einer schlechteren Bewertung führt
+- Der Text kann auch manuell hinzugefügt werden"
             });
     }
 
