@@ -81,10 +81,10 @@ namespace de.devcodemonkey.AIChecker.UseCases
                         else
                         {
                             if (maxTokens == -1)
-                            return await _apiRequester.SendChatRequestAsync(messages, model: modelName, temperature: 0.7,
+                            return await _apiRequester.SendChatRequestAsync(messages, model: modelName, temperature: 0,
                                 source: "https://api.openai.com/v1/chat/completions", environmentTokenName: "OPEN_AI_TOKEN");
                             else
-                                return await _apiRequester.SendChatRequestAsync(messages, model: modelName, maxTokens: maxTokens, temperature: 0.7,
+                                return await _apiRequester.SendChatRequestAsync(messages, model: modelName, maxTokens: maxTokens, temperature: 0,
                                 source: "https://api.openai.com/v1/chat/completions", environmentTokenName: "OPEN_AI_TOKEN");
                         }
                     });
