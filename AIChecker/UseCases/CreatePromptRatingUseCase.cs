@@ -113,9 +113,9 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     // return result to show in UI
                     DisplayResult(result);
 
-                    // set rating
-                    var ratingValue = rating();
+                    // set rating                    
                     var ratingReasonValue = ratingReason();
+                    var ratingValue = rating();
 
                     await HandleStatus(statusHandler, $"Saving dependencies for '{modelName}'...", async () =>
                     {
