@@ -42,7 +42,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //await RunWithScopeAsync(serviceProvider, ["model", "-u"]);
             //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "--help"]);
 
-            //await RunWithScopeAsync(serviceProvider, ["recreateDatabase", "-f"]);
+            await RunWithScopeAsync(serviceProvider, ["recreateDatabase", "-f"]);
             //await RunWithScopeAsync(serviceProvider, ["importQuestions", "-p", "C:\\Users\\d-hoe\\source\\repos\\masterarbeit.wiki\\06_00_00-Ticketexport\\FAQs\\FAQ-Outlook.json","-c", "Outlook"]);            
 
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set", "-t", "Markdown"]);
@@ -50,7 +50,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set", "-t", "Docx"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set"]);
 
-            //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Prompt Bewertung: Bildbeschreibungen über ChatGpt erstellen"]);
+            //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Prompt Bewertung: Bildbeschreibungen über ChatGpt erstellen (Nr. 1)"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Bild Beschreibungen über ChatGpt erstellen", "-t", "Markdown"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Bild Beschreibungen über ChatGpt erstellen", "-t", "Docx"]);
 
@@ -59,6 +59,14 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "ChatGpt Test", "-p", "Prüft ob die Ausgabe funktioniert", "-m", "gpt-4o-mini-2024-07-18"]);
             //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "ChatGpt Test", "-p", "Prüft ob die Ausgabe funktioniert", "-m", "bartowski/Llama-3.2-1B-Instruct-GGUF"]);
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "ChatGpt Test", "-t", "pdf"]);
+
+            //            await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Prompt Ranking für Fragen erstellen (1. Versuch)"]);
+
+            //            await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Prompt Ranking für Fragen erstellen (1. Versuch)", "-p", @"* Ausgabe im vorgegebenen JSON-Format
+            //* Ausgabe der reinen JSON-Ausgabe, ohne Text vor oder nach dem Beginn, damit validiert werden kann
+            //* Inhaltlich korrekt abgeleitete Fragen aus der Antwort
+            //* Unterschiedliche Fragen
+            //* Erzeugung von 10 Fragen", "-m", "bartowski/Llama-3.2-1B-Instruct-GGUF"]);
 
             await RunWithScopeAsync(serviceProvider, args);
         }

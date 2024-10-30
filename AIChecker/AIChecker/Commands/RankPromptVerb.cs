@@ -16,6 +16,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
         [Option('m', "models", Required = true, Separator = ',', HelpText = "The models to test.")]
         public IEnumerable<string> Models { get; set; }
 
+        [Option('d', "description", Required = false, HelpText = "The description of the prompt rating.")]
+        public string Description { get; set; }
+
         [Option('p', "promptRequierements", Required = true, HelpText = "The prompt requierements")]
         public string promptRequierements { get; set; }
 

@@ -42,6 +42,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 DateTime.Now.ToString(),
                 firstResult?.RequestCreated?.ToShortDateString() ?? string.Empty,
                 resultSet,
+                firstResult?.ResultSet.Description,
                 results.Count().ToString(),
                 firstResult?.MaxTokens?.ToString() ?? string.Empty,
                 firstResult?.Temperature?.ToString() ?? string.Empty

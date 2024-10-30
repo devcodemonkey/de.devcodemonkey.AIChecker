@@ -138,6 +138,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             await _createPromptRatingUseCase.ExecuteAsync(opts.Models.ToArray(),
                 opts.MaxTokens,
                 opts.ResultSet,
+                opts.Description,
                 opts.promptRequierements,
                 systemPrompt: () =>
                 {

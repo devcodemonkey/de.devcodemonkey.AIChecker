@@ -22,7 +22,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             _apiRequester = aPIRequester;
         }
 
-        public async Task ExecuteAsync(string[] modelNames, int maxTokens, string resultSet, string promptRequierements, Func<string> systemPrompt,
+        public async Task ExecuteAsync(string[] modelNames, int maxTokens, string resultSet, string description,string promptRequierements, Func<string> systemPrompt,
             Func<string> message, Func<string> ratingReason, Func<int> rating, Func<bool> newImprovement, Action<Result> DisplayResult,
             StatusHandler? statusHandler = null)
         {

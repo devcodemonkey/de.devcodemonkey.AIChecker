@@ -8,6 +8,8 @@ public partial class ResultSet : IValue
 
     public string Value { get; set; } = null!;
 
+    public string? Description { get; set; } 
+
     public string? PromptRequierements { get; set; }
 
     public virtual ICollection<Result> Results { get; set; } = new List<Result>();

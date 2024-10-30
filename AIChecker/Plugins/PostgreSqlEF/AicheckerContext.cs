@@ -414,7 +414,7 @@ Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste V
         var resultSet = new ResultSet
         {
             ResultSetId = Guid.NewGuid(),
-            Value = "Prompt Bewertung: Bildbeschreibungen über ChatGpt erstellen",
+            Value = "Prompt Bewertung: Bildbeschreibungen über ChatGpt erstellen (Nr. 1)",            
             PromptRequierements = @"**Erstelle eine aussagekräftige Beschreibung des hochgeladenen Bildes**
 - Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
 - Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
