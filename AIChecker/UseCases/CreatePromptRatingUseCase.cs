@@ -56,7 +56,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 var systemPromptObject = new SystemPrompt
                 {
                     SystemPromptId = Guid.NewGuid(),
-                    Value = messages[1]!.Content!,
+                    Value = messages[0]!.Content!,
                 };
 
 
@@ -95,7 +95,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     var result = new Result
                     {
                         ResultId = Guid.NewGuid(),
-                        Asked = messages[0].Content,
+                        Asked = messages[1].Content,
                         Message = apiResult?.Data?.Choices?.FirstOrDefault()?.Message?.Content,
                         Temperature = 0,
                         MaxTokens = maxTokens,
