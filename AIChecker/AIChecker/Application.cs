@@ -165,7 +165,15 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     table.AddColumn("System Prompt");
                     table.AddColumn("Message");
                     table.AddColumn("Max Tokens");
-                    table.AddRow(result.Model.Value, opts.promptRequierements, result.SystemPrompt.Value, result.Message, result.MaxTokens.ToString());
+                    // delete format option with the 'new Style()'
+                    table.AddRow(
+                        new Text(result.Model.Value, new Style()),
+                        new Text(opts.promptRequierements, new Style()),
+                        new Text(result.SystemPrompt.Value, new Style()),
+                        new Text(result.Message, new Style()),
+                        new Text(result.MaxTokens.ToString(), new Style())
+                    );
+
                     AnsiConsole.Write(table);
                 },
                 statusHandler: (statusMessage, action) =>
@@ -177,59 +185,53 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         private string MultiLineInput(string text)
         {
-            Console.WriteLine($"Enter your multi-line input (press Ctrl+D in a new line to finish, or press Ctrl+O in a new line to open a text editor) for {text}:");
             var inputLines = new List<string>();
-            string line;
             string fileContent = string.Empty;
+
+            AnsiConsole.MarkupLine($"[bold yellow]Enter your multi-line input for [underline]{text}[/] (press [green]Ctrl+D[/] to finish, or [green]Ctrl+O[/] to open a text editor):[/]");
 
             while (true)
             {
                 var keyInfo = Console.ReadKey(intercept: true);
 
-                // Detect Ctrl+O
+                // Detect Ctrl+O for opening editor
                 if (keyInfo.Key == ConsoleKey.O && (keyInfo.Modifiers & ConsoleModifiers.Control) != 0)
                 {
                     fileContent = string.Join(Environment.NewLine, inputLines);
-                    // Create or reuse the temporary file with existing content
                     string tempFilePath = Path.GetTempFileName() + ".txt";
                     File.WriteAllText(tempFilePath, fileContent);
 
-                    // Launch default editor (e.g., Notepad on Windows) with the temporary file
                     Process editorProcess = Process.Start("notepad.exe", tempFilePath);
                     editorProcess.WaitForExit();
 
-                    // Read the file content
+                    // Load and display the content from the editor
                     fileContent = File.ReadAllText(tempFilePath);
-
-                    // Display the imported content in the console
-                    Console.WriteLine("\nImported content from editor:");
+                    AnsiConsole.MarkupLine("[bold cyan]\nImported content from editor:[/]");                    
                     Console.WriteLine(fileContent);
 
                     inputLines.Clear();
                     inputLines.Add(fileContent);
 
-                    // Delete the temp file after reading
                     File.Delete(tempFilePath);
 
-                    // Prompt for confirmation
-                    Console.WriteLine("Press Ctrl+D to finish, or press Ctrl+O to return to a text editor.");
+                    AnsiConsole.MarkupLine("[bold yellow]Press [green]Ctrl+D[/] to finish, or [green]Ctrl+O[/] to edit again.[/]");
                 }
-                // Detect Ctrl+D
+                // Detect Ctrl+D to end input
                 else if (keyInfo.Key == ConsoleKey.D && (keyInfo.Modifiers & ConsoleModifiers.Control) != 0)
                 {
                     break;
                 }
                 else
                 {
-                    // Start the line with the first key, then capture the rest
                     Console.Write(keyInfo.KeyChar);
-                    line = keyInfo.KeyChar + Console.ReadLine();
+                    var line = keyInfo.KeyChar + Console.ReadLine();
 
                     if (!string.IsNullOrWhiteSpace(line))
                         inputLines.Add(line);
                 }
             }
 
+            AnsiConsole.MarkupLine("[bold green]Input completed.[/]");
             return string.Join(Environment.NewLine, inputLines);
         }
 
@@ -283,11 +285,12 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     table.AddColumn("Size");
                     foreach (var m in models)
                     {
+                        // delete format option with the 'new Style()'
                         table.AddRow(
-                            m.Value,
-                            m.BaseModels ?? "",
-                            m.Link ?? "",
-                            m.Size.ToString()
+                            new Text(m.Value, new Style()),
+                            new Text(m.BaseModels ?? "", new Style()),
+                            new Text(m.Link ?? "", new Style()),
+                            new Text(m.Size.ToString(), new Style())
                         );
                     }
                     AnsiConsole.Write(table);
