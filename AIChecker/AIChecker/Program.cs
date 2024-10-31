@@ -42,7 +42,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //await RunWithScopeAsync(serviceProvider, ["model", "-u"]);
             //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "--help"]);
 
-            await RunWithScopeAsync(serviceProvider, ["recreateDatabase", "-f"]);
+            //await RunWithScopeAsync(serviceProvider, ["recreateDatabase", "-f"]);
             //await RunWithScopeAsync(serviceProvider, ["importQuestions", "-p", "C:\\Users\\d-hoe\\source\\repos\\masterarbeit.wiki\\06_00_00-Ticketexport\\FAQs\\FAQ-Outlook.json","-c", "Outlook"]);            
 
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Test result set", "-t", "Markdown"]);
@@ -67,6 +67,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //* Inhaltlich korrekt abgeleitete Fragen aus der Antwort
             //* Unterschiedliche Fragen
             //* Erzeugung von 10 Fragen", "-m", "bartowski/Llama-3.2-1B-Instruct-GGUF"]);
+
+            //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Prompt Ranking für Fragen erstellen (Nr. 1)", "-t", "pdf"]);
 
             await RunWithScopeAsync(serviceProvider, args);
         }
