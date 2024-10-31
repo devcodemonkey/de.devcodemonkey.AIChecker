@@ -121,7 +121,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     {
                         await SaveDependencies.SaveDependenciesFromResult(
                             _defaultMethodesRepository,
-                            messages[1]!.Content!,
+                            messages[0]!.Content!,
                             resultSet,
                             apiResult,
                             result,
