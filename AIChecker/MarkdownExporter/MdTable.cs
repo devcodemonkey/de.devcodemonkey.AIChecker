@@ -1,4 +1,5 @@
 ﻿using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using System.Text.RegularExpressions;
 
 namespace de.devcodemonkey.AIChecker.MarkdownExporter
 {
@@ -22,9 +23,18 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter
         public void AddRow(params string[] values)
         {
             for (int i = 0; i < values.Length; i++)
-                values[i] = values[i]?.Replace("\r\n", "<br>")  // Windows-style newlines
-                                 .Replace("\n", "<br>") ?? values[i];   // Unix-style newlines
-
+                //values[i] = values[i]?.Replace("\r\n", "<br>")  // Windows-style newlines
+                //                 .Replace("\n", "<br>") ?? values[i];   // Unix-style newlines
+                if (values[i] != null)
+                {
+                    values[i] = Regex.Replace(values[i], @"^ +", match =>
+                    {
+                        // Replace each leading space with &nbsp;
+                        return string.Concat(match.Value.Select(_ => "&nbsp;"));
+                    }, RegexOptions.Multiline)  // Apply replacement at the start of each line
+                    .Replace("\r\n", "<br>")  // Windows-style newlines
+                    .Replace("\n", "<br>");   // Unix-style newlines
+                }
             Rows.Add(new List<string>(values));
         }
 
