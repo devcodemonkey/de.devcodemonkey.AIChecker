@@ -39,9 +39,126 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 round++;
 
                 // send message
-                List<IMessage> messages =
-                [
-                    new Message
+                List<IMessage> messages = CreateMessageForApi(promptParams);
+
+                var systemPromptObject = new SystemPrompt
+                {
+                    SystemPromptId = Guid.NewGuid(),
+                    Value = messages[0]!.Content!,
+                };
+
+                bool OpenAiModel = false;
+                foreach (var modelName in promptParams.ModelNames)
+                {
+                    bool isOpenAiModel = modelName.ToLower().Contains("gpt");
+
+                    await LoadModelinLmStudioIfNeeded(statusHandler, OpenAiModel, modelName);
+                    IApiResult<ResponseData> apiResult = await CreateApiResult(promptParams, statusHandler, messages, OpenAiModel, modelName);
+
+                    var model = await _defaultMethodesRepository.ViewModelOverValueAysnc(modelName);
+
+                    Result result = CreateResult(promptParams, messages, systemPromptObject, apiResult, model);
+
+                    displayResult(result);
+
+                    // set rating                    
+                    var ratingReasonValue = promptParams.RatingReason();
+                    var ratingValue = promptParams.Rating();
+
+                    PromptRatingRound promptRatingRound = CreatePromptRatingRound(round, result, ratingReasonValue, ratingValue);
+
+                    result.PromptRatingRound = promptRatingRound;
+                    await SaveToDatabase(promptParams, statusHandler, messages, modelName, apiResult, result);
+                }
+            }
+            while (promptParams.NewImprovement());
+        }
+
+        private async Task SaveToDatabase(PromptRatingUseCaseParams promptParams, StatusHandler? statusHandler, List<IMessage> messages, string modelName, IApiResult<ResponseData> apiResult, Result result)
+        {
+            await HandleStatus(statusHandler, $"Saving dependencies for '{modelName}'...", async () =>
+            {
+                await SaveDependencies.SaveDependenciesFromResult(
+                    _defaultMethodesRepository,
+                    messages[0]!.Content!,
+                    promptParams.ResultSet,
+                    apiResult,
+                    result,
+                    apiResult!.Data!.Object!,
+                    apiResult?.Data?.Choices?.FirstOrDefault()?.FinishReason ?? string.Empty
+                );
+
+                await _defaultMethodesRepository.AddAsync(result);
+            });
+        }
+
+        private async Task<IApiResult<ResponseData>> CreateApiResult(PromptRatingUseCaseParams promptParams, StatusHandler? statusHandler, List<IMessage> messages, bool OpenAiModel, string modelName)
+        {
+            IApiResult<ResponseData> apiResult = await HandleStatus(statusHandler, $"Sending chat request for '{modelName}'...", async () =>
+            {
+                // use openai api, if it's a openai model
+                if (!OpenAiModel)
+                    return await _apiRequester.SendChatRequestAsync(messages, maxTokens: promptParams.MaxTokens);
+                else
+                {
+                    if (promptParams.MaxTokens == -1)
+                        return await _apiRequester.SendChatRequestAsync(messages, model: modelName, temperature: 0,
+                            source: "https://api.openai.com/v1/chat/completions", environmentTokenName: "OPEN_AI_TOKEN");
+                    else
+                        return await _apiRequester.SendChatRequestAsync(messages, model: modelName, maxTokens: promptParams.MaxTokens, temperature: 0,
+                        source: "https://api.openai.com/v1/chat/completions", environmentTokenName: "OPEN_AI_TOKEN");
+                }
+            });
+            return apiResult;
+        }
+
+        private async Task LoadModelinLmStudioIfNeeded(StatusHandler? statusHandler, bool OpenAiModel, string modelName)
+        {
+            if (!OpenAiModel)
+                await HandleStatus(statusHandler, $"Loading model '{modelName}'...", async () =>
+                {
+                    _loadUnloadLms.Load(modelName);
+                });
+        }
+
+        private static PromptRatingRound CreatePromptRatingRound(int round, Result result, string ratingReasonValue, int ratingValue)
+        {
+            return new PromptRatingRound
+            {
+                PromptRatingRoundId = Guid.NewGuid(),
+                ResultId = result.ResultId,
+                Rating = ratingValue,
+                ReasenRating = ratingReasonValue,
+                Round = round,
+                Result = result
+            };
+        }
+
+        private static Result CreateResult(PromptRatingUseCaseParams promptParams, List<IMessage> messages, SystemPrompt systemPromptObject, IApiResult<ResponseData> apiResult, Model model)
+        {
+            return new Result
+            {
+                ResultId = Guid.NewGuid(),
+                RequestId = apiResult?.Data?.Id,
+                Asked = messages[1].Content,
+                Message = apiResult?.Data?.Choices?.FirstOrDefault()?.Message?.Content,
+                Temperature = 0,
+                MaxTokens = promptParams.MaxTokens,
+                PromptTokens = apiResult?.Data?.Usage?.PromptTokens ?? 0,
+                CompletionTokens = apiResult?.Data?.Usage?.CompletionTokens ?? 0,
+                TotalTokens = apiResult?.Data?.Usage?.TotalTokens ?? 0,
+                RequestCreated = DateTimeOffset.FromUnixTimeSeconds(apiResult?.Data?.Created ?? 0).UtcDateTime,
+                RequestStart = apiResult!.RequestStart,
+                RequestEnd = apiResult.RequestEnd,
+                SystemPrompt = systemPromptObject,
+                Model = model,
+            };
+        }
+
+        private static List<IMessage> CreateMessageForApi(PromptRatingUseCaseParams promptParams)
+        {
+            return [
+                                new Message
                     {
                         Role = "system",
                         Content = promptParams.SystemPrompt()
@@ -52,103 +169,6 @@ namespace de.devcodemonkey.AIChecker.UseCases
                         Content = promptParams.Message()
                     },
                 ];
-
-                var systemPromptObject = new SystemPrompt
-                {
-                    SystemPromptId = Guid.NewGuid(),
-                    Value = messages[0]!.Content!,
-                };
-
-
-                bool OpenAiModel = false;
-                foreach (var modelName in promptParams.ModelNames)
-                {
-                    if (modelName.ToLower().Contains("gpt"))
-                        OpenAiModel = true;
-
-                    // change model
-                    if (!OpenAiModel)
-                        await HandleStatus(statusHandler, $"Loading model '{modelName}'...", async () =>
-                        {
-                            _loadUnloadLms.Load(modelName);
-                        });
-
-                    IApiResult<ResponseData> apiResult = await HandleStatus(statusHandler, $"Sending chat request for '{modelName}'...", async () =>
-                    {
-                        // use openai api, if it's a openai model
-                        if (!OpenAiModel)
-                            return await _apiRequester.SendChatRequestAsync(messages, maxTokens: promptParams.MaxTokens);
-                        else
-                        {
-                            if (promptParams.MaxTokens == -1)
-                                return await _apiRequester.SendChatRequestAsync(messages, model: modelName, temperature: 0,
-                                    source: "https://api.openai.com/v1/chat/completions", environmentTokenName: "OPEN_AI_TOKEN");
-                            else
-                                return await _apiRequester.SendChatRequestAsync(messages, model: modelName, maxTokens: promptParams.MaxTokens, temperature: 0,
-                                source: "https://api.openai.com/v1/chat/completions", environmentTokenName: "OPEN_AI_TOKEN");
-                        }
-                    });
-
-                    var model = await _defaultMethodesRepository.ViewModelOverValueAysnc(modelName);
-
-                    // save result                    
-                    var result = new Result
-                    {
-                        ResultId = Guid.NewGuid(),
-                        RequestId = apiResult?.Data?.Id,
-                        Asked = messages[1].Content,
-                        Message = apiResult?.Data?.Choices?.FirstOrDefault()?.Message?.Content,
-                        Temperature = 0,
-                        MaxTokens = promptParams.MaxTokens,
-                        PromptTokens = apiResult?.Data?.Usage?.PromptTokens ?? 0,
-                        CompletionTokens = apiResult?.Data?.Usage?.CompletionTokens ?? 0,
-                        TotalTokens = apiResult?.Data?.Usage?.TotalTokens ?? 0,
-                        RequestCreated = DateTimeOffset.FromUnixTimeSeconds(apiResult?.Data?.Created ?? 0).UtcDateTime,
-                        RequestStart = apiResult!.RequestStart,
-                        RequestEnd = apiResult.RequestEnd,
-                        SystemPrompt = systemPromptObject,
-                        Model = model,
-                    };
-
-
-                    // return result to show in UI
-                    displayResult(result);
-
-                    // set rating                    
-                    var ratingReasonValue = promptParams.RatingReason();
-                    var ratingValue = promptParams.Rating();
-
-                    await HandleStatus(statusHandler, $"Saving dependencies for '{modelName}'...", async () =>
-                    {
-                        await SaveDependencies.SaveDependenciesFromResult(
-                            _defaultMethodesRepository,
-                            messages[0]!.Content!,
-                            promptParams.ResultSet,
-                            apiResult,
-                            result,
-                            apiResult!.Data!.Object!,
-                            apiResult?.Data?.Choices?.FirstOrDefault()?.FinishReason ?? string.Empty
-                        );
-
-                        PromptRatingRound promptRatingRound = new PromptRatingRound
-                        {
-                            PromptRatingRoundId = Guid.NewGuid(),
-                            ResultId = result.ResultId,
-                            Rating = ratingValue,
-                            ReasenRating = ratingReasonValue,
-                            Round = round,
-                            Result = result
-                        };
-
-
-                        result.PromptRatingRound = promptRatingRound;
-
-
-                        await _defaultMethodesRepository.AddAsync(result);
-                    });
-                }
-            }
-            while (promptParams.NewImprovement());
         }
 
         private async Task<T> HandleStatus<T>(StatusHandler? statusHandler, string statusMessage, Func<Task<T>> action)
