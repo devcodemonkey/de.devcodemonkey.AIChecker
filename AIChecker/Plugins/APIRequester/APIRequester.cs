@@ -4,6 +4,7 @@ using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester.Models;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using System.Net.Http.Json;
+using System.Text.Json;
 
 
 namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
@@ -41,10 +42,15 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
 
                 // Handle the response if successful
                 if (response.IsSuccessStatusCode)
-                {
                     apiResult.Data = await response.Content.ReadFromJsonAsync<TResponse>() ?? default!;
+                else
+                {
+                    string jsonRequest = JsonSerializer.Serialize(request, new JsonSerializerOptions
+                    {
+                        WriteIndented = true
+                    });
+                    throw new Exception($"Request failed with status code {response.StatusCode}, sended Request: {jsonRequest}");
                 }
-
                 return apiResult;
             }
         }
