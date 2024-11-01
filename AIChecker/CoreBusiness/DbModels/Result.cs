@@ -18,6 +18,8 @@ public partial class Result
 
     public string? Message { get; set; } = null!;
 
+    public string? ResponseFormat { get; set; }
+
     public Guid ModelId { get; set; }
 
     public Guid? SystemPromptId { get; set; }
