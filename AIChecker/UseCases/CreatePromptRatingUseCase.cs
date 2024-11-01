@@ -4,6 +4,7 @@ using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using System.Text.Json;
 
 namespace de.devcodemonkey.AIChecker.UseCases
 {
@@ -47,13 +48,12 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     Value = messages[0]!.Content!,
                 };
 
-                bool OpenAiModel = false;
                 foreach (var modelName in promptParams.ModelNames)
                 {
                     bool isOpenAiModel = modelName.ToLower().Contains("gpt");
 
-                    await LoadModelinLmStudioIfNeeded(statusHandler, OpenAiModel, modelName);
-                    IApiResult<ResponseData> apiResult = await CreateApiResult(promptParams, statusHandler, messages, OpenAiModel, modelName);
+                    await LoadModelinLmStudioIfNeeded(statusHandler, isOpenAiModel, modelName);
+                    IApiResult<ResponseData> apiResult = await CreateApiResult(promptParams, statusHandler, messages, isOpenAiModel, modelName);
 
                     var model = await _defaultMethodesRepository.ViewModelOverValueAysnc(modelName);
 
@@ -80,11 +80,11 @@ namespace de.devcodemonkey.AIChecker.UseCases
             {
                 await SaveDependencies.SaveDependenciesFromResult(
                     _defaultMethodesRepository,
-                    messages[0]!.Content!,
+                    messages[0]?.Content ?? string.Empty,
                     promptParams.ResultSet,
                     apiResult,
                     result,
-                    apiResult!.Data!.Object!,
+                    apiResult?.Data?.Object ?? string.Empty,
                     apiResult?.Data?.Choices?.FirstOrDefault()?.FinishReason ?? string.Empty
                 );
 
@@ -110,13 +110,14 @@ namespace de.devcodemonkey.AIChecker.UseCases
                         Model = modelName,
                         Messages = messages,
                         Temperature = 0, // Assuming temperature is 0 as in the original method
-                        MaxTokens = promptParams.MaxTokens == -1 ? null : promptParams.MaxTokens,
+                        MaxTokens = openAiModel && promptParams.MaxTokens == -1 ? null : promptParams.MaxTokens,
                         Source = openAiModel
                     ? "https://api.openai.com/v1/chat/completions"
                     : "http://localhost:1234/v1/chat/completions",
-                        EnvironmentTokenName = openAiModel ? "OPEN_AI_TOKEN" : null
+                        EnvironmentTokenName = openAiModel ? "OPEN_AI_TOKEN" : null,
+                        ResponseFormat = JsonDocument.Parse(promptParams.ResponseFormat).RootElement,
                     };
-                    
+
                     return await _apiRequester.SendChatRequestAsync(requestData);
                 });
 
@@ -153,6 +154,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 RequestId = apiResult?.Data?.Id,
                 Asked = messages[1].Content,
                 Message = apiResult?.Data?.Choices?.FirstOrDefault()?.Message?.Content,
+                ResponseFormat = promptParams.ResponseFormat,
                 Temperature = 0,
                 MaxTokens = promptParams.MaxTokens,
                 PromptTokens = apiResult?.Data?.Usage?.PromptTokens ?? 0,
@@ -169,7 +171,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
         private static List<IMessage> CreateMessageForApi(PromptRatingUseCaseParams promptParams)
         {
             return [
-                                new Message
+                    new Message
                     {
                         Role = "system",
                         Content = promptParams.SystemPrompt()

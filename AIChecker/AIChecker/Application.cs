@@ -135,12 +135,13 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         private async Task RankPrompt(RankPromptVerb opts)
         {
-            int listNumber = 1;            
+            int listNumber = 1;
 
             await _createPromptRatingUseCase.ExecuteAsync(
                 new PromptRatingUseCaseParams()
                 {
                     ModelNames = opts.Models.ToArray(),
+                    ResponseFormat = opts.ResponseFormat,
                     MaxTokens = opts.MaxTokens,
                     ResultSet = opts.ResultSet,
                     Description = opts.Description,
@@ -174,11 +175,11 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     table.AddColumn("Max Tokens");
                     // delete format option with the 'new Style()'
                     table.AddRow(
-                        new Text(result.Model.Value, new Style()),
+                        new Text(result?.Model?.Value ?? string.Empty, new Style()),
                         new Text(opts.promptRequierements, new Style()),
-                        new Text(result.SystemPrompt.Value, new Style()),
-                        new Text(result.Message, new Style()),
-                        new Text(result.MaxTokens.ToString(), new Style())
+                        new Text(result?.SystemPrompt?.Value ?? string.Empty, new Style()),
+                        new Text(result?.Message ?? string.Empty, new Style()),
+                        new Text(result?.MaxTokens?.ToString() ?? string.Empty, new Style())
                     );
 
                     AnsiConsole.Write(table);
