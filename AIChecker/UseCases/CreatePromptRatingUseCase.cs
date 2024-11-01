@@ -96,6 +96,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     var result = new Result
                     {
                         ResultId = Guid.NewGuid(),
+                        RequestId = apiResult?.Data?.Id,
                         Asked = messages[1].Content,
                         Message = apiResult?.Data?.Choices?.FirstOrDefault()?.Message?.Content,
                         Temperature = 0,
@@ -105,7 +106,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                         TotalTokens = apiResult?.Data?.Usage?.TotalTokens ?? 0,
                         RequestCreated = DateTimeOffset.FromUnixTimeSeconds(apiResult?.Data?.Created ?? 0).UtcDateTime,
                         RequestStart = apiResult!.RequestStart,
-                        RequestEnd = apiResult.RequestEnd,
+                        RequestEnd = apiResult.RequestEnd,                        
                         SystemPrompt = systemPromptObject,
                         Model = model,
                     };
