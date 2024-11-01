@@ -97,7 +97,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             for (int i = 0; i < requestCount; i++)
             {
 
-                var apiResult = await _apiRequester.SendChatRequestAsync(messages, maxTokens: maxTokens, temperature: temperature,model: model, source: source, environmentTokenName: environmentBearerTokenName);
+                var apiResult = await _apiRequester.SendChatRequestOldAsync(messages, maxTokens: maxTokens, temperature: temperature,model: model, source: source, environmentTokenName: environmentBearerTokenName);
 
 
                 Result result = new Result

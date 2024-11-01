@@ -27,7 +27,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester.Tests
                 }
             };
 
-            var result = await apiRequester.SendChatRequestAsync(messages, maxTokens: -1);
+            var result = await apiRequester.SendChatRequestOldAsync(messages, maxTokens: -1);
 
             Assert.AreEqual(result.StatusCode, HttpStatusCode.OK);
             Assert.IsNotNull(result.Data);
@@ -53,7 +53,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester.Tests
                 }
             };
 
-            var result = await apiRequester.SendChatRequestAsync(
+            var result = await apiRequester.SendChatRequestOldAsync(
                 messages,
                 source: "https://api.openai.com/v1/chat/completions",
                 model: "gpt-4o-mini",

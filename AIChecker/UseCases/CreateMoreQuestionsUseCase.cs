@@ -45,7 +45,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 });
 
                 var apiResult = await _apiRequester
-                    .SendChatRequestAsync(messages,
+                    .SendChatRequestOldAsync(messages,
                         maxTokens: -1,
                         temperature: temperature,
                         requestTimeout: TimeSpan.FromMinutes(10));

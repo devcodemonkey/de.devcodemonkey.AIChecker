@@ -92,23 +92,34 @@ namespace de.devcodemonkey.AIChecker.UseCases
             });
         }
 
-        private async Task<IApiResult<ResponseData>> CreateApiResult(PromptRatingUseCaseParams promptParams, StatusHandler? statusHandler, List<IMessage> messages, bool OpenAiModel, string modelName)
+        private async Task<IApiResult<ResponseData>> CreateApiResult(
+            PromptRatingUseCaseParams promptParams,
+            StatusHandler? statusHandler,
+            List<IMessage> messages,
+            bool openAiModel,
+            string modelName)
         {
-            IApiResult<ResponseData> apiResult = await HandleStatus(statusHandler, $"Sending chat request for '{modelName}'...", async () =>
-            {
-                // use openai api, if it's a openai model
-                if (!OpenAiModel)
-                    return await _apiRequester.SendChatRequestAsync(messages, maxTokens: promptParams.MaxTokens);
-                else
+            IApiResult<ResponseData> apiResult = await HandleStatus(
+                statusHandler,
+                $"Sending chat request for '{modelName}'...",
+                async () =>
                 {
-                    if (promptParams.MaxTokens == -1)
-                        return await _apiRequester.SendChatRequestAsync(messages, model: modelName, temperature: 0,
-                            source: "https://api.openai.com/v1/chat/completions", environmentTokenName: "OPEN_AI_TOKEN");
-                    else
-                        return await _apiRequester.SendChatRequestAsync(messages, model: modelName, maxTokens: promptParams.MaxTokens, temperature: 0,
-                        source: "https://api.openai.com/v1/chat/completions", environmentTokenName: "OPEN_AI_TOKEN");
-                }
-            });
+                    // Configure the RequestData object based on whether it's an OpenAI model
+                    var requestData = new RequestData
+                    {
+                        Model = modelName,
+                        Messages = messages,
+                        Temperature = 0, // Assuming temperature is 0 as in the original method
+                        MaxTokens = promptParams.MaxTokens == -1 ? null : promptParams.MaxTokens,
+                        Source = openAiModel
+                    ? "https://api.openai.com/v1/chat/completions"
+                    : "http://localhost:1234/v1/chat/completions",
+                        EnvironmentTokenName = openAiModel ? "OPEN_AI_TOKEN" : null
+                    };
+                    
+                    return await _apiRequester.SendChatRequestAsync(requestData);
+                });
+
             return apiResult;
         }
 

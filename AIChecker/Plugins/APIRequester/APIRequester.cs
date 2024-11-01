@@ -49,7 +49,8 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
             }
         }
 
-        public async Task<IApiResult<ResponseData>> SendChatRequestAsync(
+        [Obsolete("Use SendChatRequestAsync instead.")]
+        public async Task<IApiResult<ResponseData>> SendChatRequestOldAsync(
             List<IMessage> messages,
             string model = "nothing set",
             string source = "http://localhost:1234/v1/chat/completions",
@@ -69,6 +70,16 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
             };
 
             return await SendPostRequest<RequestData, ResponseData>(source, requestData, environmentTokenName, requestTimeout: requestTimeout);
+        }
+
+        public async Task<IApiResult<ResponseData>> SendChatRequestAsync(RequestData requestData)
+        {
+            return await SendPostRequest<RequestData, ResponseData>(
+                requestData.Source,
+                requestData,
+                requestData.EnvironmentTokenName,
+                requestTimeout: requestData.RequestTimeout
+            );
         }
     }
 }

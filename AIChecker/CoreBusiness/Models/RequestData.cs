@@ -11,5 +11,9 @@ namespace de.devcodemonkey.AIChecker.CoreBusiness.Models
         [JsonPropertyName("max_tokens")]
         public int? MaxTokens { get; set; }
         public bool Stream { get; set; }
+
+        public string Source { get; set; } = "http://localhost:1234/v1/chat/completions";
+        public string? EnvironmentTokenName { get; set; }
+        public TimeSpan? RequestTimeout { get; set; }
     }
 }
