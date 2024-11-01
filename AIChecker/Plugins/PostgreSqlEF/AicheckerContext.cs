@@ -266,6 +266,15 @@ public partial class AicheckerContext : DbContext
         });
 
         // add default data
+        //SeedModelData(modelBuilder);
+
+        //SeedImagePromptData(modelBuilder);
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    private static void SeedModelData(ModelBuilder modelBuilder)
+    {
         modelBuilder.Entity<Model>().HasData(
             new Model
             {
@@ -287,26 +296,6 @@ Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste V
 Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste Version der GPT-4o Familie, die am 06.08.2024 veröffentlich wurde",
                 Link = "https://platform.openai.com/docs/models/gpt-4o",
             },
-             //new Model
-             //{
-             //    ModelId = Guid.NewGuid(),
-             //    Value = "lmstudio -community/Phi-3.5-mini-instruct-GGUF/Phi-3.5-mini-instruct-Q4_K_M.gguf",
-             //},
-             //new Model
-             //{
-             //    ModelId = Guid.NewGuid(),
-             //    Value = "TheBloke/SauerkrautLM-7B-HerO-GGUF/sauerkrautlm-7b-hero.Q4_K_M.gguf"
-             //},
-             //new Model
-             //{
-             //    ModelId = Guid.NewGuid(),
-             //    Value = "Qwen/Qwen2-0.5B-Instruct-GGUF/qwen2-0_5b-instruct-q4_0.gguf"
-             //},
-             //new Model
-             //{
-             //    ModelId = Guid.NewGuid(),
-             //    Value = "HuggingFaceTB/smollm-360M-instruct-v0.2-Q8_0-GGUF/smollm-360m-instruct-add-basics-q8_0.gguf"
-             //}
              new Model
              {
                  ModelId = Guid.NewGuid(),
@@ -403,18 +392,14 @@ Mit Stand 22.10.2024 handelt es sich mit bei dieser Version, um die aktuellste V
                 Size = 15.64,
                 Quantification = "Q2_K"
             });
-
-        AddImagePromptTest(modelBuilder);
-
-        OnModelCreatingPartial(modelBuilder);
     }
 
-    private void AddImagePromptTest(ModelBuilder modelBuilder)
+    private void SeedImagePromptData(ModelBuilder modelBuilder)
     {
         var resultSet = new ResultSet
         {
             ResultSetId = Guid.NewGuid(),
-            Value = "Prompt Bewertung: Bildbeschreibungen über ChatGpt erstellen (Nr. 1)",            
+            Value = "Prompt Bewertung: Bildbeschreibungen über ChatGpt erstellen (Nr. 1)",
             PromptRequierements = @"**Erstelle eine aussagekräftige Beschreibung des hochgeladenen Bildes**
 - Bildinhalt sollen vom Aussehen her schriftlich dargestellt werden
 - Textbeschreibungen sollen, falls vorhanden, ausgelesen werden
