@@ -61,8 +61,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "ChatGpt Test", "-t", "pdf"]);
 
             //            await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Prompt Ranking für Fragen erstellen (1. Versuch)"]);
-
-            //            await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Prompt Ranking für Fragen erstellen (1. Versuch)", "-p", @"* Ausgabe im vorgegebenen JSON-Format
+            //await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Test"]);
+            //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Test", "-p", @"* Ausgabe im vorgegebenen JSON-Format
             //* Ausgabe der reinen JSON-Ausgabe, ohne Text vor oder nach dem Beginn, damit validiert werden kann
             //* Inhaltlich korrekt abgeleitete Fragen aus der Antwort
             //* Unterschiedliche Fragen

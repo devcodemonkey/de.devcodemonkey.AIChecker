@@ -2,6 +2,7 @@
 using de.devcodemonkey.AIChecker.AIChecker.Commands;
 using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using de.devcodemonkey.AIChecker.CoreBusiness.MarkDownExporterModels;
+using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using Spectre.Console;
@@ -132,7 +133,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             AnsiConsole.MarkupLine("[green]Prompt rating exported![/]");
         }
 
-        private async Task RankPrompt(RankPromptVerb opts)
+        private async Task RankPromptOld(RankPromptVerb opts)
         {
             int listNumber = 1;
             await _createPromptRatingUseCase.ExecuteAsync(opts.Models.ToArray(),
@@ -184,6 +185,62 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             );
         }
 
+        private async Task RankPrompt(RankPromptVerb opts)
+        {
+            int listNumber = 1;            
+
+            await _createPromptRatingUseCase.ExecuteAsync(
+                new PromptRatingUseCaseParams()
+                {
+                    ModelNames = opts.Models.ToArray(),
+                    MaxTokens = opts.MaxTokens,
+                    ResultSet = opts.ResultSet,
+                    Description = opts.Description,
+                    PromptRequirements = opts.promptRequierements,
+                    SystemPrompt = () =>
+                    {
+                        AnsiConsole.Write(new Rule($"[yellow]{listNumber}. Run[/]").RuleStyle("green"));
+                        var str = MultiLineInput("System Prompt");
+                        return str;
+                    },
+                    Message = () => MultiLineInput("Message"),
+                    RatingReason = () => MultiLineInput("Rating Reason"),
+                    Rating = () =>
+                    {
+                        int rank = 0;
+                        do
+                        {
+                            rank = AnsiConsole.Ask<int>("Rating (1-10): ");
+                        } while (rank < 1 || rank > 10);
+                        return rank;
+                    },
+                    NewImprovement = () => AnsiConsole.Confirm($"New Improvement ({++listNumber}. Run ): ")
+                },
+                displayResult: (result) =>
+                {
+                    Table table = new();
+                    table.AddColumn("Model");
+                    table.AddColumn("Prompt Requierements");
+                    table.AddColumn("System Prompt");
+                    table.AddColumn("Message");
+                    table.AddColumn("Max Tokens");
+                    // delete format option with the 'new Style()'
+                    table.AddRow(
+                        new Text(result.Model.Value, new Style()),
+                        new Text(opts.promptRequierements, new Style()),
+                        new Text(result.SystemPrompt.Value, new Style()),
+                        new Text(result.Message, new Style()),
+                        new Text(result.MaxTokens.ToString(), new Style())
+                    );
+
+                    AnsiConsole.Write(table);
+                },
+                statusHandler: (statusMessage, action) =>
+                {
+                    AnsiConsole.Status().Start(statusMessage, ctx => action());
+                });
+        }
+
         private string MultiLineInput(string text)
         {
             var inputLines = new List<string>();
@@ -207,7 +264,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
                     // Load and display the content from the editor
                     fileContent = File.ReadAllText(tempFilePath);
-                    AnsiConsole.MarkupLine("[bold cyan]\nImported content from editor:[/]");                    
+                    AnsiConsole.MarkupLine("[bold cyan]\nImported content from editor:[/]");
                     Console.WriteLine(fileContent);
 
                     inputLines.Clear();

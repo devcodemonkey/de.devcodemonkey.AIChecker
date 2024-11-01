@@ -5,15 +5,17 @@ namespace LmsWrapper
 {
     public class LoadUnloadLms : ILoadUnloadLms
     {
+        const string LMS_FILE_PATH = "C:\\Users\\d-hoe\\AppData\\Local\\LM-Studio\\app-0.3.5\\resources\\app\\.webpack\\lms.exe";
+
         public bool Load(string modelName)
         {
             Unload();
-            return RunProcess("lms", $"load {modelName} --gpu max");
+            return RunProcess(LMS_FILE_PATH, $"load {modelName} --gpu max");
         }
 
         public bool Unload()
         {
-            return RunProcess("lms", $"unload --all");
+            return RunProcess(LMS_FILE_PATH, $"unload --all");
         }
 
         private bool RunProcess(string command, string arguments)
