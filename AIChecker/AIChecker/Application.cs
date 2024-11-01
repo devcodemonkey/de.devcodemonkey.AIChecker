@@ -133,58 +133,6 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             AnsiConsole.MarkupLine("[green]Prompt rating exported![/]");
         }
 
-        private async Task RankPromptOld(RankPromptVerb opts)
-        {
-            int listNumber = 1;
-            await _createPromptRatingUseCase.ExecuteAsync(opts.Models.ToArray(),
-                opts.MaxTokens,
-                opts.ResultSet,
-                opts.Description,
-                opts.promptRequierements,
-                systemPrompt: () =>
-                {
-                    AnsiConsole.Write(new Rule($"[yellow]{listNumber}. Run[/]").RuleStyle("green"));
-                    var str = MultiLineInput("System Prompt");
-                    return str;
-                },
-                message: () => MultiLineInput("Message"),
-                ratingReason: () => MultiLineInput("Rating Reason"),
-                rating: () =>
-                {
-                    int rank = 0;
-                    do
-                    {
-                        rank = AnsiConsole.Ask<int>("Rating (1-10): ");
-                    } while (rank < 1 || rank > 10);
-                    return rank;
-                },
-                newImprovement: () => AnsiConsole.Confirm($"New Improvement ({++listNumber}. Run ): "),
-                DisplayResult: (result) =>
-                {
-                    Table table = new();
-                    table.AddColumn("Model");
-                    table.AddColumn("Prompt Requierements");
-                    table.AddColumn("System Prompt");
-                    table.AddColumn("Message");
-                    table.AddColumn("Max Tokens");
-                    // delete format option with the 'new Style()'
-                    table.AddRow(
-                        new Text(result.Model.Value, new Style()),
-                        new Text(opts.promptRequierements, new Style()),
-                        new Text(result.SystemPrompt.Value, new Style()),
-                        new Text(result.Message, new Style()),
-                        new Text(result.MaxTokens.ToString(), new Style())
-                    );
-
-                    AnsiConsole.Write(table);
-                },
-                statusHandler: (statusMessage, action) =>
-                {
-                    AnsiConsole.Status().Start(statusMessage, ctx => action());
-                }
-            );
-        }
-
         private async Task RankPrompt(RankPromptVerb opts)
         {
             int listNumber = 1;            

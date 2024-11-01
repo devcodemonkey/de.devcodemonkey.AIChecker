@@ -25,9 +25,21 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
             var model1 = await defaultMethodesRepository.AddAsync(new Model { ModelId = Guid.NewGuid(), Value = "bartowski/Phi-3.5-mini-instruct_Uncensored-GGUF" });
             var model2 = await defaultMethodesRepository.AddAsync(new Model { ModelId = Guid.NewGuid(), Value = "TheBloke/em_german_mistral_v01-GGUF" });
 
-            // Act
-            await createPromptRatingUseCase.ExecuteAsync(new string[] { model1.Value, model2.Value }, 300, "resultSet", "description text","prompt requierements description", () => "You are helpful assistent", () => "Create me a poem", () => "", () => 1, () => false, (Result result) => { });
-
+            // Act            
+            await createPromptRatingUseCase.ExecuteAsync(
+                new PromptRatingUseCaseParams()
+                {
+                    ModelNames = [model1.Value, model2.Value],
+                    MaxTokens = 300,
+                    ResultSet = "resultSet",
+                    Description = "description text",
+                    PromptRequirements = "prompt requierements description",
+                    SystemPrompt = () => "You are helpful assistent",
+                    Message = () => "Create me a poem",
+                    RatingReason = () => ""
+                },
+                (Result result) => { }
+            );
         }
     }
 }
