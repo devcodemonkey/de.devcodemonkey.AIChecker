@@ -38,6 +38,11 @@ To apply the migration to your PostgreSQL database, use:
 dotnet ef database update --project PostgreSqlEF.csproj --startup-project ../../AIChecker --connection "Host=localhost;Database=AiCheckerDB;Port=5432;User Id=AiChecker;Password=123"
 ```
 
+
+```bash
+dotnet ef migrations list --project PostgreSqlEF.csproj --startup-project ../../AIChecker --connection "Host=localhost;Database=AiCheckerDB;Port=5432;User Id=AiChecker;Password=123"
+
+```
 This will execute the migration and create the necessary database schema in PostgreSQL.
 
 ## Scaffold the DbContext:
