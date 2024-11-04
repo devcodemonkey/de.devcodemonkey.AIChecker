@@ -5,6 +5,7 @@ using de.devcodemonkey.AIChecker.DataSource.APIRequester.Models;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 
 namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
@@ -36,7 +37,13 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
                 };
 
                 // Send the request as JSON
-                var response = await client.PostAsJsonAsync(source, request);
+                var jsonOptions = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                    WriteIndented = true
+                };
+                var response = await client.PostAsJsonAsync(source, request, jsonOptions);
                 apiResult.RequestEnd = DateTime.Now;
                 apiResult.StatusCode = response.StatusCode;
 
@@ -45,10 +52,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.APIRequester
                     apiResult.Data = await response.Content.ReadFromJsonAsync<TResponse>() ?? default!;
                 else
                 {
-                    string jsonRequest = JsonSerializer.Serialize(request, new JsonSerializerOptions
-                    {
-                        WriteIndented = true
-                    });
+                    string jsonRequest = JsonSerializer.Serialize(request, jsonOptions);
                     throw new Exception($"Request failed with status code {response.StatusCode}, sended Request: {jsonRequest}");
                 }
                 return apiResult;
