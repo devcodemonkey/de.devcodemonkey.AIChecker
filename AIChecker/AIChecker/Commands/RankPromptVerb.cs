@@ -20,7 +20,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
         public string promptRequierements { get; set; }
 
         [Option('s', "responseFormat", Required = false, HelpText = "The format of the request. You can set JSON by 'type: \"json_schema\"'")]
-        public string ResponseFormat { get; set; }
+        public bool ResponseFormat { get; set; }
 
         [Option('d', "description", Required = false, HelpText = "The description of the prompt rating.")]
         public string Description { get; set; }

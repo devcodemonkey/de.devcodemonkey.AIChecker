@@ -136,12 +136,17 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private async Task RankPrompt(RankPromptVerb opts)
         {
             int listNumber = 1;
-
+            string? responseFormat = null;
+            if (opts.ResponseFormat)
+            {
+                responseFormat = MultiLineInput("Response Format");
+            }
             await _createPromptRatingUseCase.ExecuteAsync(
+                
                 new PromptRatingUseCaseParams()
                 {
                     ModelNames = opts.Models.ToArray(),
-                    ResponseFormat = opts.ResponseFormat,
+                    ResponseFormat = responseFormat,
                     MaxTokens = opts.MaxTokens,
                     ResultSet = opts.ResultSet,
                     Description = opts.Description,

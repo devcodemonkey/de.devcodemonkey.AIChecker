@@ -4,6 +4,7 @@ using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using System.Globalization;
 using System.Text.Json;
 
 namespace de.devcodemonkey.AIChecker.UseCases
@@ -103,7 +104,18 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 statusHandler,
                 $"Sending chat request for '{modelName}'...",
                 async () =>
-                {
+                {                    
+                    JsonElement? json = null;
+                    try
+                    {
+                        if (!string.IsNullOrWhiteSpace(promptParams?.ResponseFormat))
+                            json = JsonDocument.Parse(promptParams.ResponseFormat).RootElement;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"JSON Parsing Error: {ex.Message}");
+                        throw;
+                    }
                     // Configure the RequestData object based on whether it's an OpenAI model
                     var requestData = new RequestData
                     {
@@ -115,7 +127,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     ? "https://api.openai.com/v1/chat/completions"
                     : "http://localhost:1234/v1/chat/completions",
                         EnvironmentTokenName = openAiModel ? "OPEN_AI_TOKEN" : null,
-                        ResponseFormat = JsonDocument.Parse(promptParams.ResponseFormat).RootElement,
+                        ResponseFormat = json,
                     };
 
                     return await _apiRequester.SendChatRequestAsync(requestData);
