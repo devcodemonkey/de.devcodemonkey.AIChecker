@@ -1,14 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using de.devcodemonkey.AIChecker.UseCases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
 using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
-using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 
 namespace de.devcodemonkey.AIChecker.UseCases.Tests
 {
