@@ -104,7 +104,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 statusHandler,
                 $"Sending chat request for '{modelName}'...",
                 async () =>
-                {                    
+                {
                     JsonElement? json = null;
                     try
                     {
@@ -126,7 +126,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                         Source = openAiModel
                     ? "https://api.openai.com/v1/chat/completions"
                     : "http://localhost:1234/v1/chat/completions",
-                        EnvironmentTokenName = openAiModel ? "OPEN_AI_TOKEN" : null,
+                        EnvironmentTokenName = openAiModel ? Configuration.EnvironmentTokenName : null,
                         ResponseFormat = json,
                     };
 
