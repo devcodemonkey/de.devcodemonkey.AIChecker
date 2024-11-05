@@ -58,7 +58,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
                     var model = await _defaultMethodesRepository.ViewModelOverValueAysnc(modelName);
 
-                    Result result = CreateResult(promptParams.Message(), promptParams.ResponseFormat, promptParams.MaxTokens, systemPromptObject, apiResult, model);
+                    Result result = ObjectCreationForApi.CreateResult(promptParams.Message(), promptParams.ResponseFormat, promptParams.MaxTokens, systemPromptObject, apiResult, model);
 
                     displayResult(result);
 
@@ -155,28 +155,6 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 ReasenRating = ratingReasonValue,
                 Round = round,
                 Result = result
-            };
-        }
-
-        private static Result CreateResult(string asked, string responseFormat, int? maxTokens, SystemPrompt systemPromptObject, IApiResult<ResponseData> apiResult, Model model)
-        {
-            return new Result
-            {
-                ResultId = Guid.NewGuid(),
-                RequestId = apiResult?.Data?.Id,
-                Asked = asked,
-                Message = apiResult?.Data?.Choices?.FirstOrDefault()?.Message?.Content,
-                ResponseFormat = responseFormat,
-                Temperature = 0,
-                MaxTokens = maxTokens,
-                PromptTokens = apiResult?.Data?.Usage?.PromptTokens ?? 0,
-                CompletionTokens = apiResult?.Data?.Usage?.CompletionTokens ?? 0,
-                TotalTokens = apiResult?.Data?.Usage?.TotalTokens ?? 0,
-                RequestCreated = DateTimeOffset.FromUnixTimeSeconds(apiResult?.Data?.Created ?? 0).UtcDateTime,
-                RequestStart = apiResult!.RequestStart,
-                RequestEnd = apiResult.RequestEnd,
-                SystemPrompt = systemPromptObject,
-                Model = model,
             };
         }
 
