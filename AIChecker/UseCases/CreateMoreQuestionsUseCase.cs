@@ -77,6 +77,9 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
         private async Task<IApiResult<ResponseData>> SendChatRequestAsync(MoreQuestionsUseCaseParams moreQuestionsUseCaseParams, List<IMessage> messages)
         {
+            JsonElement? json = null;
+            if (!string.IsNullOrWhiteSpace(moreQuestionsUseCaseParams?.ResponseFormat))
+                json = JsonDocument.Parse(moreQuestionsUseCaseParams.ResponseFormat).RootElement;
             var requestData = new RequestData
             {
                 Messages = messages,
@@ -86,6 +89,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 Stream = false,
                 EnvironmentTokenName = Configuration.EnvironmentTokenName,
                 Source = Configuration.ApiSourceChatGpt,
+                ResponseFormat = json,
                 RequestTimeout = null
             };
             var apiResponse = await _apiRequester.SendChatRequestAsync(requestData);
@@ -98,7 +102,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
         {
             foreach (var question in questions)
             {
-                yield return $"Frage:\n\"{question.Value}\"\nAntwort:\"{question.Answer.Value}";
+                yield return $"Frage:\n\"{question.Value}\"\nAntwort:\n\"{question.Answer.Value}\"";
             }
         }
     }
