@@ -3,7 +3,7 @@ using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 
-namespace de.devcodemonkey.AIChecker.UseCases
+namespace de.devcodemonkey.AIChecker.UseCases.Global
 {
     public static class SaveDependencies
     {

@@ -2,6 +2,7 @@
 using de.devcodemonkey.AIChecker.CoreBusiness.Interfaces;
 using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
+using de.devcodemonkey.AIChecker.UseCases.Global;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using System.Net;
@@ -29,40 +30,40 @@ namespace de.devcodemonkey.AIChecker.UseCases
             if (!moreQuestionsUseCaseParams.Model.Contains("gpt"))
                 throw new ArgumentException("Only OpenAi Models are supported. Model must contain 'gpt' in the name", nameof(moreQuestionsUseCaseParams.Model));
 
+            var resultSetObject = await _defaultMethodesRepository.AddAsync(new ResultSet
+            {
+                ResultSetId = Guid.NewGuid(),
+                Value = moreQuestionsUseCaseParams.ResultSet,                                
+            });
+
             List<IMessage> messages = ObjectCreationForApi.CreateMessageForApi(moreQuestionsUseCaseParams.SystemPrompt, moreQuestionsUseCaseParams.Message);
 
             IEnumerable<Question> questions = await _defaultMethodesRepository.ViewQuestionAnswerByCategoryAsync(moreQuestionsUseCaseParams.Category);
 
             IEnumerable<string> questionAnswer = ConcatQuestionAnswer(questions);
 
+            SystemPrompt systemPromptObject = ObjectCreationForApi.CreateSystemPrompt(moreQuestionsUseCaseParams.SystemPrompt);
+
+            var model = await _defaultMethodesRepository.ViewModelOverValueAysnc(moreQuestionsUseCaseParams.Model);
+
             for (int i = 0; i < questions.Count(); i++)
             {
                 var apiResult = await SendChatRequestAsync(moreQuestionsUseCaseParams, messages);
 
-                await SaveToDatabase(moreQuestionsUseCaseParams, apiResult, questionAnswer.ElementAt(i), questions.ElementAt(i));
+                var resultDb = ObjectCreationForApi.CreateResult(
+                    moreQuestionsUseCaseParams.Message,
+                    moreQuestionsUseCaseParams.ResponseFormat,
+                    moreQuestionsUseCaseParams.MaxTokens,
+                    systemPromptObject,
+                    apiResult,
+                    model);
+
+
             }
 
         }
 
-        private async Task SaveToDatabase(MoreQuestionsUseCaseParams moreQuestionsUseCaseParams, IApiResult<ResponseData> apiResult, string questionAnswer, Question question)
-        {
-            var result = new Result()
-            {
-                ResultId = Guid.NewGuid(),
-                AnswerId = question.AnswerId,
-                RequestId = apiResult.Data.Id,
-                Asked = questionAnswer,
-                Message = moreQuestionsUseCaseParams.Message,
-                Temperature = moreQuestionsUseCaseParams.Temperture,
-                MaxTokens = moreQuestionsUseCaseParams.MaxTokens,
-                PromptTokens = apiResult.Data.Usage.PromptTokens,
-                CompletionTokens = apiResult.Data.Usage.CompletionTokens,
-                TotalTokens = apiResult.Data.Usage.TotalTokens,
-                RequestCreated = DateTimeOffset.FromUnixTimeSeconds(apiResult?.Data?.Created ?? 0).UtcDateTime,
-                RequestStart = apiResult.RequestStart,
-                RequestEnd = apiResult.RequestEnd
-            };
-        }
+        
 
         private async Task<IApiResult<ResponseData>> SendChatRequestAsync(MoreQuestionsUseCaseParams moreQuestionsUseCaseParams, List<IMessage> messages)
         {

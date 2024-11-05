@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace de.devcodemonkey.AIChecker.UseCases
+namespace de.devcodemonkey.AIChecker.UseCases.Global
 {
     public class ObjectCreationForApi
     {
