@@ -74,7 +74,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
         private async Task SaveToDatabase(PromptRatingUseCaseParams promptParams, StatusHandler? statusHandler, List<IMessage> messages, string modelName, IApiResult<ResponseData> apiResult, Result result)
         {
-            await HandleStatus(statusHandler, $"Saving dependencies for '{modelName}'...", async () =>
+            await Status.HandleStatus(statusHandler, $"Saving dependencies for '{modelName}'...", async () =>
             {
                 await SaveDependencies.SaveDependenciesFromResult(
                     _defaultMethodesRepository,
@@ -97,7 +97,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             bool openAiModel,
             string modelName)
         {
-            IApiResult<ResponseData> apiResult = await HandleStatus(
+            IApiResult<ResponseData> apiResult = await Status.HandleStatus(
                 statusHandler,
                 $"Sending chat request for '{modelName}'...",
                 async () =>
@@ -136,7 +136,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
         private async Task LoadModelinLmStudioIfNeeded(StatusHandler? statusHandler, bool OpenAiModel, string modelName)
         {
             if (!OpenAiModel)
-                await HandleStatus(statusHandler, $"Loading model '{modelName}'...", async () =>
+                await Status.HandleStatus(statusHandler, $"Loading model '{modelName}'...", async () =>
                 {
                     _loadUnloadLms.Load(modelName);
                 });
@@ -153,35 +153,6 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 Round = round,
                 Result = result
             };
-        }
-
-        private async Task<T> HandleStatus<T>(StatusHandler? statusHandler, string statusMessage, Func<Task<T>> action)
-        {
-            if (statusHandler != null)
-            {
-                T result = default!;
-                statusHandler(statusMessage, () =>
-                {
-                    result = action().Result;
-                });
-                return result;
-            }
-            return await action();
-        }
-
-        private async Task HandleStatus(StatusHandler? statusHandler, string statusMessage, Func<Task> action)
-        {
-            if (statusHandler != null)
-            {
-                statusHandler(statusMessage, () =>
-                {
-                    action().Wait();
-                });
-            }
-            else
-            {
-                await action();
-            }
         }
     }
 }
