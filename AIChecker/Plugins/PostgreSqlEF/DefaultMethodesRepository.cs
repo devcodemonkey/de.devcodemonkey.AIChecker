@@ -190,11 +190,10 @@ public class DefaultMethodesRepository : IDefaultMethodesRepository
 
     public async Task<IEnumerable<Question>> ViewQuestionAnswerByCategoryAsync(string category)
     {
-        return await (from q in _ctx.Questions
-                      join a in _ctx.Answers on q.AnswerId equals a.AnswerId
-                      join QuestionCategory in _ctx.QuestionCategories on q.QuestionCategoryId equals QuestionCategory.QuestionCategoryId
-                      where QuestionCategory.Value == category
-                      select q).ToListAsync();
+        return await _ctx.Questions
+                    .Include(q => q.Answer)
+                    .Where(q => q.Category.Value == category)
+                    .ToListAsync();
     }
 
     // Write Operation with SemaphoreSlim
