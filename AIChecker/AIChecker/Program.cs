@@ -68,6 +68,88 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //* Unterschiedliche Fragen
             //* Erzeugung von 10 Fragen", "-m", "bartowski/Llama-3.2-1B-Instruct-GGUF"]);
 
+            //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Test", "-p", @"* Ausgabe im vorgegebenen JSON-Format
+            //* Ausgabe der reinen JSON-Ausgabe, ohne Text vor oder nach dem Beginn, damit validiert werden kann
+            //* Inhaltlich korrekt abgeleitete Fragen aus der Antwort
+            //* Unterschiedliche Fragen
+            //* Erzeugung von 10 Fragen", "-m", "gpt-4o-mini-2024-07-18"]);
+
+            // the system prompt or the the prompt must include json in the prompt
+            //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Test", "-p", @"* Ausgabe im vorgegebenen JSON-Format
+            //* Ausgabe der reinen JSON-Ausgabe, ohne Text vor oder nach dem Beginn, damit validiert werden kann
+            //* Inhaltlich korrekt abgeleitete Fragen aus der Antwort
+            //* Unterschiedliche Fragen
+            //* Erzeugung von 10 Fragen", "-m", "gpt-4o-mini-2024-07-18", "-s", "{ \"type\": \"json_object\" }"]);
+
+//            await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Prompt Ranking für Fragen erstellen (Nr. 3)"]);
+
+//            var responseFormat = @"
+//{
+//    ""type"": ""json_schema"",
+//    ""json_schema"": {
+//      ""name"": ""questions"",
+//      ""schema"": {
+//        ""type"": ""object"",
+//        ""properties"": {
+//          ""questions"": {
+//            ""type"": ""array"",
+//            ""items"": {
+//              ""type"": ""object"",
+//              ""properties"": {
+//                ""Question"": {
+//                  ""type"": ""string"",
+//                  ""description"": ""The text of the question.""
+//                }
+//              },
+//              ""required"": [""Question""],
+//              ""additionalProperties"": false
+//            }
+//          }
+//        },
+//        ""required"": [""questions""],
+//        ""additionalProperties"": false
+//      },
+//      ""strict"": true
+//    }
+//  }
+//";
+
+//            var description = @"
+//Erstellt ein Ranking für einen Systemprompt für die Generierung von Fragen. Hierfür wird eine Frage aus dem Qutlook-FAQ verwendet.
+//Beim Test ""Prompt Ranking für Fragen erstellen (Nr. 2)"" konnte inhaltlich gute Ausgabe erzeugt werden. Allerdings waren nicht alle Ergebnisse im JSON Format
+//In diesem Test wird daher mit dem folgendem JSON-Schema gearbeitet:
+//{
+//    ""type"": ""json_schema"",
+//    ""json_schema"": {
+//      ""name"": ""questions"",
+//      ""schema"": {
+//        ""type"": ""object"",
+//        ""properties"": {
+//          ""questions"": {
+//            ""type"": ""array"",
+//            ""items"": {
+//              ""type"": ""object"",
+//              ""properties"": {
+//                ""Question"": {
+//                  ""type"": ""string"",
+//                  ""description"": ""The text of the question.""
+//                }
+//              },
+//              ""required"": [""Question""],
+//              ""additionalProperties"": false
+//            }
+//          }
+//        },
+//        ""required"": [""questions""],
+//        ""additionalProperties"": false
+//      },
+//      ""strict"": true
+//    }
+//}
+//Das Einbinden eines Dateiformats wird auf der folgenden Seite https://platform.openai.com/docs/guides/structured-outputs?context=ex1&lang=curl#introduction beschrieben.
+//";
+//            await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Prompt Ranking für Fragen erstellen (Nr. 3)", "-p", description, "-m", "gpt-4o-mini-2024-07-18", "-s", responseFormat]);
+
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Prompt Ranking für Fragen erstellen (Nr. 1)", "-t", "pdf"]);
 
             await RunWithScopeAsync(serviceProvider, args);

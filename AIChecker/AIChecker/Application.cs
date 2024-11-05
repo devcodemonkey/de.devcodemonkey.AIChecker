@@ -142,7 +142,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 responseFormat = MultiLineInput("Response Format");
             }
             await _createPromptRatingUseCase.ExecuteAsync(
-                
+
                 new PromptRatingUseCaseParams()
                 {
                     ModelNames = opts.Models.ToArray(),
@@ -486,19 +486,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         private async Task CreateMoreQuestionsAsync(CreateMoreQuestionsVerb opts)
         {
-            //await AnsiConsole.Status().StartAsync("Creating more questions...", async ctx =>
-                //await _createMoreQuestionsUseCase.ExecuteAsync(
-                //    opts.ResultSet,
-                //    opts.SystemPrompt,
-                //    opts.MaxTokens,
-                //    opts.Temperature,
-                //    opts.Model,
-                //    opts.Source,
-                //    opts.EnvironmentTokenName
-                //)
-            //);
+            var createMoreQuestionsVerb = opts;
+            opts.ResponseFormat = MultiLineInput("Response Format");
+            await AnsiConsole.Status().StartAsync("Creating more questions...", async ctx =>
+                await _createMoreQuestionsUseCase.ExecuteAsync(createMoreQuestionsVerb));
         }
-
-
     }
 }
