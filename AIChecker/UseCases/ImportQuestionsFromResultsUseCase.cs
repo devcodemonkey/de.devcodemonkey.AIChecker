@@ -52,7 +52,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 await _defaultMethodesRepository.AddRangeAsync(questions);
             }
             else
-                throw new Exception($"Some results could not be parsed: {string.Join(", ", notValidResults)}");
+                throw new Exception($"Nothing was imported. Some results could not be parsed: {string.Join(", ", notValidResults)}");
         }
 
         public bool TryParseJson<T>(string json, out T? result)
