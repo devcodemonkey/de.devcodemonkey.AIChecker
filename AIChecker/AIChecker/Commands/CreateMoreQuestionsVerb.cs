@@ -12,7 +12,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
         [Option('s', "systemPrompt", Required = true, HelpText = "The system prompt or path (path:<file-path>) for creating questions.")]
         public string? SystemPrompt { get; set; }
 
-        [Option("model", Required = true, HelpText = "The model name.")]
+        [Option('m', "model", Required = true, HelpText = "The model name.")]
         public string Model { get; set; }
 
         [Option('c', "category", Required = true, HelpText = "The category.")]
