@@ -15,9 +15,24 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
     [TestClass()]
     public class ImportQuestionsFromResultsUseCaseTests
     {
-        private readonly DbContextOptions<DbContext> _options = new DbContextOptionsBuilder<DbContext>()
+        private DbContextOptions<DbContext> _options;
+        private DefaultMethodesRepository _defaultMethodesRepository;
+
+        [TestInitialize]
+        public async Task TestInitialize()
+        {
+            _options = new DbContextOptionsBuilder<DbContext>()
                 .UseInMemoryDatabase(databaseName: "AicheckerTestDatabase")
                 .Options;
+
+            using (var context = new AicheckerContext(_options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+            }
+
+            _defaultMethodesRepository = new DefaultMethodesRepository(new AicheckerContext(_options));
+        }
 
         [TestMethod()]
         public async Task ExecuteAsync_ValidJson_ShouldAddQuestionsToDatabase()
@@ -30,16 +45,16 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
             ImportQuestionsFromResultsUseCase importQuestionsFromResultsUseCase =
                 new ImportQuestionsFromResultsUseCase(new DefaultMethodesRepository(new AicheckerContext(_options)));
 
-            var defaultMethodesRepository = new DefaultMethodesRepository(new AicheckerContext(_options));
 
-            var resultSetEntity = await defaultMethodesRepository.AddAsync(
+
+            var resultSetEntity = await _defaultMethodesRepository.AddAsync(
                 new ResultSet
                 {
                     ResultSetId = Guid.NewGuid(),
                     Value = resultSet
                 });
 
-            await defaultMethodesRepository.AddAsync(
+            await _defaultMethodesRepository.AddAsync(
                 new Result
                 {
                     ResultSetId = resultSetEntity.ResultSetId,
@@ -71,6 +86,44 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
                 Assert.AreEqual(1, context.Questions.Count());
                 Assert.AreEqual("Sample question?", context.Questions.First().Value);
                 Assert.AreEqual(answerId, context.Questions.First().AnswerId);
+            }
+        }
+
+        [TestMethod]
+        public async Task ExecuteAsync_InvalidJson_ShouldNotAddQuestionsToDatabase()
+        {
+            // Arrange
+            string resultSet = "testResultSet";
+            string category = "TestCategory";
+            Guid answerId = Guid.NewGuid();
+
+            // Seed data in the in-memory database
+            var resultSetEntity = await _defaultMethodesRepository.AddAsync(new ResultSet { ResultSetId = Guid.NewGuid(), Value = resultSet });
+            await _defaultMethodesRepository.AddAsync(
+                new Result
+                {
+                    ResultSetId = resultSetEntity.ResultSetId,
+                    Message = "Invalid JSON",
+                    AnswerId = answerId,
+                    Model = new Model
+                    {
+                        ModelId = Guid.NewGuid(),
+                        Value = "Model"
+                    },
+                });
+
+            // Create an instance of ImportQuestionsFromResultsUseCase
+            var useCase = new ImportQuestionsFromResultsUseCase(_defaultMethodesRepository);
+
+            // Act & Assert
+            await Assert.ThrowsExceptionAsync<Exception>(async () =>
+                await useCase.ExecuteAsync(resultSet, category));
+
+            // Verify that nothing was added to the Questions or QuestionCategories tables
+            using (var context = new AicheckerContext(_options))
+            {
+                Assert.AreEqual(0, context.QuestionCategories.Count());
+                Assert.AreEqual(0, context.Questions.Count());
             }
         }
     }
