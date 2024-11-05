@@ -29,7 +29,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             if (!moreQuestionsUseCaseParams.Model.Contains("gpt"))
                 throw new ArgumentException("Only OpenAi Models are supported. Model must contain 'gpt' in the name", nameof(moreQuestionsUseCaseParams.Model));
 
-            List<IMessage> messages = CreateMessageForApi(moreQuestionsUseCaseParams.SystemPrompt, moreQuestionsUseCaseParams.Message);
+            List<IMessage> messages = ObjectCreationForApi.CreateMessageForApi(moreQuestionsUseCaseParams.SystemPrompt, moreQuestionsUseCaseParams.Message);
 
             IEnumerable<Question> questions = await _defaultMethodesRepository.ViewQuestionAnswerByCategoryAsync(moreQuestionsUseCaseParams.Category);
 
@@ -39,8 +39,29 @@ namespace de.devcodemonkey.AIChecker.UseCases
             {
                 var apiResult = await SendChatRequestAsync(moreQuestionsUseCaseParams, messages);
 
+                await SaveToDatabase(moreQuestionsUseCaseParams, apiResult, questionAnswer.ElementAt(i), questions.ElementAt(i));
             }
 
+        }
+
+        private async Task SaveToDatabase(MoreQuestionsUseCaseParams moreQuestionsUseCaseParams, IApiResult<ResponseData> apiResult, string questionAnswer, Question question)
+        {
+            var result = new Result()
+            {
+                ResultId = Guid.NewGuid(),
+                AnswerId = question.AnswerId,
+                RequestId = apiResult.Data.Id,
+                Asked = questionAnswer,
+                Message = moreQuestionsUseCaseParams.Message,
+                Temperature = moreQuestionsUseCaseParams.Temperture,
+                MaxTokens = moreQuestionsUseCaseParams.MaxTokens,
+                PromptTokens = apiResult.Data.Usage.PromptTokens,
+                CompletionTokens = apiResult.Data.Usage.CompletionTokens,
+                TotalTokens = apiResult.Data.Usage.TotalTokens,
+                RequestCreated = DateTimeOffset.FromUnixTimeSeconds(apiResult?.Data?.Created ?? 0).UtcDateTime,
+                RequestStart = apiResult.RequestStart,
+                RequestEnd = apiResult.RequestEnd
+            };
         }
 
         private async Task<IApiResult<ResponseData>> SendChatRequestAsync(MoreQuestionsUseCaseParams moreQuestionsUseCaseParams, List<IMessage> messages)
@@ -50,7 +71,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 Messages = messages,
                 Model = moreQuestionsUseCaseParams.Model,
                 MaxTokens = moreQuestionsUseCaseParams.MaxTokens,
-                Temperature = 0,
+                Temperature = moreQuestionsUseCaseParams.Temperture,
                 Stream = false,
                 EnvironmentTokenName = Configuration.EnvironmentTokenName,
                 Source = Configuration.ApiSourceChatGpt,
@@ -68,22 +89,6 @@ namespace de.devcodemonkey.AIChecker.UseCases
             {
                 yield return $"Frage:\n\"{question.Value}\"\nAntwort:\"{question.Answer.Value}";
             }
-        }
-
-        private List<IMessage> CreateMessageForApi(string systemPrompt, string message)
-        {
-            return new List<IMessage> {
-                new Message
-                {
-                    Role = "user",
-                    Content = message
-                },
-                new Message
-                {
-                    Role = "system",
-                    Content = systemPrompt
-                }
-            };
         }
 
         public async Task ExecuteAsync(
