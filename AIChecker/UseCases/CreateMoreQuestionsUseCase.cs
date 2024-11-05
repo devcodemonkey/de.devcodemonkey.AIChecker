@@ -7,14 +7,16 @@ using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using System.Net;
 using System.Text.Json;
+using static de.devcodemonkey.AIChecker.UseCases.CreatePromptRatingUseCase;
 
 namespace de.devcodemonkey.AIChecker.UseCases
 {
     public class CreateMoreQuestionsUseCase : ICreateMoreQuestionsUseCase
     {
         private readonly IAPIRequester _apiRequester;
-
         private readonly IDefaultMethodesRepository _defaultMethodesRepository;
+
+        public delegate void StatusHandler(string statusMessage, Action action);
 
         public CreateMoreQuestionsUseCase(IAPIRequester apiRequester,
             IDefaultMethodesRepository defaultMethodesRepository)
@@ -23,7 +25,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             _defaultMethodesRepository = defaultMethodesRepository;
         }
 
-        public async Task ExecuteAsync(MoreQuestionsUseCaseParams moreQuestionsUseCaseParams)
+        public async Task ExecuteAsync(MoreQuestionsUseCaseParams moreQuestionsUseCaseParams, CreateMoreQuestionsUseCase.StatusHandler? statusHandler = null)
         {
             if (moreQuestionsUseCaseParams.Category == null)
                 throw new ArgumentNullException(nameof(moreQuestionsUseCaseParams.Category));
@@ -33,7 +35,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             var resultSetObject = await _defaultMethodesRepository.AddAsync(new ResultSet
             {
                 ResultSetId = Guid.NewGuid(),
-                Value = moreQuestionsUseCaseParams.ResultSet,                                
+                Value = moreQuestionsUseCaseParams.ResultSet,
             });
 
             List<IMessage> messages = ObjectCreationForApi.CreateMessageForApi(moreQuestionsUseCaseParams.SystemPrompt, moreQuestionsUseCaseParams.Message);
@@ -48,6 +50,11 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
             for (int i = 0; i < questions.Count(); i++)
             {
+                //var apiResult = await Status.HandleStatus(
+                //    statusHandler, 
+                //    $"Processing question {i + 1} of {questions.Count()}",
+                //    async () => );
+
                 var apiResult = await SendChatRequestAsync(moreQuestionsUseCaseParams, messages);
 
                 var resultDb = ObjectCreationForApi.CreateResult(
@@ -58,12 +65,19 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     apiResult,
                     model);
 
+                await SaveDependencies.SaveDependenciesFromResult(
+                    _defaultMethodesRepository,
+                    moreQuestionsUseCaseParams.SystemPrompt,
+                    moreQuestionsUseCaseParams.ResultSet,
+                    apiResult,
+                    resultDb,
+                    apiResult.Data!.Object!,
+                    apiResult.Data.Choices?.FirstOrDefault()?.FinishReason!);
 
+                await _defaultMethodesRepository.AddAsync(resultDb);
             }
 
         }
-
-        
 
         private async Task<IApiResult<ResponseData>> SendChatRequestAsync(MoreQuestionsUseCaseParams moreQuestionsUseCaseParams, List<IMessage> messages)
         {
