@@ -46,7 +46,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 var systemPromptObject = new SystemPrompt
                 {
                     SystemPromptId = Guid.NewGuid(),
-                    Value = messages[0]!.Content!,
+                    Value = promptParams.SystemPrompt(),
                 };
 
                 foreach (var modelName in promptParams.ModelNames)
