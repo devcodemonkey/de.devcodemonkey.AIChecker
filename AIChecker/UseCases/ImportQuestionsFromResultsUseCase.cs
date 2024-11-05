@@ -1,11 +1,12 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
+using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace de.devcodemonkey.AIChecker.UseCases
 {
-    public class ImportQuestionsFromResultsUseCase
+    public class ImportQuestionsFromResultsUseCase : IImportQuestionsFromResultsUseCase
     {
         private readonly IDefaultMethodesRepository _defaultMethodesRepository;
 
@@ -38,7 +39,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                             QuestionId = Guid.NewGuid(),
                             AnswerId = result.AnswerId,
                             Value = question.QuestionText,
-                            Category = questionCategory,
+                            Category = questionCategory
                         });
                     }
                 }
