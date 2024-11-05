@@ -35,6 +35,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IUnloadModelUseCase _unloadModelUseCase;
         private readonly ICreatePromptRatingUseCase _createPromptRatingUseCase;
         private readonly IExportPromptRatingUseCase _exportPromptRatingUseCase;
+        private readonly IImportQuestionsFromResultsUseCase _importQuestionsFromResultsUseCase;
 
         public Application(
             IRecreateDatabaseUseCase recreateDatabaseUseCase,
@@ -54,7 +55,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             ILoadModelUseCase loadModelUseCase,
             IUnloadModelUseCase unloadModelUseCase,
             ICreatePromptRatingUseCase createPromptRatingUseCase,
-            IExportPromptRatingUseCase exportPromptRatingUseCase)
+            IExportPromptRatingUseCase exportPromptRatingUseCase,
+            IImportQuestionsFromResultsUseCase importQuestionsFromResultsUseCase)
         {
             _recreateDatabaseUseCase = recreateDatabaseUseCase;
             _importQuestionAnswerUseCase = importQuestionAnswerUseCase;
@@ -74,6 +76,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             _unloadModelUseCase = unloadModelUseCase;
             _createPromptRatingUseCase = createPromptRatingUseCase;
             _exportPromptRatingUseCase = exportPromptRatingUseCase;
+            _importQuestionsFromResultsUseCase = importQuestionsFromResultsUseCase;
         }
 
         public async Task RunAsync(string[] args)
@@ -91,7 +94,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             .ParseArguments<InfoVerb, RecreateDatabaseVerb, ImportQuestionsVerb, ViewResultSetsVerb,
                             ViewAverageVerb, ViewResultsVerb, ViewProcessUsageVerb, DeleteAllQuestionsVerb,
                             DeleteResultSetVerb, CreateMoreQuestionsVerb, SendToLmsVerb, DatabaseVerb, ModelVerb,
-                            RankPromptVerb, ExportPromptRankVerb>(args)
+                            RankPromptVerb, ExportPromptRankVerb, ImportQuestionsFromResultsVerb>(args)
             .MapResult(
                 async (InfoVerb opts) => await DisplayAppInfoAsync(),
                 async (RecreateDatabaseVerb opts) => await RecreateDatabaseAsync(opts),
@@ -107,14 +110,20 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 async (DatabaseVerb opts) => await StartStopDatabase(opts),
                 async (ModelVerb opts) => await ManageModel(opts),
                 async (RankPromptVerb opts) => await RankPrompt(opts),
-                async (ExportPromptRankVerb opts) => await ExportRankVerb(opts),
+                async (ExportPromptRankVerb opts) => await ExportRank(opts),
+                async (ImportQuestionsFromResultsVerb opts) => await ImportQuestionsFromResultsVerb(opts),
                 errs => Task.FromResult(0)
             );
 
             await parsingTask;
         }
 
-        private async Task ExportRankVerb(ExportPromptRankVerb opts)
+        private async Task ImportQuestionsFromResultsVerb(ImportQuestionsFromResultsVerb opts)
+            => await _importQuestionsFromResultsUseCase.ExecuteAsync(opts.ResultSet, opts.Category);
+
+
+
+        private async Task ExportRank(ExportPromptRankVerb opts)
         {
             await AnsiConsole.Status().StartAsync("Exporting prompt rating...", async ctx =>
             {
@@ -485,7 +494,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         }
 
         private async Task CreateMoreQuestionsAsync(CreateMoreQuestionsVerb opts)
-        {            
+        {
             opts.ResponseFormat = MultiLineInput("Response Format");
             await AnsiConsole.Status().StartAsync("Creating more questions...", async ctx =>
                 await _createMoreQuestionsUseCase.ExecuteAsync(opts));
