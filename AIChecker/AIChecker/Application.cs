@@ -486,17 +486,17 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         private async Task CreateMoreQuestionsAsync(CreateMoreQuestionsVerb opts)
         {
-            await AnsiConsole.Status().StartAsync("Creating more questions...", async ctx =>
-                await _createMoreQuestionsUseCase.ExecuteAsync(
-                    opts.ResultSet,
-                    opts.SystemPrompt,
-                    opts.MaxTokens,
-                    opts.Temperature,
-                    opts.Model,
-                    opts.Source,
-                    opts.EnvironmentTokenName
-                )
-            );
+            //await AnsiConsole.Status().StartAsync("Creating more questions...", async ctx =>
+                //await _createMoreQuestionsUseCase.ExecuteAsync(
+                //    opts.ResultSet,
+                //    opts.SystemPrompt,
+                //    opts.MaxTokens,
+                //    opts.Temperature,
+                //    opts.Model,
+                //    opts.Source,
+                //    opts.EnvironmentTokenName
+                //)
+            //);
         }
 
 
