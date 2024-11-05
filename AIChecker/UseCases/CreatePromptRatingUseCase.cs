@@ -58,7 +58,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
                     var model = await _defaultMethodesRepository.ViewModelOverValueAysnc(modelName);
 
-                    Result result = CreateResult(promptParams, messages, systemPromptObject, apiResult, model);
+                    Result result = CreateResult(promptParams.Message(), promptParams.ResponseFormat, promptParams.MaxTokens, systemPromptObject, apiResult, model);
 
                     displayResult(result);
 
@@ -158,17 +158,17 @@ namespace de.devcodemonkey.AIChecker.UseCases
             };
         }
 
-        private static Result CreateResult(PromptRatingUseCaseParams promptParams, List<IMessage> messages, SystemPrompt systemPromptObject, IApiResult<ResponseData> apiResult, Model model)
+        private static Result CreateResult(string asked, string responseFormat, int? maxTokens, SystemPrompt systemPromptObject, IApiResult<ResponseData> apiResult, Model model)
         {
             return new Result
             {
                 ResultId = Guid.NewGuid(),
                 RequestId = apiResult?.Data?.Id,
-                Asked = messages[1].Content,
+                Asked = asked,
                 Message = apiResult?.Data?.Choices?.FirstOrDefault()?.Message?.Content,
-                ResponseFormat = promptParams.ResponseFormat,
+                ResponseFormat = responseFormat,
                 Temperature = 0,
-                MaxTokens = promptParams.MaxTokens,
+                MaxTokens = maxTokens,
                 PromptTokens = apiResult?.Data?.Usage?.PromptTokens ?? 0,
                 CompletionTokens = apiResult?.Data?.Usage?.CompletionTokens ?? 0,
                 TotalTokens = apiResult?.Data?.Usage?.TotalTokens ?? 0,
