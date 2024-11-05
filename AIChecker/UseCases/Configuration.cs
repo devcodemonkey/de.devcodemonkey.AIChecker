@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace de.devcodemonkey.AIChecker.UseCases
+﻿namespace de.devcodemonkey.AIChecker.UseCases
 {
     public static class Configuration
     {        
         public const string EnvironmentTokenName = "AI_CHECKER_TOKEN";
+
+        public const string ApiSourceLmStudio = "http://localhost:1234/v1/chat/completions";
+
+        public const string ApiSourceChatGpt = "https://api.openai.com/v1/chat/completions";
     }
 }

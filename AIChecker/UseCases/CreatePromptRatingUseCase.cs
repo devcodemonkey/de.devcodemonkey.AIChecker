@@ -124,8 +124,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
                         Temperature = 0, // Assuming temperature is 0 as in the original method
                         MaxTokens = openAiModel && promptParams.MaxTokens == -1 ? null : promptParams.MaxTokens,
                         Source = openAiModel
-                    ? "https://api.openai.com/v1/chat/completions"
-                    : "http://localhost:1234/v1/chat/completions",
+                    ? Configuration.ApiSourceChatGpt
+                    : Configuration.ApiSourceLmStudio,
                         EnvironmentTokenName = openAiModel ? Configuration.EnvironmentTokenName : null,
                         ResponseFormat = json,
                     };
