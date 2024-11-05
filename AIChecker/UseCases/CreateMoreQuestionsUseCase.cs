@@ -25,7 +25,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
         }
 
         public async Task ExecuteAsync(MoreQuestionsUseCaseParams moreQuestionsUseCaseParams)
-        {
+        {            
             if (moreQuestionsUseCaseParams.Category == null)
                 throw new ArgumentNullException(nameof(moreQuestionsUseCaseParams.Category));
             if (!moreQuestionsUseCaseParams.Model.Contains("gpt"))

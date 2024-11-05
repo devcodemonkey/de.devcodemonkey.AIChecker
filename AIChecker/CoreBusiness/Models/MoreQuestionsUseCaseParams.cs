@@ -2,12 +2,12 @@
 {    
     public class MoreQuestionsUseCaseParams
     {
-        public string ResultSet { get; set; }
-        public string Model { get; set; }
-        public int? MaxTokens { get; set; }
-        public int Temperature { get; set; }        
-        public string Category { get; set; }
-        public string? ResponseFormat { get; set; }
-        public string SystemPrompt { get; set; }               
+        public virtual string ResultSet { get; set; }
+        public virtual string Model { get; set; }
+        public virtual int? MaxTokens { get; set; }
+        public virtual int Temperature { get; set; }        
+        public virtual string Category { get; set; }
+        public virtual string? ResponseFormat { get; set; }
+        public virtual string SystemPrompt { get; set; }               
     }
 }

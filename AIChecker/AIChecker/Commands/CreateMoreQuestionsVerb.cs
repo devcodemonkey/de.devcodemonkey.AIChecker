@@ -7,22 +7,22 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
     public class CreateMoreQuestionsVerb : MoreQuestionsUseCaseParams
     {
         [Option('r', "resultSet", Required = true, HelpText = "The result set name.")]
-        public string? ResultSet { get; set; }
+        public override string? ResultSet { get; set; }
 
         [Option('s', "systemPrompt", Required = true, HelpText = "The system prompt or path (path:<file-path>) for creating questions.")]
-        public string? SystemPrompt { get; set; }
+        public override string? SystemPrompt { get; set; }
 
         [Option('m', "model", Required = true, HelpText = "The model name.")]
-        public string Model { get; set; }
+        public override string Model { get; set; }
 
         [Option('c', "category", Required = true, HelpText = "The category.")]
-        public string Category { get; set; }
+        public override string Category { get; set; }
 
         [Option('t', "maxTokens", Default = null, HelpText = "The maximum number of tokens.")]
-        public int? MaxTokens { get; set; }
+        public override int? MaxTokens { get; set; }
 
         [Option('p', "temperature", Default = 0, HelpText = "The temperature.")]
-        public double Temperature { get; set; }
+        public override int Temperature { get; set; }
 
 
     }

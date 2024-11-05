@@ -485,11 +485,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         }
 
         private async Task CreateMoreQuestionsAsync(CreateMoreQuestionsVerb opts)
-        {
-            var createMoreQuestionsVerb = opts;
+        {            
             opts.ResponseFormat = MultiLineInput("Response Format");
             await AnsiConsole.Status().StartAsync("Creating more questions...", async ctx =>
-                await _createMoreQuestionsUseCase.ExecuteAsync(createMoreQuestionsVerb));
+                await _createMoreQuestionsUseCase.ExecuteAsync(opts));
         }
     }
 }
