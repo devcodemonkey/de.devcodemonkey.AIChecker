@@ -49,5 +49,14 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 Model = model,
             };
         }
+
+        public static SystemPrompt CreateSystemPrompt(string systemPrompt)
+        {
+            return new SystemPrompt
+            {
+                SystemPromptId = Guid.NewGuid(),
+                Value = systemPrompt
+            };
+        }
     }
 }

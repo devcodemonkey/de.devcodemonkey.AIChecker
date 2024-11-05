@@ -43,11 +43,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 // send message
                 List<IMessage> messages = ObjectCreationForApi.CreateMessageForApi(promptParams.SystemPrompt(), promptParams.Message());
 
-                var systemPromptObject = new SystemPrompt
-                {
-                    SystemPromptId = Guid.NewGuid(),
-                    Value = promptParams.SystemPrompt(),
-                };
+                SystemPrompt systemPromptObject = ObjectCreationForApi.CreateSystemPrompt(promptParams.SystemPrompt());                
 
                 foreach (var modelName in promptParams.ModelNames)
                 {
