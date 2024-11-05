@@ -41,7 +41,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 round++;
 
                 // send message
-                List<IMessage> messages = CreateMessageForApi(promptParams);
+                List<IMessage> messages = ObjectCreationForApi.CreateMessageForApi(promptParams.SystemPrompt(), promptParams.Message());
 
                 var systemPromptObject = new SystemPrompt
                 {
@@ -178,22 +178,6 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 SystemPrompt = systemPromptObject,
                 Model = model,
             };
-        }
-
-        private static List<IMessage> CreateMessageForApi(PromptRatingUseCaseParams promptParams)
-        {
-            return [
-                    new Message
-                    {
-                        Role = "system",
-                        Content = promptParams.SystemPrompt()
-                    },
-                    new Message
-                    {
-                        Role = "user",
-                        Content = promptParams.Message()
-                    },
-                ];
         }
 
         private async Task<T> HandleStatus<T>(StatusHandler? statusHandler, string statusMessage, Func<Task<T>> action)
