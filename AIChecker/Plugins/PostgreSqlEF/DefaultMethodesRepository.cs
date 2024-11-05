@@ -188,7 +188,7 @@ public class DefaultMethodesRepository : IDefaultMethodesRepository
         return averageTimeSpan;
     }
 
-    public async Task<IEnumerable<Question>> ViewQuestionAnswerByCategory(string category)
+    public async Task<IEnumerable<Question>> ViewQuestionAnswerByCategoryAsync(string category)
     {
         return await (from q in _ctx.Questions
                       join a in _ctx.Answers on q.AnswerId equals a.AnswerId
