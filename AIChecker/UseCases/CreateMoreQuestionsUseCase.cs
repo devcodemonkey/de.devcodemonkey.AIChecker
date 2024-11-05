@@ -25,7 +25,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             _defaultMethodesRepository = defaultMethodesRepository;
         }
 
-        public async Task ExecuteAsync(MoreQuestionsUseCaseParams moreQuestionsUseCaseParams, CreateMoreQuestionsUseCase.StatusHandler? statusHandler = null)
+        public async Task ExecuteAsync(MoreQuestionsUseCaseParams moreQuestionsUseCaseParams)
         {
             if (moreQuestionsUseCaseParams.Category == null)
                 throw new ArgumentNullException(nameof(moreQuestionsUseCaseParams.Category));
@@ -50,11 +50,6 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
             for (int i = 0; i < questions.Count(); i++)
             {
-                //var apiResult = await Status.HandleStatus(
-                //    statusHandler, 
-                //    $"Processing question {i + 1} of {questions.Count()}",
-                //    async () => );
-
                 var apiResult = await SendChatRequestAsync(moreQuestionsUseCaseParams, messages);
 
                 var resultDb = ObjectCreationForApi.CreateResult(
