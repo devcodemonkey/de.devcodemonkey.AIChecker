@@ -59,6 +59,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     apiResult,
                     model);
 
+                resultDb.AnswerId = questions.ElementAt(i).AnswerId;
+
                 await SaveDependencies.SaveDependenciesFromResult(
                     _defaultMethodesRepository,
                     moreQuestionsUseCaseParams.SystemPrompt,
