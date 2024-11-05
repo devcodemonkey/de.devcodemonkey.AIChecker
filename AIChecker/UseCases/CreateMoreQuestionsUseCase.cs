@@ -7,7 +7,6 @@ using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using System.Net;
 using System.Text.Json;
-using static de.devcodemonkey.AIChecker.UseCases.CreatePromptRatingUseCase;
 
 namespace de.devcodemonkey.AIChecker.UseCases
 {
@@ -38,8 +37,6 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 Value = moreQuestionsUseCaseParams.ResultSet,
             });
 
-            List<IMessage> messages = ObjectCreationForApi.CreateMessageForApi(moreQuestionsUseCaseParams.SystemPrompt, moreQuestionsUseCaseParams.Message);
-
             IEnumerable<Question> questions = await _defaultMethodesRepository.ViewQuestionAnswerByCategoryAsync(moreQuestionsUseCaseParams.Category);
 
             IEnumerable<string> questionAnswer = ConcatQuestionAnswer(questions);
@@ -50,10 +47,12 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
             for (int i = 0; i < questions.Count(); i++)
             {
+                List<IMessage> messages = ObjectCreationForApi.CreateMessageForApi(moreQuestionsUseCaseParams.SystemPrompt, questionAnswer.ElementAt(i));
+
                 var apiResult = await SendChatRequestAsync(moreQuestionsUseCaseParams, messages);
 
                 var resultDb = ObjectCreationForApi.CreateResult(
-                    moreQuestionsUseCaseParams.Message,
+                    questionAnswer.ElementAt(i),
                     moreQuestionsUseCaseParams.ResponseFormat,
                     moreQuestionsUseCaseParams.MaxTokens,
                     systemPromptObject,
@@ -81,7 +80,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 Messages = messages,
                 Model = moreQuestionsUseCaseParams.Model,
                 MaxTokens = moreQuestionsUseCaseParams.MaxTokens,
-                Temperature = moreQuestionsUseCaseParams.Temperture,
+                Temperature = moreQuestionsUseCaseParams.Temperature,
                 Stream = false,
                 EnvironmentTokenName = Configuration.EnvironmentTokenName,
                 Source = Configuration.ApiSourceChatGpt,
