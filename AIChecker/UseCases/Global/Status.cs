@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static de.devcodemonkey.AIChecker.UseCases.CreatePromptRatingUseCase;
+﻿using static de.devcodemonkey.AIChecker.UseCases.CreatePromptRatingUseCase;
 
 namespace de.devcodemonkey.AIChecker.UseCases.Global
 {

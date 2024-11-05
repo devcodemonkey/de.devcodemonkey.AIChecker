@@ -13,7 +13,5 @@
         public Func<string> RatingReason { get; set; }
         public Func<int> Rating { get; set; }
         public Func<bool> NewImprovement { get; set; }
-
-        
     }
 }

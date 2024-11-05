@@ -66,19 +66,19 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     PromptRatingRound promptRatingRound = CreatePromptRatingRound(round, result, ratingReasonValue, ratingValue);
 
                     result.PromptRatingRound = promptRatingRound;
-                    await SaveToDatabase(promptParams, statusHandler, messages, modelName, apiResult, result);
+                    await SaveToDatabase(promptParams, statusHandler, promptParams.SystemPrompt(), modelName, apiResult, result);
                 }
             }
             while (promptParams.NewImprovement());
         }
 
-        private async Task SaveToDatabase(PromptRatingUseCaseParams promptParams, StatusHandler? statusHandler, List<IMessage> messages, string modelName, IApiResult<ResponseData> apiResult, Result result)
+        private async Task SaveToDatabase(PromptRatingUseCaseParams promptParams, StatusHandler? statusHandler, string systemPrompt, string modelName, IApiResult<ResponseData> apiResult, Result result)
         {
             await Status.HandleStatus(statusHandler, $"Saving dependencies for '{modelName}'...", async () =>
             {
                 await SaveDependencies.SaveDependenciesFromResult(
                     _defaultMethodesRepository,
-                    messages[0]?.Content ?? string.Empty,
+                    systemPrompt,
                     promptParams.ResultSet,
                     apiResult,
                     result,
