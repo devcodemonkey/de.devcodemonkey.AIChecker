@@ -91,27 +91,36 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             {
                 config.HelpWriter = Console.Out;
             })
-            .ParseArguments<InfoVerb, RecreateDatabaseVerb, ImportQuestionsVerb, ViewResultSetsVerb,
-                            ViewAverageVerb, ViewResultsVerb, ViewProcessUsageVerb, DeleteAllQuestionsVerb,
-                            DeleteResultSetVerb, CreateMoreQuestionsVerb, SendToLmsVerb, DatabaseVerb, ModelVerb,
-                            RankPromptVerb, ExportPromptRankVerb, ImportQuestionsFromResultsVerb>(args)
+            .ParseArguments<DatabaseVerb, RecreateDatabaseVerb, RankPromptVerb, SendToLmsVerb,
+                ImportQuestionsVerb, ImportQuestionsFromResultsVerb, ViewResultSetsVerb,
+                ViewAverageVerb, ViewResultsVerb, ViewProcessUsageVerb, DeleteResultSetVerb,
+                DeleteAllQuestionsVerb, CreateMoreQuestionsVerb, ModelVerb, ExportPromptRankVerb,
+                InfoVerb>(args)
             .MapResult(
-                async (InfoVerb opts) => await DisplayAppInfoAsync(),
+                async (DatabaseVerb opts) => await StartStopDatabase(opts),
                 async (RecreateDatabaseVerb opts) => await RecreateDatabaseAsync(opts),
-                async (ViewProcessUsageVerb opts) => await ViewProcessUsageAsync(),
+
+                async (RankPromptVerb opts) => await RankPrompt(opts),
+
                 async (SendToLmsVerb opts) => await SendToLmsAsync(opts),
+
                 async (ImportQuestionsVerb opts) => await _importQuestionAnswerUseCase.ExecuteAsync(opts.Path, opts.Category),
+                async (ImportQuestionsFromResultsVerb opts) => await ImportQuestionsFromResultsVerb(opts),
+
                 async (ViewResultSetsVerb opts) => await ViewResultSetsAsync(),
                 async (ViewAverageVerb opts) => await ViewAverageAsync(opts),
                 async (ViewResultsVerb opts) => await ViewResultsAsync(opts),
+                async (ViewProcessUsageVerb opts) => await ViewProcessUsageAsync(),
+
                 async (DeleteResultSetVerb opts) => await _deleteResultSetUseCase.ExecuteAsync(opts.ResultSet),
                 async (DeleteAllQuestionsVerb opts) => await _deleteAllQuestionAnswerUseCase.ExecuteAsync(),
-                async (CreateMoreQuestionsVerb opts) => await CreateMoreQuestionsAsync(opts),
-                async (DatabaseVerb opts) => await StartStopDatabase(opts),
+
+                async (CreateMoreQuestionsVerb opts) => await CreateMoreQuestionsAsync(opts),                
                 async (ModelVerb opts) => await ManageModel(opts),
-                async (RankPromptVerb opts) => await RankPrompt(opts),
+                
                 async (ExportPromptRankVerb opts) => await ExportRank(opts),
-                async (ImportQuestionsFromResultsVerb opts) => await ImportQuestionsFromResultsVerb(opts),
+                
+                async (InfoVerb opts) => await DisplayAppInfoAsync(),
                 errs => Task.FromResult(0)
             );
 
