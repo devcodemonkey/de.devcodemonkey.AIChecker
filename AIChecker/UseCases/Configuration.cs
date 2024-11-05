@@ -2,7 +2,7 @@
 {
     public static class Configuration
     {        
-        public const string EnvironmentTokenName = "AI_CHECKER_TOKEN";
+        public const string EnvironmentTokenName = "OPEN_AI_TOKEN";
 
         public const string ApiSourceLmStudio = "http://localhost:1234/v1/chat/completions";
 
