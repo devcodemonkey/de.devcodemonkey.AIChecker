@@ -21,5 +21,6 @@ namespace de.devcodemonkey.AIChecker.UseCases.PluginInterfaces
         Task<IEnumerable<Result>> ViewResultsOfResultSetAsync(Guid resultSetId);
         Task RecreateDatabaseAsync();
         Task<IEnumerable<T>> AddRangeAsync<T>(IEnumerable<T> entities) where T : class;
+        Task<IEnumerable<Question>> ViewQuestionAnswerByCategory(string category);
     }
 }

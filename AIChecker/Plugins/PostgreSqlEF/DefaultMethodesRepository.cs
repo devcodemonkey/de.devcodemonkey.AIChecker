@@ -188,6 +188,15 @@ public class DefaultMethodesRepository : IDefaultMethodesRepository
         return averageTimeSpan;
     }
 
+    public async Task<IEnumerable<Question>> ViewQuestionAnswerByCategory(string category)
+    {
+        return await (from q in _ctx.Questions
+                      join a in _ctx.Answers on q.AnswerId equals a.AnswerId
+                      join QuestionCategory in _ctx.QuestionCategories on q.QuestionCategoryId equals QuestionCategory.QuestionCategoryId
+                      where QuestionCategory.Value == category
+                      select q).ToListAsync();
+    }
+
     // Write Operation with SemaphoreSlim
     public async Task RemoveResultSetAsync(Guid resultSetId)
     {
