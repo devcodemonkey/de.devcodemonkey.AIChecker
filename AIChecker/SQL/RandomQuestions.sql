@@ -64,7 +64,7 @@ SELECT
 FROM counts c, total t;
 
 
-
+-- SQL to check correct questions
 WITH vars AS (
     SELECT
         'Outlook created Questions over gpt-4o-mini' AS question_value,
