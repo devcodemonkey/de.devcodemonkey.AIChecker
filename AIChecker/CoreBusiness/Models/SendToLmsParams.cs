@@ -20,5 +20,6 @@ namespace de.devcodemonkey.AIChecker.CoreBusiness.Models
         public string? EnvironmentTokenName { get; set; }
         public string Source { get; set; } = "http://localhost:1234/v1/chat/completions";
         public string Model { get; set; } = "nothing set";
+        public virtual string? ResponseFormat { get; set; }
     }
 }

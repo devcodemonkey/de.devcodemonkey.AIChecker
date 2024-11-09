@@ -1,9 +1,12 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using de.devcodemonkey.AIChecker.CoreBusiness.Interfaces;
 using de.devcodemonkey.AIChecker.CoreBusiness.Models;
+using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.Global;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using System.Net;
+using System.Text.Json;
 using System.Threading;
 
 namespace de.devcodemonkey.AIChecker.UseCases
@@ -37,9 +40,44 @@ namespace de.devcodemonkey.AIChecker.UseCases
             if (sendToLmsParams.SaveProcessUsage)
                 await SaveProcessUsage(sendToLmsParams, ResultSetObject);
             else
-                await SaveApiRequest(sendToLmsParams.UserMessage, sendToLmsParams.SystemPrompt, sendToLmsParams.ResultSet, sendToLmsParams.RequestCount, sendToLmsParams.MaxTokens, sendToLmsParams.Temperature, sendToLmsParams.EnvironmentTokenName, sendToLmsParams.Source, sendToLmsParams.Model);
+                await SendAndSaveApiRequest(sendToLmsParams);
+        }
 
+        private async Task SendAndSaveApiRequest(SendToLmsParams sendToLmsParams)
+        {
+            List<IMessage> messages = ObjectCreationForApi.CreateMessageForApi(sendToLmsParams.SystemPrompt, sendToLmsParams.UserMessage);
 
+            for (int i = 0; i < sendToLmsParams.RequestCount; i++)
+            {
+                var apiResult = await SendChatRequestAsync(sendToLmsParams, messages);
+
+                
+
+                
+            }
+        }
+
+        private async Task<IApiResult<ResponseData>> SendChatRequestAsync(SendToLmsParams sendToLmsParams, List<IMessage> messages)
+        {
+            JsonElement? json = null;
+            if (!string.IsNullOrWhiteSpace(sendToLmsParams?.ResponseFormat))
+                json = JsonDocument.Parse(sendToLmsParams.ResponseFormat).RootElement;
+            var requestData = new RequestData
+            {
+                Messages = messages,
+                MaxTokens = sendToLmsParams.MaxTokens,
+                Temperature = sendToLmsParams.Temperature,
+                Model = sendToLmsParams.Model,
+                Source = sendToLmsParams.Source,
+                EnvironmentTokenName = sendToLmsParams.EnvironmentTokenName,
+                Stream = false,
+                RequestTimeout = null,
+                ResponseFormat = json
+            };
+            var apiResponse = await _apiRequester.SendChatRequestAsync(requestData);
+            if (apiResponse.StatusCode != HttpStatusCode.OK)
+                throw new Exception($"Request failed with status code {apiResponse.StatusCode}, sended Request: {JsonSerializer.Serialize(requestData)}");
+            return apiResponse;
         }
 
         private async Task SaveProcessUsage(SendToLmsParams sendToLmsParams, ResultSet ResultSetObject)
@@ -60,7 +98,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
                 }, sendToLmsParams.SaveInterval, cancellationTokenSource.Token, writeOutput: sendToLmsParams.WriteOutput);
 
-                await SaveApiRequest(sendToLmsParams.UserMessage, sendToLmsParams.SystemPrompt, sendToLmsParams.ResultSet, sendToLmsParams.RequestCount, sendToLmsParams.MaxTokens, sendToLmsParams.Temperature, sendToLmsParams.EnvironmentTokenName, sendToLmsParams.Source, sendToLmsParams.Model);
+                await SendAndSaveApiRequest(sendToLmsParams);
 
                 cancellationTokenSource.Cancel();
 
