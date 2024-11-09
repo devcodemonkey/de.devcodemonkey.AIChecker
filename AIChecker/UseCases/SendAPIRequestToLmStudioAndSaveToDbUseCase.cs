@@ -26,7 +26,49 @@ namespace de.devcodemonkey.AIChecker.UseCases
             _systemMonitor = systemMonitor;
         }
 
+        public async Task ExecuteAsync(SendToLmsParams sendToLmsParams)
+        {
+            var ResultSetObject = await _defaultMethodesRepository.AddAsync(new ResultSet
+            {
+                ResultSetId = Guid.NewGuid(),
+                Value = sendToLmsParams.ResultSet,
+            });
 
+            if (sendToLmsParams.SaveProcessUsage)
+                await SaveProcessUsage(sendToLmsParams, ResultSetObject);
+            else
+                await SaveApiRequest(sendToLmsParams.UserMessage, sendToLmsParams.SystemPrompt, sendToLmsParams.ResultSet, sendToLmsParams.RequestCount, sendToLmsParams.MaxTokens, sendToLmsParams.Temperature, sendToLmsParams.EnvironmentTokenName, sendToLmsParams.Source, sendToLmsParams.Model);
+
+
+        }
+
+        private async Task SaveProcessUsage(SendToLmsParams sendToLmsParams, ResultSet ResultSetObject)
+        {
+            using (var cancellationTokenSource = new CancellationTokenSource())
+            {
+                var monitoringTask = _systemMonitor.MonitorPerformanceEveryXSecondsAsync(async (applicationUsages) =>
+                {
+                    foreach (var item in applicationUsages)
+                        item.SystemResourceUsageId = Guid.NewGuid();
+                    foreach (var item in applicationUsages)
+                    {
+                        item.SystemResourceUsageId = Guid.NewGuid();
+                        item.ResultSetId = ResultSetObject.ResultSetId;
+                    }
+
+                    await _defaultMethodesRepository.AddAsync(applicationUsages);
+
+                }, sendToLmsParams.SaveInterval, cancellationTokenSource.Token, writeOutput: sendToLmsParams.WriteOutput);
+
+                await SaveApiRequest(sendToLmsParams.UserMessage, sendToLmsParams.SystemPrompt, sendToLmsParams.ResultSet, sendToLmsParams.RequestCount, sendToLmsParams.MaxTokens, sendToLmsParams.Temperature, sendToLmsParams.EnvironmentTokenName, sendToLmsParams.Source, sendToLmsParams.Model);
+
+                cancellationTokenSource.Cancel();
+
+                await monitoringTask;
+            }
+        }
+
+        [Obsolete]
         public async Task ExecuteAsync(string userMessage,
             string systemPrompt,
             string resultSetValue,
@@ -98,7 +140,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             for (int i = 0; i < requestCount; i++)
             {
 
-                var apiResult = await _apiRequester.SendChatRequestOldAsync(messages, maxTokens: maxTokens, temperature: temperature,model: model, source: source, environmentTokenName: environmentBearerTokenName);
+                var apiResult = await _apiRequester.SendChatRequestOldAsync(messages, maxTokens: maxTokens, temperature: temperature, model: model, source: source, environmentTokenName: environmentBearerTokenName);
 
 
                 Result result = new Result
