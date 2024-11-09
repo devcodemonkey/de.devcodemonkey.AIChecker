@@ -51,9 +51,23 @@ namespace de.devcodemonkey.AIChecker.UseCases
             {
                 var apiResult = await SendChatRequestAsync(sendToLmsParams, messages);
 
-                
+                var resultDb = ObjectCreationForApi.CreateResult(
+                    sendToLmsParams.UserMessage,
+                    sendToLmsParams.ResponseFormat,
+                    sendToLmsParams.MaxTokens,
+                    ObjectCreationForApi.CreateSystemPrompt(sendToLmsParams.SystemPrompt),
+                    apiResult,
+                    await _defaultMethodesRepository.ViewModelOverValueAysnc(sendToLmsParams.Model));
 
-                
+                await SaveDependencies.SaveDependenciesFromResult(_defaultMethodesRepository,
+                    sendToLmsParams.SystemPrompt,
+                    sendToLmsParams.ResultSet,
+                    apiResult,
+                    resultDb,
+                    apiResult.Data!.Object!,
+                    apiResult.Data.Choices?.FirstOrDefault()?.FinishReason!);
+
+                await _defaultMethodesRepository.AddAsync(resultDb);
             }
         }
 
@@ -106,7 +120,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
             }
         }
 
-        [Obsolete]
+        [Obsolete("use ExecuteAsync methode with parameter SendToLmsParams")]
         public async Task ExecuteAsync(string userMessage,
             string systemPrompt,
             string resultSetValue,

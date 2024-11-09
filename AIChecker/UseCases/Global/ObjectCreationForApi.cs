@@ -28,7 +28,7 @@ namespace de.devcodemonkey.AIChecker.UseCases.Global
             };
         }
 
-        public static Result CreateResult(string asked, string responseFormat, int? maxTokens, SystemPrompt systemPromptObject, IApiResult<ResponseData> apiResult, Model model)
+        public static Result CreateResult(string asked, string? responseFormat, int? maxTokens, SystemPrompt systemPromptObject, IApiResult<ResponseData> apiResult, Model model)
         {
             return new Result
             {
