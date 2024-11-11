@@ -17,7 +17,7 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
         private Mock<IAPIRequester> _mockApiRequester;
         private Mock<ISystemMonitor> _mockSystemMonitor;
 
-        private SendAPIRequestToLmStudioAndSaveToDbUseCase _useCase;
+        private SendAPIRequestAndSaveToDbUseCase _useCase;
 
         private DbContextOptions<DbContext> _dbContextOptions;
 
@@ -36,7 +36,7 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
 
             var defaultMethodesRepository = new DefaultMethodesRepository(context);
 
-            _useCase = new SendAPIRequestToLmStudioAndSaveToDbUseCase(
+            _useCase = new SendAPIRequestAndSaveToDbUseCase(
                 _mockApiRequester.Object,
                 defaultMethodesRepository,
                 _mockSystemMonitor.Object
@@ -187,7 +187,7 @@ namespace de.devcodemonkey.AIChecker.UseCases.Tests
             var apiRequester = new APIRequester(); // Use real API requester
             var systemMonitor = new SystemMonitor(); // Use real system monitor
 
-            var useCase = new SendAPIRequestToLmStudioAndSaveToDbUseCase(
+            var useCase = new SendAPIRequestAndSaveToDbUseCase(
                 apiRequester,
                 defaultMethodesRepository,
                 systemMonitor);

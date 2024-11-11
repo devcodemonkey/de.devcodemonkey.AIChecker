@@ -23,7 +23,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly ICreateMoreQuestionsUseCase _createMoreQuestionsUseCase;
         private readonly IViewAverageTimeOfResultSetUseCase _viewAverageTimeOfResultSetUseCase;
         private readonly IViewResultSetsUseCase _viewResultSetsUseCase;
-        private readonly ISendAPIRequestToLmStudioAndSaveToDbUseCase _sendAPIRequestToLmStudioAndSaveToDbUseCase;
+        private readonly ISendAndSaveApiRequestUseCase _sendAPIRequestToLmStudioAndSaveToDbUseCase;
         private readonly IDeleteResultSetUseCase _deleteResultSetUseCase;
         private readonly IViewResultsOfResultSetUseCase _viewResultsOfResultSetUseCase;
         private readonly IViewGpuUsageUseCase _viewGpuUsageUseCase;
@@ -46,7 +46,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             IViewAverageTimeOfResultSetUseCase viewAverageTimeOfResultSetUseCase,
             IViewResultsOfResultSetUseCase viewResultsOfResultSetUseCase,
             IViewResultSetsUseCase viewResultSetsUseCase,
-            ISendAPIRequestToLmStudioAndSaveToDbUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase,
+            ISendAndSaveApiRequestUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase,
             IViewGpuUsageUseCase viewGpuUsageUseCase,
             IStartStopDatabaseUseCase startStopDatabaseUseCase,
             IBackupDatabaseUseCase backupDatabaseUseCase,

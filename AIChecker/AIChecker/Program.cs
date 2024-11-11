@@ -219,7 +219,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 services.AddSingleton<IViewAverageTimeOfResultSetUseCase, ViewAverageTimeOfResultSetUseCase>();
                 services.AddSingleton<IViewResultSetsUseCase, ViewResultSetsUseCase>();
                 services.AddSingleton<IViewResultsOfResultSetUseCase, ViewResultsOfResultSetUseCase>();
-                services.AddSingleton<ISendAPIRequestToLmStudioAndSaveToDbUseCase, SendAPIRequestToLmStudioAndSaveToDbUseCase>();
+                services.AddSingleton<ISendAndSaveApiRequestUseCase, SendAPIRequestAndSaveToDbUseCase>();
                 services.AddSingleton<IViewGpuUsageUseCase, ViewGpuUsageUseCase>();
                 services.AddSingleton<IStartStopDatabaseUseCase, StartStopDatabaseUseCase>();
                 services.AddSingleton<IAddModelUseCase, AddModelUseCase>();

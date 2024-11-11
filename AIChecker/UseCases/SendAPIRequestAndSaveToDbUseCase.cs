@@ -7,11 +7,10 @@ using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using System.Net;
 using System.Text.Json;
-using System.Threading;
 
 namespace de.devcodemonkey.AIChecker.UseCases
 {
-    public class SendAPIRequestToLmStudioAndSaveToDbUseCase : ISendAPIRequestToLmStudioAndSaveToDbUseCase
+    public class SendAPIRequestAndSaveToDbUseCase : ISendAndSaveApiRequestUseCase
     {
         private readonly IAPIRequester _apiRequester;
 
@@ -19,7 +18,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
         private readonly ISystemMonitor _systemMonitor;
 
-        public SendAPIRequestToLmStudioAndSaveToDbUseCase(
+        public SendAPIRequestAndSaveToDbUseCase(
             IAPIRequester apiRequester,
             IDefaultMethodesRepository defaultMethodesRepository,
             ISystemMonitor systemMonitor)
