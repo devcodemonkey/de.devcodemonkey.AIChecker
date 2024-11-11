@@ -228,6 +228,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 services.AddSingleton<IUnloadModelUseCase, UnloadModelUseCase>();
                 services.AddSingleton<ICreatePromptRatingUseCase, CreatePromptRatingUseCase>();
                 services.AddSingleton<IImportQuestionsFromResultsUseCase, ImportQuestionsFromResultsUseCase>();
+                services.AddSingleton<ISendQuestionsToLmsUseCase, SendQuestionsToLmsUseCase>();
 
                 services.AddScoped<IExportPromptRatingUseCase, ExportPromptRatingUseCase>();
 
