@@ -36,6 +36,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly ICreatePromptRatingUseCase _createPromptRatingUseCase;
         private readonly IExportPromptRatingUseCase _exportPromptRatingUseCase;
         private readonly IImportQuestionsFromResultsUseCase _importQuestionsFromResultsUseCase;
+        private readonly ISendQuestionsToLmsUseCase _sendQuestionsToLmsUseCase;
 
         public Application(
             IRecreateDatabaseUseCase recreateDatabaseUseCase,
@@ -56,7 +57,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             IUnloadModelUseCase unloadModelUseCase,
             ICreatePromptRatingUseCase createPromptRatingUseCase,
             IExportPromptRatingUseCase exportPromptRatingUseCase,
-            IImportQuestionsFromResultsUseCase importQuestionsFromResultsUseCase)
+            IImportQuestionsFromResultsUseCase importQuestionsFromResultsUseCase,
+            ISendQuestionsToLmsUseCase sendQuestionsToLmsUseCase)
         {
             _recreateDatabaseUseCase = recreateDatabaseUseCase;
             _importQuestionAnswerUseCase = importQuestionAnswerUseCase;
@@ -77,6 +79,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             _createPromptRatingUseCase = createPromptRatingUseCase;
             _exportPromptRatingUseCase = exportPromptRatingUseCase;
             _importQuestionsFromResultsUseCase = importQuestionsFromResultsUseCase;
+            _sendQuestionsToLmsUseCase = sendQuestionsToLmsUseCase;
         }
 
         public async Task RunAsync(string[] args)
@@ -407,8 +410,13 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         private async Task SendToLmsAsync(SendToLmsVerb opts) =>
             await AnsiConsole.Status().StartAsync("Sending API request to LmStudio and saving to db...", async ctx =>
-                await _sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(opts)
-            );
+            {
+                if (string.IsNullOrEmpty(opts.QuestionCategory))
+                    await _sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(opts);
+                else
+                    await _sendQuestionsToLmsUseCase.ExecuteAsync(opts);
+            }
+        );
 
 
         private async Task ViewResultSetsAsync()

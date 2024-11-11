@@ -5,7 +5,7 @@ using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 
 namespace de.devcodemonkey.AIChecker.UseCases
 {
-    public class SendQuestionsToLmsUseCase
+    public class SendQuestionsToLmsUseCase : ISendQuestionsToLmsUseCase
     {
         private readonly IDefaultMethodesRepository _defaultMethodesRepository;
         private readonly ISendAndSaveApiRequestUseCase _sendAndSaveApiRequestUseCase;
