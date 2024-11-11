@@ -115,11 +115,11 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 async (DeleteResultSetVerb opts) => await _deleteResultSetUseCase.ExecuteAsync(opts.ResultSet),
                 async (DeleteAllQuestionsVerb opts) => await _deleteAllQuestionAnswerUseCase.ExecuteAsync(),
 
-                async (CreateMoreQuestionsVerb opts) => await CreateMoreQuestionsAsync(opts),                
+                async (CreateMoreQuestionsVerb opts) => await CreateMoreQuestionsAsync(opts),
                 async (ModelVerb opts) => await ManageModel(opts),
-                
+
                 async (ExportPromptRankVerb opts) => await ExportRank(opts),
-                
+
                 async (InfoVerb opts) => await DisplayAppInfoAsync(),
                 errs => Task.FromResult(0)
             );
@@ -405,25 +405,11 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             });
         }
 
-        private async Task SendToLmsAsync(SendToLmsVerb opts)
-        {
+        private async Task SendToLmsAsync(SendToLmsVerb opts) =>
             await AnsiConsole.Status().StartAsync("Sending API request to LmStudio and saving to db...", async ctx =>
-            {
-                await _sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(
-                    opts.Message,
-                    opts.SystemPrompt,
-                    opts.ResultSet,
-                    opts.RequestCount,
-                    opts.MaxTokens,
-                    opts.Temperature,
-                    saveInterval: opts.SaveInterval,
-                    saveProcessUsage: opts.SaveProcessUsage,
-                    model: opts.Model,
-                    source: opts.Source,
-                    environmentTokenName: opts.EnvironmentTokenName
-                );
-            });
-        }
+                await _sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(opts)
+            );
+
 
         private async Task ViewResultSetsAsync()
         {

@@ -29,6 +29,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
             //await RunWithScopeAsync(serviceProvider, ["sendToLms", "-m", "Schreib mir ein Gedicht mit 100 Zeilen", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "5", "-i", "5"]);
             //await RunWithScopeAsync(serviceProvider, ["sendToLms", "-r", "Test result set", "-m", "write me a poem over 10 lines"]);
+            //await RunWithScopeAsync(serviceProvider, ["viewResults", "-r", "Test result set"]);
             //await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "cbc94e4a-868a-4751-aec1-9800dfbdcf08"]);
             //await RunWithScopeAsync(serviceProvider, ["viewResults", "-r", "7d26beed-3e04-4f7f-adb4-19bceca49503"]);
             //await RunWithScopeAsync(serviceProvider, ["viewProcessUsage"]);
