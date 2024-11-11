@@ -41,9 +41,11 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 round++;
 
                 // send message
-                List<IMessage> messages = ObjectCreationForApi.CreateMessageForApi(promptParams.SystemPrompt(), promptParams.Message());
+                var systemPrompt = promptParams.SystemPrompt();
+                var userMessage = promptParams.Message();
+                List<IMessage> messages = ObjectCreationForApi.CreateMessageForApi(systemPrompt, userMessage);
 
-                SystemPrompt systemPromptObject = ObjectCreationForApi.CreateSystemPrompt(promptParams.SystemPrompt());                
+                SystemPrompt systemPromptObject = ObjectCreationForApi.CreateSystemPrompt(systemPrompt);                
 
                 foreach (var modelName in promptParams.ModelNames)
                 {
@@ -54,7 +56,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
                     var model = await _defaultMethodesRepository.ViewModelOverValueAysnc(modelName);
 
-                    Result result = ObjectCreationForApi.CreateResult(promptParams.Message(), promptParams.ResponseFormat, promptParams.MaxTokens, systemPromptObject, apiResult, model);
+                    Result result = ObjectCreationForApi.CreateResult(userMessage, promptParams.ResponseFormat, promptParams.MaxTokens, systemPromptObject, apiResult, model);
 
                     displayResult(result);
 
@@ -65,7 +67,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     PromptRatingRound promptRatingRound = CreatePromptRatingRound(round, result, ratingReasonValue, ratingValue);
 
                     result.PromptRatingRound = promptRatingRound;
-                    await SaveToDatabase(promptParams, statusHandler, promptParams.SystemPrompt(), modelName, apiResult, result);
+                    await SaveToDatabase(promptParams, statusHandler, systemPrompt, modelName, apiResult, result);
                 }
             }
             while (promptParams.NewImprovement());
