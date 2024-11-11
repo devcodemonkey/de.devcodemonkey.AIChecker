@@ -15,5 +15,6 @@
         public virtual string Source { get; set; } = "http://localhost:1234/v1/chat/completions";
         public virtual string Model { get; set; } = "nothing set";
         public virtual string? ResponseFormat { get; set; }
+        public virtual string? QuestionCategory { get; set; }
     }
 }

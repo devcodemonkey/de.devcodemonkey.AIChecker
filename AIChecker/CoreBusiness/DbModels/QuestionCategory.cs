@@ -1,4 +1,5 @@
-﻿using System;
+﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModelInterfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace de.devcodemonkey.AIChecker.CoreBusiness.DbModels
 {
-    public class QuestionCategory
+    public class QuestionCategory : IValue
     {
         public Guid QuestionCategoryId { get; set; }
 

@@ -35,5 +35,11 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
         [Option("model", Default = "nothing set", HelpText = "The model name.")]
         public override string Model { get; set; }
 
+        [Option("responseFormat", Default = null, HelpText = "The response format.")]
+        public override string ResponseFormat { get; set; }
+
+        [Option("questionCategory", Default = null, HelpText = "The question category.")]
+        public override string QuestionCategory { get; set; }
+
     }
 }
