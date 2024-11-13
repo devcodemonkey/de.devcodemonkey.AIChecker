@@ -117,7 +117,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
                 modelDescriptionLink);
 
             modelDetailsTable.AddRow(
-                MdFontStyles.Bold("Größe des Modells (MB)"),
+                MdFontStyles.Bold("Größe des Modells (GB)"),
                 modelSize);
 
             modelDetailsTable.AddRow(
