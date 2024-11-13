@@ -20,6 +20,8 @@ public partial class Model : IValue
 
     public double? Size { get; set; }
 
+    public string? Parameter { get; set; }
+
     public string? Quantification { get; set; }
 
     public virtual ICollection<Result> Results { get; set; } = new List<Result>();
