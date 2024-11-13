@@ -69,9 +69,12 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     runNumber: i,
                     promptAnforderungen: round.FirstOrDefault()?.ResultSet.PromptRequierements ?? string.Empty,
                     prompt: round.FirstOrDefault()?.Asked ?? string.Empty,
-                    message: round.FirstOrDefault()?.Message ?? string.Empty,
                     systemPrompt: round.FirstOrDefault()?.SystemPrompt?.Value ?? string.Empty,
-                    modelRatings: round.Select(r => (r.Model.Value ?? string.Empty, r.PromptRatingRound?.Rating ?? 0, r.PromptRatingRound?.ReasenRating ?? string.Empty)).ToList()
+                    modelRatings: round.Select(r => (r.Message ?? string.Empty,
+                                                    r.Model.Value ?? string.Empty,
+                                                    r.PromptRatingRound?.Rating ?? 0,
+                                                    r.PromptRatingRound?.ReasenRating ?? string.Empty)
+                                                    ).ToList()
                 );
                 _mdFile.Text.AppendLine(tableRound);
 

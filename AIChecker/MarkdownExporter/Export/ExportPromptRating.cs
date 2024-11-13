@@ -58,9 +58,8 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
            int runNumber,
            string promptAnforderungen,
            string prompt,
-           string message,
            string systemPrompt,
-           List<(string modelName, int rating, string reason)> modelRatings)
+           List<(string message, string modelName, int rating, string reason)> modelRatings)
         {
             var output = new StringBuilder();
             output.AppendLine(MdFontStyles.H4($"{runNumber}. Durchlauf"));
@@ -76,7 +75,7 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             int totalScore = 0;
             for (int i = 0; i < modelRatings.Count; i++)
             {
-                var (modelName, rating, reason) = modelRatings[i];
+                var (message, modelName, rating, reason) = modelRatings[i];
                 totalScore += rating;
                 modelTable.AddRow($"{i + 1}. {MdFontStyles.Bold(modelName)}", message, rating.ToString(), reason);
             }
