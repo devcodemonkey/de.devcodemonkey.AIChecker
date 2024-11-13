@@ -103,10 +103,11 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
                 var tableModel = _exportPromptRating.GetModelDetailsTable(
                     modelNumber: i + 1,
-                    modelName: model.Value,
-                    baseModel: model.BaseModels,
-                    modelDescriptionLink: model.Link,
-                    modelSize: model.Size.ToString()
+                    modelName: model.Value ?? string.Empty,
+                    baseModel: model.BaseModels ?? string.Empty,
+                    modelDescriptionLink: model.Link ?? string.Empty,
+                    modelSize: model.Size?.ToString() ?? string.Empty,
+                    parameter: model.Parameter ?? string.Empty
                 );
                 _mdFile.Text.AppendLine(tableModel);
             }

@@ -93,7 +93,8 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             string modelName,
             string baseModel,
             string modelDescriptionLink,
-            string modelSize)
+            string modelSize,
+            string parameter)
         {
             var output = new StringBuilder();
             output.AppendLine(MdFontStyles.Bold($"{modelNumber}. {modelName}"));
@@ -118,6 +119,10 @@ namespace de.devcodemonkey.AIChecker.MarkdownExporter.Export
             modelDetailsTable.AddRow(
                 MdFontStyles.Bold("Größe des Modells (MB)"),
                 modelSize);
+
+            modelDetailsTable.AddRow(
+                MdFontStyles.Bold("Parameter"),
+                parameter);
 
             output.AppendLine(modelDetailsTable.ToString());
 
