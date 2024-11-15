@@ -10,7 +10,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
         public override string UserMessage { get; set; }
         [Option('r', "resultSet", Required = true, HelpText = "The result set name.")]
         public override string ResultSet { get; set; }
-        [Option('s', "systemPrompt", Default = "You are a helpful assistent", HelpText = "The system prompt.")]
+        [Option('s', "systemPrompt", Default = "You are a helpful assistent", HelpText = "The system prompt. (Default: You are a helpful assisten) If you want to ask for it, set an 'ask' parameter.")]
         public override string SystemPrompt { get; set; }
         [Option('c', "requestCount", Default = 1, HelpText = "The number of requests.")]
         public override int RequestCount { get; set; }
@@ -35,7 +35,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
         [Option("model", Default = "nothing set", HelpText = "The model name.")]
         public override string Model { get; set; }
 
-        [Option("responseFormat", Default = null, HelpText = "The response format.")]
+        [Option("responseFormat", Default = null, HelpText = "The response format. If you want to ask for it, set an 'ask' parameter.")]
         public override string ResponseFormat { get; set; }
 
         [Option("questionCategory", Default = null, HelpText = "The question category.")]

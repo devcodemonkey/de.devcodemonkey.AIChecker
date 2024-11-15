@@ -429,7 +429,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             if (string.IsNullOrWhiteSpace(opts.QuestionCategory) && string.IsNullOrWhiteSpace(opts.UserMessage))            
                 throw new ArgumentException("Either 'message' or 'questionCategory' must be provided.");
-            
+            if (opts.ResponseFormat.ToLower().Equals("ask"))
+                opts.ResponseFormat = MultiLineInput("Response Format");
+            if (opts.SystemPrompt.ToLower().Equals("ask"))
+                opts.SystemPrompt = MultiLineInput("System Prompt");
             await AnsiConsole.Status().StartAsync("Sending API request to LmStudio and saving to db...", async ctx =>
             {
                 if (string.IsNullOrEmpty(opts.QuestionCategory))
