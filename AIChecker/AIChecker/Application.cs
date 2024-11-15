@@ -115,7 +115,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 async (ViewResultsVerb opts) => await ViewResultsAsync(opts),
                 async (ViewProcessUsageVerb opts) => await ViewProcessUsageAsync(),
 
-                async (DeleteResultSetVerb opts) => await _deleteResultSetUseCase.ExecuteAsync(opts.ResultSet),
+                async (DeleteResultSetVerb opts) => await DeleteResultSet(opts),
                 async (DeleteAllQuestionsVerb opts) => await _deleteAllQuestionAnswerUseCase.ExecuteAsync(),
 
                 async (CreateMoreQuestionsVerb opts) => await CreateMoreQuestionsAsync(opts),
@@ -128,6 +128,14 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             );
 
             await parsingTask;
+        }
+
+        private async Task DeleteResultSet(DeleteResultSetVerb opts)
+        {
+            await AnsiConsole.Status().StartAsync("Deleting result set...", async ctx =>
+                await _deleteResultSetUseCase.ExecuteAsync(opts.ResultSet)
+            );
+            AnsiConsole.MarkupLine("[green]Result set deleted![/]");            
         }
 
         private async Task ImportQuestionsFromResultsVerb(ImportQuestionsFromResultsVerb opts)
