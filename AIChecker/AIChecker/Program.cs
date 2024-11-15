@@ -153,7 +153,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //            await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Prompt Ranking für Fragen erstellen (Nr. 3)", "-p", description, "-m", "gpt-4o-mini-2024-07-18", "-s", responseFormat]);
 
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Prompt Ranking für Fragen erstellen (Nr. 1)", "-t", "pdf"]);
-            await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Fragezuordnung für Testverfahren Skala Outlook allgemein (Nr. 1) Test"]);
+            //await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Fragezuordnung für Testverfahren Skala Outlook allgemein (Nr. 1) Test"]);
 
             await RunWithScopeAsync(serviceProvider, args);
         }
