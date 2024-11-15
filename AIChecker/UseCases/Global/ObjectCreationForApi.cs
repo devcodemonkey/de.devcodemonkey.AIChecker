@@ -28,6 +28,30 @@ namespace de.devcodemonkey.AIChecker.UseCases.Global
             };
         }
 
+        public static Result CreateResult(SendToLmsParams sendToLmsParams, SystemPrompt systemPromptObject, IApiResult<ResponseData> apiResult, Model model)
+        {
+            return new Result
+            {
+                ResultId = Guid.NewGuid(),
+                RequestId = apiResult?.Data?.Id,
+                Asked = sendToLmsParams.UserMessage,
+                Message = apiResult?.Data?.Choices?.FirstOrDefault()?.Message?.Content,
+                ResponseFormat = sendToLmsParams.ResponseFormat,
+                Temperature = 0,
+                MaxTokens = sendToLmsParams.MaxTokens,
+                PromptTokens = apiResult?.Data?.Usage?.PromptTokens ?? 0,
+                CompletionTokens = apiResult?.Data?.Usage?.CompletionTokens ?? 0,
+                TotalTokens = apiResult?.Data?.Usage?.TotalTokens ?? 0,
+                RequestCreated = DateTimeOffset.FromUnixTimeSeconds(apiResult?.Data?.Created ?? 0).UtcDateTime,
+                RequestStart = apiResult!.RequestStart,
+                RequestEnd = apiResult.RequestEnd,
+                SystemPrompt = systemPromptObject,
+                Model = model,
+                AnswerId = sendToLmsParams.AnswerId,
+                QuestionsId = sendToLmsParams.QuestionId
+            };
+        }
+
         public static Result CreateResult(string asked, string? responseFormat, int? maxTokens, SystemPrompt systemPromptObject, IApiResult<ResponseData> apiResult, Model model)
         {
             return new Result

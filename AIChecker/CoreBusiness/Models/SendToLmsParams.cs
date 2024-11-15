@@ -16,5 +16,8 @@
         public virtual string Model { get; set; } = "nothing set";
         public virtual string? ResponseFormat { get; set; }
         public virtual string? QuestionCategory { get; set; }
+
+        public Guid? AnswerId { get; set; }
+        public Guid? QuestionId { get; set; }
     }
 }

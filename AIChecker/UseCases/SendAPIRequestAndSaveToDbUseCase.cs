@@ -53,9 +53,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 var apiResult = await SendChatRequestAsync(sendToLmsParams, messages);
 
                 var resultDb = ObjectCreationForApi.CreateResult(
-                    sendToLmsParams.UserMessage,
-                    sendToLmsParams.ResponseFormat,
-                    sendToLmsParams.MaxTokens,
+                    sendToLmsParams,
                     ObjectCreationForApi.CreateSystemPrompt(sendToLmsParams.SystemPrompt),
                     apiResult,
                     await _defaultMethodesRepository.ViewModelOverValueAysnc(sendToLmsParams.Model));
