@@ -40,6 +40,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //await RunWithScopeAsync(serviceProvider, ["model", "-a"]);
             //await RunWithScopeAsync(serviceProvider, ["model", "-v"]);
             //await RunWithScopeAsync(serviceProvider, ["model", "-l"]);
+            //await RunWithScopeAsync(serviceProvider, ["model", "-l", "-m", "bartowski/Mistral-Small-Instruct-2409-GGUF"]);
             //await RunWithScopeAsync(serviceProvider, ["model", "-u"]);
             //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "--help"]);
 
@@ -82,74 +83,74 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //* Unterschiedliche Fragen
             //* Erzeugung von 10 Fragen", "-m", "gpt-4o-mini-2024-07-18", "-s", "{ \"type\": \"json_object\" }"]);
 
-//            await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Prompt Ranking für Fragen erstellen (Nr. 3)"]);
+            //            await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Prompt Ranking für Fragen erstellen (Nr. 3)"]);
 
-//            var responseFormat = @"
-//{
-//    ""type"": ""json_schema"",
-//    ""json_schema"": {
-//      ""name"": ""questions"",
-//      ""schema"": {
-//        ""type"": ""object"",
-//        ""properties"": {
-//          ""questions"": {
-//            ""type"": ""array"",
-//            ""items"": {
-//              ""type"": ""object"",
-//              ""properties"": {
-//                ""Question"": {
-//                  ""type"": ""string"",
-//                  ""description"": ""The text of the question.""
-//                }
-//              },
-//              ""required"": [""Question""],
-//              ""additionalProperties"": false
-//            }
-//          }
-//        },
-//        ""required"": [""questions""],
-//        ""additionalProperties"": false
-//      },
-//      ""strict"": true
-//    }
-//  }
-//";
+            //            var responseFormat = @"
+            //{
+            //    ""type"": ""json_schema"",
+            //    ""json_schema"": {
+            //      ""name"": ""questions"",
+            //      ""schema"": {
+            //        ""type"": ""object"",
+            //        ""properties"": {
+            //          ""questions"": {
+            //            ""type"": ""array"",
+            //            ""items"": {
+            //              ""type"": ""object"",
+            //              ""properties"": {
+            //                ""Question"": {
+            //                  ""type"": ""string"",
+            //                  ""description"": ""The text of the question.""
+            //                }
+            //              },
+            //              ""required"": [""Question""],
+            //              ""additionalProperties"": false
+            //            }
+            //          }
+            //        },
+            //        ""required"": [""questions""],
+            //        ""additionalProperties"": false
+            //      },
+            //      ""strict"": true
+            //    }
+            //  }
+            //";
 
-//            var description = @"
-//Erstellt ein Ranking für einen Systemprompt für die Generierung von Fragen. Hierfür wird eine Frage aus dem Qutlook-FAQ verwendet.
-//Beim Test ""Prompt Ranking für Fragen erstellen (Nr. 2)"" konnte inhaltlich gute Ausgabe erzeugt werden. Allerdings waren nicht alle Ergebnisse im JSON Format
-//In diesem Test wird daher mit dem folgendem JSON-Schema gearbeitet:
-//{
-//    ""type"": ""json_schema"",
-//    ""json_schema"": {
-//      ""name"": ""questions"",
-//      ""schema"": {
-//        ""type"": ""object"",
-//        ""properties"": {
-//          ""questions"": {
-//            ""type"": ""array"",
-//            ""items"": {
-//              ""type"": ""object"",
-//              ""properties"": {
-//                ""Question"": {
-//                  ""type"": ""string"",
-//                  ""description"": ""The text of the question.""
-//                }
-//              },
-//              ""required"": [""Question""],
-//              ""additionalProperties"": false
-//            }
-//          }
-//        },
-//        ""required"": [""questions""],
-//        ""additionalProperties"": false
-//      },
-//      ""strict"": true
-//    }
-//}
-//Das Einbinden eines Dateiformats wird auf der folgenden Seite https://platform.openai.com/docs/guides/structured-outputs?context=ex1&lang=curl#introduction beschrieben.
-//";
-//            await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Prompt Ranking für Fragen erstellen (Nr. 3)", "-p", description, "-m", "gpt-4o-mini-2024-07-18", "-s", responseFormat]);
+            //            var description = @"
+            //Erstellt ein Ranking für einen Systemprompt für die Generierung von Fragen. Hierfür wird eine Frage aus dem Qutlook-FAQ verwendet.
+            //Beim Test ""Prompt Ranking für Fragen erstellen (Nr. 2)"" konnte inhaltlich gute Ausgabe erzeugt werden. Allerdings waren nicht alle Ergebnisse im JSON Format
+            //In diesem Test wird daher mit dem folgendem JSON-Schema gearbeitet:
+            //{
+            //    ""type"": ""json_schema"",
+            //    ""json_schema"": {
+            //      ""name"": ""questions"",
+            //      ""schema"": {
+            //        ""type"": ""object"",
+            //        ""properties"": {
+            //          ""questions"": {
+            //            ""type"": ""array"",
+            //            ""items"": {
+            //              ""type"": ""object"",
+            //              ""properties"": {
+            //                ""Question"": {
+            //                  ""type"": ""string"",
+            //                  ""description"": ""The text of the question.""
+            //                }
+            //              },
+            //              ""required"": [""Question""],
+            //              ""additionalProperties"": false
+            //            }
+            //          }
+            //        },
+            //        ""required"": [""questions""],
+            //        ""additionalProperties"": false
+            //      },
+            //      ""strict"": true
+            //    }
+            //}
+            //Das Einbinden eines Dateiformats wird auf der folgenden Seite https://platform.openai.com/docs/guides/structured-outputs?context=ex1&lang=curl#introduction beschrieben.
+            //";
+            //            await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Prompt Ranking für Fragen erstellen (Nr. 3)", "-p", description, "-m", "gpt-4o-mini-2024-07-18", "-s", responseFormat]);
 
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Prompt Ranking für Fragen erstellen (Nr. 1)", "-t", "pdf"]);
 

@@ -14,6 +14,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
         [Option('l', "load", HelpText = "Load a model")]
         public bool Load { get; set; }
 
+        [Option('m', "modelname", HelpText = "(Optional) can use with load")]
+        public string ModelName { get; set; }
+
         [Option('u', "unload", HelpText = "Unload a model")]
         public bool Unload { get; set; }
     }

@@ -273,15 +273,25 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             switch (opts)
             {
                 case { Load: true }:
-                    var modelsAllProperties = await _viewModels.ExecuteAsync();
-                    var modelNames = modelsAllProperties.Select(m => m.Value).ToArray();
-                    var modelName = AnsiConsole.Prompt(
-                        new SelectionPrompt<string>()
-                            .Title("Select a model to load")
-                            .PageSize(10)
-                            .AddChoices(modelNames)
-                    );
-                    var success = await _loadModelUseCase.ExecuteAsync(modelName);
+                    var modelName = opts.ModelName;
+                    if (string.IsNullOrEmpty(opts.ModelName))
+                    {
+                        var modelsAllProperties = await _viewModels.ExecuteAsync();
+                        var modelNames = modelsAllProperties.Select(m => m.Value).ToArray();
+                        modelName = AnsiConsole.Prompt(
+                            new SelectionPrompt<string>()
+                                .Title("Select a model to load")
+                                .PageSize(10)
+                                .AddChoices(modelNames)
+                        );
+                    }
+                    //add loading screen
+                    var success = false;
+                    await AnsiConsole.Status().StartAsync("Loading model...", async ctx =>
+                    {
+                        success = await _loadModelUseCase.ExecuteAsync(modelName);
+                        
+                    });
                     if (success)
                         AnsiConsole.Markup($"[green]Model '{modelName}' loaded successfully.[/]");
                     else
