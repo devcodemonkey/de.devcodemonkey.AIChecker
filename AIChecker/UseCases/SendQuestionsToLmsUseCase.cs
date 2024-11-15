@@ -26,11 +26,21 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
             var questions = await _defaultMethodesRepository.ViewQuestionAnswerByCategoryAsync(questionsCategoryId.Value);
 
+            var answers = await _defaultMethodesRepository.GetAllEntitiesAsync<Answer>();
+
             foreach (var question in questions)
             {
-                sendToLmsParams.UserMessage = question.Value;
-                await _sendAndSaveApiRequestUseCase.ExecuteAsync(sendToLmsParams);
+                foreach (var answer in answers)
+                {
+                    sendToLmsParams.UserMessage = ConcatQuestionAnswer(question.Value, answer.Value);
+                    sendToLmsParams.QuestionId = question.QuestionId;
+                    sendToLmsParams.AnswerId = answer.AnswerId;
+                    await _sendAndSaveApiRequestUseCase.ExecuteAsync(sendToLmsParams);
+                }                
             }
         }
+
+        private string ConcatQuestionAnswer(string question, string answer)
+            => $"Frage:\n\"{question}\"\nAntwort:\n\"{answer}\"";
     }
 }
