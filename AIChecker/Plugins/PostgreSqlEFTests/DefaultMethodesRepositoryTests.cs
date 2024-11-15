@@ -82,6 +82,55 @@ namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF.Tests
 
         }
 
-        
+        [TestMethod()]
+        public async Task RemoveResultSetAsyncTest()
+        {
+            // Arrange
+            var resultSetId = Guid.NewGuid();
+
+            // Seed the in-memory database
+            using (var context = new AicheckerContext(_options))
+            {
+                context!.Results.AddRange(new List<Result>
+                {
+                    new Result
+                    {
+                        ResultId = Guid.NewGuid(),
+                        ResultSet = new ResultSet {
+                            ResultSetId = resultSetId,
+                            Value = "ResultsetValue"+ Guid.NewGuid().ToString(),
+                            SystemResourceUsages = new List<SystemResourceUsage>
+                            {
+                                new SystemResourceUsage
+                                {
+                                    SystemResourceUsageId = Guid.NewGuid(),
+                                    ProcessId = 1,
+                                    ProcessName = "Test",
+                                    CpuUsage = 5,
+                                    MemoryUsage = 5
+                                },
+                                new SystemResourceUsage
+                                {
+                                    SystemResourceUsageId = Guid.NewGuid(),
+                                    ProcessId = 2,
+                                    ProcessName = "Test",
+                                    CpuUsage = 5,
+                                    MemoryUsage = 5
+                                }
+                            }
+                        },
+                        RequestStart = new DateTime(2024, 9, 12, 10, 0, 0),
+                        RequestEnd = new DateTime(2024, 9, 12, 10, 30, 0)
+                    }
+                });
+
+                context!.SaveChanges();
+            }
+
+            // Act, Assert
+            var repository = new DefaultMethodesRepository(new AicheckerContext(_options));
+            await repository.RemoveResultSetAsync(resultSetId);
+        }
+
     }
 }
