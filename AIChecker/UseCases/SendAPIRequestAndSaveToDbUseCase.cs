@@ -30,14 +30,16 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
         public async Task ExecuteAsync(SendToLmsParams sendToLmsParams)
         {
-            var ResultSetObject = await _defaultMethodesRepository.AddAsync(new ResultSet
-            {
-                ResultSetId = Guid.NewGuid(),
-                Value = sendToLmsParams.ResultSet,
-            });
+            var resultSetObject = await _defaultMethodesRepository.ViewOverValue<ResultSet>(sendToLmsParams.ResultSet);            
+            if (resultSetObject == null)
+                resultSetObject = await _defaultMethodesRepository.AddAsync(new ResultSet
+                {
+                    ResultSetId = Guid.NewGuid(),
+                    Value = sendToLmsParams.ResultSet,
+                });            
 
             if (sendToLmsParams.SaveProcessUsage)
-                await SaveProcessUsage(sendToLmsParams, ResultSetObject);
+                await SaveProcessUsage(sendToLmsParams, resultSetObject);
             else
                 await SendAndSaveApiRequest(sendToLmsParams);
         }
