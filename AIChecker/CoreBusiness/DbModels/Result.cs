@@ -6,6 +6,8 @@ public partial class Result
 
     public Guid? AnswerId { get; set; }
 
+    public Guid? QuestionsId { get; set; }
+
     public Guid ResultSetId { get; set; }
 
     public Guid? RequestObjectId { get; set; }
@@ -43,6 +45,8 @@ public partial class Result
     public virtual Model Model { get; set; } = null!;
 
     public virtual Answer? Answer { get; set; }
+
+    public virtual Question? Questions { get; set; }
 
     public virtual RequestObject RequestObject { get; set; } = null!;
 
