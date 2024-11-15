@@ -221,6 +221,15 @@ public class DefaultMethodesRepository : IDefaultMethodesRepository
             if (systemPrompt != null && !await _ctx.Results.AnyAsync(r => r.SystemPromptId == systemPrompt.SystemPromptId))
                 _ctx.SystemPrompts.Remove(systemPrompt);
 
+            // Remove all SystemResourceUsages of result if it was found
+            if (resultSet?.SystemResourceUsages != null)
+            {
+                var systemResourceUsages = await _ctx.SystemResourceUsages
+                    .Where(sru => sru.ResultSetId == resultSetId)
+                    .ToListAsync();
+                _ctx.SystemResourceUsages.RemoveRange(systemResourceUsages);
+                await _ctx.SaveChangesAsync();
+            }
 
             // Remove resultSet if it was found
             if (resultSet != null)

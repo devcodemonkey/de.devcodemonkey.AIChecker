@@ -290,7 +290,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     await AnsiConsole.Status().StartAsync("Loading model...", async ctx =>
                     {
                         success = await _loadModelUseCase.ExecuteAsync(modelName);
-                        
+
                     });
                     if (success)
                         AnsiConsole.Markup($"[green]Model '{modelName}' loaded successfully.[/]");
@@ -418,15 +418,19 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             });
         }
 
-        private async Task SendToLmsAsync(SendToLmsVerb opts) =>
+        private async Task SendToLmsAsync(SendToLmsVerb opts)
+        {
+            if (string.IsNullOrWhiteSpace(opts.QuestionCategory) && string.IsNullOrWhiteSpace(opts.UserMessage))            
+                throw new ArgumentException("Either 'message' or 'questionCategory' must be provided.");
+            
             await AnsiConsole.Status().StartAsync("Sending API request to LmStudio and saving to db...", async ctx =>
             {
                 if (string.IsNullOrEmpty(opts.QuestionCategory))
                     await _sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(opts);
                 else
                     await _sendQuestionsToLmsUseCase.ExecuteAsync(opts);
-            }
-        );
+            });
+        }
 
 
         private async Task ViewResultSetsAsync()
