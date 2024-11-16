@@ -295,7 +295,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                 }
             }
 
-            Console.WriteLine("Monitoring stopped.");
+            //Console.WriteLine("Monitoring stopped.");
         }
 
         private bool GetProcessIdFromPid(string input, out int pid)
