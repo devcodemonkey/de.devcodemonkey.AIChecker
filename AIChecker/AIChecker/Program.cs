@@ -154,7 +154,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Prompt Ranking für Fragen erstellen (Nr. 1)", "-t", "pdf"]);
             //await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Fragezuordnung für Testverfahren Skala Outlook allgemein (Nr. 1) Test"]);
-            //await RunWithScopeAsync(serviceProvider, ["sendToLms", "-r", "Fragezuordnung für Testverfahren Skala Outlook allgemein (Nr. 1) Test", "--questionCategory", "Outlook created Questions over gpt-4o-mini", "--questionsCorrect", "-s", ""]);
+            //await RunWithScopeAsync(serviceProvider, ["sendToLms", "-r", "Fragezuordnung für Testverfahren Skala Outlook allgemein (Nr. 1) Test", "--questionCategory", "Outlook created Questions over gpt-4o-mini", "--questionsCorrect", "-s", "", "-u", "1", "-w" ]);
             await RunWithScopeAsync(serviceProvider, args);
         }
 
@@ -205,36 +205,36 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 MdServiceRegistrationExtensions.AddServiceAndDependencies(services);
 
                 // Register services
-                services.AddScoped<Application>();
+                services.AddScoped<Application>();                
                 // Register plugins
-                services.AddSingleton<IDeserializer<QuestionAnswer>, Deserializer<QuestionAnswer>>();
-                services.AddSingleton<IAPIRequester, APIRequester>();
-                services.AddSingleton<ISystemMonitor, SystemMonitor>();
-                services.AddSingleton<IWslDatabaseService, WslDatabaseService>();
-                services.AddSingleton<ILoadUnloadLms, LoadUnloadLms>();
+                services.AddScoped<IDeserializer<QuestionAnswer>, Deserializer<QuestionAnswer>>();
+                services.AddScoped<IAPIRequester, APIRequester>();
+                services.AddScoped<ISystemMonitor, SystemMonitor>();
+                services.AddScoped<IWslDatabaseService, WslDatabaseService>();
+                services.AddScoped<ILoadUnloadLms, LoadUnloadLms>();
                 // Register use cases
-                services.AddSingleton<IRecreateDatabaseUseCase, RecreateDatabaseUseCase>();
-                services.AddSingleton<IImportQuestionAnswerUseCase, ImportQuestionAnswerUseCase>();
-                services.AddSingleton<IDeleteAllQuestionAnswerUseCase, DeleteAllQuestionAnswerUseCase>();
-                services.AddSingleton<IDeleteResultSetUseCase, DeleteResultSetUseCase>();
-                services.AddSingleton<ICreateMoreQuestionsUseCase, CreateMoreQuestionsUseCase>();
-                services.AddSingleton<IViewAverageTimeOfResultSetUseCase, ViewAverageTimeOfResultSetUseCase>();
-                services.AddSingleton<IViewResultSetsUseCase, ViewResultSetsUseCase>();
-                services.AddSingleton<IViewResultsOfResultSetUseCase, ViewResultsOfResultSetUseCase>();
-                services.AddSingleton<ISendAndSaveApiRequestUseCase, SendAPIRequestAndSaveToDbUseCase>();
-                services.AddSingleton<IViewGpuUsageUseCase, ViewGpuUsageUseCase>();
-                services.AddSingleton<IStartStopDatabaseUseCase, StartStopDatabaseUseCase>();
-                services.AddSingleton<IAddModelUseCase, AddModelUseCase>();
-                services.AddSingleton<IViewModels, ViewModels>();
-                services.AddSingleton<ILoadModelUseCase, LoadModelUseCase>();
-                services.AddSingleton<IUnloadModelUseCase, UnloadModelUseCase>();
-                services.AddSingleton<ICreatePromptRatingUseCase, CreatePromptRatingUseCase>();
-                services.AddSingleton<IImportQuestionsFromResultsUseCase, ImportQuestionsFromResultsUseCase>();
-                services.AddSingleton<ISendQuestionsToLmsUseCase, SendQuestionsToLmsUseCase>();
+                services.AddScoped<IRecreateDatabaseUseCase, RecreateDatabaseUseCase>();
+                services.AddScoped<IImportQuestionAnswerUseCase, ImportQuestionAnswerUseCase>();
+                services.AddScoped<IDeleteAllQuestionAnswerUseCase, DeleteAllQuestionAnswerUseCase>();
+                services.AddScoped<IDeleteResultSetUseCase, DeleteResultSetUseCase>();
+                services.AddScoped<ICreateMoreQuestionsUseCase, CreateMoreQuestionsUseCase>();
+                services.AddScoped<IViewAverageTimeOfResultSetUseCase, ViewAverageTimeOfResultSetUseCase>();
+                services.AddScoped<IViewResultSetsUseCase, ViewResultSetsUseCase>();
+                services.AddScoped<IViewResultsOfResultSetUseCase, ViewResultsOfResultSetUseCase>();
+                services.AddScoped<ISendAndSaveApiRequestUseCase, SendAPIRequestAndSaveToDbUseCase>();
+                services.AddScoped<IViewGpuUsageUseCase, ViewGpuUsageUseCase>();
+                services.AddScoped<IStartStopDatabaseUseCase, StartStopDatabaseUseCase>();
+                services.AddScoped<IAddModelUseCase, AddModelUseCase>();
+                services.AddScoped<IViewModels, ViewModels>();
+                services.AddScoped<ILoadModelUseCase, LoadModelUseCase>();
+                services.AddScoped<IUnloadModelUseCase, UnloadModelUseCase>();
+                services.AddScoped<ICreatePromptRatingUseCase, CreatePromptRatingUseCase>();
+                services.AddScoped<IImportQuestionsFromResultsUseCase, ImportQuestionsFromResultsUseCase>();
+                services.AddScoped<ISendQuestionsToLmsUseCase, SendQuestionsToLmsUseCase>();
 
                 services.AddScoped<IExportPromptRatingUseCase, ExportPromptRatingUseCase>();
 
-                services.AddSingleton<IBackupDatabaseUseCase, BackupDatabaseUseCase>(provider =>
+                services.AddScoped<IBackupDatabaseUseCase, BackupDatabaseUseCase>(provider =>
                 {
                     var wslDatabaseService = provider.GetRequiredService<IWslDatabaseService>();
                     var configuration = provider.GetRequiredService<IConfiguration>();

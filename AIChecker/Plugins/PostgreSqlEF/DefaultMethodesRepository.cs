@@ -138,16 +138,34 @@ public class DefaultMethodesRepository : IDefaultMethodesRepository
         }
     }
 
-    // Read-Only Operation (SemaphoreSlim not necessary)
+    // Use of SemaphoreSlim, because of two read tasks will access
+    // TODO: Test with own semaphore, than it will not block the other read and write tasks
     public async Task<Model> ViewModelOverValueAysnc(string value)
     {
-        return await _ctx.Models.FirstOrDefaultAsync(m => m.Value == value);
+        await _semaphore.WaitAsync();
+        try
+        {
+            return await _ctx.Models.FirstOrDefaultAsync(m => m.Value == value);
+        }
+        finally
+        {
+            _semaphore.Release();
+        }
     }
 
-    // Read-Only Operation (SemaphoreSlim not necessary)
+    // Use of SemaphoreSlim, because of two read tasks will access
+    // TODO: Test with own semaphore, than it will not block the other read and write tasks
     public async Task<TTable> ViewOverValue<TTable>(string value) where TTable : class, IValue
     {
-        return await _ctx.Set<TTable>().FirstOrDefaultAsync(t => t.Value == value);
+        await _semaphore.WaitAsync();
+        try
+        {
+            return await _ctx.Set<TTable>().FirstOrDefaultAsync(t => t.Value == value);
+        }
+        finally
+        {
+            _semaphore.Release();
+        }
     }
 
     // Read-Only Operation (SemaphoreSlim not necessary)
