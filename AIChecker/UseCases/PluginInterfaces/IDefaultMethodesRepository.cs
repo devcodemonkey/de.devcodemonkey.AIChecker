@@ -17,7 +17,7 @@ namespace de.devcodemonkey.AIChecker.UseCases.PluginInterfaces
         Task<TTable> ViewOverValue<TTable>(string value) where TTable : class, IValue;
         Task<TimeSpan> ViewAverageTimeOfResultSet(Guid resultSetId);
         Task RemoveResultSetAsync(Guid resultSetId);
-        Task<Guid> GetResultSetIdByValueAsync(string resultSetValue);
+        Task<Guid> GetResultSetIdByValueAsync(string? resultSetValue);
         Task<IEnumerable<Result>> ViewResultsOfResultSetAsync(Guid resultSetId);
         Task RecreateDatabaseAsync();
         Task<IEnumerable<T>> AddRangeAsync<T>(IEnumerable<T> entities) where T : class;

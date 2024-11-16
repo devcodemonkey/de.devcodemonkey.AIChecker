@@ -25,6 +25,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
             var questionsCategoryId = await _defaultMethodesRepository.ViewOverValue<QuestionCategory>(questionCategory);
 
             var questions = await _defaultMethodesRepository.ViewQuestionAnswerByCategoryAsync(questionsCategoryId.Value);
+            if(sendToLmsParams.QuestionsCorrect)
+                questions = questions.Where(q => q.Correct == true);
 
             var answers = await _defaultMethodesRepository.GetAllEntitiesAsync<Answer>();
 
@@ -36,7 +38,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     sendToLmsParams.QuestionId = question.QuestionId;
                     sendToLmsParams.AnswerId = answer.AnswerId;
                     await _sendAndSaveApiRequestUseCase.ExecuteAsync(sendToLmsParams);
-                }                
+                }
             }
         }
 

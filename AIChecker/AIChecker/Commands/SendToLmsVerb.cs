@@ -41,5 +41,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
         [Option("questionCategory", Default = null, HelpText = "The question category.")]
         public override string QuestionCategory { get; set; }
 
+        [Option("questionsCorrect", Default = false, HelpText = "The question checked. (Adjustable if 'questionCategory' is set.)")]
+        public override bool QuestionsCorrect { get; set; }
+
     }
 }

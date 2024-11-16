@@ -168,7 +168,9 @@ public class DefaultMethodesRepository : IDefaultMethodesRepository
     public async Task<Guid> GetResultSetIdByValueAsync(string resultSetValue)
     {
         var resultSet = await _ctx.ResultSets.FirstOrDefaultAsync(rs => rs.Value.Trim() == resultSetValue.Trim());
-        return resultSet!.ResultSetId;
+        if (resultSet == null)
+            throw new ArgumentException("ResultSet with the specified value does not exist.");
+        return resultSet.ResultSetId;
     }
 
     // Read-Only Operation (SemaphoreSlim not necessary)
