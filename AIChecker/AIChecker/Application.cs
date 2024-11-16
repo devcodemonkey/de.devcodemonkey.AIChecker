@@ -438,7 +438,30 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 if (string.IsNullOrEmpty(opts.QuestionCategory))
                     await _sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(opts);
                 else
-                    await _sendQuestionsToLmsUseCase.ExecuteAsync(opts);
+                    await _sendQuestionsToLmsUseCase.ExecuteAsync(opts, progressAction: (progressMetrics) =>
+                    {
+                        // Display progress metrics
+                        //AnsiConsole.MarkupLine($"[yellow]Questions:[/] {progressMetrics.QuestionsCounter}/{progressMetrics.QuestionsCount}");
+                        //AnsiConsole.MarkupLine($"[yellow]Answers:[/] {progressMetrics.AnswersCounter}/{progressMetrics.AnswersCount}");
+                        //AnsiConsole.MarkupLine($"[yellow]Total:[/] {progressMetrics.TotalCounter}/{progressMetrics.QuestionsCount * progressMetrics.AnswersCount}");
+                        //AnsiConsole.MarkupLine($"[yellow]Running Time:[/] {progressMetrics.RunningTime.ToString(@"hh\:mm\:ss")}");
+                        //AnsiConsole.MarkupLine($"[yellow]Estimated Time to Finish:[/] {progressMetrics.CalulationTime.ToString(@"hh\:mm\:ss")}");
+
+                        var table = new Table()
+                            .Border(TableBorder.Rounded)
+                            .Title("[yellow bold]Progress Metrics[/]")
+                            .AddColumn("[bold yellow]Metric[/]")
+                            .AddColumn("[bold yellow]Value[/]")
+                            .AddRow("[green]Questions[/]", $"[bold]{progressMetrics.QuestionsCounter}/{progressMetrics.QuestionsCount}[/]")
+                            .AddRow("[green]Answers[/]", $"[bold]{progressMetrics.AnswersCounter}/{progressMetrics.AnswersCount}[/]")
+                            .AddRow("[green]Total[/]", $"[bold]{progressMetrics.TotalCounter}/{progressMetrics.QuestionsCount * progressMetrics.AnswersCount}[/]")
+                            .AddRow("[green]Running Time[/]", $"[bold]{progressMetrics.RunningTime.ToString(@"hh\:mm\:ss")}[/]")
+                            .AddRow("[green]Estimated Time to Finish[/]", $"[bold]{progressMetrics.CalulationTime.ToString(@"hh\:mm\:ss")}[/]");
+                        
+                        AnsiConsole.Write(table);
+
+
+                    });
             });
         }
 

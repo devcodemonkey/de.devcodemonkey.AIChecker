@@ -3,7 +3,7 @@
 namespace de.devcodemonkey.AIChecker.UseCases.Interfaces
 {
     public interface ISendQuestionsToLmsUseCase
-    {
-        Task ExecuteAsync(SendToLmsParams sendToLmsParams);
+    {        
+        Task ExecuteAsync(SendToLmsParams sendToLmsParams, Action<LoadingProgressQuestions>? progressAction = null);
     }
 }
