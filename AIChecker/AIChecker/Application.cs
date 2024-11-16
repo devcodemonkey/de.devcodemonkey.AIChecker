@@ -134,7 +134,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             await AnsiConsole.Status().StartAsync("Deleting result set...", async ctx =>
                 await _deleteResultSetUseCase.ExecuteAsync(opts.ResultSet)
             );
-            AnsiConsole.MarkupLine("[green]Result set deleted![/]");            
+            AnsiConsole.MarkupLine("[green]Result set deleted![/]");
         }
 
         private async Task ImportQuestionsFromResultsVerb(ImportQuestionsFromResultsVerb opts)
@@ -427,11 +427,11 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         private async Task SendToLmsAsync(SendToLmsVerb opts)
         {
-            if (string.IsNullOrWhiteSpace(opts.QuestionCategory) && string.IsNullOrWhiteSpace(opts.UserMessage))            
+            if (string.IsNullOrWhiteSpace(opts.QuestionCategory) && string.IsNullOrWhiteSpace(opts.UserMessage))
                 throw new ArgumentException("Either 'message' or 'questionCategory' must be provided.");
-            if (opts.ResponseFormat.ToLower().Equals("ask"))
+            if (opts.ResponseFormat != null && opts.ResponseFormat.ToLower().Equals("ask"))
                 opts.ResponseFormat = MultiLineInput("Response Format");
-            if (opts.SystemPrompt.ToLower().Equals("ask"))
+            if (opts.SystemPrompt != null && opts.SystemPrompt.ToLower().Equals("ask"))
                 opts.SystemPrompt = MultiLineInput("System Prompt");
             await AnsiConsole.Status().StartAsync("Sending API request to LmStudio and saving to db...", async ctx =>
             {
