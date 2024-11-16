@@ -23,7 +23,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
 
         [Option('i', "saveInterval", Default = 5, HelpText = "The save interval.")]
         public override int SaveInterval { get; set; }
-        [Option('w', "writeOutput", Default = true, HelpText = "Write process output to console")]
+        [Option('w', "writeOutput", Default = false, HelpText = "Write process output to console")]
         public override bool WriteOutput { get; set; }
 
         [Option("environmentTokenName", Default = null, HelpText = "The environment token name to set the bearer token for the api.")]
