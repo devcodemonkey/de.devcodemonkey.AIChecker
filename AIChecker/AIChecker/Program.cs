@@ -231,6 +231,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 services.AddScoped<ICreatePromptRatingUseCase, CreatePromptRatingUseCase>();
                 services.AddScoped<IImportQuestionsFromResultsUseCase, ImportQuestionsFromResultsUseCase>();
                 services.AddScoped<ISendQuestionsToLmsUseCase, SendQuestionsToLmsUseCase>();
+                services.AddScoped<ICheckJsonFormatOfResultsUseCase, CheckJsonFormatOfResultsUseCase>();
 
                 services.AddScoped<IExportPromptRatingUseCase, ExportPromptRatingUseCase>();
 

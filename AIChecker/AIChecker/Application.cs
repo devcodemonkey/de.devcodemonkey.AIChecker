@@ -36,6 +36,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IExportPromptRatingUseCase _exportPromptRatingUseCase;
         private readonly IImportQuestionsFromResultsUseCase _importQuestionsFromResultsUseCase;
         private readonly ISendQuestionsToLmsUseCase _sendQuestionsToLmsUseCase;
+        private readonly ICheckJsonFormatOfResultsUseCase _checkJsonFormatOfResultsUseCase;
 
         public Application(
             IRecreateDatabaseUseCase recreateDatabaseUseCase,
@@ -57,7 +58,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             ICreatePromptRatingUseCase createPromptRatingUseCase,
             IExportPromptRatingUseCase exportPromptRatingUseCase,
             IImportQuestionsFromResultsUseCase importQuestionsFromResultsUseCase,
-            ISendQuestionsToLmsUseCase sendQuestionsToLmsUseCase)
+            ISendQuestionsToLmsUseCase sendQuestionsToLmsUseCase,
+            ICheckJsonFormatOfResultsUseCase checkJsonFormatOfResultsUseCase)
         {
             _recreateDatabaseUseCase = recreateDatabaseUseCase;
             _importQuestionAnswerUseCase = importQuestionAnswerUseCase;
@@ -79,6 +81,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             _exportPromptRatingUseCase = exportPromptRatingUseCase;
             _importQuestionsFromResultsUseCase = importQuestionsFromResultsUseCase;
             _sendQuestionsToLmsUseCase = sendQuestionsToLmsUseCase;
+            _checkJsonFormatOfResultsUseCase = checkJsonFormatOfResultsUseCase;
         }
 
         public async Task RunAsync(string[] args)
@@ -97,6 +100,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 ImportQuestionsVerb, ImportQuestionsFromResultsVerb, ViewResultSetsVerb,
                 ViewAverageVerb, ViewResultsVerb, ViewProcessUsageVerb, DeleteResultSetVerb,
                 DeleteAllQuestionsVerb, CreateMoreQuestionsVerb, ModelVerb, ExportPromptRankVerb,
+                //CheckJsonVerb,
                 InfoVerb>(args)
             .MapResult(
                 async (DatabaseVerb opts) => await StartStopDatabase(opts),
@@ -121,6 +125,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 async (ModelVerb opts) => await ManageModel(opts),
 
                 async (ExportPromptRankVerb opts) => await ExportRank(opts),
+
+                //async (CheckJsonVerb opts) => await _checkJsonFormatOfResultsUseCase.ExecuteAsync(opts.ResultSet),
 
                 async (InfoVerb opts) => await DisplayAppInfoAsync(),
                 errs => Task.FromResult(0)
@@ -457,7 +463,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                             .AddRow("[green]Total[/]", $"[bold]{progressMetrics.TotalCounter}/{progressMetrics.QuestionsCount * progressMetrics.AnswersCount}[/]")
                             .AddRow("[green]Running Time[/]", $"[bold]{progressMetrics.RunningTime.ToString(@"hh\:mm\:ss")}[/]")
                             .AddRow("[green]Estimated Time to Finish[/]", $"[bold]{progressMetrics.CalulationTime.ToString(@"hh\:mm\:ss")}[/]");
-                        
+
                         AnsiConsole.Write(table);
 
 

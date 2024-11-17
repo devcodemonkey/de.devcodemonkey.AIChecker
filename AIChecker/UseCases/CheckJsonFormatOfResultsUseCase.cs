@@ -1,14 +1,15 @@
 ﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using de.devcodemonkey.AIChecker.UseCases.Global;
+using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace de.devcodemonkey.AIChecker.UseCases
 {
-    public class CheckJsonFormatOfResultsUseCase
+    public class CheckJsonFormatOfResultsUseCase : ICheckJsonFormatOfResultsUseCase
     {
-        private readonly IDefaultMethodesRepository _defaultMethodesRepository;        
+        private readonly IDefaultMethodesRepository _defaultMethodesRepository;
 
         public CheckJsonFormatOfResultsUseCase(IDefaultMethodesRepository defaultMethodesRepository)
             => _defaultMethodesRepository = defaultMethodesRepository;
@@ -24,7 +25,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 results = await _defaultMethodesRepository.ViewResultsOfResultSetAsync(resultSetId);
             }
 
-            foreach (var result in results)                        
+            foreach (var result in results)
                 result.IsJson = JsonValidator.IsValidJson(result.Message);
 
             return results;
