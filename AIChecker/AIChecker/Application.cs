@@ -124,13 +124,41 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
                 async (ExportPromptRankVerb opts) => await ExportRank(opts),
 
-                async (CheckJsonVerb opts) => await _checkJsonFormatOfResultsUseCase.ExecuteAsync(opts.ResultSet),
+                async (CheckJsonVerb opts) => CheckJsonVerb(opts),
 
                 async (InfoVerb opts) => await DisplayAppInfoAsync(),
                 errs => Task.FromResult(0)
             );
 
             await parsingTask;
+        }
+
+        private async void CheckJsonVerb(CheckJsonVerb opts)
+        {
+            await AnsiConsole.Status().StartAsync("Checking JSON format of results...", async ctx =>
+            {
+                var results = await _checkJsonFormatOfResultsUseCase.ExecuteAsync(opts.ResultSet);
+                var table = new Table();
+                table.AddColumn("ResultSet");
+                table.AddColumn("Model");
+                table.AddColumn("System Prompt");
+                table.AddColumn("Asked");
+                table.AddColumn("Message");
+                table.AddColumn("IsJson");
+                foreach (var result in results)
+                {
+                    table.AddRow(
+                        result.ResultSet.Value,
+                        result.Model.Value,
+                        result.SystemPrompt.Value,
+                        result.Asked.ToString(),
+                        result.Message,
+                        result.IsJson ? "Yes" : "No"
+                    );
+                }
+                AnsiConsole.Write(new Rule("[yellow]Results[/]").RuleStyle("green"));
+                AnsiConsole.Write(table);
+            });
         }
 
         private async Task DeleteResultSet(DeleteResultSetVerb opts)
