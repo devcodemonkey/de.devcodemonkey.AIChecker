@@ -124,7 +124,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
                 async (ExportPromptRankVerb opts) => await ExportRank(opts),
 
-                async (CheckJsonVerb opts) => CheckJsonVerb(opts),
+                async (CheckJsonVerb opts) => await CheckJsonVerb(opts),
 
                 async (InfoVerb opts) => await DisplayAppInfoAsync(),
                 errs => Task.FromResult(0)
@@ -133,31 +133,39 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             await parsingTask;
         }
 
-        private async void CheckJsonVerb(CheckJsonVerb opts)
+        private async Task CheckJsonVerb(CheckJsonVerb opts)
         {
             await AnsiConsole.Status().StartAsync("Checking JSON format of results...", async ctx =>
             {
                 var results = await _checkJsonFormatOfResultsUseCase.ExecuteAsync(opts.ResultSet);
-                var table = new Table();
-                table.AddColumn("ResultSet");
-                table.AddColumn("Model");
-                table.AddColumn("System Prompt");
-                table.AddColumn("Asked");
-                table.AddColumn("Message");
-                table.AddColumn("IsJson");
-                foreach (var result in results)
+                if (opts.ShowOutput)
                 {
-                    table.AddRow(
-                        result.ResultSet.Value,
-                        result.Model.Value,
-                        result.SystemPrompt.Value,
-                        result.Asked.ToString(),
-                        result.Message,
-                        result.IsJson ? "Yes" : "No"
-                    );
+                    var table = new Table();
+                    table.AddColumn("ResultSet");
+                    table.AddColumn("Model");
+                    table.AddColumn("System Prompt");
+                    table.AddColumn("Asked");
+                    table.AddColumn("Message");
+                    table.AddColumn("IsJson");
+                    foreach (var result in results)
+                    {
+                        table.AddRow(
+                            new Text(result.ResultSet.Value, new Style()),
+                            new Text(result.Model.Value, new Style()),
+                            new Text(result.SystemPrompt.Value, new Style()),
+                            new Text(result.Asked.ToString(), new Style()),
+                            new Text(result.Message, new Style()),
+                            new Text(result.IsJson ? "Yes" : "No", new Style())
+                        );
+                    }
+                    AnsiConsole.Write(new Rule("[yellow]Results[/]").RuleStyle("green"));
+                    AnsiConsole.Write(table);
                 }
-                AnsiConsole.Write(new Rule("[yellow]Results[/]").RuleStyle("green"));
-                AnsiConsole.Write(table);
+                // Count the number of results that are not valid JSON format and that are valid JSON format and display the count
+                var invalidJsonCount = results.Count(r => !r.IsJson);
+                var validJsonCount = results.Count(r => r.IsJson);
+                AnsiConsole.MarkupLine($"[yellow]Invalid JSON:[/] {invalidJsonCount}");
+                AnsiConsole.MarkupLine($"[yellow]Valid JSON:[/] {validJsonCount}");
             });
         }
 
