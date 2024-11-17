@@ -72,9 +72,8 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
         private async Task<IApiResult<ResponseData>> SendChatRequestAsync(SendToLmsParams sendToLmsParams, List<IMessage> messages)
         {
-            JsonElement? json = null;
-            if (!string.IsNullOrWhiteSpace(sendToLmsParams?.ResponseFormat))
-                json = JsonDocument.Parse(sendToLmsParams.ResponseFormat).RootElement;
+            var json = JsonValidator.ConvertToJsonFormat(sendToLmsParams.ResponseFormat);
+
             var requestData = new RequestData
             {
                 Messages = messages,

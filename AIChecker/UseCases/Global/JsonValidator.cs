@@ -18,5 +18,14 @@ namespace de.devcodemonkey.AIChecker.UseCases.Global
                 return false;
             }
         }
+
+        public static JsonElement? ConvertToJsonFormat(string? json)
+        {
+            if(json == null)
+                return null;
+            if (!IsValidJson(json))
+                throw new JsonException("Invalid JSON");
+            return JsonDocument.Parse(json).RootElement;
+        }
     }
 }
