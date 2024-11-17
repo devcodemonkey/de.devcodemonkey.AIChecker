@@ -100,10 +100,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 ImportQuestionsVerb, ImportQuestionsFromResultsVerb, ViewResultSetsVerb,
                 ViewAverageVerb, ViewResultsVerb, ViewProcessUsageVerb, DeleteResultSetVerb,
                 DeleteAllQuestionsVerb, CreateMoreQuestionsVerb, ModelVerb, ExportPromptRankVerb,
-                //CheckJsonVerb,
-                InfoVerb>(args)
+                CheckJsonVerb, InfoVerb>(args)
             .MapResult(
-                async (DatabaseVerb opts) => await StartStopDatabase(opts),                
+                async (DatabaseVerb opts) => await StartStopDatabase(opts),
 
                 async (RankPromptVerb opts) => await RankPrompt(opts),
 
@@ -125,7 +124,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
                 async (ExportPromptRankVerb opts) => await ExportRank(opts),
 
-                //async (CheckJsonVerb opts) => await _checkJsonFormatOfResultsUseCase.ExecuteAsync(opts.ResultSet),
+                async (CheckJsonVerb opts) => await _checkJsonFormatOfResultsUseCase.ExecuteAsync(opts.ResultSet),
 
                 async (InfoVerb opts) => await DisplayAppInfoAsync(),
                 errs => Task.FromResult(0)
