@@ -27,7 +27,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
             var questions = await _defaultMethodesRepository.ViewQuestionAnswerByCategoryAsync(questionsCategoryId.Value);
             if (sendToLmsParams.QuestionsCorrect)
-                questions = questions.Where(q => q.Correct == true);
+                questions = questions.Where(q => q.IsCorrect == true);
 
             var answers = await _defaultMethodesRepository.GetAllEntitiesAsync<Answer>();
 

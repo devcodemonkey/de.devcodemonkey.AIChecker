@@ -10,7 +10,7 @@ public partial class Question
 
     public string Value { get; set; } = null!;
 
-    public bool? Correct { get; set; } = null!;
+    public bool? IsCorrect { get; set; } = null!;
 
     public virtual Answer Answer { get; set; } = null!;
 

@@ -40,7 +40,9 @@ public partial class Result
 
     public DateTime? RequestStart { get; set; }
 
-    public DateTime? RequestEnd { get; set; }        
+    public DateTime? RequestEnd { get; set; }
+
+    public bool IsJson { get; set; }
 
     public virtual Model Model { get; set; } = null!;
 
