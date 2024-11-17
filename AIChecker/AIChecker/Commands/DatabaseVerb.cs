@@ -13,5 +13,11 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
 
         [Option('b', "backup", HelpText = "Backup the database.")]
         public bool Backup { get; set; }
+
+        [Option("recreateDatabase", HelpText = "Recreates the database.")]
+        public bool RecreateDatabase { get; set; }
+
+        [Option('f', "force", Required = false, HelpText = "Force the recreation of the database.")]
+        public bool Force { get; set; }
     }
 }

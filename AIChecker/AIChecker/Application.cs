@@ -96,15 +96,14 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             {
                 config.HelpWriter = Console.Out;
             })
-            .ParseArguments<DatabaseVerb, RecreateDatabaseVerb, RankPromptVerb, SendToLmsVerb,
+            .ParseArguments<DatabaseVerb, RankPromptVerb, SendToLmsVerb,
                 ImportQuestionsVerb, ImportQuestionsFromResultsVerb, ViewResultSetsVerb,
                 ViewAverageVerb, ViewResultsVerb, ViewProcessUsageVerb, DeleteResultSetVerb,
                 DeleteAllQuestionsVerb, CreateMoreQuestionsVerb, ModelVerb, ExportPromptRankVerb,
                 //CheckJsonVerb,
                 InfoVerb>(args)
             .MapResult(
-                async (DatabaseVerb opts) => await StartStopDatabase(opts),
-                async (RecreateDatabaseVerb opts) => await RecreateDatabaseAsync(opts),
+                async (DatabaseVerb opts) => await StartStopDatabase(opts),                
 
                 async (RankPromptVerb opts) => await RankPrompt(opts),
 
@@ -365,6 +364,12 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     AnsiConsole.Markup("[red]Database backup failed.[/]");
                 return;
             }
+            if (opts.RecreateDatabase)
+            {
+                await RecreateDatabaseAsync(opts);
+                return;
+            }
+
             if (opts.Stop)
                 await _startStopDatabaseUseCase.ExecuteAsync(false);
             else
@@ -395,7 +400,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             return Task.CompletedTask;
         }
 
-        private async Task RecreateDatabaseAsync(RecreateDatabaseVerb opts)
+        private async Task RecreateDatabaseAsync(DatabaseVerb opts)
         {
             if (!opts.Force)
             {
