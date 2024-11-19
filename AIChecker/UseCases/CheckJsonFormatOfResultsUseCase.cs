@@ -23,8 +23,10 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 results = await _defaultMethodesRepository.ViewResultsOfResultSetAsync(resultSetId);
             }
 
-            foreach (var result in results)
+            foreach (var result in results) { 
                 result.IsJson = JsonValidator.IsValidJson(result.Message);
+                await _defaultMethodesRepository.UpdateAsync(result);
+            }
 
             return results;
         }
