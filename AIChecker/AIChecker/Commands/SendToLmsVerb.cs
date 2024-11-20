@@ -6,7 +6,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
     [Verb("sendToLms", HelpText = "Sends an API request to the LmStudio and saves the result to the db.")]
     public class SendToLmsVerb : SendToLmsParams
     {
-        [Option('m', "message", Required = false, HelpText = "The user message. Required if questionCategory is not set.")]
+        [Option('m', "message", Required = false, HelpText = "The user message. Required if questionCategory is not set. If you want to ask for it, set an 'ask' parameter.")]
         public override string UserMessage { get; set; }
         [Option('r', "resultSet", Required = true, HelpText = "The result set name.")]
         public override string ResultSet { get; set; }
