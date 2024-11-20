@@ -516,6 +516,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 table.AddColumn(new TableColumn("[bold yellow]Average Time (s)[/]").Centered());
 
                 var resultSets = await _viewResultSetsUseCase.ExecuteAsync();
+
+                resultSets = resultSets.OrderBy(r => r.Item1.Value);
                 foreach (var resultSet in resultSets)
                 {
                     table.AddRow(
