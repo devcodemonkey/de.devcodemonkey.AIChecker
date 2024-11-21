@@ -514,7 +514,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             {
                 var table = new Table();
                 table.AddColumn(new TableColumn("[bold yellow]ID[/]").Centered());
-                table.AddColumn(new TableColumn("[bold yellow]Value[/]").Centered());
+                table.AddColumn(new TableColumn("[bold yellow]Value[/]").LeftAligned());
                 table.AddColumn(new TableColumn("[bold yellow]Average Time (s)[/]").Centered());
 
                 var resultSets = await _viewResultSetsUseCase.ExecuteAsync();
