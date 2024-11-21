@@ -1,4 +1,5 @@
-﻿using CommandLine;
+﻿using AngleSharp;
+using CommandLine;
 using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 
 namespace de.devcodemonkey.AIChecker.AIChecker.Commands
@@ -26,10 +27,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker.Commands
         [Option('w', "writeOutput", Default = false, HelpText = "Write process output to console")]
         public override bool WriteOutput { get; set; }
 
-        [Option("environmentTokenName", Default = null, HelpText = "The environment token name to set the bearer token for the api.")]
+        [Option("environmentTokenName", Default = null, HelpText = $"The environment token name to set the bearer token for the api. The environment variable {UseCases.Configuration.EnvironmentTokenName} is automatically selected when you set an openAi model with gpt in the name.")]
         public override string EnvironmentTokenName { get; set; }
 
-        [Option("source", Default = "http://localhost:1234/v1/chat/completions", HelpText = "The source url. Default is http://localhost:1234/v1/chat/completions, default endpoint form Lm Studio.")]
+        [Option("source", Default = "http://localhost:1234/v1/chat/completions", HelpText = $"The source url. The openAi URL ({UseCases.Configuration.ApiSourceChatGpt}) is automatically selected when you set an openAi model with gpt in the name.")]
         public override string Source { get; set; }
 
         [Option("model", Default = "nothing set", HelpText = "The model name.")]

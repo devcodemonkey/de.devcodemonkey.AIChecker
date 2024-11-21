@@ -30,13 +30,13 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
         public async Task ExecuteAsync(SendToLmsParams sendToLmsParams)
         {
-            var resultSetObject = await _defaultMethodesRepository.ViewOverValue<ResultSet>(sendToLmsParams.ResultSet);            
+            var resultSetObject = await _defaultMethodesRepository.ViewOverValue<ResultSet>(sendToLmsParams.ResultSet);
             if (resultSetObject == null)
                 resultSetObject = await _defaultMethodesRepository.AddAsync(new ResultSet
                 {
                     ResultSetId = Guid.NewGuid(),
                     Value = sendToLmsParams.ResultSet,
-                });            
+                });
 
             if (sendToLmsParams.SaveProcessUsage)
                 await SaveProcessUsage(sendToLmsParams, resultSetObject);
@@ -74,14 +74,16 @@ namespace de.devcodemonkey.AIChecker.UseCases
         {
             var json = JsonValidator.ConvertToJsonFormat(sendToLmsParams.ResponseFormat);
 
+            var isOpenAiModel = sendToLmsParams.Model.ToLower().Contains("gpt");
+
             var requestData = new RequestData
             {
                 Messages = messages,
                 MaxTokens = sendToLmsParams.MaxTokens,
                 Temperature = sendToLmsParams.Temperature,
                 Model = sendToLmsParams.Model,
-                Source = sendToLmsParams.Source,
-                EnvironmentTokenName = sendToLmsParams.EnvironmentTokenName,
+                Source = isOpenAiModel ? Configuration.ApiSourceChatGpt : sendToLmsParams.Source,
+                EnvironmentTokenName = isOpenAiModel ? Configuration.EnvironmentTokenName : sendToLmsParams.EnvironmentTokenName,
                 Stream = false,
                 RequestTimeout = null,
                 ResponseFormat = json
