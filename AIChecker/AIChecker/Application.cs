@@ -479,9 +479,11 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 opts.ResponseFormat = MultiLineInput("Response Format");
             if (opts.SystemPrompt != null && opts.SystemPrompt.ToLower().Equals("ask"))
                 opts.SystemPrompt = MultiLineInput("System Prompt");
-            if(opts.UserMessage != null && opts.UserMessage.ToLower().Equals("ask"))
+            if (opts.UserMessage != null && opts.UserMessage.ToLower().Equals("ask"))
                 opts.UserMessage = MultiLineInput("User Message");
-            await AnsiConsole.Status().StartAsync("Sending API request to LmStudio and saving to db...", async ctx =>
+
+            var isOpenAiModel = opts.Model.ToLower().Contains("gpt");
+            await AnsiConsole.Status().StartAsync($"Sending API request to {(isOpenAiModel ? "OpenAi Api" : "LmStudio")} and saving to db...", async ctx =>
             {
                 if (string.IsNullOrEmpty(opts.QuestionCategory))
                     await _sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(opts);
