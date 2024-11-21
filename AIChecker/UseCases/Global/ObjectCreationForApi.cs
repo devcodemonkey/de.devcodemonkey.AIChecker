@@ -14,17 +14,17 @@ namespace de.devcodemonkey.AIChecker.UseCases.Global
     {
         public static List<IMessage> CreateMessageForApi(string systemPrompt, string message)
         {
-            return new List<IMessage> {
+            return new List<IMessage> {                
+                new Message
+                {
+                    Role = "system",
+                    Content = systemPrompt
+                },
                 new Message
                 {
                     Role = "user",
                     Content = message
                 },
-                new Message
-                {
-                    Role = "system",
-                    Content = systemPrompt
-                }
             };
         }
 
