@@ -3,7 +3,7 @@ using System.Runtime.Versioning;
 
 namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
 
-    [SupportedOSPlatform("windows")]
+[SupportedOSPlatform("windows")]
 public class WslDatabaseService : IWslDatabaseService
 {
     public bool StartDatabase(bool runInBackground = false)
@@ -71,6 +71,41 @@ public class WslDatabaseService : IWslDatabaseService
 
         return true;
     }
+
+    public bool RestoreDatabaseFromGit(string gitRemoteUrl, string gitRepositoryName, string gitBranchName)
+    {
+        if (string.IsNullOrEmpty(gitRemoteUrl))
+            throw new ArgumentNullException(nameof(gitRemoteUrl), "Remote URL must be set");
+        if (string.IsNullOrEmpty(gitRepositoryName))
+            throw new ArgumentNullException(nameof(gitRepositoryName), "Repository name must be set");
+        if (string.IsNullOrEmpty(gitBranchName))
+            throw new ArgumentNullException(nameof(gitBranchName), "Branch name must be set");
+
+        string repoPath = $"/tmp/{gitRepositoryName}";
+
+        // Step 1: Clone the Git repository and switch to the specified branch
+        if (!RunCommandOnWsl($"cd /tmp && rm -rf {gitRepositoryName} && git clone {gitRemoteUrl}/{gitRepositoryName}.git"))
+            return false;
+        if (!RunCommandOnWsl($"cd {repoPath} && git checkout {gitBranchName}"))
+            return false;
+
+        // Step 2: Assume the SQL backup file name is derived from the branch name
+        string sqlFileName = $"{gitBranchName.Split('/').Last()}.sql";
+        string sqlFilePath = $"{repoPath}/{sqlFileName}";
+
+        // Step 3: Restore the database from the backup file
+        string dockerCommand = $"docker exec -i aichecker-db-1 psql -U AiChecker -h localhost -p 5432 AiCheckerDB < {sqlFilePath}";
+        if (!RunCommandOnWsl(dockerCommand))
+            return false;
+
+        // Step 4: Clean up the temporary files
+        if (!RunCommandOnWsl($"cd /tmp && rm -rf {gitRepositoryName}"))
+            return false;
+
+        return true;
+    }
+
+
 
 
     public bool RunCommandInPowershell(string command)

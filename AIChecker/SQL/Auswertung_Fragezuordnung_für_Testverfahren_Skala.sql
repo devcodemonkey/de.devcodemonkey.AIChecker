@@ -105,6 +105,7 @@ order by "MaxValueCount"
 -- Treffer/-quote
 with maxbewertungen as (
     select
+    	rs."Value" as  "ResultSet",
         r."QuestionsId",
         r."AnswerId" as "AnswerIdResult",
         q."AnswerId" as "AnswerIdQuestions(Korrekt)",
@@ -115,14 +116,38 @@ with maxbewertungen as (
     join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId"
     left join "Questions" q on q."QuestionId" = r."QuestionsId"
     where 
-        rs."Value" like 'Fragezuordnung für Testverfahren Skala%' 
+        rs."Value" like 'Fragezuordnung für Testverfahren Skala auf%' 
         and r."IsJson" = true
 )
-select "QuestionsId", "AnswerIdResult", "AnswerIdQuestions(Korrekt)", "Bewertung", "MaxValueCount"
+select "ResultSet","QuestionsId", "AnswerIdResult", "AnswerIdQuestions(Korrekt)", "Bewertung", "MaxValueCount"
 from maxbewertungen
 where "Bewertung" = "MaxBewertung"
-and "AnswerIdQuestions(Korrekt)" = "AnswerIdResult";
-order by "MaxValueCount"
+and "AnswerIdQuestions(Korrekt)" = "AnswerIdResult"
+order by "MaxValueCount";
+
+--- 3 Besten werte, Berchnung, der Treffer
+with maxbewertungen as (
+    select
+        rs."Value" as "ResultSet",
+        r."QuestionsId",
+        r."AnswerId" as "AnswerIdResult",
+        q."AnswerId" as "AnswerIdQuestions(Korrekt)",
+        (r."Message"::jsonb ->> 'Bewertung')::numeric as "Bewertung",
+        max((r."Message"::jsonb ->> 'Bewertung')::numeric) over (partition by r."QuestionsId") as "MaxBewertung",
+        count(*) over (partition by r."QuestionsId", (r."Message"::jsonb ->> 'Bewertung')::numeric) as "MaxValueCount",
+        rank() over (partition by r."QuestionsId" order by (r."Message"::jsonb ->> 'Bewertung')::numeric desc) as rank
+    from "Results" r
+    join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId"
+    left join "Questions" q on q."QuestionId" = r."QuestionsId"
+    where 
+        rs."Value" like 'Fragezuordnung für Testverfahren Skala auf gpt-4o%' 
+        and r."IsJson" = true
+)
+select "ResultSet", "QuestionsId", "AnswerIdResult", "AnswerIdQuestions(Korrekt)", "Bewertung", "MaxValueCount"
+from maxbewertungen
+where rank <= 3
+and "AnswerIdQuestions(Korrekt)" = "AnswerIdResult"
+order by "ResultSet", "QuestionsId", "Bewertung" desc, "MaxValueCount";
 
 
 select * from "Questions" q 

@@ -3,6 +3,7 @@ using de.devcodemonkey.AIChecker.AIChecker.Commands;
 using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using de.devcodemonkey.AIChecker.CoreBusiness.MarkDownExporterModels;
 using de.devcodemonkey.AIChecker.CoreBusiness.Models;
+using de.devcodemonkey.AIChecker.UseCases;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using Spectre.Console;
 using System.Diagnostics;
@@ -28,6 +29,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private readonly IViewGpuUsageUseCase _viewGpuUsageUseCase;
         private readonly IStartStopDatabaseUseCase _startStopDatabaseUseCase;
         private readonly IBackupDatabaseUseCase _backupDatabaseUseCase;
+        private readonly IRestoreDatabaseUseCase _restoreDatabaseUseCase;
         private readonly IAddModelUseCase _addModelUseCase;
         private readonly IViewModels _viewModels;
         private readonly ILoadModelUseCase _loadModelUseCase;
@@ -51,6 +53,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             IViewGpuUsageUseCase viewGpuUsageUseCase,
             IStartStopDatabaseUseCase startStopDatabaseUseCase,
             IBackupDatabaseUseCase backupDatabaseUseCase,
+            IRestoreDatabaseUseCase restoreDatabaseUseCase,
             IAddModelUseCase addModelUseCase,
             IViewModels viewModels,
             ILoadModelUseCase loadModelUseCase,
@@ -73,6 +76,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             _viewGpuUsageUseCase = viewGpuUsageUseCase;
             _startStopDatabaseUseCase = startStopDatabaseUseCase;
             _backupDatabaseUseCase = backupDatabaseUseCase;
+            _restoreDatabaseUseCase = restoreDatabaseUseCase;
             _addModelUseCase = addModelUseCase;
             _viewModels = viewModels;
             _loadModelUseCase = loadModelUseCase;
@@ -390,6 +394,16 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         private async Task StartStopDatabase(DatabaseVerb opts)
         {
+
+            if (opts.Restore)
+            {
+                var restoreSuccess = _restoreDatabaseUseCase.Execute(opts.Branch);
+                if (restoreSuccess)
+                    AnsiConsole.Markup("[green]Database restored successfully.[/]");
+                else
+                    AnsiConsole.Markup("[red]Database restore failed.[/]");
+                return;
+            }
             if (opts.Backup)
             {
                 var backupSuccess = _backupDatabaseUseCase.Execute();

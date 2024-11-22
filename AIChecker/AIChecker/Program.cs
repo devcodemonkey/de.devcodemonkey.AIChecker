@@ -255,6 +255,19 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     // Create an instance of BackupDatabaseUseCase with the required parameters
                     return new BackupDatabaseUseCase(wslDatabaseService, gitRemoteUrl, gitRepositoryName);
                 });
+
+                services.AddScoped<IRestoreDatabaseUseCase, RestoreDatabaseUseCase>(provider =>
+                {
+                    var wslDatabaseService = provider.GetRequiredService<IWslDatabaseService>();
+                    var configuration = provider.GetRequiredService<IConfiguration>();
+
+                    // Retrieve the Git settings from configuration
+                    string gitRemoteUrl = configuration["Git:GitRemoteUrl"];
+                    string gitRepositoryName = configuration["Git:GitRemoteName"];
+
+                    // Create an instance of BackupDatabaseUseCase with the required parameters
+                    return new RestoreDatabaseUseCase(wslDatabaseService, gitRemoteUrl, gitRepositoryName);
+                });
             });
 
             return services.BuildServiceProvider();
