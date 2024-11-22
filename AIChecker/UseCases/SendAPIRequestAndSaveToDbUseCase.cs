@@ -5,6 +5,7 @@ using de.devcodemonkey.AIChecker.DataSource.APIRequester.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.Global;
 using de.devcodemonkey.AIChecker.UseCases.Interfaces;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using Microsoft.VisualBasic;
 using System.Net;
 using System.Text.Json;
 
@@ -46,7 +47,13 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
         private async Task SendAndSaveApiRequest(SendToLmsParams sendToLmsParams)
         {
+            if(sendToLmsParams.SystemPrompt == null)
+                throw new ArgumentNullException(nameof(sendToLmsParams.SystemPrompt));
             List<IMessage> messages = ObjectCreationForApi.CreateMessageForApi(sendToLmsParams.SystemPrompt, sendToLmsParams.UserMessage);
+            
+            if (sendToLmsParams.SystemPromptObject == null)
+                sendToLmsParams.SystemPromptObject = ObjectCreationForApi.CreateSystemPrompt(sendToLmsParams.SystemPrompt);
+
 
             for (int i = 0; i < sendToLmsParams.RequestCount; i++)
             {
@@ -54,7 +61,7 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
                 var resultDb = ObjectCreationForApi.CreateResult(
                     sendToLmsParams,
-                    ObjectCreationForApi.CreateSystemPrompt(sendToLmsParams.SystemPrompt),
+                    systemPromptObject: sendToLmsParams.SystemPromptObject,
                     apiResult,
                     await _defaultMethodesRepository.ViewModelOverValueAysnc(sendToLmsParams.Model));
 

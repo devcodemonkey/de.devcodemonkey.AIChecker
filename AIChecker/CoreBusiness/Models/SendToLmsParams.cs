@@ -1,9 +1,14 @@
-﻿namespace de.devcodemonkey.AIChecker.CoreBusiness.Models
+﻿using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
+
+namespace de.devcodemonkey.AIChecker.CoreBusiness.Models
 {
     public class SendToLmsParams
     {
         public virtual string UserMessage { get; set; }
         public virtual string SystemPrompt { get; set; }
+
+        public SystemPrompt? SystemPromptObject { get; set; }
+
         public virtual string ResultSet { get; set; }
         public virtual int RequestCount { get; set; } = 1;
         public virtual int MaxTokens { get; set; } = -1;
