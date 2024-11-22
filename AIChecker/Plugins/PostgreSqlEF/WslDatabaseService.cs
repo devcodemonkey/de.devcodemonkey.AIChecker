@@ -93,17 +93,32 @@ public class WslDatabaseService : IWslDatabaseService
         string sqlFileName = $"{gitBranchName.Split('/').Last()}.sql";
         string sqlFilePath = $"{repoPath}/{sqlFileName}";
 
-        // Step 3: Restore the database from the backup file
+        // Step 3: Drop the existing database
+        Console.WriteLine("Dropping the existing database...");
+        string dropDbCommand = $"docker exec -i aichecker-db-1 psql -U AiChecker -h localhost -p 5432 -c \"DROP DATABASE IF EXISTS \\\"AiCheckerDB\\\"; CREATE DATABASE \\\"AiCheckerDB\\\";\"";
+        if (!RunCommandOnWsl(dropDbCommand))
+        {
+            Console.WriteLine("Failed to drop and recreate the database.");
+            return false;
+        }
+
+        // Step 4: Restore the database from the backup file
+        Console.WriteLine("Restoring the database...");
         string dockerCommand = $"docker exec -i aichecker-db-1 psql -U AiChecker -h localhost -p 5432 AiCheckerDB < {sqlFilePath}";
         if (!RunCommandOnWsl(dockerCommand))
+        {
+            Console.WriteLine("Failed to restore the database.");
             return false;
+        }
 
-        // Step 4: Clean up the temporary files
+        // Step 5: Clean up the temporary files
+        Console.WriteLine("Cleaning up temporary files...");
         if (!RunCommandOnWsl($"cd /tmp && rm -rf {gitRepositoryName}"))
             return false;
 
         return true;
     }
+
 
 
 
