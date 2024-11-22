@@ -48,7 +48,16 @@ namespace de.devcodemonkey.AIChecker.UseCases.Global
                 SystemPrompt = systemPromptObject,
                 Model = model,
                 AnswerId = sendToLmsParams.AnswerId,
-                QuestionsId = sendToLmsParams.QuestionId
+                QuestionsId = sendToLmsParams.QuestionId,
+
+                PromptCachedTokens = apiResult?.Data?.Usage?.PromptTokensDetails?.CachedTokens,
+                PromptAudioTokens = apiResult?.Data?.Usage?.PromptTokensDetails?.AudioTokens,
+                CompletionReasoningTokens = apiResult?.Data?.Usage?.CompletionTokensDetails?.ReasoningTokens,
+                CompletionAudioTokens = apiResult?.Data?.Usage?.CompletionTokensDetails?.AudioTokens,
+                CompletionAcceptedPredictionTokens = apiResult?.Data?.Usage?.CompletionTokensDetails?.AcceptedPredictionTokens,
+                CompletionsRejectedPredictionTokens = apiResult?.Data?.Usage?.CompletionTokensDetails?.RejectedPredictionTokens,
+
+                SystemFingerprint = apiResult?.Data?.SystemFingerprint,
             };
         }
 

@@ -154,11 +154,14 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "Prompt Ranking für Fragen erstellen (Nr. 1)", "-t", "pdf"]);
             //await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Fragezuordnung für Testverfahren Skala Outlook allgemein (Nr. 1) Test"]);
-            //await RunWithScopeAsync(serviceProvider, ["sendToLms", "-r", "Fragezuordnung für Testverfahren Skala Outlook allgemein (Nr. 1) Test", "--questionCategory", "Outlook created Questions over gpt-4o-mini", "--questionsCorrect", "-s", "", "-u", "1", "-w" ]);
+            //await RunWithScopeAsync(serviceProvider, ["sendToLms", "-r", "Fragezuordnung für Testverfahren Skala Outlook allgemein (Nr. 1) Test", "--questionCategory", "Outlook created Questions over gpt-4o-mini", "--questionsCorrect", "-s", "", "-u", "1", "-w"]);
             //await RunWithScopeAsync(serviceProvider, ["checkJson", "-r", "Fragezuordnung für Testverfahren Skala (Nr. 2) Teams Citrix korrekt geprüfte Fragen Test"]);
 
-            //await RunWithScopeAsync(serviceProvider, ["sendToLms", "-r", "ChatGpt Test mini model", 
-            //    "-t", "21", "-u", "-i", "10", "-m", "Write me a poem", "--model", "gpt-4o-mini-2024-07-18"]);
+            //await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "ChatGpt Test mini model"]);
+
+            //await RunWithScopeAsync(serviceProvider, ["sendToLms", "-r", "ChatGpt Test mini model",
+            //    "-t", "21", "-u", "-i", "10", "-m", "Write me a poem", "--model", "gpt-4o-mini-2024-07-18", "-s", "You are helpful",
+            //    "-c", "4"]);
 
             await RunWithScopeAsync(serviceProvider, args);
         }

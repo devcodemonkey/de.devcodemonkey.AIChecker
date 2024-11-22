@@ -36,6 +36,20 @@ public partial class Result
 
     public int? TotalTokens { get; set; }
 
+    public int? PromptCachedTokens { get; set; }
+
+    public int? PromptAudioTokens { get; set; }
+
+    public int? CompletionReasoningTokens { get; set; }
+
+    public int? CompletionAudioTokens { get; set; }
+
+    public int? CompletionAcceptedPredictionTokens { get; set; }
+
+    public int? CompletionsRejectedPredictionTokens { get; set; }
+
+    public string? SystemFingerprint { get; set; }
+
     public DateTime? RequestCreated { get; set; }
 
     public DateTime? RequestStart { get; set; }
