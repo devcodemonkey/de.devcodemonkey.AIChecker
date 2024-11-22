@@ -16,9 +16,6 @@ order by
 	case when qc."Value" is null then 1 else 0 end; 
 
 
-
-
-
 select 
 m."Value",
 r."RequestEnd", r."RequestStart",
@@ -29,6 +26,18 @@ join "Models" m on r."ModelId" = m."ModelId"
 where rs."Value" like 'Fragezuordnung für Testverfahren Skala (Nr. 6) Performance Test'
 order by m."Value" ;
 
+-- Auswertung
+drop table temp_table_ResultSets;
+create temp table temp_table_ResultSets
+("ResultSets" TEXT);
+
+insert into temp_table_ResultSets
+values	
+	('Fragezuordnung für Testverfahren Skala (Nr. 1) Outlook allgemein korrekt geprüfte Fragen')
+	,('Fragezuordnung für Testverfahren Skala (Nr. 2) Teams Citrix korrekt geprüfte Fragen')
+	,('Fragezuordnung für Testverfahren Skala (Nr. 3) Teams allgemein korrekt geprüfte Fragen')
+	,('Fragezuordnung für Testverfahren Skala (Nr. 4) Azubi FAQ korrekt geprüfte Fragen')
+	;
 
 -- Zeiten des  des Tests
 select 
@@ -38,7 +47,7 @@ count(*) as "Anzahl Anfragen",
 (max(r."RequestEnd") - min(r."RequestStart")) / count(*) as "Durchschnittliche Dauer" 
 from "Results" r 
 join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId" 
-where rs."Value" like 'Fragezuordnung für Testverfahren Skala%'
+where rs."Value" in (select * from temp_table_ResultSets)
 group by rs."Value";
 
 -- Zeiten
@@ -94,13 +103,20 @@ with maxbewertungen as (
     join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId"
     left join "Questions" q on q."QuestionId" = r."QuestionsId"
     where 
-        rs."Value" like 'Fragezuordnung für Testverfahren Skala%' 
+        rs."Value" like 'Fragezuordnung für Testverfahren Skala (%' 
         and r."IsJson" = true
 )
 select "QuestionsId", "Bewertung", "MaxValueCount" as "doppelte Maximalwerte"
 from maxbewertungen
 where "Bewertung" = "MaxBewertung" 
-order by "MaxValueCount"
+order by "MaxValueCount";
+
+select 
+	(r."Message"::jsonb ->> 'Bewertung')::numeric as "Bewertung"
+from "Results" r
+join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId"
+where r."QuestionsId" = 'e6d953a2-0441-47bb-bf8b-127262a912eb'
+and r."IsJson" = true
 
 -- Treffer/-quote
 with maxbewertungen as (
@@ -116,7 +132,7 @@ with maxbewertungen as (
     join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId"
     left join "Questions" q on q."QuestionId" = r."QuestionsId"
     where 
-        rs."Value" like 'Fragezuordnung für Testverfahren Skala auf%' 
+        rs."Value" like 'Fragezuordnung für Testverfahren Skala auf gpt-mini%' 
         and r."IsJson" = true
 )
 select "ResultSet","QuestionsId", "AnswerIdResult", "AnswerIdQuestions(Korrekt)", "Bewertung", "MaxValueCount"
@@ -154,3 +170,16 @@ select * from "Questions" q
 where q."QuestionId" = '9c0db720-2886-43a4-a4c1-b888f953ad46';
 
 
+
+
+-- Query 1 condition
+select count(*), rs."Value"
+from "ResultSets" rs
+where rs."Value" like 'Fragezuordnung für Testverfahren Skala%'
+group by rs."Value";
+
+-- Query 2 condition
+select count(*), rs."Value"
+from "ResultSets" rs
+where rs."Value" like 'Fragezuordnung für Testverfahren Skala auf%'
+group by rs."Value";
