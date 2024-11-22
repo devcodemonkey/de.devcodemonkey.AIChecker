@@ -95,8 +95,7 @@ public class WslDatabaseService : IWslDatabaseService
 
         // Step 3: Drop the existing database
         Console.WriteLine("Dropping the existing database...");
-        string dropDbCommand = $"docker exec -i aichecker-db-1 psql -U AiChecker -h localhost -p 5432 -c \"DROP DATABASE IF EXISTS \\\"AiCheckerDB\\\"; CREATE DATABASE \\\"AiCheckerDB\\\";\"";
-        if (!RunCommandOnWsl(dropDbCommand))
+        if (!TerminateConnectionsAndDropDatabase("AiCheckerDB"))
         {
             Console.WriteLine("Failed to drop and recreate the database.");
             return false;
@@ -119,7 +118,34 @@ public class WslDatabaseService : IWslDatabaseService
         return true;
     }
 
+    private bool TerminateConnectionsAndDropDatabase(string databaseName)
+    {
+        // Terminate connections
+        string terminateCommand = $"docker exec -i aichecker-db-1 psql -U AiChecker -d postgres -c \"SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE datname = '{databaseName}';\"";
+        if (!RunCommandOnWsl(terminateCommand))
+        {
+            Console.WriteLine($"Failed to terminate connections to database {databaseName}.");
+            return false;
+        }
 
+        // Drop the database (force execution outside transaction block)
+        string dropCommand = $"docker exec -i aichecker-db-1 psql -U AiChecker -d postgres -c \"DROP DATABASE \\\"{databaseName}\\\";\"";
+        if (!RunCommandOnWsl(dropCommand))
+        {
+            Console.WriteLine($"Failed to drop the database {databaseName}.");
+            return false;
+        }
+
+        // Recreate the database
+        string createCommand = $"docker exec -i aichecker-db-1 psql -U AiChecker -d postgres -c \"CREATE DATABASE \\\"{databaseName}\\\";\"";
+        if (!RunCommandOnWsl(createCommand))
+        {
+            Console.WriteLine($"Failed to create the database {databaseName}.");
+            return false;
+        }
+
+        return true;
+    }
 
 
 
