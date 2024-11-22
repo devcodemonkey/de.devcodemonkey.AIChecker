@@ -1,5 +1,4 @@
-﻿using AngleSharp;
-using CommandLine;
+﻿using CommandLine;
 using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 
 namespace de.devcodemonkey.AIChecker.AIChecker.Commands

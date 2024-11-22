@@ -23,11 +23,20 @@ namespace de.devcodemonkey.AIChecker.UseCases
                 throw new ArgumentNullException(nameof(questionCategory));
 
             var startTimestamp = DateTime.Now;
-            var questionsCategoryId = await _defaultMethodesRepository.ViewOverValue<QuestionCategory>(questionCategory);
 
-            var questions = await _defaultMethodesRepository.ViewQuestionAnswerByCategoryAsync(questionsCategoryId.Value);
+
+            List<Question> questions = new List<Question>();
+
+            foreach (var questionCategoryItem in sendToLmsParams!.QuestionCategory!.Split(','))
+            {
+                var questionsCategoryId = await _defaultMethodesRepository.ViewOverValue<QuestionCategory>(questionCategoryItem);
+
+                questions.AddRange(await _defaultMethodesRepository.ViewQuestionAnswerByCategoryAsync(questionsCategoryId.Value));
+            }
+
+
             if (sendToLmsParams.QuestionsCorrect)
-                questions = questions.Where(q => q.IsCorrect == true);
+                questions = questions.Where(q => q.IsCorrect == true).ToList();
 
             var answers = await _defaultMethodesRepository.GetAllEntitiesAsync<Answer>();
 
@@ -51,9 +60,9 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
                     loadingProgress.AnswersCounter++;
                     loadingProgress.TotalCounter++;
-                    loadingProgress.RunningTime = DateTime.Now - startTimestamp;                    
+                    loadingProgress.RunningTime = DateTime.Now - startTimestamp;
                     loadingProgress.CalulationTime = TimeSpan.FromTicks(loadingProgress.RunningTime.Ticks / loadingProgress.TotalCounter * (questions.Count() * answers.Count() - loadingProgress.TotalCounter));
-                    
+
                     progressAction?.Invoke(loadingProgress);
                 }
             }
@@ -61,5 +70,5 @@ namespace de.devcodemonkey.AIChecker.UseCases
 
         private string ConcatQuestionAnswer(string question, string answer)
             => $"Frage:\n\"{question}\"\nAntwort:\n\"{answer}\"";
-    }   
+    }
 }
