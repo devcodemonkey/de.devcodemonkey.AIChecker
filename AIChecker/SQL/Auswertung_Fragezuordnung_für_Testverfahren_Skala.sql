@@ -62,8 +62,7 @@ r."RequestEnd" - r."RequestStart" as "Dauer"
 from "Results" r 
 join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId"
 join "Models" m on r."ModelId" = m."ModelId" 
-where rs."Value" like 'Fragezuordnung für Testverfahren Skala%'
---or rs."Value" like 'Prompt Ranking für Testverfahren Skala (Nr. 2)'
+where rs."Value" in (select * from temp_table_ResultSets)
 order by "Dauer" desc ;
 
 select count(*)
@@ -76,7 +75,7 @@ select
 from "Results" r 
 join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId" 
 where 
-rs."Value" like 'Fragezuordnung für Testverfahren Skala%';
+rs."Value" in (select * from temp_table_ResultSets)
 
 
 -- Verschiedenen Bewertungen
@@ -86,8 +85,8 @@ select
 from "Results" r 
 join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId" 
 where 
-rs."Value" like 'Fragezuordnung für Testverfahren Skala%' and
-r."IsJson" = true
+rs."Value" in (select * from temp_table_ResultSets) 
+and r."IsJson" = true
 group by (r."Message"::jsonb ->> 'Bewertung')::numeric
 order by count(*) desc ;
 
@@ -103,7 +102,7 @@ with maxbewertungen as (
     join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId"
     left join "Questions" q on q."QuestionId" = r."QuestionsId"
     where 
-        rs."Value" like 'Fragezuordnung für Testverfahren Skala (%' 
+        rs."Value" in (select * from temp_table_ResultSets)  
         and r."IsJson" = true
 )
 select "QuestionsId", "Bewertung", "MaxValueCount" as "doppelte Maximalwerte"
@@ -132,7 +131,7 @@ with maxbewertungen as (
     join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId"
     left join "Questions" q on q."QuestionId" = r."QuestionsId"
     where 
-        rs."Value" like 'Fragezuordnung für Testverfahren Skala auf gpt-mini%' 
+        rs."Value" in (select * from temp_table_ResultSets)  
         and r."IsJson" = true
 )
 select "ResultSet","QuestionsId", "AnswerIdResult", "AnswerIdQuestions(Korrekt)", "Bewertung", "MaxValueCount"
@@ -156,7 +155,7 @@ with maxbewertungen as (
     join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId"
     left join "Questions" q on q."QuestionId" = r."QuestionsId"
     where 
-        rs."Value" like 'Fragezuordnung für Testverfahren Skala auf gpt-4o%' 
+        rs."Value" in (select * from temp_table_ResultSets)  
         and r."IsJson" = true
 )
 select "ResultSet", "QuestionsId", "AnswerIdResult", "AnswerIdQuestions(Korrekt)", "Bewertung", "MaxValueCount"
@@ -168,18 +167,3 @@ order by "ResultSet", "QuestionsId", "Bewertung" desc, "MaxValueCount";
 
 select * from "Questions" q 
 where q."QuestionId" = '9c0db720-2886-43a4-a4c1-b888f953ad46';
-
-
-
-
--- Query 1 condition
-select count(*), rs."Value"
-from "ResultSets" rs
-where rs."Value" like 'Fragezuordnung für Testverfahren Skala%'
-group by rs."Value";
-
--- Query 2 condition
-select count(*), rs."Value"
-from "ResultSets" rs
-where rs."Value" like 'Fragezuordnung für Testverfahren Skala auf%'
-group by rs."Value";
