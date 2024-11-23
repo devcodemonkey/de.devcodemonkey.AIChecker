@@ -32,14 +32,18 @@ create temp table temp_table_ResultSets
 ("ResultSets" TEXT);
 
 insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 8) mixtral-8x7b-instruct-v0.1')
+
+insert into temp_table_ResultSets
 values	
 	('Fragezuordnung für Testverfahren Skala (Nr. 1) Outlook allgemein korrekt geprüfte Fragen')
 	,('Fragezuordnung für Testverfahren Skala (Nr. 2) Teams Citrix korrekt geprüfte Fragen')
 	,('Fragezuordnung für Testverfahren Skala (Nr. 3) Teams allgemein korrekt geprüfte Fragen')
-	,('Fragezuordnung für Testverfahren Skala (Nr. 4) Azubi FAQ korrekt geprüfte Fragen')
-	;
+	,('Fragezuordnung für Testverfahren Skala (Nr. 4) Azubi FAQ korrekt geprüfte Fragen');
 
 -- Zeiten des  des Tests
+
 select 
 replace(rs."Value", 'Fragezuordnung für Testverfahren Skala','') as "Test",
 count(*) as "Anzahl Anfragen",
@@ -69,6 +73,7 @@ select count(*)
 from "SystemResourceUsage" sru;
 
 -- Valid JSON Format
+
 select
 	COUNT(*) FILTER (WHERE r."IsJson" = true) AS "Anzahl ValidJsonFormat",
 	COUNT(*) FILTER (WHERE r."IsJson" = false) AS "Anzahl InvalidJsonFormat"	
@@ -109,13 +114,6 @@ select "QuestionsId", "Bewertung", "MaxValueCount" as "doppelte Maximalwerte"
 from maxbewertungen
 where "Bewertung" = "MaxBewertung" 
 order by "MaxValueCount";
-
-select 
-	(r."Message"::jsonb ->> 'Bewertung')::numeric as "Bewertung"
-from "Results" r
-join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId"
-where r."QuestionsId" = 'e6d953a2-0441-47bb-bf8b-127262a912eb'
-and r."IsJson" = true
 
 -- Treffer/-quote
 with maxbewertungen as (
