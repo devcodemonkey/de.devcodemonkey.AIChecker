@@ -32,27 +32,67 @@ create temp table temp_table_ResultSets
 ("ResultSets" TEXT);
 
 insert into temp_table_ResultSets
+values	
+	('Fragezuordnung für Testverfahren Skala (Nr. 1) Outlook allgemein korrekt geprüfte Fragen'),
+	('Fragezuordnung für Testverfahren Skala (Nr. 2) Teams Citrix korrekt geprüfte Fragen'),
+	('Fragezuordnung für Testverfahren Skala (Nr. 3) Teams allgemein korrekt geprüfte Fragen'),
+	('Fragezuordnung für Testverfahren Skala (Nr. 4) Azubi FAQ korrekt geprüfte Fragen');
+
+INSERT INTO temp_table_ResultSets
+VALUES    
+    --('Fragezuordnung für Testverfahren Skala auf gpt-mini (Nr. 2) Teams Citrix created Questions'),
+    --('Fragezuordnung für Testverfahren Skala auf gpt-mini (Nr. 3) Outlook allgemein korrekt geprüfte Fragen'),
+    --('Fragezuordnung für Testverfahren Skala auf gpt-mini (Nr. 4) Teams allgemein'),
+    ('Fragezuordnung für Testverfahren Skala auf gpt-mini (Nr. 5) Azubi FAQ');
+
+INSERT INTO temp_table_ResultSets
+VALUES    
+ 	('Fragezuordnung für Testverfahren Skala auf gpt-4o (Nr. 1) Teams Citrix created Questions'),
+    ('Fragezuordnung für Testverfahren Skala auf gpt-4o (Nr. 2) Outlook allgemein korrekt geprüfte Fragen'),
+    ('Fragezuordnung für Testverfahren Skala auf gpt-4o (Nr. 3) Teams allgemein'),
+    ('Fragezuordnung für Testverfahren Skala auf gpt-4o (Nr. 4) Azubi FAQ');
+   
+   
+insert into temp_table_ResultSets
 values
 	('Fragezuordnung für Testverfahren Skala (Nr. 8) mixtral-8x7b-instruct-v0.1')
-
+   
 insert into temp_table_ResultSets
-values	
-	('Fragezuordnung für Testverfahren Skala (Nr. 1) Outlook allgemein korrekt geprüfte Fragen')
-	,('Fragezuordnung für Testverfahren Skala (Nr. 2) Teams Citrix korrekt geprüfte Fragen')
-	,('Fragezuordnung für Testverfahren Skala (Nr. 3) Teams allgemein korrekt geprüfte Fragen')
-	,('Fragezuordnung für Testverfahren Skala (Nr. 4) Azubi FAQ korrekt geprüfte Fragen');
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 10) Meta-Llama-3.1-70B')
 
 -- Zeiten des  des Tests
+ 	
+with GroupedResults as (
+    select 
+        coalesce(replace(rs."Value", 'Fragezuordnung für Testverfahren Skala', ''), 'Gesamt') as "Test",
+        count(*) as "Anzahl Anfragen",
+        max(r."RequestEnd") - min(r."RequestStart") as "Dauer",
+        (max(r."RequestEnd") - min(r."RequestStart")) / count(*) as "Durchschnittliche Dauer"
+    from "Results" r 
+    join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId" 
+    where rs."Value" in (select * from temp_table_ResultSets)
+    group by rs."Value"
+),
+TotalRow as (
+    select 
+        'Gesamt' as "Test",
+        sum("Anzahl Anfragen") as "Anzahl Anfragen",
+        sum("Dauer") as "Dauer",
+        sum("Dauer") / sum("Anzahl Anfragen") as "Durchschnittliche Dauer"
+    from GroupedResults
+)
+select * 
+from (
+    select * from GroupedResults
+    union all
+    select * from TotalRow
+) CombinedResults
+order by 
+    (case when "Test" = 'Gesamt' then 1 else 0 end),
+    "Test";
 
-select 
-replace(rs."Value", 'Fragezuordnung für Testverfahren Skala','') as "Test",
-count(*) as "Anzahl Anfragen",
-(max(r."RequestEnd") - min(r."RequestStart")) as "Dauer",
-(max(r."RequestEnd") - min(r."RequestStart")) / count(*) as "Durchschnittliche Dauer" 
-from "Results" r 
-join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId" 
-where rs."Value" in (select * from temp_table_ResultSets)
-group by rs."Value";
+
 
 -- Zeiten
 select
@@ -161,6 +201,15 @@ from maxbewertungen
 where rank <= 3
 and "AnswerIdQuestions(Korrekt)" = "AnswerIdResult"
 order by "ResultSet", "QuestionsId", "Bewertung" desc, "MaxValueCount";
+
+-- Tokens
+select 
+	sum(r."CompletionTokens") as "CompletionTokens"
+	,sum(r."PromptTokens") as "PromptTokens"
+	,sum(r."TotalTokens") as "TotalTokens"
+from "Results" r 
+join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId" 
+where rs."Value" in (select * from temp_table_ResultSets)
 
 
 select * from "Questions" q 
