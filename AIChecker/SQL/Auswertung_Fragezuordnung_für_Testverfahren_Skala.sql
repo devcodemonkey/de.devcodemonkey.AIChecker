@@ -55,11 +55,15 @@ VALUES
    
 insert into temp_table_ResultSets
 values
-	('Fragezuordnung für Testverfahren Skala (Nr. 8) mixtral-8x7b-instruct-v0.1')
+	('Fragezuordnung für Testverfahren Skala (Nr. 8) mixtral-8x7b-instruct-v0.1');
    
 insert into temp_table_ResultSets
 values
-	('Fragezuordnung für Testverfahren Skala (Nr. 10) Meta-Llama-3.1-70B')
+	('Fragezuordnung für Testverfahren Skala (Nr. 10) Meta-Llama-3.1-70B');
+	
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 11) em_german_leo_mistral');
 
 -- Zeiten des  des Tests
  	
