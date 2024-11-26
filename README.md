@@ -38,106 +38,124 @@ To get help, simply run `AIChecker.exe` followed by the desired command.
 
    - **Description**: Recreates the database.
    - **Command**: `recreateDatabase [-f | --force]`
-     - `-f, --force`: Force recreation of the database (optional).
+     - `-f, --force`: Force recreation of the database.
 
 5. **viewResultSets**
 
    - **Description**: View all result sets.
    - **Command**: `viewResultSets`
 
-6. **importQuestions**
-
-   - **Description**: Imports questions and answers into the database from a file.
-   - **Command**: `importQuestions -p <Path> | --path <Path>`
-     - `-p, --path`: Specifies the path to the file containing the questions and answers.
-
-7. **viewResults**
+6. **viewResults**
 
    - **Description**: Displays the results of a specific result set with optional formatting.
    - **Command**: `viewResults -r <ResultSet> [-f | --formatTable]`
      - `-r, --resultSet`: Specifies the result set to view.
-     - `-f, --formatTable`: Optionally format the table for a better view.
+     - `-f, --formatTable`: Format the table for better viewing.
 
-8. **viewAverage**
+7. **viewAverage**
 
    - **Description**: Displays the average time of API requests for a specific result set.
-   - **Command**: `viewAverage -r <ResultSet> | --resultSet <ResultSet>`
+   - **Command**: `viewAverage -r <ResultSet>`
      - `-r, --resultSet`: Specifies the result set for which the average time is displayed.
 
-9. **deleteAllQuestions**
+8. **importQuestions**
 
-   - **Description**: Deletes all questions and answers from the database.
-   - **Command**: `deleteAllQuestions`
+   - **Description**: Imports questions and answers into the database from a file.
+   - **Command**: `importQuestions -p <Path> -c <Category>`
+     - `-p, --path`: Path to the file containing questions and answers.
+     - `-c, --category`: Category of the questions and answers.
 
-10. **deleteResultSet**
+9. **importQuestionsFromResults**
+
+   - **Description**: Imports questions from results into the database.
+   - **Command**: `importQuestionsFromResults -r <ResultSet> -c <Category>`
+     - `-r, --resultSet`: Name of the result set.
+     - `-c, --category`: Category of the questions.
+
+10. **deleteAllQuestions**
+
+    - **Description**: Deletes all questions and answers from the database.
+    - **Command**: `deleteAllQuestions`
+
+11. **deleteResultSet**
 
     - **Description**: Deletes a specific result set from the database.
-    - **Command**: `deleteResultSet -r <ResultSet> | --resultSet <ResultSet>`
-      - `-r, --resultSet`: Specifies the result set to delete.
+    - **Command**: `deleteResultSet -r <ResultSet>`
+    - `-r, --resultSet`: Name of the result set.
 
-11. **createMoreQuestions**
+12. **createMoreQuestions**
 
     - **Description**: Creates more questions based on a system prompt and saves them under a specified result set.
-    - **Command**: `createMoreQuestions -r <ResultSet> -s <SystemPrompt> [-t <MaxTokens>] [-p <Temperature>] [--environmentTokenName <Name>] [--source <URL>] [--model <Model>]`
-      - `-r, --resultSet`: Result set name.
-      - `-s, --systemPrompt`: System prompt or path for question generation.
-      - `-t, --maxTokens`: Maximum number of tokens (optional).
-      - `-p, --temperature`: Temperature value (optional).
-      - `--environmentTokenName`: The environment token name to set the bearer token for the API.
-      - `--source`: The source URL for the API request.
-      - `--model`: The model name to be used for generation.
+    - **Command**: `createMoreQuestions -r <ResultSet> -s <SystemPrompt> -m <Model> -c <Category> [-t <MaxTokens>] [-p <Temperature>]`
+    - `-r, --resultSet`: Name of the result set.
+    - `-s, --systemPrompt`: System prompt or file path (path:<file-path>).
+    - `-m, --model`: Name of the model.
+    - `-c, --category`: Category for the questions.
+    - `-t, --maxTokens`: Maximum number of tokens (optional).
+    - `-p, --temperature`: Temperature value (optional).
 
-12. **sendToLMS**
+13. **sendToLMS**
 
     - **Description**: Sends an API request to LmStudio and saves the result to the database.
-    - **Command**: `sendToLms -m <Message> -s <SystemPrompt> -r <ResultSet> [-t <MaxTokens>] [-p <Temperature>] [-c <RequestCount>] [-u] [-i <SaveInterval>] [-w] [--environmentTokenName <Name>] [--source <URL>] [--model <Model>]`
-      - `-m, --message`: The user message to send.
-      - `-r, --resultSet`: Result set name to save the API response.
-      - `-s, --systemPrompt`: System prompt for the request (optional).
-      - `-t, --maxTokens`: Maximum number of tokens for the request (optional).
-      - `-p, --temperature`: Temperature value (optional).
-      - `-c, --requestCount`: Number of requests to send (optional).
-      - `-u, --saveProcessUsage`: Save process usage statistics (optional).
-      - `-i, --saveInterval`: Interval in seconds to save process usage data (optional).
-      - `-w, --writeOutput`: Write the process output to the console (optional).
-      - `--environmentTokenName`: Name of the environment token to set the bearer token for the API.
-      - `--source`: The source URL for the API request.
-      - `--model`: Specifies the model name to use for the API request.
+    - **Command**: `sendToLms -m <Message> -r <ResultSet> -s <SystemPrompt> [-t <MaxTokens>] [-p <Temperature>] [-c <RequestCount>] [-u] [-i <SaveInterval>] [-w] [--environmentTokenName <Name>] [--source <URL>] [--model <Model>]`
+    - `-m, --message`: User message.
+    - `-r, --resultSet`: Name of the result set.
+    - `-s, --systemPrompt`: System prompt (default: "You are a helpful assistant").
+    - `-t, --maxTokens`: Maximum number of tokens (optional).
+    - `-p, --temperature`: Temperature value (optional).
+    - `-c, --requestCount`: Number of requests to send (optional).
+    - `-u, --saveProcessUsage`: Save process usage statistics.
+    - `-i, --saveInterval`: Interval in seconds to save process usage data.
+    - `-w, --writeOutput`: Write the process output to the console.
+    - `--environmentTokenName`: Environment token name for the API.
+    - `--source`: Source URL for the API request.
+    - `--model`: Model name for the API request.
 
-13. **viewProcessUsage**
-
-    - **Description**: View usage of each process.
-    - **Command**: `viewProcessUsage`
-
-14. **exportPromptRank**
-
-    - **Description**: Exports the ranking of the prompts.
-    - **Command**: `exportPromptRank -r <ResultSet> [-t <FileType>] [-o]`
-      - `-r, --resultSet`: Specifies the result set name.
-      - `-t, --fileType`: File type to export (optional, default is PDF, possible options: PDF, HTML, Docx, Markdown).
-      - `-o, --notOpenFolder`: Prevent opening the folder after export (optional).
-
-15. **rankPrompt**
+14. **rankPrompt**
 
     - **Description**: Tests prompts and creates a ranking for them.
     - **Command**: `rankPrompt -r <ResultSet> -m <Models> -p <PromptRequirements> [-t <MaxTokens>]`
-      - `-r, --resultSet`: Specifies the result set name.
-      - `-m, --models`: Specifies the models to test (comma-separated).
-      - `-p, --promptRequirements`: Prompt requirements.
-      - `-t, --maxTokens`: Maximum number of tokens (optional).
+    - `-r, --resultSet`: Name of the result set.
+    - `-m, --models`: Comma-separated list of models to test.
+    - `-p, --promptRequirements`: Requirements for the prompts.
+    - `-t, --maxTokens`: Maximum number of tokens (optional).
 
-16. **model**
+15. **exportPromptRank**
 
-    - **Description**: Manage models.
+    - **Description**: Exports the ranking of the prompts.
+    - **Command**: `exportPromptRank -r <ResultSet> [-t <FileType>] [-o]`
+    - `-r, --resultSet`: Name of the result set.
+    - `-t, --fileType`: File type for export (default: PDF; options: PDF, HTML, Docx, Markdown).
+    - `-o, --notOpenFolder`: Do not open the folder after export.
+
+16. **database**
+
+    - **Description**: Manage the database (start, stop, backup, restore, recreate).
+    - **Command**: `database [-s | --stop] [-r | --start] [-b | --backup] [-o | --restore] [--branch <Branch>] [--recreateDatabase] [-f | --force]`
+    - `-s, --stop`: Stop the database.
+    - `-r, --start`: Start the database.
+    - `-b, --backup`: Backup the database.
+    - `-o, --restore`: Restore the database.
+    - `--branch`: Branch to restore the database from.
+    - `--recreateDatabase`: Recreate the database.
+    - `-f, --force`: Force the operation.
+
+17. **model**
+
+    - **Description**: Manage models (view, add, load, unload).
     - **Command**: `model [-v | --view] [-a | --add] [-l | --load] [-u | --unload]`
-      - `-v, --view`: View all models.
-      - `-a, --add`: Add a new model.
-      - `-l, --load`: Load a model.
-      - `-u, --unload`: Unload a model.
+    - `-v, --view`: View all models.
+    - `-a, --add`: Add a new model.
+    - `-l, --load`: Load a model.
+    - `-u, --unload`: Unload a model.
 
-17. **database**
-    - **Description**: Start, stop, or backup the database.
-    - **Command**: `database [-s | --stop] [-r | --start] [-b | --backup]`
-      - `-s, --stop`: Stop the database.
-      - `-r, --start`: Start the database.
-      - `-b, --backup`: Backup the database.
+18. **checkJson**
+
+    - **Description**: Check the JSON format of the results.
+    - **Command**: `checkJson [-r <ResultSet>] [-o | --showOutput]`
+    - `-r, --resultSet`: Name of the result set to check.
+    - `-o, --showOutput`: Display the output of the results.
+
+19. **viewProcessUsage**
+    - **Description**: View the usage of each process.
+    - **Command**: `viewProcessUsage`
