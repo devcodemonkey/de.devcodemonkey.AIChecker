@@ -5,8 +5,7 @@ where rs."Value" like '%Fragezu%'
 group by rs."Value";
 
 -- Anzahl Fragen
-select 
-coalesce (qc."Value", 'Gesamt') 	as "Kategorie", 	
+select coalesce (qc."Value", 'Gesamt') 	as "Kategorie", 	
 count(*) 							as "Anzahl"		
 from "Questions" q 
 join "QuestionCategories" qc on qc."QuestionCategoryId" = q."QuestionCategoryId"
@@ -64,6 +63,22 @@ values
 insert into temp_table_ResultSets
 values
 	('Fragezuordnung für Testverfahren Skala (Nr. 11) em_german_leo_mistral');
+
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 12) Meta-Llama-3.1-8B-Instruct');
+
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 13) Llama-3.2-3B-Instruct');
+
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 14) Llama-3.2-1B-Instruct')
+	
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 15) Mistral-Nemo')
 
 -- Zeiten des  des Tests
  	
@@ -171,7 +186,7 @@ with maxbewertungen as (
         count(*) over (partition by r."QuestionsId", (r."Message"::jsonb ->> 'Bewertung')::numeric) as "MaxValueCount"
     from "Results" r
     join "ResultSets" rs on r."ResultSetId" = rs."ResultSetId"
-    left join "Questions" q on q."QuestionId" = r."QuestionsId"
+    join "Questions" q on q."QuestionId" = r."QuestionsId"
     where 
         rs."Value" in (select * from temp_table_ResultSets)  
         and r."IsJson" = true
