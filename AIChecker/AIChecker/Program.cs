@@ -1,14 +1,6 @@
 ﻿using de.devcodemonkey.AIChecker.AIChecker.Extenions;
-using de.devcodemonkey.AIChecker.CoreBusiness.Models;
-using de.devcodemonkey.AIChecker.DataSource.APIRequester;
-using de.devcodemonkey.AIChecker.DataSource.SystemMonitor;
 using de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
-using de.devcodemonkey.AIChecker.Importer.JsonDeserializer;
 using de.devcodemonkey.AIChecker.MarkdownExporter;
-using de.devcodemonkey.AIChecker.UseCases;
-using de.devcodemonkey.AIChecker.UseCases.Interfaces;
-using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
-using LmsWrapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
