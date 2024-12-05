@@ -105,13 +105,12 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     foreach (var result in results)
                     {
                         table.AddRow(
-                            new Text(result.ResultSet.Value, new Style()),
-                            new Text(result.Model.Value, new Style()),
-                            new Text(result.SystemPrompt.Value, new Style()),
-                            new Text(result.Asked.ToString(), new Style()),
-                            new Text(result.Message, new Style()),
-                            new Text(result.IsJson ? "Yes" : "No", new Style())
-                        );
+                            NewTextNoStyle(result.ResultSet.Value),
+                            NewTextNoStyle(result.Model.Value),
+                            NewTextNoStyle(result.SystemPrompt.Value),
+                            NewTextNoStyle(result.Asked.ToString()),
+                            NewTextNoStyle(result.Message),
+                            NewTextNoStyle(result.IsJson ? "Yes" : "No"));
                     }
                     AnsiConsole.Write(new Rule("[yellow]Results[/]").RuleStyle("green"));
                     AnsiConsole.Write(table);
@@ -202,13 +201,13 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     table.AddColumn("Message");
                     table.AddColumn("Max Tokens");
                     // delete format option with the 'new Style()'
+
                     table.AddRow(
-                        new Text(result?.Model?.Value ?? string.Empty, new Style()),
-                        new Text(opts.promptRequierements, new Style()),
-                        new Text(result?.SystemPrompt?.Value ?? string.Empty, new Style()),
-                        new Text(result?.Message ?? string.Empty, new Style()),
-                        new Text(result?.MaxTokens?.ToString() ?? string.Empty, new Style())
-                    );
+                        NewTextNoStyle(result?.Model?.Value ?? string.Empty),
+                        NewTextNoStyle(opts.promptRequierements),
+                        NewTextNoStyle(result?.SystemPrompt?.Value ?? string.Empty),
+                        NewTextNoStyle(result?.Message ?? string.Empty),
+                        NewTextNoStyle(result?.MaxTokens?.ToString() ?? string.Empty));
 
                     AnsiConsole.Write(table);
                 },
@@ -330,13 +329,12 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     table.AddColumn("Size");
                     foreach (var m in models)
                     {
-                        // delete format option with the 'new Style()'
+                        // delete format option with the 'new Style()'                        
                         table.AddRow(
-                            new Text(m.Value, new Style()),
-                            new Text(m.BaseModels ?? "", new Style()),
-                            new Text(m.Link ?? "", new Style()),
-                            new Text(m.Size.ToString(), new Style())
-                        );
+                            NewTextNoStyle(m.Value),
+                            NewTextNoStyle(m.BaseModels ?? ""),
+                            NewTextNoStyle(m.Link ?? ""),
+                            NewTextNoStyle(m.Size.ToString()));
                     }
                     AnsiConsole.Write(table);
                     break;
@@ -526,17 +524,16 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 foreach (var result in results)
                 {
                     table.AddRow(
-                        new Text(opts.FormatTable ? Truncate(result.ResultSet.Value, 50) : result.ResultSet.Value, new Style()),
-                        new Text(opts.FormatTable ? Truncate(result.Model.Value, 50) : result.Model.Value, new Style()),
-                        new Text(opts.FormatTable ? Truncate(result.SystemPrompt.Value, 50) : result.SystemPrompt.Value, new Style()),
-                        new Text(opts.FormatTable ? Truncate(result.Asked.ToString(), 50) : result.Asked.ToString(), new Style()),
-                        new Text(opts.FormatTable ? Truncate(result.Message, 50) : result.Message, new Style()),
-                        new Text(opts.FormatTable ? Truncate(result.Temperature.ToString(), 50) : result.Temperature.ToString(), new Style()),
-                        new Text(opts.FormatTable ? Truncate(result.MaxTokens.ToString(), 50) : result.MaxTokens.ToString(), new Style()),
-                        new Text(opts.FormatTable ? Truncate(result.PromptTokens.ToString(), 50) : result.PromptTokens.ToString(), new Style()),
-                        new Text(opts.FormatTable ? Truncate(result.CompletionTokens.ToString(), 50) : result.CompletionTokens.ToString(), new Style()),
-                        new Text(opts.FormatTable ? Truncate(result.TotalTokens.ToString(), 50) : result.TotalTokens.ToString(), new Style())
-                     );
+                        NewTextNoStyle(opts.FormatTable ? Truncate(result.ResultSet.Value, 50) : result.ResultSet.Value),
+                        NewTextNoStyle(opts.FormatTable ? Truncate(result.Model.Value, 50) : result.Model.Value),
+                        NewTextNoStyle(opts.FormatTable ? Truncate(result.SystemPrompt.Value, 50) : result.SystemPrompt.Value),
+                        NewTextNoStyle(opts.FormatTable ? Truncate(result.Asked.ToString(), 50) : result.Asked.ToString()),
+                        NewTextNoStyle(opts.FormatTable ? Truncate(result.Message, 50) : result.Message),
+                        NewTextNoStyle(opts.FormatTable ? Truncate(result.Temperature.ToString(), 50) : result.Temperature.ToString()),
+                        NewTextNoStyle(opts.FormatTable ? Truncate(result.MaxTokens.ToString(), 50) : result.MaxTokens.ToString()),
+                        NewTextNoStyle(opts.FormatTable ? Truncate(result.PromptTokens.ToString(), 50) : result.PromptTokens.ToString()),
+                        NewTextNoStyle(opts.FormatTable ? Truncate(result.CompletionTokens.ToString(), 50) : result.CompletionTokens.ToString()),
+                        NewTextNoStyle(opts.FormatTable ? Truncate(result.TotalTokens.ToString(), 50) : result.TotalTokens.ToString()));
                 }
 
                 AnsiConsole.Write(new Rule("[yellow]Result[/]").RuleStyle("green"));
@@ -558,5 +555,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             await AnsiConsole.Status().StartAsync("Creating more questions...", async ctx =>
                 await createMoreQuestionsUseCase.ExecuteAsync(opts));
         }
+
+        private Text NewTextNoStyle(string text) => new Text(text, new Style());
+
     }
 }
