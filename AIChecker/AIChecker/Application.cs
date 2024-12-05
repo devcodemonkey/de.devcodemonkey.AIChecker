@@ -12,81 +12,32 @@ using System.Runtime.InteropServices;
 
 namespace de.devcodemonkey.AIChecker.AIChecker
 {
-    public class Application
+    public class Application(
+        IRecreateDatabaseUseCase recreateDatabaseUseCase,
+        IImportQuestionAnswerUseCase importQuestionAnswerUseCase,
+        IDeleteAllQuestionAnswerUseCase deleteAllQuestionAnswerUseCase,
+        IDeleteResultSetUseCase deleteResultSetUseCase,
+        ICreateMoreQuestionsUseCase createMoreQuestionsUseCase,
+        IViewAverageTimeOfResultSetUseCase viewAverageTimeOfResultSetUseCase,
+        IViewResultsOfResultSetUseCase viewResultsOfResultSetUseCase,
+        IViewResultSetsUseCase viewResultSetsUseCase,
+        ISendAndSaveApiRequestUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase,
+        IViewGpuUsageUseCase viewGpuUsageUseCase,
+        IStartStopDatabaseUseCase startStopDatabaseUseCase,
+        IBackupDatabaseUseCase backupDatabaseUseCase,
+        IRestoreDatabaseUseCase restoreDatabaseUseCase,
+        IAddModelUseCase addModelUseCase,
+        IViewModels viewModels,
+        ILoadModelUseCase loadModelUseCase,
+        IUnloadModelUseCase unloadModelUseCase,
+        ICreatePromptRatingUseCase createPromptRatingUseCase,
+        IExportPromptRatingUseCase exportPromptRatingUseCase,
+        IImportQuestionsFromResultsUseCase importQuestionsFromResultsUseCase,
+        ISendQuestionsToLmsUseCase sendQuestionsToLmsUseCase,
+        ICheckJsonFormatOfResultsUseCase checkJsonFormatOfResultsUseCase)
     {
         private const int MAX_DISTANCE = 58;
         private const int MONKEY_DISTANCE = 12;
-
-        private readonly IRecreateDatabaseUseCase _recreateDatabaseUseCase;
-        private readonly IImportQuestionAnswerUseCase _importQuestionAnswerUseCase;
-        private readonly IDeleteAllQuestionAnswerUseCase _deleteAllQuestionAnswerUseCase;
-        private readonly ICreateMoreQuestionsUseCase _createMoreQuestionsUseCase;
-        private readonly IViewAverageTimeOfResultSetUseCase _viewAverageTimeOfResultSetUseCase;
-        private readonly IViewResultSetsUseCase _viewResultSetsUseCase;
-        private readonly ISendAndSaveApiRequestUseCase _sendAPIRequestToLmStudioAndSaveToDbUseCase;
-        private readonly IDeleteResultSetUseCase _deleteResultSetUseCase;
-        private readonly IViewResultsOfResultSetUseCase _viewResultsOfResultSetUseCase;
-        private readonly IViewGpuUsageUseCase _viewGpuUsageUseCase;
-        private readonly IStartStopDatabaseUseCase _startStopDatabaseUseCase;
-        private readonly IBackupDatabaseUseCase _backupDatabaseUseCase;
-        private readonly IRestoreDatabaseUseCase _restoreDatabaseUseCase;
-        private readonly IAddModelUseCase _addModelUseCase;
-        private readonly IViewModels _viewModels;
-        private readonly ILoadModelUseCase _loadModelUseCase;
-        private readonly IUnloadModelUseCase _unloadModelUseCase;
-        private readonly ICreatePromptRatingUseCase _createPromptRatingUseCase;
-        private readonly IExportPromptRatingUseCase _exportPromptRatingUseCase;
-        private readonly IImportQuestionsFromResultsUseCase _importQuestionsFromResultsUseCase;
-        private readonly ISendQuestionsToLmsUseCase _sendQuestionsToLmsUseCase;
-        private readonly ICheckJsonFormatOfResultsUseCase _checkJsonFormatOfResultsUseCase;
-
-        public Application(
-            IRecreateDatabaseUseCase recreateDatabaseUseCase,
-            IImportQuestionAnswerUseCase importQuestionAnswerUseCase,
-            IDeleteAllQuestionAnswerUseCase deleteAllQuestionAnswerUseCase,
-            IDeleteResultSetUseCase deleteResultSetUseCase,
-            ICreateMoreQuestionsUseCase createMoreQuestionsUseCase,
-            IViewAverageTimeOfResultSetUseCase viewAverageTimeOfResultSetUseCase,
-            IViewResultsOfResultSetUseCase viewResultsOfResultSetUseCase,
-            IViewResultSetsUseCase viewResultSetsUseCase,
-            ISendAndSaveApiRequestUseCase sendAPIRequestToLmStudioAndSaveToDbUseCase,
-            IViewGpuUsageUseCase viewGpuUsageUseCase,
-            IStartStopDatabaseUseCase startStopDatabaseUseCase,
-            IBackupDatabaseUseCase backupDatabaseUseCase,
-            IRestoreDatabaseUseCase restoreDatabaseUseCase,
-            IAddModelUseCase addModelUseCase,
-            IViewModels viewModels,
-            ILoadModelUseCase loadModelUseCase,
-            IUnloadModelUseCase unloadModelUseCase,
-            ICreatePromptRatingUseCase createPromptRatingUseCase,
-            IExportPromptRatingUseCase exportPromptRatingUseCase,
-            IImportQuestionsFromResultsUseCase importQuestionsFromResultsUseCase,
-            ISendQuestionsToLmsUseCase sendQuestionsToLmsUseCase,
-            ICheckJsonFormatOfResultsUseCase checkJsonFormatOfResultsUseCase)
-        {
-            _recreateDatabaseUseCase = recreateDatabaseUseCase;
-            _importQuestionAnswerUseCase = importQuestionAnswerUseCase;
-            _deleteAllQuestionAnswerUseCase = deleteAllQuestionAnswerUseCase;
-            _deleteResultSetUseCase = deleteResultSetUseCase;
-            _createMoreQuestionsUseCase = createMoreQuestionsUseCase;
-            _viewAverageTimeOfResultSetUseCase = viewAverageTimeOfResultSetUseCase;
-            _viewResultSetsUseCase = viewResultSetsUseCase;
-            _viewResultsOfResultSetUseCase = viewResultsOfResultSetUseCase;
-            _sendAPIRequestToLmStudioAndSaveToDbUseCase = sendAPIRequestToLmStudioAndSaveToDbUseCase;
-            _viewGpuUsageUseCase = viewGpuUsageUseCase;
-            _startStopDatabaseUseCase = startStopDatabaseUseCase;
-            _backupDatabaseUseCase = backupDatabaseUseCase;
-            _restoreDatabaseUseCase = restoreDatabaseUseCase;
-            _addModelUseCase = addModelUseCase;
-            _viewModels = viewModels;
-            _loadModelUseCase = loadModelUseCase;
-            _unloadModelUseCase = unloadModelUseCase;
-            _createPromptRatingUseCase = createPromptRatingUseCase;
-            _exportPromptRatingUseCase = exportPromptRatingUseCase;
-            _importQuestionsFromResultsUseCase = importQuestionsFromResultsUseCase;
-            _sendQuestionsToLmsUseCase = sendQuestionsToLmsUseCase;
-            _checkJsonFormatOfResultsUseCase = checkJsonFormatOfResultsUseCase;
-        }
 
         public async Task RunAsync(string[] args)
         {
@@ -112,7 +63,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
                 async (SendToLmsVerb opts) => await SendToLmsAsync(opts),
 
-                async (ImportQuestionsVerb opts) => await _importQuestionAnswerUseCase.ExecuteAsync(opts.Path, opts.Category),
+                async (ImportQuestionsVerb opts) => await importQuestionAnswerUseCase.ExecuteAsync(opts.Path, opts.Category),
                 async (ImportQuestionsFromResultsVerb opts) => await ImportQuestionsFromResultsVerb(opts),
 
                 async (ViewResultSetsVerb opts) => await ViewResultSetsAsync(),
@@ -121,7 +72,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 async (ViewProcessUsageVerb opts) => await ViewProcessUsageAsync(),
 
                 async (DeleteResultSetVerb opts) => await DeleteResultSet(opts),
-                async (DeleteAllQuestionsVerb opts) => await _deleteAllQuestionAnswerUseCase.ExecuteAsync(),
+                async (DeleteAllQuestionsVerb opts) => await deleteAllQuestionAnswerUseCase.ExecuteAsync(),
 
                 async (CreateMoreQuestionsVerb opts) => await CreateMoreQuestionsAsync(opts),
                 async (ModelVerb opts) => await ManageModel(opts),
@@ -141,7 +92,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             await AnsiConsole.Status().StartAsync("Checking JSON format of results...", async ctx =>
             {
-                var results = await _checkJsonFormatOfResultsUseCase.ExecuteAsync(opts.ResultSet);
+                var results = await checkJsonFormatOfResultsUseCase.ExecuteAsync(opts.ResultSet);
                 if (opts.ShowOutput)
                 {
                     var table = new Table();
@@ -176,13 +127,13 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         private async Task DeleteResultSet(DeleteResultSetVerb opts)
         {
             await AnsiConsole.Status().StartAsync("Deleting result set...", async ctx =>
-                await _deleteResultSetUseCase.ExecuteAsync(opts.ResultSet)
+                await deleteResultSetUseCase.ExecuteAsync(opts.ResultSet)
             );
             AnsiConsole.MarkupLine("[green]Result set deleted![/]");
         }
 
         private async Task ImportQuestionsFromResultsVerb(ImportQuestionsFromResultsVerb opts)
-            => await _importQuestionsFromResultsUseCase.ExecuteAsync(opts.ResultSet, opts.Category);
+            => await importQuestionsFromResultsUseCase.ExecuteAsync(opts.ResultSet, opts.Category);
 
 
 
@@ -199,7 +150,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     "docx" => DataExportType.Docx,
                     _ => DataExportType.Pdf
                 };
-                await _exportPromptRatingUseCase.ExecuteAsync(opts.ResultSet, fileType, !opts.NotOpenFolder);
+                await exportPromptRatingUseCase.ExecuteAsync(opts.ResultSet, fileType, !opts.NotOpenFolder);
             }
             );
             AnsiConsole.MarkupLine("[green]Prompt rating exported![/]");
@@ -213,7 +164,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             {
                 responseFormat = MultiLineInput("Response Format");
             }
-            await _createPromptRatingUseCase.ExecuteAsync(
+            await createPromptRatingUseCase.ExecuteAsync(
 
                 new PromptRatingUseCaseParams()
                 {
@@ -327,7 +278,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     var modelName = opts.ModelName;
                     if (string.IsNullOrEmpty(opts.ModelName))
                     {
-                        var modelsAllProperties = await _viewModels.ExecuteAsync();
+                        var modelsAllProperties = await viewModels.ExecuteAsync();
                         var modelNames = modelsAllProperties.Select(m => m.Value).ToArray();
                         modelName = AnsiConsole.Prompt(
                             new SelectionPrompt<string>()
@@ -340,7 +291,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                     var success = false;
                     await AnsiConsole.Status().StartAsync("Loading model...", async ctx =>
                     {
-                        success = await _loadModelUseCase.ExecuteAsync(modelName);
+                        success = await loadModelUseCase.ExecuteAsync(modelName);
 
                     });
                     if (success)
@@ -349,7 +300,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                         AnsiConsole.Markup($"[red]Model '{modelName}' could not be loaded.[/]");
                     break;
                 case { Unload: true }:
-                    var successUnload = await _unloadModelUseCase.ExecuteAsync();
+                    var successUnload = await unloadModelUseCase.ExecuteAsync();
                     if (successUnload)
                         AnsiConsole.Markup("[green]Model unloaded successfully.[/]");
                     else
@@ -368,10 +319,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                         Link = link,
                         Size = size
                     };
-                    await _addModelUseCase.ExecuteAsync(model);
+                    await addModelUseCase.ExecuteAsync(model);
                     break;
                 default:
-                    var models = await _viewModels.ExecuteAsync();
+                    var models = await viewModels.ExecuteAsync();
                     var table = new Table();
                     table.AddColumn("Model");
                     table.AddColumn("Basic Models");
@@ -397,7 +348,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
             if (opts.Restore)
             {
-                var restoreSuccess = _restoreDatabaseUseCase.Execute(opts.Branch);
+                var restoreSuccess = restoreDatabaseUseCase.Execute(opts.Branch);
                 if (restoreSuccess)
                     AnsiConsole.Markup("[green]Database restored successfully.[/]");
                 else
@@ -406,7 +357,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             }
             if (opts.Backup)
             {
-                var backupSuccess = _backupDatabaseUseCase.Execute();
+                var backupSuccess = backupDatabaseUseCase.Execute();
                 if (backupSuccess)
                     AnsiConsole.Markup("[green]Database backup successful.[/]");
                 else
@@ -420,9 +371,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             }
 
             if (opts.Stop)
-                await _startStopDatabaseUseCase.ExecuteAsync(false);
+                await startStopDatabaseUseCase.ExecuteAsync(false);
             else
-                await _startStopDatabaseUseCase.ExecuteAsync(true);
+                await startStopDatabaseUseCase.ExecuteAsync(true);
         }
 
         private Task DisplayAppInfoAsync()
@@ -471,7 +422,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             }
             await AnsiConsole.Status().StartAsync("Recreating database...", async ctx =>
                 {
-                    await _recreateDatabaseUseCase.ExecuteAysnc();
+                    await recreateDatabaseUseCase.ExecuteAysnc();
                 });
 
             AnsiConsole.MarkupLine("[green]Database recreated![/]");
@@ -481,7 +432,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             await AnsiConsole.Status().StartAsync("Loading GPU usage...", async ctx =>
             {
-                await _viewGpuUsageUseCase.ExecuteAsync();
+                await viewGpuUsageUseCase.ExecuteAsync();
             });
         }
 
@@ -500,9 +451,9 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             await AnsiConsole.Status().StartAsync($"Sending API request to {(isOpenAiModel ? "OpenAi Api" : "LmStudio")} and saving to db...", async ctx =>
             {
                 if (string.IsNullOrEmpty(opts.QuestionCategory))
-                    await _sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(opts);
+                    await sendAPIRequestToLmStudioAndSaveToDbUseCase.ExecuteAsync(opts);
                 else
-                    await _sendQuestionsToLmsUseCase.ExecuteAsync(opts, progressAction: (progressMetrics) =>
+                    await sendQuestionsToLmsUseCase.ExecuteAsync(opts, progressAction: (progressMetrics) =>
                     {
                         // Display progress metrics
                         var table = new Table()
@@ -531,7 +482,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
                 table.AddColumn(new TableColumn("[bold yellow]Value[/]").LeftAligned());
                 table.AddColumn(new TableColumn("[bold yellow]Average Time (s)[/]").Centered());
 
-                var resultSets = await _viewResultSetsUseCase.ExecuteAsync();
+                var resultSets = await viewResultSetsUseCase.ExecuteAsync();
 
                 resultSets = resultSets.OrderBy(r => r.Item1.Value);
                 foreach (var resultSet in resultSets)
@@ -551,7 +502,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
         private async Task ViewAverageAsync(ViewAverageVerb opts)
         {
-            var result = await _viewAverageTimeOfResultSetUseCase.ExecuteAsync(opts.ResultSet);
+            var result = await viewAverageTimeOfResultSetUseCase.ExecuteAsync(opts.ResultSet);
             Console.WriteLine($"The average time of the API request for result set '{opts.ResultSet}' is {result.TotalSeconds} seconds.");
         }
 
@@ -559,7 +510,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             await AnsiConsole.Status().StartAsync("Loading results...", async ctx =>
             {
-                var results = await _viewResultsOfResultSetUseCase.ExecuteAsync(opts.ResultSet);
+                var results = await viewResultsOfResultSetUseCase.ExecuteAsync(opts.ResultSet);
                 var table = new Table();
                 table.AddColumn("ResultSet");
                 table.AddColumn("Model");
@@ -605,7 +556,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
         {
             opts.ResponseFormat = MultiLineInput("Response Format");
             await AnsiConsole.Status().StartAsync("Creating more questions...", async ctx =>
-                await _createMoreQuestionsUseCase.ExecuteAsync(opts));
+                await createMoreQuestionsUseCase.ExecuteAsync(opts));
         }
     }
 }
