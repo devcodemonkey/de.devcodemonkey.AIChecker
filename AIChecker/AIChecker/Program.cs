@@ -1,4 +1,5 @@
-﻿using de.devcodemonkey.AIChecker.CoreBusiness.Models;
+﻿using de.devcodemonkey.AIChecker.AIChecker.Extenions;
+using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.DataSource.APIRequester;
 using de.devcodemonkey.AIChecker.DataSource.SystemMonitor;
 using de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
@@ -195,82 +196,24 @@ namespace de.devcodemonkey.AIChecker.AIChecker
 
                 services.AddSingleton<IConfiguration>(configuration);
 
-                services.AddDbContext<AicheckerContext>(options =>
-                {
-                    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
-                });
+                services
+                    .ConfigureDatabase(configuration)
+                    .ConfigureServices()
+                    .ConfigureUseCases()
+                    .ConfigureDatabaseUseCases();
 
                 // Create the database
                 if (runMigration())
-                {
-                    // services.AddSingleton<MigrationService>();
                     using (var scope = services.BuildServiceProvider().CreateScope())
                     {
                         var services = scope.ServiceProvider;
                         MigrationService.RunMigrationIfNeeded(services);
                     }
 
-                }
-                services.AddScoped<IDefaultMethodesRepository, DefaultMethodesRepository>();
-
                 MdServiceRegistrationExtensions.AddServiceAndDependencies(services);
 
                 // Register services
                 services.AddScoped<Application>();
-                // Register plugins
-                services.AddScoped<IDeserializer<QuestionAnswer>, Deserializer<QuestionAnswer>>();
-                services.AddScoped<IAPIRequester, APIRequester>();
-                services.AddScoped<ISystemMonitor, SystemMonitor>();
-                services.AddScoped<IWslDatabaseService, WslDatabaseService>();
-                services.AddScoped<ILoadUnloadLms, LoadUnloadLms>();
-                // Register use cases
-                services.AddScoped<IRecreateDatabaseUseCase, RecreateDatabaseUseCase>();
-                services.AddScoped<IImportQuestionAnswerUseCase, ImportQuestionAnswerUseCase>();
-                services.AddScoped<IDeleteAllQuestionAnswerUseCase, DeleteAllQuestionAnswerUseCase>();
-                services.AddScoped<IDeleteResultSetUseCase, DeleteResultSetUseCase>();
-                services.AddScoped<ICreateMoreQuestionsUseCase, CreateMoreQuestionsUseCase>();
-                services.AddScoped<IViewAverageTimeOfResultSetUseCase, ViewAverageTimeOfResultSetUseCase>();
-                services.AddScoped<IViewResultSetsUseCase, ViewResultSetsUseCase>();
-                services.AddScoped<IViewResultsOfResultSetUseCase, ViewResultsOfResultSetUseCase>();
-                services.AddScoped<ISendAndSaveApiRequestUseCase, SendAPIRequestAndSaveToDbUseCase>();
-                services.AddScoped<IViewGpuUsageUseCase, ViewGpuUsageUseCase>();
-                services.AddScoped<IStartStopDatabaseUseCase, StartStopDatabaseUseCase>();
-                services.AddScoped<IAddModelUseCase, AddModelUseCase>();
-                services.AddScoped<IViewModels, ViewModels>();
-                services.AddScoped<ILoadModelUseCase, LoadModelUseCase>();
-                services.AddScoped<IUnloadModelUseCase, UnloadModelUseCase>();
-                services.AddScoped<ICreatePromptRatingUseCase, CreatePromptRatingUseCase>();
-                services.AddScoped<IImportQuestionsFromResultsUseCase, ImportQuestionsFromResultsUseCase>();
-                services.AddScoped<ISendQuestionsToLmsUseCase, SendQuestionsToLmsUseCase>();
-                services.AddScoped<ICheckJsonFormatOfResultsUseCase, CheckJsonFormatOfResultsUseCase>();
-
-                services.AddScoped<IExportPromptRatingUseCase, ExportPromptRatingUseCase>();
-
-                services.AddScoped<IBackupDatabaseUseCase, BackupDatabaseUseCase>(provider =>
-                {
-                    var wslDatabaseService = provider.GetRequiredService<IWslDatabaseService>();
-                    var configuration = provider.GetRequiredService<IConfiguration>();
-
-                    // Retrieve the Git settings from configuration
-                    string gitRemoteUrl = configuration["Git:GitRemoteUrl"];
-                    string gitRepositoryName = configuration["Git:GitRemoteName"];
-
-                    // Create an instance of BackupDatabaseUseCase with the required parameters
-                    return new BackupDatabaseUseCase(wslDatabaseService, gitRemoteUrl, gitRepositoryName);
-                });
-
-                services.AddScoped<IRestoreDatabaseUseCase, RestoreDatabaseUseCase>(provider =>
-                {
-                    var wslDatabaseService = provider.GetRequiredService<IWslDatabaseService>();
-                    var configuration = provider.GetRequiredService<IConfiguration>();
-
-                    // Retrieve the Git settings from configuration
-                    string gitRemoteUrl = configuration["Git:GitRemoteUrl"];
-                    string gitRepositoryName = configuration["Git:GitRemoteName"];
-
-                    // Create an instance of BackupDatabaseUseCase with the required parameters
-                    return new RestoreDatabaseUseCase(wslDatabaseService, gitRemoteUrl, gitRepositoryName);
-                });
             });
 
             return services.BuildServiceProvider();
