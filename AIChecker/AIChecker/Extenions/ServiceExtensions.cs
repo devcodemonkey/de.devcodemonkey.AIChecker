@@ -19,7 +19,7 @@ public static class ServiceExtensions
     {
         services.AddDbContext<AicheckerContext>(options =>
         {
-            options.UseNpgsql(configuration.GetConnectionString("AicheckerContext"));
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
         });
         services.AddScoped<IDefaultMethodesRepository, DefaultMethodesRepository>();
         return services;
