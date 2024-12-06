@@ -40,7 +40,7 @@ public class WslDatabaseService : IWslDatabaseService
         string repoPath = $"/tmp/{gitRepositoryName}";
 
         // Step 1: Clone the Git repository
-        if (!RunCommandOnWsl($"cd /tmp && rm {gitRepositoryName} -r -f && git clone {gitRemoteUrl}/{gitRepositoryName}.git"))
+        if (!RunCommandOnWsl($"cd /tmp && rm {gitRepositoryName} -r -f && git clone --branch main --single-branch {gitRemoteUrl}/{gitRepositoryName}.git"))
             return false;
 
         // Step 2: Create a new branch for the backup
@@ -84,10 +84,10 @@ public class WslDatabaseService : IWslDatabaseService
         string repoPath = $"/tmp/{gitRepositoryName}";
 
         // Step 1: Clone the Git repository and switch to the specified branch
-        if (!RunCommandOnWsl($"cd /tmp && rm -rf {gitRepositoryName} && git clone {gitRemoteUrl}/{gitRepositoryName}.git"))
+        if (!RunCommandOnWsl($"cd /tmp && rm -rf {gitRepositoryName} && git clone --branch {gitBranchName} --single-branch {gitRemoteUrl}/{gitRepositoryName}.git"))
             return false;
-        if (!RunCommandOnWsl($"cd {repoPath} && git checkout {gitBranchName}"))
-            return false;
+        //if (!RunCommandOnWsl($"cd {repoPath} && git checkout {gitBranchName}"))
+        //    return false;
 
         // Step 2: Assume the SQL backup file name is derived from the branch name
         string sqlFileName = $"{gitBranchName.Split('/').Last()}.sql";
