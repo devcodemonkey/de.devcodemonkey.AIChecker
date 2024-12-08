@@ -3,7 +3,21 @@ drop table temp_table_ResultSets;
 create temp table temp_table_ResultSets
 ("ResultSets" TEXT);
 
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 16) Ministral-8B')
 
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 8) mixtral-8x7b-instruct-v0.1');
+
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 13) Llama-3.2-3B-Instruct');
+
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 14) Llama-3.2-1B-Instruct')
 
 -- Zeiten
 with GroupedResults as (
@@ -47,7 +61,7 @@ rs."Value" in (select * from temp_table_ResultSets)
 
 -- Treffer/-quote
 with maxbewertungen as (
-    select
+    select    	
     	rs."Value" as  "ResultSet",
         r."QuestionsId",
         r."AnswerId" as "AnswerIdResult",
@@ -67,3 +81,33 @@ from maxbewertungen
 where "Bewertung" = "MaxBewertung"
 and "AnswerIdQuestions(Korrekt)" = "AnswerIdResult"
 order by "MaxValueCount";
+
+-- Hardware Using
+select
+	sru."ProcessId"
+	,sru."ProcessName" 
+	,sum(sru."GpuMemoryUsage") / count(*) 	as "TotalGpuMemoryUsage"
+	,sum(sru."GpuUsage") / count(*)			as "TotalGpuUsage"
+	,sum(sru."MemoryUsage")	/ count(*)		as "TotalMemoryUsage"
+	,sum(sru."CpuUsage") / count(*)			as "TotalCpuUsage"
+	,max(sru."GpuUsage")
+from "ResultSets" rs 
+join "SystemResourceUsage" sru on rs."ResultSetId" = sru."ResultSetId" 
+where 
+	rs."Value" in (select * from temp_table_ResultSets)
+group by
+	sru."ProcessId"
+	,sru."ProcessName" 
+order by 
+max(sru."GpuUsage")				desc
+	,sum(sru."GpuMemoryUsage") 	desc 
+	sum(sru."GpuUsage")			desc
+	,sum(sru."MemoryUsage")		desc
+	,sum(sru."CpuUsage")		desc
+limit 10
+;
+select * from "SystemResourceUsage" sru 
+where sru."GpuUsage" is null
+
+
+	
