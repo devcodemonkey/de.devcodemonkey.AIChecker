@@ -2,6 +2,7 @@
 using de.devcodemonkey.AIChecker.CoreBusiness.Models;
 using de.devcodemonkey.AIChecker.CoreBusiness.ModelsSystemMonitor;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
+using GpuOverNVML;
 using Spectre.Console;
 using System.Diagnostics;
 using System.Management;
@@ -89,8 +90,36 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 
                     applicationUsages.Add(systeResourceUsage);
                 }
+
+                using (var nvml = new NvmlWrapper())
+                {
+                    try
+                    {
+                        var nvmlGpuUsage = nvml.GetGpuUsage();
+                        var nvmlMemoryUsage = nvml.GetMemoryUsage();
+
+                        applicationUsages.Add(new SystemResourceUsage
+                        {
+                            ProcessId = -1,
+                            ProcessName = "_Nvml",
+                            CpuUsage = 0,
+                            CpuUsageTimestamp = DateTime.Now,
+                            MemoryUsage = 0,
+                            MemoryUsageTimestamp = DateTime.Now,
+                            GpuUsage = Convert.ToInt32(nvmlGpuUsage),
+                            GpuUsageTimestamp = DateTime.Now,
+                            GpuMemoryUsage = Convert.ToInt32(nvmlMemoryUsage),
+                            GpuMemoryUsageTimestamp = DateTime.Now,
+                        });
+                    }
+                    catch (Exception e)
+                    {
+                        AnsiConsole.MarkupLine($"[red]{e.Message}[/]");
+                    }
+                }
             });
 
+            
             return applicationUsages;
         }
 
@@ -259,7 +288,7 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
                     table.AddColumn(new TableColumn("[bold yellow]RAM Usage[/]").RightAligned());
                     table.AddColumn("[bold yellow]RAM Timestamp[/]");
 
-                    
+
 
                     foreach (var (usage, index) in topGpuUsage.Select((usage, index) => (usage, index)))
                     {
@@ -272,12 +301,12 @@ namespace de.devcodemonkey.AIChecker.DataSource.SystemMonitor
 
                             $"[darkorange]{usage.GpuMemoryUsage} MB[/]",  // Display GPU memory usage in MB
                             usage.GpuMemoryUsageTimestamp.ToString("yyyy-MM-dd HH:mm:ss"),
-                            
+
                             $"[green]{usage.CpuUsage / 100:F2}%[/]",  // Display CPU usage with formatting
                             usage.CpuUsageTimestamp.ToString("yyyy-MM-dd HH:mm:ss"),  // Format timestamps
 
                             $"[blue]{usage.MemoryUsage} MB[/]",  // Display RAM usage in MB
-                            usage.MemoryUsageTimestamp.ToString("yyyy-MM-dd HH:mm:ss")                            
+                            usage.MemoryUsageTimestamp.ToString("yyyy-MM-dd HH:mm:ss")
                         );
                     }
 

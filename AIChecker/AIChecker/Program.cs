@@ -155,7 +155,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //    "-c", "4"]);
 
 
-            //await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Fragezuordnung für Testverfahren Skala Outlook allgemein (Nr. 1) Test"]);            
+            //await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Fragezuordnung für Testverfahren Skala Outlook allgemein (Nr. 1) Test"]);
             //await RunWithScopeAsync(serviceProvider, ["sendToLms", "-r", "Fragezuordnung für Testverfahren Skala Outlook allgemein (Nr. 1) Test", "--questionCategory", "Outlook created Questions over gpt-4o-mini,Teams Citrix created Questions over gpt-4o-mini,Teams allgemein created Questions over gpt-4o-mini,Azubi FAQ created Questions over gpt-4o-mini", "--questionsCorrect", "-s", "", "-u", "1", "-w"]);
             //await RunWithScopeAsync(serviceProvider, ["checkJson", "-r", "Fragezuordnung für Testverfahren Skala (Nr. 2) Teams Citrix korrekt geprüfte Fragen Test"]);
 
