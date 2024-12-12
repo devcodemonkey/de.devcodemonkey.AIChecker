@@ -2,6 +2,8 @@
 using de.devcodemonkey.AIChecker.CoreBusiness.DbModels;
 using de.devcodemonkey.AIChecker.UseCases.PluginInterfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using static System.Formats.Asn1.AsnWriter;
 
 
 namespace de.devcodemonkey.AIChecker.DataStore.PostgreSqlEF;
@@ -10,10 +12,12 @@ public class DefaultMethodesRepository : IDefaultMethodesRepository
 {
     private readonly AicheckerContext _ctx;
     private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+    private readonly IServiceProvider _serviceProvider;
 
-    public DefaultMethodesRepository(AicheckerContext context)
+    public DefaultMethodesRepository(AicheckerContext context, IServiceProvider serviceProvider)
     {
         _ctx = context;
+        _serviceProvider = serviceProvider;
     }
 
     // Write Operation with SemaphoreSlim
@@ -137,34 +141,26 @@ public class DefaultMethodesRepository : IDefaultMethodesRepository
             _semaphore.Release();
         }
     }
-
-    // Use of SemaphoreSlim, because of two read tasks will access
-    // TODO: Test with own semaphore, than it will not block the other read and write tasks
+    
     public async Task<Model> ViewModelOverValueAysnc(string value)
     {
-        await _semaphore.WaitAsync();
-        try
+        // create a new scope to be shure that a new instance of the context is used
+        // than a semaphore is not necessary
+        using (var scope = _serviceProvider.CreateScope())
         {
-            return await _ctx.Models.FirstOrDefaultAsync(m => m.Value == value);
-        }
-        finally
-        {
-            _semaphore.Release();
+            var scopedContext = scope.ServiceProvider.GetRequiredService<AicheckerContext>();
+            return await scopedContext.Models.FirstOrDefaultAsync(m => m.Value == value);
         }
     }
-
-    // Use of SemaphoreSlim, because of two read tasks will access
-    // TODO: Test with own semaphore, than it will not block the other read and write tasks
+    
     public async Task<TTable> ViewOverValue<TTable>(string value) where TTable : class, IValue
     {
-        await _semaphore.WaitAsync();
-        try
+        // create a new scope to be shure that a new instance of the context is used
+        // than a semaphore is not necessary
+        using (var scope = _serviceProvider.CreateScope())
         {
-            return await _ctx.Set<TTable>().FirstOrDefaultAsync(t => t.Value == value);
-        }
-        finally
-        {
-            _semaphore.Release();
+            var scopedContext = scope.ServiceProvider.GetRequiredService<AicheckerContext>();
+            return await scopedContext.Set<TTable>().FirstOrDefaultAsync(t => t.Value == value);
         }
     }
 
