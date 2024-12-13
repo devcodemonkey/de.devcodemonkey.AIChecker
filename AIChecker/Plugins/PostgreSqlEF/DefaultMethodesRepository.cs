@@ -14,6 +14,11 @@ public class DefaultMethodesRepository : IDefaultMethodesRepository
     private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
     private readonly IServiceProvider _serviceProvider;
 
+    public DefaultMethodesRepository(AicheckerContext context)
+    {
+        _ctx = context;
+    }
+
     public DefaultMethodesRepository(AicheckerContext context, IServiceProvider serviceProvider)
     {
         _ctx = context;
