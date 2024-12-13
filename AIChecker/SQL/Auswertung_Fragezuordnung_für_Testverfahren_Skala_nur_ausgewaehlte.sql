@@ -4,12 +4,42 @@ create temp table temp_table_ResultSets
 ("ResultSets" TEXT);
 
 insert into temp_table_ResultSets
-values
-	('Fragezuordnung für Testverfahren Skala (Nr. 16) Ministral-8B')
+values	
+	('Fragezuordnung für Testverfahren Skala (Nr. 1) Outlook allgemein korrekt geprüfte Fragen'),
+	('Fragezuordnung für Testverfahren Skala (Nr. 2) Teams Citrix korrekt geprüfte Fragen'),
+	('Fragezuordnung für Testverfahren Skala (Nr. 3) Teams allgemein korrekt geprüfte Fragen'),
+	('Fragezuordnung für Testverfahren Skala (Nr. 4) Azubi FAQ korrekt geprüfte Fragen');
 
+INSERT INTO temp_table_ResultSets
+VALUES    
+    --('Fragezuordnung für Testverfahren Skala auf gpt-mini (Nr. 2) Teams Citrix created Questions'),
+    --('Fragezuordnung für Testverfahren Skala auf gpt-mini (Nr. 3) Outlook allgemein korrekt geprüfte Fragen'),
+    --('Fragezuordnung für Testverfahren Skala auf gpt-mini (Nr. 4) Teams allgemein'),
+    ('Fragezuordnung für Testverfahren Skala auf gpt-mini (Nr. 5) Azubi FAQ');
+
+INSERT INTO temp_table_ResultSets
+VALUES    
+ 	('Fragezuordnung für Testverfahren Skala auf gpt-4o (Nr. 1) Teams Citrix created Questions'),
+    ('Fragezuordnung für Testverfahren Skala auf gpt-4o (Nr. 2) Outlook allgemein korrekt geprüfte Fragen'),
+    ('Fragezuordnung für Testverfahren Skala auf gpt-4o (Nr. 3) Teams allgemein'),
+    ('Fragezuordnung für Testverfahren Skala auf gpt-4o (Nr. 4) Azubi FAQ');
+   
+   
 insert into temp_table_ResultSets
 values
 	('Fragezuordnung für Testverfahren Skala (Nr. 8) mixtral-8x7b-instruct-v0.1');
+   
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 10) Meta-Llama-3.1-70B');
+	
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 11) em_german_leo_mistral');
+
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 12) Meta-Llama-3.1-8B-Instruct');
 
 insert into temp_table_ResultSets
 values
@@ -18,11 +48,15 @@ values
 insert into temp_table_ResultSets
 values
 	('Fragezuordnung für Testverfahren Skala (Nr. 14) Llama-3.2-1B-Instruct')
+	
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 15) Mistral-Nemo')
 
--- Zeiten
+-- Laufzeiten	
 with GroupedResults as (
     select 
-        coalesce(replace(rs."Value", 'Fragezuordnung für Testverfahren Skala', ''), 'Gesamt') as "Test",
+        coalesce(replace(rs."Value", 'Fragezuordnung für Testverfahren Skala auf', ''), 'Gesamt') as "Test",
         count(*) as "Anzahl Anfragen",
         max(r."RequestEnd") - min(r."RequestStart") as "Dauer",
         (max(r."RequestEnd") - min(r."RequestStart")) / count(*) as "Durchschnittliche Dauer"
