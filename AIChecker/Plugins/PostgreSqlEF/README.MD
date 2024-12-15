@@ -35,7 +35,7 @@ dotnet ef migrations add InitialCreate --project PostgreSqlEF.csproj --startup-p
 To apply the migration to your PostgreSQL database, use:
 
 ```bash
-dotnet ef database update --project PostgreSqlEF.csproj --startup-project ../../AIChecker --connection "Host=localhost;Database=AiCheckerDB;Port=5432;User Id=AiChecker;Password=123"
+dotnet ef database update --project PostgreSqlEF.csproj --startup-project ../../AIChecker --connection "Host=localhost;Database=AiCheckerDB;Port=5432;User Id=AiChecker;Password=123;Timeout"
 ```
 
 
@@ -44,6 +44,15 @@ dotnet ef migrations list --project PostgreSqlEF.csproj --startup-project ../../
 
 ```
 This will execute the migration and create the necessary database schema in PostgreSQL.
+
+If needed set the timeout for the connection string. For example, if you have to create indexes on a large table:
+
+
+```bash
+dotnet ef database update --project PostgreSqlEF.csproj --startup-project ../../AIChecker --connection "Host=localhost;Database=AiCheckerDB;Port=5432;User Id=AiChecker;Password=123;CommandTimeout=600"
+```
+
+```bash
 
 ## Scaffold the DbContext:
 

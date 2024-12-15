@@ -233,9 +233,19 @@ public partial class AicheckerContext : DbContext
                 .HasForeignKey(d => d.ResultSetId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SystemResourceUsage_ResultSets");
+            
+            entity.HasIndex(e => e.ProcessId, "IX_SystemResourceUsage_ProcessId");
+            entity.HasIndex(e => e.ProcessName, "IX_SystemResourceUsage_ProcessName");
 
-            // DateTime conversion to UTC
-            entity.Property(e => e.CpuUsageTimestamp)
+            entity.HasIndex(e => e.GpuMemoryUsage, "IX_SystemResourceUsage_GpuMemoryUsage");
+            entity.HasIndex(e => e.GpuUsage, "IX_SystemResourceUsage_GpuUsage");
+            entity.HasIndex(e => e.MemoryUsage, "IX_SystemResourceUsage_MemoryUsage");
+            entity.HasIndex(e => e.CpuUsage, "IX_SystemResourceUsage_CpuUsage");
+
+
+
+        // DateTime conversion to UTC
+        entity.Property(e => e.CpuUsageTimestamp)
             .HasConversion(
                 v => v.ToUniversalTime(),
                 v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
