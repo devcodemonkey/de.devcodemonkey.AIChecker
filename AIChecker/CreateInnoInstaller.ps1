@@ -3,7 +3,7 @@ function Set-SignToFile {
         $fileName
     )    
     $signToolPath = "C:\Program Files (x86)\Windows Kits\10\App Certification Kit\signtool.exe"    
-    & $signToolPath sign /debug /a /fd SHA256 $fileName
+    & $signToolPath sign /debug /n "Open Source Developer, David Höll" /fd SHA256 $fileName
 }
 
 function New-SetupFile {
