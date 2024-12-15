@@ -52,6 +52,20 @@ values
 insert into temp_table_ResultSets
 values
 	('Fragezuordnung für Testverfahren Skala (Nr. 15) Mistral-Nemo')
+	
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 16) Ministral-8B');
+
+
+
+
+
+
+
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 18) Llama-3.2-1B-Instruct 3s');
 
 -- Laufzeiten	
 with GroupedResults as (
@@ -116,32 +130,58 @@ where "Bewertung" = "MaxBewertung"
 and "AnswerIdQuestions(Korrekt)" = "AnswerIdResult"
 order by "MaxValueCount";
 
--- Hardware Using
-select
+-- GPU Auslastung
+select 
 	sru."ProcessId"
 	,sru."ProcessName" 
-	,sum(sru."GpuMemoryUsage") / count(*) 	as "TotalGpuMemoryUsage"
-	,sum(sru."GpuUsage") / count(*)			as "TotalGpuUsage"
-	,sum(sru."MemoryUsage")	/ count(*)		as "TotalMemoryUsage"
-	,sum(sru."CpuUsage") / count(*)			as "TotalCpuUsage"
-	,max(sru."GpuUsage")
+	,round(cast(sum(sru."GpuUsage") as decimal) / cast(count(*) as decimal),2) as "AvgGpuUsage"
+    ,cast(sum(sru."GpuUsage") as decimal) as "TotalGpuUsage"
+	,count(*) as "CountOfGpuUsage"
 from "ResultSets" rs 
 join "SystemResourceUsage" sru on rs."ResultSetId" = sru."ResultSetId" 
 where 
 	rs."Value" in (select * from temp_table_ResultSets)
+	and sru."ProcessId" = -1
+group by
+	sru."ProcessId"
+	,sru."ProcessName";
+
+-- Hardware Auslastung
+select
+	sru."ProcessId"
+	,sru."ProcessName" 
+	,round(cast(sum(sru."GpuMemoryUsage") as decimal) / cast(count(*) as decimal),2) as "AvgGpuMemoryUsage"
+    ,round(cast(sum(sru."MemoryUsage") as decimal) / cast(count(*) as decimal),2) as "AvgMemoryUsage"
+    ,round(cast(sum(sru."CpuUsage") as decimal) / cast(count(*) as decimal),2) as "AvgCpuUsage"
+from "ResultSets" rs 
+join "SystemResourceUsage" sru on rs."ResultSetId" = sru."ResultSetId" 
+where 
+	rs."Value" in (select * from temp_table_ResultSets)
+	and sru."ProcessId" <> -1
 group by
 	sru."ProcessId"
 	,sru."ProcessName" 
 order by 
-max(sru."GpuUsage")				desc
-	,sum(sru."GpuMemoryUsage") 	desc 
-	sum(sru."GpuUsage")			desc
+	sum(sru."GpuMemoryUsage") 	desc 	
 	,sum(sru."MemoryUsage")		desc
 	,sum(sru."CpuUsage")		desc
-limit 10
-;
-select * from "SystemResourceUsage" sru 
-where sru."GpuUsage" is null
+limit 10;
 
+
+
+
+
+select * from "SystemResourceUsage" sru
+join "ResultSets" rs ON sru."ResultSetId" = rs."ResultSetId" 
+where 
+    rs."Value" in (select * from temp_table_ResultSets)
+	and sru."ProcessId" = -1
+	and sru."GpuUsage" > 0;
+
+select *
+from "Results" r
+join "ResultSets" rs ON r."ResultSetId" = rs."ResultSetId" 
+where 
+    rs."Value" in (select * from temp_table_ResultSets);  
 
 	
