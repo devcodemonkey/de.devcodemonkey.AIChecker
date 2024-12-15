@@ -3,13 +3,6 @@ drop table temp_table_ResultSets;
 create temp table temp_table_ResultSets
 ("ResultSets" TEXT);
 
-insert into temp_table_ResultSets
-values	
-	('Fragezuordnung für Testverfahren Skala (Nr. 1) Outlook allgemein korrekt geprüfte Fragen'),
-	('Fragezuordnung für Testverfahren Skala (Nr. 2) Teams Citrix korrekt geprüfte Fragen'),
-	('Fragezuordnung für Testverfahren Skala (Nr. 3) Teams allgemein korrekt geprüfte Fragen'),
-	('Fragezuordnung für Testverfahren Skala (Nr. 4) Azubi FAQ korrekt geprüfte Fragen');
-
 INSERT INTO temp_table_ResultSets
 VALUES    
     --('Fragezuordnung für Testverfahren Skala auf gpt-mini (Nr. 2) Teams Citrix created Questions'),
@@ -24,6 +17,14 @@ VALUES
     ('Fragezuordnung für Testverfahren Skala auf gpt-4o (Nr. 3) Teams allgemein'),
     ('Fragezuordnung für Testverfahren Skala auf gpt-4o (Nr. 4) Azubi FAQ');
    
+
+   
+insert into temp_table_ResultSets
+values	
+	('Fragezuordnung für Testverfahren Skala (Nr. 1) Outlook allgemein korrekt geprüfte Fragen'),
+	('Fragezuordnung für Testverfahren Skala (Nr. 2) Teams Citrix korrekt geprüfte Fragen'),
+	('Fragezuordnung für Testverfahren Skala (Nr. 3) Teams allgemein korrekt geprüfte Fragen'),
+	('Fragezuordnung für Testverfahren Skala (Nr. 4) Azubi FAQ korrekt geprüfte Fragen');
    
 insert into temp_table_ResultSets
 values
@@ -57,10 +58,9 @@ insert into temp_table_ResultSets
 values
 	('Fragezuordnung für Testverfahren Skala (Nr. 16) Ministral-8B');
 
-
-
-
-
+insert into temp_table_ResultSets
+values
+	('Fragezuordnung für Testverfahren Skala (Nr. 17) Meta-Llama-3.3-70B');
 
 
 insert into temp_table_ResultSets
@@ -167,21 +167,3 @@ order by
 	,sum(sru."CpuUsage")		desc
 limit 10;
 
-
-
-
-
-select * from "SystemResourceUsage" sru
-join "ResultSets" rs ON sru."ResultSetId" = rs."ResultSetId" 
-where 
-    rs."Value" in (select * from temp_table_ResultSets)
-	and sru."ProcessId" = -1
-	and sru."GpuUsage" > 0;
-
-select *
-from "Results" r
-join "ResultSets" rs ON r."ResultSetId" = rs."ResultSetId" 
-where 
-    rs."Value" in (select * from temp_table_ResultSets);  
-
-	
