@@ -24,16 +24,13 @@ function New-SetupFile {
         $secureFtpPassword = Read-Host -AsSecureString "Enter ftp password"    
     }
 
-    #Set-Location $PSScriptRoot
     Set-Location $basePath
     # change version in the vs project file
-    Set-Location .\AIChecker\
-    [xml]$vsProjectFile = Get-Content .\AIChecker.csproj
+    [xml]$vsProjectFile = Get-Content "$basePath\AIChecker\AIChecker.csproj"
     $vsProjectFile.Project.PropertyGroup.Version = $version
-    $vsProjectFile.Save(".\AIChecker.csproj")
+    $vsProjectFile.Save("$basePath\AIChecker\AIChecker.csproj")
 
     # change version in the installer script
-    Set-location ..           
 
     $fileName = "Setup_$($version -replace '\.','_')"
     (Get-Content .\InstallerInno.iss) -replace "#define MyAppVersion ""##testing##""", "#define MyAppVersion ""$version""" -replace "OutputBaseFilename=Setup", "OutputBaseFilename=$fileName" | Set-Content .\InstallerInno.iss
