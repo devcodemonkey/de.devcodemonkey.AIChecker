@@ -17,7 +17,9 @@ namespace de.devcodemonkey.AIChecker.UseCases.Global
             string requestReason)
         {
             // check if model exists in db
-            var modelExists = await defaultMethodesRepository.ViewOverValue<Model>(apiResult!.Data!.Model!);
+            Model? modelExists = null;
+            if (result.Model.Value != null)
+                modelExists = await defaultMethodesRepository.ViewOverValue<Model>(result.Model.Value);
             if (modelExists == null)
             {
                 result.Model = new Model
@@ -27,7 +29,10 @@ namespace de.devcodemonkey.AIChecker.UseCases.Global
                 };
             }
             else
+            {
                 result.ModelId = modelExists.ModelId;
+                result.Model = null!;
+            }
 
             // check if resultSet exists in db
             var resultSetExists = await defaultMethodesRepository.ViewOverValue<ResultSet>(resultSet);
