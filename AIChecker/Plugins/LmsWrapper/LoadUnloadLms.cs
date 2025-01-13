@@ -5,7 +5,7 @@ namespace LmsWrapper
 {
     public class LoadUnloadLms : ILoadUnloadLms
     {
-        const string LMS_FILE_PATH = "C:\\Users\\d-hoe\\AppData\\Local\\LM-Studio\\app-0.3.5\\resources\\app\\.webpack\\lms.exe";
+        string LMS_FILE_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".cache", "lm-studio", "bin", "lms.exe");
 
         public bool Load(string modelName)
         {
