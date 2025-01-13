@@ -20,6 +20,7 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             // Setup DI
             var serviceProvider = await ConfigureServicesAsync();
 
+            #region Test
             //await RunWithScopeAsync(serviceProvider, ["sendToLms", "-m", "Schreib mir ein Gedicht mit 100 Zeilen", "-s", "Du achtest darauf, dass sich alles reimt", "-r", "Requesttime check: | model: Phi-3.5-mini-instruct", "-c", "5", "-i", "5"]);
             //await RunWithScopeAsync(serviceProvider, ["sendToLms", "-r", "Test result set", "-m", "write me a poem over 10 lines"]);
             //await RunWithScopeAsync(serviceProvider, ["viewResults", "-r", "Test result set"]);
@@ -52,7 +53,10 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Rank"]);
 
             //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "ChatGpt Test", "-p", "Prüft ob die Ausgabe funktioniert", "-m", "gpt-4o-mini-2024-07-18"]);
-            //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "ChatGpt Test", "-p", "Prüft ob die Ausgabe funktioniert", "-m", "bartowski/Llama-3.2-1B-Instruct-GGUF"]);
+
+            //await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Test"]);
+            //await RunWithScopeAsync(serviceProvider, ["rankPrompt", "-r", "Test", "-p", "Prüft ob die Ausgabe funktioniert", "-m", "bartowski/Llama-3.2-1B-Instruct-GGUF"]);
+
             //await RunWithScopeAsync(serviceProvider, ["exportPromptRank", "-r", "ChatGpt Test", "-t", "pdf"]);
 
             //            await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Prompt Ranking für Fragen erstellen (1. Versuch)"]);
@@ -158,6 +162,8 @@ namespace de.devcodemonkey.AIChecker.AIChecker
             //await RunWithScopeAsync(serviceProvider, ["deleteResultSet", "-r", "Fragezuordnung für Testverfahren Skala Outlook allgemein (Nr. 1) Test"]);
             //await RunWithScopeAsync(serviceProvider, ["sendToLms", "-r", "Fragezuordnung für Testverfahren Skala Outlook allgemein (Nr. 1) Test", "--questionCategory", "Outlook created Questions over gpt-4o-mini,Teams Citrix created Questions over gpt-4o-mini,Teams allgemein created Questions over gpt-4o-mini,Azubi FAQ created Questions over gpt-4o-mini", "--questionsCorrect", "-s", "", "-u", "1", "-w"]);
             //await RunWithScopeAsync(serviceProvider, ["checkJson", "-r", "Fragezuordnung für Testverfahren Skala (Nr. 2) Teams Citrix korrekt geprüfte Fragen Test"]);
+
+            #endregion
 
             await RunWithScopeAsync(serviceProvider, args);
         }

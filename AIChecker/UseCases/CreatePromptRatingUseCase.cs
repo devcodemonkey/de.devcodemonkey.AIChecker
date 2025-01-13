@@ -87,6 +87,9 @@ namespace de.devcodemonkey.AIChecker.UseCases
                     apiResult?.Data?.Choices?.FirstOrDefault()?.FinishReason ?? string.Empty
                 );
 
+                //result.ModelId = result.Model.ModelId;
+                //result.Model = null!;
+
                 await _defaultMethodesRepository.AddAsync(result);
             });
         }
